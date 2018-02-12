@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="repository.ttmediav1" name="TTMedia Repository" version="0.0.9" provider-name="TTMedia">
+<addon id="repository.ttmedia" name="TTMedia Repository" version="0.0.9" provider-name="TTMedia">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 		<dir>
 			<info compressed="false">https://raw.githubusercontent.com/noobsandnerds/modules4all/master/zips/addons.xml</info>
 			<checksum>https://raw.githubusercontent.com/noobsandnerds/modules4all/master/zips/addons.xml.md5</checksum>
 			<datadir zip="true">https://raw.githubusercontent.com/noobsandnerds/modules4all/master/zips/</datadir>
 		</dir>
-		<info compressed="false">https://raw.githubusercontent.com/ttmediav1/repository.ttmediav1/master/zips/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/ttmediav1/repository.ttmediav1/master/zips/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/ttmediav1/repository.ttmediav1/master/zips/</datadir>
+		<info compressed="false">https://raw.githubusercontent.com/ttmediav1/repository.ttmedia/master/zips/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/ttmediav1/repository.ttmedia/master/zips/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/ttmediav1/repository.ttmedia/master/zips/</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en">[COLORred]TTMEDIA[/COLOR]</summary>
