@@ -1,0 +1,41 @@
+<dir>
+  <name>[B][COLORlimegreen]Tv Channels[/COLOR][/B]</name>
+  <link>file://nan_tv.xml</link>
+  <fanart>https://i.imgur.com/yonai3v.jpg</fanart>
+  <summary></summary>
+</dir>
+
+<dir>
+  <title>[B][COLORdarkred]Update Channel List[/COLOR][/B]</title>
+  <link>plugin://plugin.video.invictus/?mode=RunScript&url=special://home/addons/plugin.video.invictus/resources/lib/plugins/AirTable/air_channels.py</link>
+  <fanart>https://i.imgur.com/yonai3v.jpg</fanart>
+  <summary>Updates the Nan tv channels list</summary>
+</dir>
+
+<dir>
+  <name>[B][COLORlimegreen]Sports Channels[/COLOR][/B]</name>
+  <link>file://nan_sports.xml</link>
+  <fanart>https://i.imgur.com/yonai3v.jpg</fanart>
+  <summary></summary>
+</dir>
+
+<dir>
+  <title>[B][COLORdarkred]Update Channel List[/COLOR][/B]</title>
+  <link>plugin://plugin.video.invictus/?mode=RunScript&url=special://home/addons/plugin.video.invictus/resources/lib/plugins/AirTable/air_sports_channels.py</link>
+  <fanart>https://i.imgur.com/yonai3v.jpg</fanart>
+  <summary>Updates the Nan tv channels list</summary>
+</dir>
+
+<dir>
+    <name>[B][COLORwhite]XXX ADULT SECTION XXX[/COLOR][/B]</name>
+    <link>http://illuminatitemple.xyz/atrain/xxxadult.xml</link>
+    <thumbnail></thumbnail> 
+    <fanart>https://i.imgur.com/yonai3v.jpg</fanart>
+</dir>
+
+<dir>
+    <name>[B][COLORlimegreen]Next Page>>>[/COLOR][/B]</name>
+    <link>http://illuminatitemple.xyz/atrain/nextpage.xml</link>
+    <thumbnail></thumbnail> 
+    <fanart>https://i.imgur.com/yonai3v.jpg</fanart>
+</dir>
