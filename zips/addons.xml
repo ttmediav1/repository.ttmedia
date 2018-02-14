@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addons>
-<addon id="plugin.program.ttmediawizard" name="TTMedia Wizard" version="2.6" provider-name="TTMedia">
+<addon id="plugin.program.ttmediawizard" name="TTMedia Wizard" version="2.7" provider-name="TTMedia">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
