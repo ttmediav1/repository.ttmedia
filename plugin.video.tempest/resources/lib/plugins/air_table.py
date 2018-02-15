@@ -1,6 +1,6 @@
 """
-    air_table.py
-    Copyright (C) 2018,
+    new_releases.py --- Reads the spreadsheets and displays the contents
+    Copyright (C) 2018, TonyH
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,19 +20,19 @@
     Usage Examples:
 
 
-    Returns the Tv Channels-
+    Returns the Nan Tv Channels-
 
     <dir>
-    <title>Tv Channels</title>
+    <title>Nan Tv Channels</title>
     <Airtable>tv_channels</Airtable>
     </dir>
 
 
 
-    Returns the Sports Channels-
+    Returns the Nan Sports Channels-
 
     <dir>
-    <title>Sports Channels</title>
+    <title>Nan Sports Channels</title>
     <Airtable>sports_channels</Airtable>
     </dir>
 
@@ -151,7 +151,7 @@ class AIRTABLE(Plugin):
 @route(mode='Tv_channels')
 def new_releases():
     xml = ""
-    at = Airtable('appEh3MpOXliHvAjw', 'TV_channels', api_key='keyOHaxsTGzHU9EEh')
+    at = Airtable('appEh3MpOXliHvAjw', 'NanTV_channels', api_key='keyOHaxsTGzHU9EEh')
     match = at.get_all(maxRecords=700, sort=['channel'])
     results = re.compile("fanart': u'(.+?)'.+?link': u'(.+?)'.+?thumbnail': u'(.+?)'.+?channel': u'(.+?)'.+?summary': u'(.+?)'",re.DOTALL).findall(str(match))
     for fanart,link,thumbnail,channel,summary in results:
@@ -196,7 +196,7 @@ def new_releases():
 @route(mode='Sports_channels')
 def new_releases():
     xml = ""
-    at = Airtable('apppx7NENxSaqMkM5', 'Sports_channels', api_key='keyOHaxsTGzHU9EEh')
+    at = Airtable('apppx7NENxSaqMkM5', 'Nan_sports_channels', api_key='keyOHaxsTGzHU9EEh')
     match = at.get_all(maxRecords=700, sort=['channel'])
     results = re.compile("fanart': u'(.+?)'.+?link': u'(.+?)'.+?thumbnail': u'(.+?)'.+?channel': u'(.+?)'.+?summary': u'(.+?)'",re.DOTALL).findall(str(match))
     for fanart,link,thumbnail,channel,summary in results:
