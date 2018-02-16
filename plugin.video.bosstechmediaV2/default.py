@@ -61,14 +61,14 @@ def start():
 		auth = tools.OPEN_URL(auth)
 		if not auth=="":
 			tools.addDir('[COLOR red]Account Information[/COLOR]','url',6,icon,fanart,'')
-			tools.addDir('[COLOR ff1a1aff]Live Tv[/COLOR]','live',1,icon,fanart,'')
+			tools.addDir('[COLOR lightskyblue]Live Tv[/COLOR]','live',1,icon,fanart,'')
 			tools.addDir('[COLOR red]Catchup TV[/COLOR]','url',12,icon,fanart,'')
 			if xbmc.getCondVisibility('System.HasAddon(pvr.iptvsimple)') or xbmc.getCondVisibility('System.HasAddon(script.ivueguide)'):
-				tools.addDir('[COLOR ff1a1aff]TV Guide[/COLOR]','pvr',7,icon,fanart,'')
+				tools.addDir('[COLOR lightskyblue]TV Guide[/COLOR]','pvr',7,icon,fanart,'')
 			tools.addDir('[COLOR red]VOD[/COLOR]','vod',3,icon,fanart,'')
-			tools.addDir('[COLOR ff1a1aff]Search[/COLOR]','url',5,icon,fanart,'')
+			tools.addDir('[COLOR lightskyblue]Search[/COLOR]','url',5,icon,fanart,'')
 			tools.addDir('[COLOR red]Settings[/COLOR]','url',8,icon,fanart,'')
-			tools.addDir('[COLOR ff1a1aff]Extras[/COLOR]','url',16,icon,fanart,'')
+			tools.addDir('[COLOR lightskyblue]Extras[/COLOR]','url',16,icon,fanart,'')
 def home():
 	tools.addDir('Account Information','url',6,icon,fanart,'')
 	tools.addDir('Live TV','live',1,icon,fanart,'')

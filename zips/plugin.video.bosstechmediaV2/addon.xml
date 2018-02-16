@@ -1,7 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" standalone="yes"?>
 <addon id="plugin.video.bosstechmediaV2"
        name="BossTech Media [COLOR red]V2[/COLOR]"
-       version="1.1"
+       version="1.2"
        provider-name="TT Media">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -12,9 +12,9 @@
         <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">BossTech MediaV2</summary>
+    <summary lang="en">BOSSTECH MEDIA[COLORred]V2[/COLOR]</summary>
     <language>en</language>
-    <description lang="en">BossTech MediaV2 Addon - Supplier of Great Quality and Stable Streams</description>
+    <description lang="en">[COLORlightskyblue]BOSSTECH MEDIAV2 ADDON - SUPPLIER OF GREAT QUALITY AND STABLE STREAMS.[/COLOR]</description>
      <platform>all</platform>
   </extension>
 </addon>
