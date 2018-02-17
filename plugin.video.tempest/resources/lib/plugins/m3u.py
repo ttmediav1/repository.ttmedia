@@ -1,6 +1,6 @@
 """
     m3u.py --- Jen Plugin for accessing m3u data
-    Copyright (C) 2018, Mister-X
+    Copyright (C) 2018
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,7 +29,6 @@
 import urllib2
 import re
 import xbmcaddon
-import xbmcgui
 from koding import route
 from resources.lib.plugin import Plugin
 from resources.lib.util.context import get_context_items
@@ -70,20 +69,23 @@ class M3U(Plugin):
 
 @route(mode='m3u', args=["url"])
 def m3u(url):
-	xml = ""
-	if not xml:
-		xml = ""
-		listhtml = getHtml(url)
-		match = re.compile(ur'#EXTINF:.+?,(.+?)\n([a-zA-Z0-9s" "-\\xe2_]+)\w?.*',
-						re.UNICODE).findall(listhtml)
-	for name, url in match:
-		xml += "<item>"\
-				"<title>%s</title>"\
-				"<link>%s</link>"\
-				"<thumbnail></thumbnail>"\
-		"</item>" % (name, url)
-	jenlist = JenList(xml)
-	display_list(jenlist.get_list(), jenlist.get_content_type())
+    xml = ""
+    if not xml:
+        xml = ""
+        if '.m3u' in url:
+            listhtml = getHtml(url)
+            match = re.compile('#EXTINF:.+?,(.+?)\n([^"]+)\n',
+                               re.IGNORECASE | re.DOTALL).findall(listhtml)
+            for name, url in match:
+                name = name
+                url = url
+                xml += "<item>"\
+                       "<title>%s</title>"\
+                       "<link>%s</link>"\
+                       "<thumbnail></thumbnail>"\
+                       "</item>" % (name, url)
+    jenlist = JenList(xml)
+    display_list(jenlist.get_list(), jenlist.get_content_type())
 
 
 def getHtml(url, referer=None, hdr=None, data=None):

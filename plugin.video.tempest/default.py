@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
     default.py --- Jen Addon entry point
-    Copyright (C) 2017, Midraal
+    Copyright (C) 2017, Jen
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,8 +24,8 @@ import __builtin__
 root_xml_url = "http://ttmedia.live/tempest/main.xml"  # url of the root xml file
 __builtin__.tvdb_api_key = "146E7EB2B9C689B2"  # tvdb api key
 __builtin__.tmdb_api_key = "63aa68b8717a7477ff33c5a0ffa31355"  # tmdb api key
-__builtin__.trakt_client_id = "948c4e2514db4f2cca33e737f5e73ae213e537d344b9916983e53e3cc2a1b21c"  # trakt client id
-__builtin__.trakt_client_secret = "140369c2c981732a7b183db2e9300065629b8b7417a149a0c4e098ebee8f692e"  # trakt client secret
+__builtin__.trakt_client_id = "3bfca5a53033d8659bc4cb926b65e281de94db9e122c5717003e0a2526b44dea"  # trakt client id
+__builtin__.trakt_client_secret = "7ae57b40dfb7f3dc4cce7b8f2847a15ca1a4cfb99471f6b566d5bbeadb142f5d"  # trakt client secret
 __builtin__.search_db_location = ""  # location of search db
 
 import os
@@ -151,12 +151,21 @@ def settings():
 
 @route(mode="ScraperSettings")
 def scraper_settings():
-    xbmcaddon.Addon('script.module.nanscrapers').openSettings()
+    xbmcaddon.Addon('script.module.universalscrapers').openSettings()
 
 
 @route(mode="ResolverSettings")
 def resolver_settings():
     xbmcaddon.Addon('script.module.resolveurl').openSettings()
+
+
+@route(mode="ClearTraktAccount")
+def clear_trakt_account():
+    import xbmcgui
+    if xbmcgui.Dialog().yesno(addon_name, "{0} Trakt {1}. {2}".format(_("Delete"), _("Settings").lower(), _("Are you sure?"))):
+        xbmcaddon.Addon().setSetting("TRAKT_EXPIRES_AT", "")
+        xbmcaddon.Addon().setSetting("TRAKT_ACCESS_TOKEN", "")
+        xbmcaddon.Addon().setSetting("TRAKT_REFRESH_TOKEN", "")
 
 
 @route(mode="message", args=["url"])
@@ -176,8 +185,8 @@ def clear_cache():
         koding.Remove_Table("meta")
         koding.Remove_Table("episode_meta")
     if dialog.yesno(addon_name, _("Clear Scraper Cache?")):
-        import nanscrapers
-        nanscrapers.clear_cache()
+        import universalscrapers
+        universalscrapers.clear_cache()
     if dialog.yesno(addon_name, _("Clear GIF Cache?")):
         dest_folder = os.path.join(
             xbmc.translatePath(xbmcaddon.Addon().getSetting("cache_folder")),
@@ -186,15 +195,6 @@ def clear_cache():
     xbmc.log("running hook:", xbmc.LOGNOTICE)
     run_hook("clear_cache")
 
-@route(mode="RunScript", args=["url"])
-def run_script(url):
-    import xbmcgui
-    if url.startswith("special://"):
-        url = xbmc.translatePath(url)
-    hdr = xbmcaddon.Addon().getAddonInfo("name")
-    msg = "Are you sure?"
-    if xbmcgui.Dialog().yesno(hdr, msg):
-        xbmc.executebuiltin("RunScript({0})".format(url))
 
 def get_addon_url(mode, url=""):
     import urllib

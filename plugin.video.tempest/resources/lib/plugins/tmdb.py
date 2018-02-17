@@ -1,6 +1,6 @@
 """
     tmdb.py --- Jen Plugin for accessing tmdb data
-    Copyright (C) 2017, Midraal
+    Copyright (C) 2017, Jen
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -166,7 +166,7 @@ from resources.lib.util.xml import JenItem, JenList, display_list
 from unidecode import unidecode
 
 
-CACHE_TIME = 86400  # change to wanted cache time in seconds
+CACHE_TIME = 3600  # change to wanted cache time in seconds
 
 addon_fanart = xbmcaddon.Addon().getAddonInfo('fanart')
 addon_icon = xbmcaddon.Addon().getAddonInfo('icon')

@@ -24,16 +24,16 @@
     <category label="30715">
       <setting label="30718" type="lsep"/>
       <setting label="30719" type="action" option="close"
-               action="RunPlugin(plugin://plugin.video.jen/?mode=clearCache)"/>
+               action="RunPlugin(plugin://plugin.video.tempest/?mode=clearCache)"/>
       <setting label="30733" type="lsep"/>
       <!-- scraper settings -->
       <setting label="30734" type="action" option="close"
-               action="RunPlugin(plugin://plugin.video.jen/?mode=ScraperSettings)"/>
+               action="RunPlugin(plugin://plugin.video.tempest/?mode=ScraperSettings)"/>
       <setting id="use_link_dialog" label="30744" type="bool" default="true" />
       <setting id="link_fallthrough" label="30745" type="bool"	default="true" visible="eq(-1,true)"/>
       <setting label="30741" type="lsep"/>
       <setting label="30742" type="action" option="close"
-               action="RunPlugin(plugin://plugin.video.jen/?mode=ResolverSettings)"/>
+               action="RunPlugin(plugin://plugin.video.tempest/?mode=ResolverSettings)"/>
       <!-- filtering settings -->
       <setting label="30735" type="lsep"/>
       <setting id="allow_openload" label="30736" type="bool" default="false"/>
@@ -62,13 +62,13 @@
       <!-- debugging and developer options -->
       <setting id="debug" type="bool" label="30758" default="false" visible="true"/>
       <setting id="first_run" label="first run" type="bool" default="false" visible="false"/>
-      <setting label="Cache Location" id="cache_folder" type="folder" default="special://profile/addon_data/plugin.video.jen/"/>
-      <setting label="TVDb api key" type="text" id="tvdb_api_key" option="hidden" default="" visible="eq(-3,true)"/>
-      <setting label="TMDb api key" type="text" id="tmdb_api_key" option="hidden" default="" visible="eq(-4,true)"/>
-      <setting label="Trakt client id" type="text" id="trakt_api_client_id" option="hidden" default="" visible="eq(-5,true)"/>
-      <setting label="Trakt client secret" type="text" id="trakt_api_client_secret" option="hidden" visible="!eq(-1,8b3c509d7ae20fb31efcf95a7f030da562c37a8f0d9cd100db6ac1a41970f8ac) + eq(-6,true)" default=""/>
-      <setting label="Last.fm api key" type="text" id="lastfm_api_key" option="hidden" default="" visible="eq(-7,true)"/>
-      <setting label="Last.fm secret" type="text" id="lastfm_secret" option="hidden" visible="!eq(-1,3ec34c514a9230ebf006c8e24a8419d6) + eq(-8,true)" default=""/>
+      <setting label="Cache Location" id="cache_folder" type="folder" default="special://profile/addon_data/plugin.video.tempest/"/>
+      <setting label="TVDb api key" type="text" id="146E7EB2B9C689B2" option="hidden" default="" visible="eq(-3,true)"/>
+      <setting label="TMDb api key" type="text" id="63aa68b8717a7477ff33c5a0ffa31355" option="hidden" default="" visible="eq(-4,true)"/>
+      <setting label="Trakt client id" type="text" id="3bfca5a53033d8659bc4cb926b65e281de94db9e122c5717003e0a2526b44dea" option="hidden" default="" visible="eq(-5,true)"/>
+      <setting label="Trakt client secret" type="text" id="7ae57b40dfb7f3dc4cce7b8f2847a15ca1a4cfb99471f6b566d5bbeadb142f5d" option="hidden" visible="!eq(-1,8b3c509d7ae20fb31efcf95a7f030da562c37a8f0d9cd100db6ac1a41970f8ac) + eq(-6,true)" default=""/>
+      <setting label="Last.fm api key" type="text" id="9f8e10942d79d87fd36300a13d666071" option="hidden" default="" visible="eq(-7,true)"/>
+      <setting label="Last.fm secret" type="text" id="39b22c5cc712030ddacaaa0d03012d6e" option="hidden" visible="!eq(-1,3ec34c514a9230ebf006c8e24a8419d6) + eq(-8,true)" default=""/>
       <setting id="TRAKT_ACCESS_TOKEN" label="" type="text" visible="false"/>
       <setting id="TRAKT_EXPIRES_AT" label="" type="text" visible="false"/>
       <setting id="TRAKT_REFRESH_TOKEN" label="" type="text" visible="false"/>

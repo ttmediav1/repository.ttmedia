@@ -14,11 +14,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "#30401"
-msgid "[COLOR limegreen]Are You Sure?[/COLOR]"
+msgid "[COLOR teal]Are You Sure?[/COLOR]"
 msgstr ""
 
 msgctxt "#30402"
-msgid "[COLOR limegreen]Process Complete[/COLOR]"
+msgid "[COLOR teal]Process Complete[/COLOR]"
 msgstr ""
 
 msgctxt "#30491"
@@ -30,15 +30,15 @@ msgid "[I]Next Page[/I]"
 msgstr ""
 
 msgctxt "#30701"
-msgid "[COLOR limegreen]Settings[/COLOR]"
+msgid "[COLOR blue]Settings[/COLOR]"
 msgstr ""
 
 msgctxt "#30702"
-msgid "[COLOR limegreen]Search[/COLOR]"
+msgid "[COLOR orange]Search[/COLOR]"
 msgstr ""
 
 msgctxt "#30703"
-msgid "[COLOR limegreen]Clear History[/COLOR]"
+msgid "[COLOR purple]Clear History[/COLOR]"
 msgstr ""
 
 msgctxt "#30704"
@@ -54,7 +54,7 @@ msgid "Discover Great Streaming Playlists!"
 msgstr ""
 
 msgctxt "#30707"
-msgid "[COLOR limegreen]Trailer[/COLOR]"
+msgid "[COLOR orange]Trailer[/COLOR]"
 msgstr ""
 
 msgctxt "#30708"
@@ -122,7 +122,7 @@ msgid "Add-on settings"
 msgstr ""
 
 msgctxt "#30726"
-msgid "[COLOR limegreen]Opening Stream[/COLOR]"
+msgid "[COLOR teal]Opening Stream[/COLOR]"
 msgstr ""
 
 msgctxt "#30727"
@@ -142,7 +142,7 @@ msgid "Password"
 msgstr ""
 
 msgctxt "#30731"
-msgid "[COLOR limegreen]Please Wait...[/COLOR]"
+msgid "[COLOR orange]Please Wait...[/COLOR]"
 msgstr ""
 
 msgctxt "#30732"
@@ -359,11 +359,11 @@ msgstr ""
 
 msgctxt "#30897"
 msgid ""
-"[COLOR=limegreen]----------------------------------------------------[/COLOR]"
+"[COLOR=gold]----------------------------------------------------[/COLOR]"
 msgstr ""
 
 msgctxt "#30900"
-msgid "[COLOR=limegreen]Use latest test version (donators only)[/COLOR]"
+msgid "[COLOR=gold]Use latest test version (donators only)[/COLOR]"
 msgstr ""
 
 msgctxt "#30901"
@@ -472,8 +472,8 @@ msgstr ""
 msgctxt "#30976"
 msgid ""
 "The noobsandnerds Add-on Portal is showing a newer version of "
-"[COLOR=limegreen]%s[/COLOR] is available. Would you like to update to version: "
-"[COLOR=limegreen]%s[/COLOR]"
+"[COLOR=gold]%s[/COLOR] is available. Would you like to update to version: "
+"[COLOR=dodgerblue]%s[/COLOR]"
 msgstr ""
 
 msgctxt "#30977"

@@ -1,6 +1,6 @@
-# Addon Name: Invictus
-# Addon id: plugin.video.invictus
-# Addon Provider: Team Illuminati
+# Addon Name: Jen Unleashed
+# Addon id: plugin.video.jen.unleased
+# Addon Provider: Team Jen
 msgid ""
 msgstr ""
 "Project-Id-Version: Jen\n"

@@ -15,66 +15,54 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+	
+#####EXAMPLES#####
+### NEW FEATURES ADDED ###
+- <imdburl>user/ur19947955/lists</imdburl>	  	# Now if you have a IMDB account with lists. Add your user ID like this and it will grab all public list on your account
+- <imdburl>searchboth</imdburl>				# Search Movies and TV Shows in same search
+- <imdburl>searchkeywords</imdburl>			# Search Keywords in iMDB
+### NEW FEATURES ADDED ###
+- <imdburl>user/ur19947955/lists</imdburl>	  	# Now if you have a IMDB account with lists. Add your user ID like this and it will grab all public list on your account
+- <imdburl>searchboth</imdburl>				# Search Movies and TV Shows in same search
+- <imdburl>searchkeywords</imdburl>			# Search Keywords in iMDB
+###genres just switch out key word 
+<dir>
+<title>IMDB Action TV Shows</title>
+<imdburl>genrestv/action</imdburl>
+</dir>
 
-    Usage Examples:
-	<dir>
-		<title>Search</title>
-		<imdburl>searchseries</imdburl>
-		<thumbnail></thumbnail>
-	</dir>
+<dir>
+<title>IMDB Action Movies</title>
+<imdburl>genres/action</imdburl>
+</dir>
 
-	####TV
-	<dir>
-		<title>Newest</title>
-		<imdburl>tvshows/new</imdburl>
-		<thumbnail></thumbnail>
-	</dir>
+###Movies
+<dir>
+<title>Chart Moviemeter</title>
+<imdburl>chart/moviemeter</imdburl>
+</dir>
 
-	<dir>
-		<title>Best Ratings</title>
-		<imdburl>tvshows/rating</imdburl>
-		<thumbnail></thumbnail>
-	</dir>
+<dir>
+<title>Chart Best Rated</title>
+<imdburl>chart/top</imdburl>
+</dir>
 
-	<dir>
-		<title>Most Viewed</title>
-		<imdburl>tvshows/mostviews</imdburl>
-		<thumbnail></thumbnail>
-	</dir>
+###switch out year
+<dir>
+<title>IMDB 2017</title>
+<imdburl>years/2017</imdburl>
+</dir>
 
-	###charts
-	<dir>
-		<title>Chart Best Rated</title>
-		<imdburl>charttv/toptv</imdburl>
-	</dir>
-
-	###Genres
-	<dir>
-		<title>IMDB Action TV Shows</title>
-		<imdburl>genres/action</imdburl>
-		<thumbnail></thumbnail>
-	</dir>
-
-	### Movies
-	<dir>
-		<title>IMDB Trending</title>
-		<imdburl>movies/trending</imdburl>
-	</dir>
-		
-	<dir>
-	<title>2016</title>
-		<imdburl>years/2016</imdburl>
-		<thumbnail></thumbnail>
-	</dir>
-		
-	###For user list 
-	<dir>
-		<title>IMDB TOP 100 Gangster List</title>
-		<imdburl>list/ls001818278</imdburl>
-	</dir>
+###Tv show
+<dir>
+<title>Popular TV</title>
+<imdburl>charttv/tvmeter</imdburl>
+</dir>
 """
 
-import urllib, urllib2, os, base64, xbmcplugin, xbmcgui, xbmcvfs, traceback, cookielib, xbmc, sys
+
+
+import urllib, urllib2, os, base64, xbmcplugin, xbmcgui, xbmcvfs, traceback, cookielib, xbmc, sys, requests
 import pickle
 import time
 import re
@@ -87,7 +75,7 @@ from resources.lib.util.xml import JenItem, JenList, display_list
 from unidecode import unidecode
 
 
-CACHE_TIME = 86400  # change to wanted cache time in seconds
+CACHE_TIME = 3600  # change to wanted cache time in seconds
 
 addon_fanart = xbmcaddon.Addon().getAddonInfo('fanart')
 addon_icon = xbmcaddon.Addon().getAddonInfo('icon')
@@ -99,51 +87,7 @@ class IMDB(Plugin):
     def process_item(self, item_xml):
         if "<imdburl>" in item_xml:
 			item = JenItem(item_xml)
-			if "movies/" in item.get("imdburl", ""):
-				result_item = {
-					'label': item["title"],
-					'icon': item.get("thumbnail", addon_icon),
-					'fanart': item.get("fanart", addon_fanart),
-					'mode': "imdbmovies",
-					'url': item.get("imdburl", ""),
-					'folder': True,
-					'imdb': "0",
-					'content': "files",
-					'season': "0",
-					'episode': "0",
-					'info': {},
-					'year': "0",
-					'context': get_context_items(item),
-					"summary": item.get("summary", None)
-				}
-				result_item["properties"] = {
-					'fanart_image': result_item["fanart"]
-				}
-				result_item['fanart_small'] = result_item["fanart"]
-				return result_item
-			elif "tvshows/" in item.get("imdburl", ""):
-				result_item = {
-					'label': item["title"],
-					'icon': item.get("thumbnail", addon_icon),
-					'fanart': item.get("fanart", addon_fanart),
-					'mode': "imdbseries",
-					'url': item.get("imdburl", ""),
-					'folder': True,
-					'imdb': "0",
-					'content': "files",
-					'season': "0",
-					'episode': "0",
-					'info': {},
-					'year': "0",
-					'context': get_context_items(item),
-					"summary": item.get("summary", None)
-				}
-				result_item["properties"] = {
-					'fanart_image': result_item["fanart"]
-				}
-				result_item['fanart_small'] = result_item["fanart"]
-				return result_item
-			elif "season/" in item.get("imdburl", ""):
+			if "season/" in item.get("imdburl", ""):
 				result_item = {
 					'label': item["title"],
 					'icon': item.get("thumbnail", addon_icon),
@@ -171,28 +115,6 @@ class IMDB(Plugin):
 					'icon': item.get("thumbnail", addon_icon),
 					'fanart': item.get("fanart", addon_fanart),
 					'mode': "imdbepisode",
-					'url': item.get("imdburl", ""),
-					'folder': True,
-					'imdb': "0",
-					'content': "files",
-					'season': "0",
-					'episode': "0",
-					'info': {},
-					'year': "0",
-					'context': get_context_items(item),
-					"summary": item.get("summary", None)
-				}
-				result_item["properties"] = {
-					'fanart_image': result_item["fanart"]
-				}
-				result_item['fanart_small'] = result_item["fanart"]
-				return result_item
-			elif "theepisodeTwo/" in item.get("imdburl", ""):
-				result_item = {
-					'label': item["title"],
-					'icon': item.get("thumbnail", addon_icon),
-					'fanart': item.get("fanart", addon_fanart),
-					'mode': "imdbepisodeTwo",
 					'url': item.get("imdburl", ""),
 					'folder': True,
 					'imdb': "0",
@@ -254,6 +176,28 @@ class IMDB(Plugin):
 				result_item['fanart_small'] = result_item["fanart"]
 				return result_item
 			elif "list/" in item.get("imdburl", ""):
+				result_item = {
+					'label': item["title"],
+					'icon': item.get("thumbnail", addon_icon),
+					'fanart': item.get("fanart", addon_fanart),
+					'mode': "imdblists",
+					'url': item.get("imdburl", ""),
+					'folder': True,
+					'imdb': "0",
+					'content': "files",
+					'season': "0",
+					'episode': "0",
+					'info': {},
+					'year': "0",
+					'context': get_context_items(item),
+					"summary": item.get("summary", None)
+				}
+				result_item["properties"] = {
+					'fanart_image': result_item["fanart"]
+				}
+				result_item['fanart_small'] = result_item["fanart"]
+				return result_item
+			elif "keyword/" in item.get("imdburl", ""):
 				result_item = {
 					'label': item["title"],
 					'icon': item.get("thumbnail", addon_icon),
@@ -473,6 +417,72 @@ class IMDB(Plugin):
 				}
 				result_item['fanart_small'] = result_item["fanart"]
 				return result_item
+			elif "searchboth" in item.get("imdburl", ""):
+				result_item = {
+					'label': item["title"],
+					'icon': item.get("thumbnail", addon_icon),
+					'fanart': item.get("fanart", addon_fanart),
+					'mode': "searchboth",
+					'url': item.get("imdburl", ""),
+					'folder': True,
+					'imdb': "0",
+					'content': "files",
+					'season': "0",
+					'episode': "0",
+					'info': {},
+					'year': "0",
+					'context': get_context_items(item),
+					"summary": item.get("summary", None)
+				}
+				result_item["properties"] = {
+					'fanart_image': result_item["fanart"]
+				}
+				result_item['fanart_small'] = result_item["fanart"]
+				return result_item
+			elif "searchkeywords" in item.get("imdburl", ""):
+				result_item = {
+					'label': item["title"],
+					'icon': item.get("thumbnail", addon_icon),
+					'fanart': item.get("fanart", addon_fanart),
+					'mode': "searchkeywords",
+					'url': item.get("imdburl", ""),
+					'folder': True,
+					'imdb': "0",
+					'content': "files",
+					'season': "0",
+					'episode': "0",
+					'info': {},
+					'year': "0",
+					'context': get_context_items(item),
+					"summary": item.get("summary", None)
+				}
+				result_item["properties"] = {
+					'fanart_image': result_item["fanart"]
+				}
+				result_item['fanart_small'] = result_item["fanart"]
+				return result_item
+			elif "/lists" in item.get("imdburl", ""):
+				result_item = {
+					'label': item["title"],
+					'icon': item.get("thumbnail", addon_icon),
+					'fanart': item.get("fanart", addon_fanart),
+					'mode': "imdbuser",
+					'url': item.get("imdburl", ""),
+					'folder': True,
+					'imdb': "0",
+					'content': "files",
+					'season': "0",
+					'episode': "0",
+					'info': {},
+					'year': "0",
+					'context': get_context_items(item),
+					"summary": item.get("summary", None)
+				}
+				result_item["properties"] = {
+					'fanart_image': result_item["fanart"]
+				}
+				result_item['fanart_small'] = result_item["fanart"]
+				return result_item
 				
 
 @route(mode='searchmovies', args=["url"])
@@ -498,34 +508,126 @@ def searchseries(url):
 		url = 'http://www.imdb.com/search/title?title=' + search_entered + '&title_type=tv_series'
 		progress = xbmcgui.DialogProgress()
 		imdbseries(url)
-		
-@route(mode='imdbmovies', args=["url"])
+
+@route(mode='searchboth', args=["url"])
+def searchboth(url):
+	search_entered = ''
+	keyboard = xbmc.Keyboard(search_entered, 'Search iMDB Movies & Series')
+	keyboard.doModal()
+	if keyboard.isConfirmed():
+		search_entered = keyboard.getText().replace(' ','+')
+	if len(search_entered)>1:
+		url = 'http://www.imdb.com/find?ref_=nv_sr_fn&q=' + search_entered + '&s=all'
+		progress = xbmcgui.DialogProgress()
+		imdbBothSearch(url)
+
+@route(mode='searchkeywords', args=["url"])
+def searchkeywords(url):
+	search_entered = ''
+	keyboard = xbmc.Keyboard(search_entered, 'Search iMDB Keywords')
+	keyboard.doModal()
+	if keyboard.isConfirmed():
+		search_entered = keyboard.getText().replace(' ','+')
+	if len(search_entered)>1:
+		url = 'http://www.imdb.com/find?ref_=nv_sr_fn&q=' + search_entered + '&s=kw'
+		progress = xbmcgui.DialogProgress()
+		imdbKeywords(url)
+	
+def imdbKeywords(url):
+	xml = ""
+	listhtml = getHtml(url)
+	match = re.compile(
+			'<a href="/keyword/(.+?)/.+?ref_=fn_kw_kw_.+?" >.+?</a>(.+?)</td>', 
+			re.IGNORECASE | re.DOTALL).findall(listhtml)
+	for keywords, count in match:
+			name = keywords + count
+			xml += "<dir>"\
+				   "<title>%s</title>"\
+				   "<imdburl>keyword/%s</imdburl>"\
+				   "<thumbnail></thumbnail>"\
+				   "</dir>" % (name, keywords)	
+	jenlist = JenList(xml)
+	display_list(jenlist.get_list(), jenlist.get_content_type())
+
+
+def imdbBothSearch(url):
+	xml = ""
+	listhtml = getHtml(url)
+	match = re.compile(
+			'<img src="(.+?)" /></a> </td> <td class="result_text"> <a href="/title/(.+?)/.+?ref_=fn_al_tt_.+?" >(.+?)</a>(.+?)</td>', 
+			re.IGNORECASE | re.DOTALL).findall(listhtml)
+	for thumbnail, imdb, title, year in match:
+			tmdb_url = 'http://api.themoviedb.org/3/find/' + imdb + '?api_key=30551812602b96050a36103b3de0163b&external_source=imdb_id'
+			tmdbhtml = requests.get(tmdb_url).content
+			Poster_path = re.compile(
+							'"poster_path":"(.+?)"', 
+							re.DOTALL).findall(tmdbhtml)
+			Backdrop_path = re.compile(
+							'"backdrop_path":"(.+?)"', 
+							re.DOTALL).findall(tmdbhtml)
+			for poster_path in Poster_path:
+				for backdrop_path in Backdrop_path:
+					if not 'Series' in year:
+						year = year.split(')', 1)[0]
+						name = title + " " + year + ')'
+						year = year.replace("(","").replace(")","")
+						xml += "<item>"\
+								"<title>%s</title>"\
+								"<meta>"\
+								"<content>movie</content>"\
+								"<imdb>%s</imdb>"\
+								"<title>%s</title>"\
+								"<year>%s</year>"\
+								"</meta>"\
+								"<link>"\
+								"<sublink>search</sublink>"\
+								"<sublink>searchsd</sublink>"\
+								"</link>"\
+								"<thumbnail>https://image.tmdb.org/t/p/w1280/%s</thumbnail>"\
+								"<fanart>https://image.tmdb.org/t/p/w1280/%s</fanart>"\
+								"</item>" % (name, imdb, title, year, poster_path, backdrop_path)
+					else:
+						name = title + " " + year
+						xml += "<dir>"\
+							   "<title>%s</title>"\
+							   "<imdburl>season/%s</imdburl>"\
+							   "<thumbnail>https://image.tmdb.org/t/p/w1280/%s</thumbnail>"\
+							   "<fanart>https://image.tmdb.org/t/p/w1280/%s</fanart>"\
+							   "</dir>" % (name, imdb, poster_path, backdrop_path)	
+	jenlist = JenList(xml)
+	display_list(jenlist.get_list(), jenlist.get_content_type())
+	
+
 def imdbmovies(url):
 	xml = ""
-	url = url.replace("movies/popular","http://www.imdb.com/search/title?title_type=feature,tv_movie&num_votes=1000,&production_status=released&groups=top_1000&sort=moviemeter,asc&count=40&start=1").replace("movies/voted","http://www.imdb.com/search/title?title_type=feature,tv_movie&num_votes=1000,&production_status=released&sort=num_votes,desc&count=40&start=1").replace("movies/trending","http://www.imdb.com/search/title?title_type=feature,tv_movie&num_votes=1000,&production_status=released&release_date=date[365],date[60]&sort=moviemeter,asc&count=40&start=1").replace("movies/boxoffice","http://www.imdb.com/search/title?title_type=feature,tv_movie&production_status=released&sort=boxoffice_gross_us,desc&count=40&start=1")
 	listhtml = getHtml(url)
 	match = re.compile(
 			'<img alt=".+?"\nclass="loadlate"\nloadlate="(.+?)"\ndata-tconst="(.+?)"\nheight="98"\nsrc=".+?"\nwidth="67" />\n</a>.+?</div>\n.+?<div class="lister-item-content">\n<h3 class="lister-item-header">\n.+?<span class="lister-item-index unbold text-primary">.+?</span>\n.+?\n.+?<a href=".+?"\n>(.+?)</a>\n.+?<span class="lister-item-year text-muted unbold">(.+?)</span>', 
 			re.IGNORECASE | re.DOTALL).findall(listhtml)
 	for thumbnail, imdb, title, year in match:
-		name = title + " " + year
-		year = year.replace("(","").replace(")","")
-		thumbnail = thumbnail.replace("@._V1_UX67_CR0,0,67,98_AL_.jpg","@._V1_UX520_CR0,0,520,700_AL_.jpg")
-		xml += "<item>"\
-				"<title>%s</title>"\
-				"<meta>"\
-				"<content>movie</content>"\
-				"<imdb>%s</imdb>"\
-				"<title>%s</title>"\
-				"<year>%s</year>"\
-				"</meta>"\
-				"<link>"\
-				"<sublink>search</sublink>"\
-				"<sublink>searchsd</sublink>"\
-				"</link>"\
-				"<thumbnail>%s</thumbnail>"\
-				"<fanart></fanart>"\
-				"</item>" % (name, imdb, title, year, thumbnail)
+		tmdb_url = 'http://api.themoviedb.org/3/find/' + imdb + '?api_key=30551812602b96050a36103b3de0163b&external_source=imdb_id'
+		tmdbhtml = requests.get(tmdb_url).content
+		Poster_path = re.compile(
+						'"backdrop_path":"(.+?)".+?"overview":".+?","poster_path":"(.+?)"}', 
+						re.DOTALL).findall(tmdbhtml)
+		for backdrop_path, poster_path in Poster_path:
+			name = title + " " + year
+			year = year.replace("(","").replace(")","")
+			xml += "<item>"\
+					"<title>%s</title>"\
+					"<meta>"\
+					"<content>movie</content>"\
+					"<imdb>%s</imdb>"\
+					"<title>%s</title>"\
+					"<year>%s</year>"\
+					"</meta>"\
+					"<link>"\
+					"<sublink>search</sublink>"\
+					"<sublink>searchsd</sublink>"\
+					"</link>"\
+				    "<thumbnail>https://image.tmdb.org/t/p/w1280/%s</thumbnail>"\
+				    "<fanart>https://image.tmdb.org/t/p/w1280/%s</fanart>"\
+					"</item>" % (name, imdb, title, year, poster_path, backdrop_path)
 	next_page = re.compile(
 				'<a href="([^"]+)"\nclass="lister-page-next next-page" ref-marker=adv_nxt>Next &#187;</a>\n.+?</div>\n.+?<br class="clear" />', 
 				re.DOTALL | re.IGNORECASE).findall(listhtml)[0]
@@ -536,40 +638,37 @@ def imdbmovies(url):
 		   "</dir>" % (next_page)
 	jenlist = JenList(xml)
 	display_list(jenlist.get_list(), jenlist.get_content_type())
-
-
-@route(mode='imdbseries', args=["url"])
+	
+	
 def imdbseries(url):
 	xml = ""
-	url = url.replace("tvshows/popular","http://www.imdb.com/search/title?title_type=tv_series,mini_series&num_votes=100,&release_date=,date[0]&sort=moviemeter,asc&count=40&start=1")
-	url = url.replace("tvshows/new","http://www.imdb.com/search/title?title_type=tv_series,mini_series&languages=en&num_votes=10,&release_date=date[60],date[0]&sort=release_date,desc&count=40&start=1")
-	url = url.replace("tvshows/rating","http://www.imdb.com/search/title?title_type=tv_series,mini_series&num_votes=5000,&release_date=,date[0]&sort=user_rating,desc&count=40&start=1")
-	url = url.replace("tvshows/mostviews","http://www.imdb.com/search/title?title_type=tv_series,mini_series&num_votes=100,&release_date=,date[0]&sort=num_votes,desc&count=40&start=1")
-	url = url.replace("tvshows/boxoffice","http://www.imdb.com/search/title?title_type=tv_series,mini_series&num_votes=100,&release_date=,date%5B0%5D&count=40&start=1&sort=boxoffice_gross_us,desc")
-	url = url.replace("tvshows/alphabetical","http://www.imdb.com/search/title?title_type=tv_series,mini_series&num_votes=100,&release_date=,date%5B0%5D&count=40&start=1&sort=alpha,asc")
-	
 	listhtml = getHtml(url)
 	match = re.compile(
-			'<img alt=".+?"\nclass="loadlate"\nloadlate="(.+?)"\ndata-tconst="(.+?)"\nheight="98"\nsrc=".+?"\nwidth="67" />\n</a>.+?</div>\n.+?<div class="lister-item-content">\n<h3 class="lister-item-header">\n.+?<span class="lister-item-index unbold text-primary">.+?</span>\n.+?\n.+?<a href=".+?"\n>(.+?)</a>\n.+?<span class="lister-item-year text-muted unbold">(.+?)</span>', 
+			'<img alt=".+?"\nclass="loadlate"\nloadlate="(.+?)"\ndata-tconst="(.+?)"\nheight=".+?"\nsrc=".+?"\nwidth=".+?" />\n</a>.+?</div>\n.+?<div class="lister-item-content">\n<h3 class="lister-item-header">\n.+?<span class="lister-item-index unbold text-primary">.+?</span>\n.+?\n.+?<a href=".+?"\n>(.+?)</a>\n.+?<span class="lister-item-year text-muted unbold">(.+?)</span>', 
 			re.IGNORECASE | re.DOTALL).findall(listhtml)
 	for thumbnail, imdb, title, year in match:
-		name = title + " " + year
-		year = year.replace("(","").replace(")","")
-		thumbnail = thumbnail.replace("@._V1_UX67_CR0,0,67,98_AL_.jpg","@._V1_UX520_CR0,0,520,700_AL_.jpg")
-		xml += "<dir>"\
-			   "<title>%s</title>"\
-			   "<meta>"\
-			   "<content>tvshow</content>"\
-			   "<imdb>%s</imdb>"\
-			   "<imdburl>season/%s</imdburl>"\
-			   "<tvdb></tvdb>"\
-			   "<tvshowtitle>%s</tvshowtitle>"\
-			   "<year>%s</year>"\
-			   "</meta>"\
-			   "<link></link>"\
-			   "<thumbnail>%s</thumbnail>"\
-			   "<fanart></fanart>"\
-			   "</dir>" % (name, imdb, imdb, title, year, thumbnail)
+		tmdb_url = 'http://api.themoviedb.org/3/find/' + imdb + '?api_key=30551812602b96050a36103b3de0163b&external_source=imdb_id'
+		tmdbhtml = requests.get(tmdb_url).content
+		Poster_path = re.compile(
+					'"poster_path":"(.+?)".+?"backdrop_path":"(.+?)"', 
+					re.DOTALL).findall(tmdbhtml)
+		for poster_path, backdrop_path in Poster_path:
+			name = title + " " + year
+			year = year.replace("(","").replace(")","")
+			xml += "<dir>"\
+				   "<title>%s</title>"\
+				   "<meta>"\
+				   "<content>tvshow</content>"\
+				   "<imdb>%s</imdb>"\
+				   "<imdburl>season/%s</imdburl>"\
+				   "<tvdb></tvdb>"\
+				   "<tvshowtitle>%s</tvshowtitle>"\
+				   "<year>%s</year>"\
+				   "</meta>"\
+				   "<link></link>"\
+				   "<thumbnail>https://image.tmdb.org/t/p/w1280/%s</thumbnail>"\
+				   "<fanart>https://image.tmdb.org/t/p/w1280/%s</fanart>"\
+				   "</dir>" % (name, imdb, imdb, title, year, poster_path, backdrop_path)
 	try:
 		next_page = re.compile(
 					'<a href="([^"]+)"\nclass="lister-page-next next-page" ref-marker=adv_nxt>Next &#187;</a>\n.+?</div>\n.+?<br class="clear" />', 
@@ -583,51 +682,92 @@ def imdbseries(url):
 		pass
 	jenlist = JenList(xml)
 	display_list(jenlist.get_list(), jenlist.get_content_type())
+	
 
-
-@route(mode='imdbseason', args=["url"])
-def imdbseason(url):
+@route(mode='imdbchart', args=["url"])
+def imdbchart(url):
 	xml = ""
-	url = url.replace("season/","title/")
 	url = 'http://www.imdb.com/' + url
 	listhtml = getHtml(url)
 	match = re.compile(
-			'href="/title/(.+?)/episodes.+?season=.+?&ref_=tt_eps_sn_.+?"\n>(.+?)</a>', 
+			'<a href="/title/(.+?)/.+?pf_rd_m=.+?pf_rd_i=.+?&ref_=.+?"\n> <img src="(.+?)" width=".+?" height=".+?"/>\n</a>.+?</td>\n.+?<td class="titleColumn">\n.+?\n.+?<a href=".+?"\ntitle=".+?" >(.+?)</a>\n.+?<span class="secondaryInfo">(.+?)</span>', 
 			re.IGNORECASE | re.DOTALL).findall(listhtml)
-	match2 = re.compile(
-			'<h4 class="float-left">Years</h4><hr />\n.+?</div>\n.+?<br class="clear" />\n.+?<div>\n.+?<a href="/title/(.+?)/episodes.+?season=.+?&ref_=tt_eps_sn_.+?"\n>(.+?)</a>&nbsp;&nbsp;', 
+	for imdb, thumbnail, title, year in match:
+		tmdb_url = 'http://api.themoviedb.org/3/find/' + imdb + '?api_key=30551812602b96050a36103b3de0163b&external_source=imdb_id'
+		tmdbhtml = requests.get(tmdb_url).content
+		Poster_path = re.compile(
+						'"backdrop_path":"(.+?)".+?"overview":".+?","poster_path":"(.+?)"}', 
+						re.DOTALL).findall(tmdbhtml)
+		for backdrop_path, poster_path in Poster_path:
+			name = title + " " + year
+			year = year.replace("(","").replace(")","")
+			xml += "<item>"\
+					"<title>%s</title>"\
+					"<meta>"\
+					"<content>movie</content>"\
+					"<imdb>%s</imdb>"\
+					"<title>%s</title>"\
+					"<year>%s</year>"\
+					"</meta>"\
+					"<link>"\
+					"<sublink>search</sublink>"\
+					"<sublink>searchsd</sublink>"\
+					"</link>"\
+					"<thumbnail>https://image.tmdb.org/t/p/w1280/%s</thumbnail>"\
+					"<fanart>https://image.tmdb.org/t/p/w1280/%s</fanart>"\
+					"</item>" % (name, imdb, title, year, poster_path, backdrop_path)
+		jenlist = JenList(xml)
+	display_list(jenlist.get_list(), jenlist.get_content_type())
+	
+
+@route(mode='imdbcharttv', args=["url"])
+def imdbcharttv(url):
+	xml = ""
+	url = url.replace("charttv/","chart/")
+	url = 'http://www.imdb.com/' + url
+	listhtml = getHtml(url)
+	match = re.compile(
+			'<a href="/title/(.+?)/.+?pf_rd_m=.+?pf_rd_i=.+?&ref_=.+?"\n> <img src="(.+?)" width=".+?" height=".+?"/>\n</a>.+?</td>\n.+?<td class="titleColumn">\n.+?\n.+?<a href=".+?"\ntitle=".+?" >(.+?)</a>\n.+?<span class="secondaryInfo">(.+?)</span>', 
 			re.IGNORECASE | re.DOTALL).findall(listhtml)
-	for imdb, season in match2:
-		thumbnail = re.compile(
-						'<img alt=".+?Poster" title=".+?Poster"\nsrc="(.+?)"', 
-						re.DOTALL | re.IGNORECASE).findall(listhtml)[0]
-		thumbnail = thumbnail.replace("@._V1_UY268_CR16,0,182,268_AL_.jpg","@._V1_UX520_CR0,0,520,700_AL_.jpg")
-		episodeURL = 'http://www.imdb.com/title/' + imdb + '/episodes?season=' + season
-		name = "Season: [COLOR dodgerblue]" + season + "[/COLOR]"
-		xml +=  "<dir>"\
-				"<title>%s</title>"\
-				"<meta>"\
-				"<content>season</content>"\
-				"<imdb>%s</imdb>"\
-				"<imdburl>theepisodeTwo/%s</imdburl>"\
-				"<tvdb></tvdb>"\
-				"<tvshowtitle></tvshowtitle>"\
-				"<year></year>"\
-				"<season>%s</season>"\
-				"</meta>"\
-				"<link></link>"\
-				"<thumbnail>%s</thumbnail>"\
-				"<fanart></fanart>"\
-				"</dir>" % (name, imdb, episodeURL, season, thumbnail)
-	for imdb, season in match:
-		if 'fallback' in imdb:
-			pass
-		else:
-			thumbnail = re.compile(
-						'<img alt=".+?Poster" title=".+?Poster"\nsrc="(.+?)"', 
-						re.DOTALL | re.IGNORECASE).findall(listhtml)[0]
-			thumbnail = thumbnail.replace("@._V1_UY268_CR16,0,182,268_AL_.jpg","@._V1_UX520_CR0,0,520,700_AL_.jpg")
-			episodeURL = 'http://www.imdb.com/title/' + imdb + '/episodes?season=' + season
+	for imdb, thumbnail, title, year in match:
+		tmdb_url = 'http://api.themoviedb.org/3/find/' + imdb + '?api_key=30551812602b96050a36103b3de0163b&external_source=imdb_id'
+		tmdbhtml = requests.get(tmdb_url).content
+		Poster_path = re.compile(
+					'"poster_path":"(.+?)".+?"backdrop_path":"(.+?)"', 
+					re.DOTALL).findall(tmdbhtml)
+		for poster_path, backdrop_path in Poster_path:
+			name = title + " " + year
+			year = year.replace("(","").replace(")","")
+			xml += "<dir>"\
+				   "<title>%s</title>"\
+				   "<meta>"\
+				   "<content>tvshow</content>"\
+				   "<imdb>%s</imdb>"\
+				   "<imdburl>season/%s</imdburl>"\
+				   "<tvdb></tvdb>"\
+				   "<tvshowtitle>%s</tvshowtitle>"\
+				   "<year>%s</year>"\
+				   "</meta>"\
+				   "<link></link>"\
+				   "<thumbnail>https://image.tmdb.org/t/p/w1280/%s</thumbnail>"\
+					"<fanart>https://image.tmdb.org/t/p/w1280/%s</fanart>"\
+				   "</dir>" % (name, imdb, imdb, title, year, poster_path, backdrop_path)
+	jenlist = JenList(xml)
+	display_list(jenlist.get_list(), jenlist.get_content_type())
+	
+	
+@route(mode='imdbseason', args=["url"])
+def imdbseason(url):
+	xml = ""
+	url = url.replace("season/","")
+	imdb = url
+	url = 'http://www.imdb.com/title/' + imdb
+	listhtml = getHtml(url)
+	match = re.compile(
+			'href="/title/'+imdb+'/episodes.+?season=.+?&ref_=tt_eps_sn_.+?"\n>(.+?)</a>', 
+			re.IGNORECASE | re.DOTALL).findall(listhtml)
+	for season in match:
+			episodeURL = 'http://www.imdb.com/title/' + imdb + "/episodes?season=" + season
 			name = "Season: [COLOR dodgerblue]" + season + "[/COLOR]"
 			xml +=  "<dir>"\
 					"<title>%s</title>"\
@@ -641,9 +781,9 @@ def imdbseason(url):
 					"<season>%s</season>"\
 					"</meta>"\
 					"<link></link>"\
-					"<thumbnail>%s</thumbnail>"\
+					"<thumbnail></thumbnail>"\
 					"<fanart></fanart>"\
-					"</dir>" % (name, imdb, episodeURL, season, thumbnail)
+					"</dir>" % (name, imdb, episodeURL, season)
 	jenlist = JenList(xml)
 	display_list(jenlist.get_list(), jenlist.get_content_type())
 
@@ -685,25 +825,18 @@ def imdbepisode(url):
 					"<thumbnail>%s</thumbnail>"\
 					"<fanart></fanart>"\
 					"</item>" % (name, imdb, tvshowtitle, Year, title, premiered, season, episode, thumbnail)
-	jenlist = JenList(xml)
-	display_list(jenlist.get_list(), jenlist.get_content_type())
-
-@route(mode='imdbepisodeTwo', args=["url"])
-def imdbepisodeTwo(url):
-	xml = ""
-	url = url.replace("theepisodeTwo/","")
-	listhtml = getHtml(url)	
-	match = re.compile(
-			'<a href="/title/(.+?)/.+?ref_=ttep_ep.+?"\ntitle="Episode #([^"]+).+?([^"]+)" itemprop="url">', 
-			re.IGNORECASE | re.DOTALL).findall(listhtml)
-	for imdb, season, episode in match:
+	if not match:
+		match = re.compile(
+				'<a href="/title/(.+?)/.+?ref_=ttep_ep.+?"\ntitle="(.+?)" itemprop="url"> <div data-const=".+?" class="hover-over-image zero-z-index no-ep-poster">\n<a href=".+?"\nonclick=".+?" class="add-image" > <span class="add-image-container episode-list" style="width:200px;height:112px">\n<span class="add-image-icon episode-list" />\n<span class="add-image-text episode-list">Add Image</span>\n</span>\n</a> <div>S(.+?), Ep(.+?)</div>\n</div>', 
+				re.IGNORECASE | re.DOTALL).findall(listhtml)
+		for imdb, title, season, episode in match:
 				tvshowtitle = re.compile(
-								'<h3 itemprop="name">\n<a href="/title/.+?/.+?ref_=ttep_ep_tt"\nitemprop=.+?>(.+?)</a>', 
-								re.DOTALL | re.IGNORECASE).findall(listhtml)[0]
+							'<h3 itemprop="name">\n<a href="/title/.+?/.+?ref_=ttep_ep_tt"\nitemprop=.+?>(.+?)</a>', 
+							re.DOTALL | re.IGNORECASE).findall(listhtml)[0]
 				Year = re.compile(
-								'<meta itemprop="name" content=".+?TV Series ([^"]+).+? .+?"/>', 
-								re.DOTALL | re.IGNORECASE).findall(listhtml)[0]
-				name = "[COLOR yellow]Episode: " + season + "[/COLOR]"
+							'<meta itemprop="name" content=".+?TV Series ([^"]+).+? .+?"/>', 
+							re.DOTALL | re.IGNORECASE).findall(listhtml)[0]
+				name = "[B][COLOR yellow]%s[/COLOR][/B]" % (title)
 				xml +=  "<item>"\
 						"<title>%s</title>"\
 						"<meta>"\
@@ -712,7 +845,7 @@ def imdbepisodeTwo(url):
 						"<tvdb></tvdb>"\
 						"<tvshowtitle>%s</tvshowtitle>"\
 						"<year>%s</year>"\
-						"<title></title>"\
+						"<title>%s</title>"\
 						"<premiered></premiered>"\
 						"<season>%s</season>"\
 						"<episode>%s</episode>"\
@@ -723,42 +856,100 @@ def imdbepisodeTwo(url):
 						"</link>"\
 						"<thumbnail>https://image.ibb.co/ew7xZG/not_Aired_Yet.png</thumbnail>"\
 						"<fanart></fanart>"\
-						"</item>" % (name, imdb, tvshowtitle, Year, season, episode)
+						"</item>" % (name, imdb, tvshowtitle, Year, title, season, episode)		
 	jenlist = JenList(xml)
 	display_list(jenlist.get_list(), jenlist.get_content_type())
 
 	
-@route(mode='imdblists', args=["url"])
-def imdblists(url):
+@route(mode='imdbuser', args=["url"])
+def imdbuser(url):
 	xml = ""
 	link = 'http://www.imdb.com/' + url
 	listhtml = getHtml(link)
 	match = re.compile(
-			'<img alt=".+?"\nclass="loadlate"\nloadlate="(.+?)"\ndata-tconst="(.+?)"\nheight="209"\nsrc=".+?"\nwidth="140" />\n</a>.+?</div>\n.+?<div class="lister-item-content">\n<h3 class="lister-item-header">\n.+?<span class="lister-item-index unbold text-primary">.+?</span>\n.+?\n.+?<a href=".+?"\n>(.+?)</a>\n.+?<span class="lister-item-year text-muted unbold">(.+?)</span>', 
+			'<a class="list-name" href="(.+?)">(.+?)</a>', 
+			re.IGNORECASE | re.DOTALL).findall(listhtml)
+	for url, name in match:
+		xml += "<dir>"\
+			   "<title>%s</title>"\
+			   "<imdburl>%s</imdburl>"\
+			   "<thumbnail>https://image.ibb.co/fR6AOm/download.jpg</thumbnail>"\
+			   "</dir>" % (name, url)
+	jenlist = JenList(xml)
+	display_list(jenlist.get_list(), jenlist.get_content_type())
+			   
+@route(mode='imdblists', args=["url"])
+def imdblists(url):
+	xml = ""
+	link = 'http://www.imdb.com/' + url
+	listhtml = requests.get(link).content
+	match = re.compile(
+			'<img alt=".+?"\nclass="loadlate"\n.+?"([^"]+)"\ndata-tconst="([^"]+)"\n.+?\nsrc=".+?"\n.+?\n</a>.+?</div>\n.+?".+?">\n.+?".+?">\n.+?".+?">.+?</span>\n.+?\n.+?.+?\n>(.+?)</a>\n.+?".+?">([^"]+)</span>\n</h3>', 
 			re.IGNORECASE | re.DOTALL).findall(listhtml)
 	for thumbnail, imdb, title, year in match:
-		name = title + " " + year
-		year = year.replace("(","").replace(")","")
-		thumbnail = thumbnail.replace("@._V1_UY209_CR3,0,140,209_AL_.jpg","@._V1_UX520_CR0,0,520,700_AL_.jpg")
-		xml += "<item>"\
-				"<title>%s</title>"\
-				"<meta>"\
-				"<content>movie</content>"\
-				"<imdb>%s</imdb>"\
-				"<title>%s</title>"\
-				"<year>%s</year>"\
-				"</meta>"\
-				"<link>"\
-				"<sublink>search</sublink>"\
-				"<sublink>searchsd</sublink>"\
-				"</link>"\
-				"<thumbnail>%s</thumbnail>"\
-				"<fanart></fanart>"\
-				"</item>" % (name, imdb, title, year, thumbnail)
+			if len(year) >= 8:
+				tmdb_url = 'http://api.themoviedb.org/3/find/' + imdb + '?api_key=30551812602b96050a36103b3de0163b&external_source=imdb_id'
+				tmdbhtml = requests.get(tmdb_url).content
+				Poster_path = re.compile(
+							'"poster_path":"(.+?)".+?"backdrop_path":"(.+?)"', 
+							re.DOTALL).findall(tmdbhtml)
+				for poster_path, backdrop_path in Poster_path:
+					name = title + " " + year
+					year = year.replace("(","").replace(")","")
+					xml += "<dir>"\
+						   "<title>%s</title>"\
+						   "<meta>"\
+						   "<content>tvshow</content>"\
+						   "<imdb>%s</imdb>"\
+						   "<imdburl>season/%s</imdburl>"\
+						   "<tvdb></tvdb>"\
+						   "<tvshowtitle>%s</tvshowtitle>"\
+						   "<year>%s</year>"\
+						   "</meta>"\
+						   "<link></link>"\
+						   "<thumbnail>https://image.tmdb.org/t/p/w1280/%s</thumbnail>"\
+						   "<fanart>https://image.tmdb.org/t/p/w1280/%s</fanart>"\
+						   "</dir>" % (name, imdb, imdb, title, year, poster_path, backdrop_path)
+			else:
+				tmdb_url = 'http://api.themoviedb.org/3/find/' + imdb + '?api_key=30551812602b96050a36103b3de0163b&external_source=imdb_id'
+				tmdbhtml = requests.get(tmdb_url).content
+				Poster_path = re.compile(
+								'"backdrop_path":"(.+?)".+?"overview":".+?","poster_path":"(.+?)"}', 
+								re.DOTALL).findall(tmdbhtml)
+				for backdrop_path, poster_path in Poster_path:
+					name = title + " " + year
+					year = year.replace("(","").replace(")","")
+					xml += "<item>"\
+							"<title>%s</title>"\
+							"<meta>"\
+							"<content>movie</content>"\
+							"<imdb>%s</imdb>"\
+							"<title>%s</title>"\
+							"<year>%s</year>"\
+							"</meta>"\
+							"<link>"\
+							"<sublink>search</sublink>"\
+							"<sublink>searchsd</sublink>"\
+							"</link>"\
+							"<thumbnail>https://image.tmdb.org/t/p/w1280/%s</thumbnail>"\
+							"<fanart>https://image.tmdb.org/t/p/w1280/%s</fanart>"\
+							"</item>" % (name, imdb, title, year, poster_path, backdrop_path)
+	try:
+		next_page = re.compile(
+					'<a class=".+?next-page" href="(.+?)">', 
+					re.DOTALL | re.IGNORECASE).findall(listhtml)[0]
+		xml += "<dir>"\
+			   "<title>[COLOR dodgerblue]Next Page >>[/COLOR]</title>"\
+			   "<imdburl>%s</imdburl>"\
+			   "<thumbnail>https://image.ibb.co/gtsNjw/next.png</thumbnail>"\
+			   "</dir>" % (next_page)
+	except:
+		pass
 	jenlist = JenList(xml)
 	display_list(jenlist.get_list(), jenlist.get_content_type())
 	
-
+			
+				
 @route(mode='imdbyears', args=["url"])
 def imdbyears(url):
 	xml = ""
@@ -769,24 +960,30 @@ def imdbyears(url):
 			'<img alt=".+?"\nclass="loadlate"\nloadlate="(.+?)"\ndata-tconst="(.+?)"\nheight="98"\nsrc=".+?"\nwidth="67" />\n</a>.+?</div>\n.+?<div class="lister-item-content">\n<h3 class="lister-item-header">\n.+?<span class="lister-item-index unbold text-primary">.+?</span>\n.+?\n.+?<a href=".+?"\n>(.+?)</a>\n.+?<span class="lister-item-year text-muted unbold">(.+?)</span>', 
 			re.IGNORECASE | re.DOTALL).findall(listhtml)
 	for thumbnail, imdb, title, year in match:
-		name = title + " " + year
-		year = year.replace("(","").replace(")","")
-		thumbnail = thumbnail.replace("@._V1_UX67_CR0,0,67,98_AL_.jpg","@._V1_UX520_CR0,0,520,700_AL_.jpg")
-		xml += "<item>"\
-				"<title>%s</title>"\
-				"<meta>"\
-				"<content>movie</content>"\
-				"<imdb>%s</imdb>"\
-				"<title>%s</title>"\
-				"<year>%s</year>"\
-				"</meta>"\
-				"<link>"\
-				"<sublink>search</sublink>"\
-				"<sublink>searchsd</sublink>"\
-				"</link>"\
-				"<thumbnail>%s</thumbnail>"\
-				"<fanart></fanart>"\
-				"</item>" % (name, imdb, title, year, thumbnail)
+		tmdb_url = 'http://api.themoviedb.org/3/find/' + imdb + '?api_key=30551812602b96050a36103b3de0163b&external_source=imdb_id'
+		tmdbhtml = requests.get(tmdb_url).content
+		Poster_path = re.compile(
+						'"backdrop_path":"(.+?)".+?"overview":".+?","poster_path":"(.+?)"}', 
+						re.DOTALL).findall(tmdbhtml)
+		for backdrop_path, poster_path in Poster_path:
+			name = title + " " + year
+			year = year.replace("(","").replace(")","")
+			thumbnail = thumbnail.replace("@._V1_UX67_CR0,0,67,98_AL_.jpg","@._V1_SY1000_SX800_AL_.jpg")
+			xml += "<item>"\
+					"<title>%s</title>"\
+					"<meta>"\
+					"<content>movie</content>"\
+					"<imdb>%s</imdb>"\
+					"<title>%s</title>"\
+					"<year>%s</year>"\
+					"</meta>"\
+					"<link>"\
+					"<sublink>search</sublink>"\
+					"<sublink>searchsd</sublink>"\
+					"</link>"\
+					"<thumbnail>https://image.tmdb.org/t/p/w1280/%s</thumbnail>"\
+					"<fanart>https://image.tmdb.org/t/p/w1280/%s</fanart>"\
+					"</item>" % (name, imdb, title, year, poster_path, backdrop_path)
 	next_page = re.compile(
 				'<a href="([^"]+)"\nclass="lister-page-next next-page" ref-marker=adv_nxt>Next &#187;</a>\n.+?</div>\n.+?<br class="clear" />', 
 				re.DOTALL | re.IGNORECASE).findall(listhtml)[0]
@@ -808,23 +1005,28 @@ def imdbyearstv(url):
 			'<img alt=".+?"\nclass="loadlate"\nloadlate="(.+?)"\ndata-tconst="(.+?)"\nheight="98"\nsrc=".+?"\nwidth="67" />\n</a>.+?</div>\n.+?<div class="lister-item-content">\n<h3 class="lister-item-header">\n.+?<span class="lister-item-index unbold text-primary">.+?</span>\n.+?\n.+?<a href=".+?"\n>(.+?)</a>\n.+?<span class="lister-item-year text-muted unbold">(.+?)</span>', 
 			re.IGNORECASE | re.DOTALL).findall(listhtml)
 	for thumbnail, imdb, title, year in match:
-		name = title + " " + year
-		year = year.replace("(","").replace(")","")
-		thumbnail = thumbnail.replace("@._V1_UX67_CR0,0,67,98_AL_.jpg","@._V1_UX520_CR0,0,520,700_AL_.jpg")
-		xml += "<dir>"\
-			   "<title>%s</title>"\
-			   "<meta>"\
-			   "<content>tvshow</content>"\
-			   "<imdb>%s</imdb>"\
-			   "<imdburl>season/%s</imdburl>"\
-			   "<tvdb></tvdb>"\
-			   "<tvshowtitle>%s</tvshowtitle>"\
-			   "<year>%s</year>"\
-			   "</meta>"\
-			   "<link></link>"\
-			   "<thumbnail>%s</thumbnail>"\
-			   "<fanart></fanart>"\
-			   "</dir>" % (name, imdb, imdb, title, year, thumbnail)
+		tmdb_url = 'http://api.themoviedb.org/3/find/' + imdb + '?api_key=30551812602b96050a36103b3de0163b&external_source=imdb_id'
+		tmdbhtml = requests.get(tmdb_url).content
+		Poster_path = re.compile(
+					'"poster_path":"(.+?)".+?"backdrop_path":"(.+?)"', 
+					re.DOTALL).findall(tmdbhtml)
+		for poster_path, backdrop_path in Poster_path:
+			name = title + " " + year
+			year = year.replace("(","").replace(")","")
+			xml += "<dir>"\
+				   "<title>%s</title>"\
+				   "<meta>"\
+				   "<content>tvshow</content>"\
+				   "<imdb>%s</imdb>"\
+				   "<imdburl>season/%s</imdburl>"\
+				   "<tvdb></tvdb>"\
+				   "<tvshowtitle>%s</tvshowtitle>"\
+				   "<year>%s</year>"\
+				   "</meta>"\
+				   "<link></link>"\
+				   "<thumbnail>https://image.tmdb.org/t/p/w1280/%s</thumbnail>"\
+				   "<fanart>https://image.tmdb.org/t/p/w1280/%s</fanart>"\
+				   "</dir>" % (name, imdb, imdb, title, year, poster_path, backdrop_path)
 	next_page = re.compile(
 				'<a href="([^"]+)"\nclass="lister-page-next next-page" ref-marker=adv_nxt>Next &#187;</a>\n.+?</div>\n.+?<br class="clear" />', 
 				re.DOTALL | re.IGNORECASE).findall(listhtml)[0]
@@ -841,30 +1043,35 @@ def imdbyearstv(url):
 def imdbgenres(url):
 	xml = ""
 	url = url.replace("genres/","")
-	url = 'http://www.imdb.com/search/title?genres=' + url + '&explore=title_type,genres&title_type=tvMovie&ref_=adv_explore_rhs'
+	url = 'http://www.imdb.com/search/title?genres=' + url + '&explore=title_type,genres&title_type=Movie'
 	listhtml = getHtml(url)
 	match = re.compile(
 			'<img alt=".+?"\nclass="loadlate"\nloadlate="(.+?)"\ndata-tconst="(.+?)"\nheight="98"\nsrc=".+?"\nwidth="67" />\n</a>.+?</div>\n.+?<div class="lister-item-content">\n<h3 class="lister-item-header">\n.+?<span class="lister-item-index unbold text-primary">.+?</span>\n.+?\n.+?<a href=".+?"\n>(.+?)</a>\n.+?<span class="lister-item-year text-muted unbold">(.+?)</span>', 
 			re.IGNORECASE | re.DOTALL).findall(listhtml)
 	for thumbnail, imdb, title, year in match:
-		name = title + " " + year
-		year = year.replace("(","").replace(")","").replace(" TV Movie","")
-		thumbnail = thumbnail.replace("@._V1_UX67_CR0,0,67,98_AL_.jpg","@._V1_UX520_CR0,0,520,700_AL_.jpg")
-		xml += "<item>"\
-				"<title>%s</title>"\
-				"<meta>"\
-				"<content>movie</content>"\
-				"<imdb>%s</imdb>"\
-				"<title>%s</title>"\
-				"<year>%s</year>"\
-				"</meta>"\
-				"<link>"\
-				"<sublink>search</sublink>"\
-				"<sublink>searchsd</sublink>"\
-				"</link>"\
-				"<thumbnail>%s</thumbnail>"\
-				"<fanart></fanart>"\
-				"</item>" % (name, imdb, title, year, thumbnail)
+		tmdb_url = 'http://api.themoviedb.org/3/find/' + imdb + '?api_key=30551812602b96050a36103b3de0163b&external_source=imdb_id'
+		tmdbhtml = requests.get(tmdb_url).content
+		Poster_path = re.compile(
+					'"backdrop_path":"(.+?)".+?"overview":".+?","poster_path":"(.+?)"}', 
+					re.DOTALL).findall(tmdbhtml)
+		for backdrop_path, poster_path in Poster_path:		
+			name = title + " " + year
+			year = year.replace("(","").replace(")","").replace(" TV Movie","")
+			xml += "<item>"\
+					"<title>%s</title>"\
+					"<meta>"\
+					"<content>movie</content>"\
+					"<imdb>%s</imdb>"\
+					"<title>%s</title>"\
+					"<year>%s</year>"\
+					"</meta>"\
+					"<link>"\
+					"<sublink>search</sublink>"\
+					"<sublink>searchsd</sublink>"\
+					"</link>"\
+					"<thumbnail>https://image.tmdb.org/t/p/w1280/%s</thumbnail>"\
+					"<fanart>https://image.tmdb.org/t/p/w1280/%s</fanart>"\
+					"</item>" % (name, imdb, title, year, poster_path, backdrop_path)
 	next_page = re.compile(
 				'<a href="([^"]+)"\nclass="lister-page-next next-page" ref-marker=adv_nxt>Next &#187;</a>\n.+?</div>\n.+?<br class="clear" />', 
 				re.DOTALL | re.IGNORECASE).findall(listhtml)[0]
@@ -889,7 +1096,7 @@ def imdbgenrestv(url):
 	for thumbnail, imdb, title, year in match:
 		name = title + " " + year
 		year = year.replace("(","").replace(")","")
-		thumbnail = thumbnail.replace("@._V1_UX67_CR0,0,67,98_AL_.jpg","@._V1_UX520_CR0,0,520,700_AL_.jpg")
+		thumbnail = thumbnail.replace("@._V1_UX67_CR0,0,67,98_AL_.jpg","@._V1_SY1000_SX800_AL_.jpg")
 		xml += "<dir>"\
 			   "<title>%s</title>"\
 			   "<meta>"\
@@ -927,7 +1134,7 @@ def imdbactors(url):
 			'<img alt=".+?"\nheight="209"\nsrc="(.+?)"\nwidth="140" />\n</a>.+?</div>\n.+?<div class="lister-item-content">\n.+?<h3 class="lister-item-header">\n.+?<span class="lister-item-index unbold text-primary">.+?</span>\n<a href="/name/(.+?)"\n>(.+?)\n</a>', 
 			re.IGNORECASE | re.DOTALL).findall(listhtml)
 	for thumbnail, imdb, name in match:
-		thumbnail = thumbnail.replace("@._V1_UY209_CR10,0,140,209_AL_.jpg","@._V1_UX520_CR0,0,520,700_AL_.jpg")
+		thumbnail = thumbnail.replace("@._V1_UY209_CR10,0,140,209_AL_.jpg","@._V1_SY1000_SX800_AL_.jpg")
 		thumbnail = thumbnail.replace("._V1_UY209_CR5,0,140,209_AL_.jpg","._V1_UX520_CR0,0,520,700_AL_.jpg")
 		xml += "<dir>"\
 			   "<title>%s</title>"\
@@ -978,80 +1185,17 @@ def imdbactorspage(url):
 	display_list(jenlist.get_list(), jenlist.get_content_type())	
 
 
-@route(mode='imdbchart', args=["url"])
-def imdbchart(url):
-	xml = ""
-	url = 'http://www.imdb.com/' + url
-	listhtml = getHtml(url)
-	match = re.compile(
-			'<a href="/title/(.+?)/.+?pf_rd_m=.+?pf_rd_i=.+?&ref_=.+?"\n> <img src="(.+?)" width=".+?" height=".+?"/>\n</a>.+?</td>\n.+?<td class="titleColumn">\n.+?\n.+?<a href=".+?"\ntitle=".+?" >(.+?)</a>\n.+?<span class="secondaryInfo">(.+?)</span>', 
-			re.IGNORECASE | re.DOTALL).findall(listhtml)
-	for imdb, thumbnail, title, year in match:
-		name = title + " " + year
-		year = year.replace("(","").replace(")","")
-		thumbnail = thumbnail.replace("@._V1_UY67_CR0,0,45,67_AL_.jpg","@._V1_UX520_CR0,0,520,700_AL_.jpg")
-		xml += "<item>"\
-				"<title>%s</title>"\
-				"<meta>"\
-				"<content>movie</content>"\
-				"<imdb>%s</imdb>"\
-				"<title>%s</title>"\
-				"<year>%s</year>"\
-				"</meta>"\
-				"<link>"\
-				"<sublink>search</sublink>"\
-				"<sublink>searchsd</sublink>"\
-				"</link>"\
-				"<thumbnail>%s</thumbnail>"\
-				"<fanart></fanart>"\
-				"</item>" % (name, imdb, title, year, thumbnail)
-	jenlist = JenList(xml)
-	display_list(jenlist.get_list(), jenlist.get_content_type())
-
-
-@route(mode='imdbcharttv', args=["url"])
-def imdbcharttv(url):
-	xml = ""
-	url = url.replace("charttv/","chart/")
-	url = 'http://www.imdb.com/' + url
-	listhtml = getHtml(url)
-	match = re.compile(
-			'<a href="/title/(.+?)/.+?pf_rd_m=.+?pf_rd_i=.+?&ref_=.+?"\n> <img src="(.+?)" width=".+?" height=".+?"/>\n</a>.+?</td>\n.+?<td class="titleColumn">\n.+?\n.+?<a href=".+?"\ntitle=".+?" >(.+?)</a>\n.+?<span class="secondaryInfo">(.+?)</span>', 
-			re.IGNORECASE | re.DOTALL).findall(listhtml)
-	for imdb, thumbnail, title, year in match:
-		name = title + " " + year
-		year = year.replace("(","").replace(")","")
-		thumbnail = thumbnail.replace("@._V1_UY67_CR0,0,45,67_AL_.jpg","@._V1_UX520_CR0,0,520,700_AL_.jpg")
-		xml += "<dir>"\
-			   "<title>%s</title>"\
-			   "<meta>"\
-			   "<content>tvshow</content>"\
-			   "<imdb>%s</imdb>"\
-			   "<imdburl>season/%s</imdburl>"\
-			   "<tvdb></tvdb>"\
-			   "<tvshowtitle>%s</tvshowtitle>"\
-			   "<year>%s</year>"\
-			   "</meta>"\
-			   "<link></link>"\
-			   "<thumbnail>%s</thumbnail>"\
-			   "<fanart></fanart>"\
-			   "</dir>" % (name, imdb, imdb, title, year, thumbnail)
-	jenlist = JenList(xml)
-	display_list(jenlist.get_list(), jenlist.get_content_type())
-
-
 @route(mode='imdbNextPage', args=["url"])
 def imdbNextPage(url):
 	xml = ""
-	link = url
-	listhtml = getHtml(link)
+	listhtml = getHtml(url)
 	match = re.compile(
-			'<img alt=".+?"\nclass="loadlate"\nloadlate="(.+?)"\ndata-tconst="(.+?)"\nheight="98"\nsrc=".+?"\nwidth="67" />\n</a>.+?</div>\n.+?<div class="lister-item-content">\n<h3 class="lister-item-header">\n.+?<span class="lister-item-index unbold text-primary">.+?</span>\n.+?\n.+?<a href=".+?"\n>(.+?)</a>\n.+?<span class="lister-item-year text-muted unbold">(.+?)</span>',
+			'<img alt=".+?"\nclass="loadlate"\nloadlate="(.+?)"\ndata-tconst="(.+?)"\nheight=".+?"\nsrc=".+?"\nwidth=".+?" />\n</a>.+?</div>\n.+?<div class="lister-item-content">\n<h3 class="lister-item-header">\n.+?<span class="lister-item-index unbold text-primary">.+?</span>\n.+?\n.+?<a href=".+?"\n>(.+?)</a>\n.+?<span class="lister-item-year text-muted unbold">(.+?)</span>',
 			re.IGNORECASE | re.DOTALL).findall(listhtml)
 	for thumbnail, imdb, title, year in match:
 		name = title + " " + year
 		year = year.replace("(","").replace(")","")
-		thumbnail = thumbnail.replace("@._V1_UX67_CR0,0,67,98_AL_.jpg","@._V1_UX520_CR0,0,520,700_AL_.jpg")
+		thumbnail = thumbnail.replace("@._V1_UX67_CR0,0,67,98_AL_.jpg","@._V1_SY1000_SX800_AL_.jpg")
 		xml += "<item>"\
 				"<title>%s</title>"\
 				"<meta>"\
