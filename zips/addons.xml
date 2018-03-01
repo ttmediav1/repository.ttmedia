@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addons>
-<addon id="plugin.program.ttmediawizard" name="[COLORlime]TTMedia Wizard[/COLOR]" version="2.8" provider-name="[COLORred]TTMedia[/COLOR]">
+<addon id="plugin.program.ttmediawizard" name="[COLORlime]TTMedia Wizard[/COLOR]" version="2.9" provider-name="[COLORred]TTMedia[/COLOR]">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
@@ -111,7 +111,7 @@
     </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="TTMedia Repository" version="1.0.3" provider-name="TTMedia">
+<addon id="repository.ttmedia" name="TTMedia Repository" version="1.0.4" provider-name="TTMedia">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 		<dir>
         <info compressed="false">http://teamuniversal.xyz/modules4all/addons.xml</info>
