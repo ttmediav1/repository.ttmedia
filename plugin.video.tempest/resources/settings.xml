@@ -60,6 +60,8 @@
     <!-- login - future features for playlisters -->
     <category label="30770">
       <!-- debugging and developer options -->
+	  <setting id="news_win" type="bool" label="Enable News Dialog" default="false" visible="true"/>
+	  <setting id="dlimage" type="bool" label="Enable Image Downloader" default="false" visible="true"/>
       <setting id="debug" type="bool" label="30758" default="false" visible="true"/>
       <setting id="first_run" label="first run" type="bool" default="false" visible="false"/>
       <setting label="Cache Location" id="cache_folder" type="folder" default="special://profile/addon_data/plugin.video.tempest/"/>
