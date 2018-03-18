@@ -1,6 +1,6 @@
 """
     lastfm.py --- Jen Plugin for accessing lastfm data
-    Copyright (C) 2017, Jen
+    Copyright (C) 2017
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -14,6 +14,30 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+    Usage Examples:
+
+    <dir>
+    <title>Muse Tracks</title>
+    <lastfm>artist/muse/tracks</lastfm>
+    </dir>
+
+    <dir>
+    <title>ZZ Top Albums</title>
+    <lastfm>artist/zz_top/albums</lastfm>
+    </dir>
+
+    <dir>
+    <title>Search Artist</title>
+    <lastfm>search/artist</lastfm>
+    </dir>
+
+    <dir>
+    <title>Search Album</title>
+    <lastfm>search/album</lastfm>
+    </dir>
+
 """
 
 import __builtin__
@@ -21,9 +45,9 @@ import pickle
 import time
 import urllib
 import urlparse
-
+import json
 import requests
-
+import re
 import koding
 import xbmc
 import xbmcaddon
@@ -122,44 +146,63 @@ def lastfm(url):
             req_url += "?method=tag.gettopalbums&tag=%s" % tag
             response_key = "albums"
             __builtin__.content_type = "albums"
-    req_url += "&api_key=%s&format=json" % LASTFM_API_KEY
+    elif url.startswith("search"):
+        splitted = url.split("/")
+        if splitted[-1] == "artist":
+            term = koding.Keyboard("Search For Artist")
+            response_key = "results"
+            req_url += "?method=artist.search&artist=%s" % term
+        elif splitted[-1] == "album":
+            term = koding.Keyboard("Search For Album")
+            response_key = "results"
+            req_url += "?method=album.search&album=%s" % term
+
+    req_url += "&api_key=%s&format=json" % LASTFM_API_KEY 
     last = url.split("/")[-1]
     if last.isdigit():
         req_url += "&page=%s" % last
 
-    xml = fetch_from_db(url)
-    if not xml:
-        xml = ""
-        response = requests.get(req_url)
-        response = response.json()
+    # xml = fetch_from_db(url)
+    # if not xml:
+    xml = ""
+    response = requests.get(req_url)
+    response = response.json()
+    if response_key:
+        response = response[response_key]
+    for key in response:
+        if key == "album":
+            for album in response["album"]:
+                xml += get_album_xml(album)
+        elif key == "tracks":
+            images = response["image"]
+            try:
+                image = images[-1]["#text"]
+            except Exception:
+                image = ""
+            for track in response["tracks"]["track"]:
+                xml += get_track_xml(track, image)
+        elif key == "track":
+            for track in response["track"]:
+                xml += get_track_xml(track)
+        elif key == "artist" and "artist" in url:
+            for artist in response["artist"]:
+                xml += get_artist_xml(artist)
+        elif key == "tag":
+            for tag in response["tag"]:
+                xml += get_tag_xml(tag)
+        elif key == "artistmatches":
+            matches = response['artistmatches']
+            for artist in matches['artist']:
+                xml += get_artist_xml(artist)
+        elif key == "albummatches":
+            matches = response['albummatches']
+            for album in matches['album']:
+                xml += get_search_album_xml(album)
+    try:  
 
-        if response_key:
-            response = response[response_key]
-
-        for key in response:
-            if key == "album":
-                for album in response["album"]:
-                    xml += get_album_xml(album)
-            elif key == "tracks":
-                images = response["image"]
-                try:
-                    image = images[-1]["#text"]
-                except Exception:
-                    image = ""
-                for track in response["tracks"]["track"]:
-                    xml += get_track_xml(track, image)
-            elif key == "track":
-                for track in response["track"]:
-                    xml += get_track_xml(track)
-            elif key == "artist" and "artist" in url:
-                for artist in response["artist"]:
-                    xml += get_artist_xml(artist)
-            elif key == "tag":
-                for tag in response["tag"]:
-                    xml += get_tag_xml(tag)
-
-        if "@attr" in response:
+        if "@attr" in response:    
             pages = int(response["@attr"]["totalPages"])
+
         else:
             pages = 1
         if pages > 1:
@@ -177,8 +220,11 @@ def lastfm(url):
                        "\t<summary>Go To Page %s</summary>\n"\
                        "</dir>" % (next_url, current_page + 1)
 
-        xml = remove_non_ascii(xml)
-        save_to_db(xml, url)
+    except:
+        pass
+
+    xml = remove_non_ascii(xml)
+    #save_to_db(xml, url)
 
     jenlist = JenList(xml)
     display_list(jenlist.get_list(), __builtin__.content_type)
@@ -205,6 +251,26 @@ def get_album_xml(album):
            "</dir>\n\n" % (album_title, url, image)
     return xml
 
+def get_search_album_xml(album):
+    xml = ""
+    album_title = album["name"]
+    artist_name = album["artist"]
+    images = album["image"]
+    try:
+        image = images[-1]["#text"]
+    except Exception:
+        image = ""
+    url = "album/%s/%s/tracks" % (artist_name, album_title)
+
+    xml += "<dir>\n"\
+           "\t<title>%s - %s</title>\n"\
+           "\t<meta>\n"\
+           "\t\t<content>album<content>\n"\
+           "\t</meta>"\
+           "\t<lastfm>%s</lastfm>\n"\
+           "\t<thumbnail>%s</thumbnail>"\
+           "</dir>\n\n" % (album_title, artist_name, url, image)
+    return xml    
 
 def get_track_xml(track, image=None):
     xml = ""
@@ -238,7 +304,7 @@ def get_track_xml(track, image=None):
 def get_artist_xml(artist):
     xml = ""
     name = artist["name"]
-    url = "artist/%s/tracks" % (name)
+    url = "artist/%s/albums" % (name)
     try:
         images = artist["image"]
         image = images[-1]["#text"]
