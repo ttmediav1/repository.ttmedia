@@ -189,43 +189,130 @@ def new_releases(url):
         call = "page13"
         
     for link5,link4,tmdb,link1,link3,link2,title,year in page_num:
-        if "-*-" in link5:
-            link5 = link5.replace("-*-","")
-        if "-*-" in link4:
-            link4 = link4.replace("-*-","")
-        if "-*-" in link3:
-            link3 = link3.replace("-*-","")
         if "-*-" in link2:
-            link2 = link2.replace("-*-","")   
-        (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
-        title = remove_non_ascii(title)
-        summary = remove_non_ascii(summary)                    
-        xml += "<item>"\
-                "<title>%s</title>"\
-                "<meta>"\
-                "<content>movie</content>"\
-                "<imdb>%s</imdb>"\
-                "<title>%s</title>"\
-                "<year>%s</year>"\
-                "<thumbnail>%s</thumbnail>"\
-                "<fanart>%s</fanart>"\
-                "<summary>%s</summary>"\
-                "</meta>"\
-                "<link>"\
-                "<sublink>%s</sublink>"\
-                "<sublink>%s</sublink>"\
-                "<sublink>%s</sublink>"\
-                "<sublink>%s</sublink>"\
-                "<sublink>%s</sublink>"\
-                "<sublink>search</sublink>"\
-                "<sublink>searchsd</sublink>"\
-                "</link>"\
-                "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2,link3,link4,link5)
+            (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
+            summary = remove_non_ascii(summary)
+            title = remove_non_ascii(title)
+            link2 = link2.replace("-*-","")
+            xml += "<item>"\
+                    "<title>%s</title>"\
+                    "<meta>"\
+                    "<content>movie</content>"\
+                    "<imdb>%s</imdb>"\
+                    "<title>%s</title>"\
+                    "<year>%s</year>"\
+                    "<thumbnail>%s</thumbnail>"\
+                    "<fanart>%s</fanart>"\
+                    "<summary>%s</summary>"\
+                    "</meta>"\
+                    "<link>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>search</sublink>"\
+                    "<sublink>searchsd</sublink>"\
+                    "</link>"\
+                    "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1)
+        elif "-*-" in link3:
+            (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
+            summary = remove_non_ascii(summary)
+            title = remove_non_ascii(title)
+            link3 = link3.replace("-*-","")
+            xml += "<item>"\
+                    "<title>%s</title>"\
+                    "<meta>"\
+                    "<content>movie</content>"\
+                    "<imdb>%s</imdb>"\
+                    "<title>%s</title>"\
+                    "<year>%s</year>"\
+                    "<thumbnail>%s</thumbnail>"\
+                    "<fanart>%s</fanart>"\
+                    "<summary>%s</summary>"\
+                    "</meta>"\
+                    "<link>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>search</sublink>"\
+                    "<sublink>searchsd</sublink>"\
+                    "</link>"\
+                    "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2)
+        elif "-*-" in link4:
+            (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
+            summary = remove_non_ascii(summary)
+            title = remove_non_ascii(title)
+            link4 = link4.replace("-*-","")
+            xml += "<item>"\
+                    "<title>%s</title>"\
+                    "<meta>"\
+                    "<content>movie</content>"\
+                    "<imdb>%s</imdb>"\
+                    "<title>%s</title>"\
+                    "<year>%s</year>"\
+                    "<thumbnail>%s</thumbnail>"\
+                    "<fanart>%s</fanart>"\
+                    "<summary>%s</summary>"\
+                    "</meta>"\
+                    "<link>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>search</sublink>"\
+                    "<sublink>searchsd</sublink>"\
+                    "</link>"\
+                    "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2,link3)                
+        elif "-*-" in link5:
+            (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
+            summary = remove_non_ascii(summary)
+            title = remove_non_ascii(title)
+            link5 = link5.replace("-*-","")
+            xml += "<item>"\
+                    "<title>%s</title>"\
+                    "<meta>"\
+                    "<content>movie</content>"\
+                    "<imdb>%s</imdb>"\
+                    "<title>%s</title>"\
+                    "<year>%s</year>"\
+                    "<thumbnail>%s</thumbnail>"\
+                    "<fanart>%s</fanart>"\
+                    "<summary>%s</summary>"\
+                    "</meta>"\
+                    "<link>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>search</sublink>"\
+                    "<sublink>searchsd</sublink>"\
+                    "</link>"\
+                    "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2,link3,link4)
+        else:
+            (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
+            summary = remove_non_ascii(summary)
+            title = remove_non_ascii(title)                  
+            xml += "<item>"\
+                    "<title>%s</title>"\
+                    "<meta>"\
+                    "<content>movie</content>"\
+                    "<imdb>%s</imdb>"\
+                    "<title>%s</title>"\
+                    "<year>%s</year>"\
+                    "<thumbnail>%s</thumbnail>"\
+                    "<fanart>%s</fanart>"\
+                    "<summary>%s</summary>"\
+                    "</meta>"\
+                    "<link>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>search</sublink>"\
+                    "<sublink>searchsd</sublink>"\
+                    "</link>"\
+                    "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2,link3,link4,link5)
     xml += "<dir>"\
-           "<title>[COLOR dodgerblue]Next Page >>[/COLOR]</title>"\
+           "<title>[COLOR white ]%s[/COLOR]                [COLOR dodgerblue]Next Page >>[/COLOR]</title>"\
            "<Airtable>new_releases/%s</Airtable>"\
            "<thumbnail>http://www.clker.com/cliparts/a/f/2/d/1298026466992020846arrow-hi.png</thumbnail>"\
-           "</dir>" % (call)
+           "</dir>" % (url, call)
 
     jenlist = JenList(xml)
     display_list(jenlist.get_list(), jenlist.get_content_type())
@@ -300,43 +387,130 @@ def newest_releases(url):
         call = "page13"
         
     for link5,link4,tmdb,link1,link3,link2,title,year in page_num:
-        if "-*-" in link5:
-            link5 = link5.replace("-*-","")
-        if "-*-" in link4:
-            link4 = link4.replace("-*-","")
-        if "-*-" in link3:
-            link3 = link3.replace("-*-","")
         if "-*-" in link2:
-            link2 = link2.replace("-*-","")   
-        (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
-        title = remove_non_ascii(title)
-        summary = remove_non_ascii(summary)                    
-        xml += "<item>"\
-                "<title>%s</title>"\
-                "<meta>"\
-                "<content>movie</content>"\
-                "<imdb>%s</imdb>"\
-                "<title>%s</title>"\
-                "<year>%s</year>"\
-                "<thumbnail>%s</thumbnail>"\
-                "<fanart>%s</fanart>"\
-                "<summary>%s</summary>"\
-                "</meta>"\
-                "<link>"\
-                "<sublink>%s</sublink>"\
-                "<sublink>%s</sublink>"\
-                "<sublink>%s</sublink>"\
-                "<sublink>%s</sublink>"\
-                "<sublink>%s</sublink>"\
-                "<sublink>search</sublink>"\
-                "<sublink>searchsd</sublink>"\
-                "</link>"\
-                "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2,link3,link4,link5)
+            (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
+            summary = remove_non_ascii(summary)
+            title = remove_non_ascii(title)
+            link2 = link2.replace("-*-","")
+            xml += "<item>"\
+                    "<title>%s</title>"\
+                    "<meta>"\
+                    "<content>movie</content>"\
+                    "<imdb>%s</imdb>"\
+                    "<title>%s</title>"\
+                    "<year>%s</year>"\
+                    "<thumbnail>%s</thumbnail>"\
+                    "<fanart>%s</fanart>"\
+                    "<summary>%s</summary>"\
+                    "</meta>"\
+                    "<link>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>search</sublink>"\
+                    "<sublink>searchsd</sublink>"\
+                    "</link>"\
+                    "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1)
+        elif "-*-" in link3:
+            (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
+            summary = remove_non_ascii(summary)
+            title = remove_non_ascii(title)
+            link3 = link3.replace("-*-","")
+            xml += "<item>"\
+                    "<title>%s</title>"\
+                    "<meta>"\
+                    "<content>movie</content>"\
+                    "<imdb>%s</imdb>"\
+                    "<title>%s</title>"\
+                    "<year>%s</year>"\
+                    "<thumbnail>%s</thumbnail>"\
+                    "<fanart>%s</fanart>"\
+                    "<summary>%s</summary>"\
+                    "</meta>"\
+                    "<link>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>search</sublink>"\
+                    "<sublink>searchsd</sublink>"\
+                    "</link>"\
+                    "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2)
+        elif "-*-" in link4:
+            (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
+            summary = remove_non_ascii(summary)
+            title = remove_non_ascii(title)
+            link4 = link4.replace("-*-","")
+            xml += "<item>"\
+                    "<title>%s</title>"\
+                    "<meta>"\
+                    "<content>movie</content>"\
+                    "<imdb>%s</imdb>"\
+                    "<title>%s</title>"\
+                    "<year>%s</year>"\
+                    "<thumbnail>%s</thumbnail>"\
+                    "<fanart>%s</fanart>"\
+                    "<summary>%s</summary>"\
+                    "</meta>"\
+                    "<link>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>search</sublink>"\
+                    "<sublink>searchsd</sublink>"\
+                    "</link>"\
+                    "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2,link3)                
+        elif "-*-" in link5:
+            (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
+            summary = remove_non_ascii(summary)
+            title = remove_non_ascii(title)
+            link5 = link5.replace("-*-","")
+            xml += "<item>"\
+                    "<title>%s</title>"\
+                    "<meta>"\
+                    "<content>movie</content>"\
+                    "<imdb>%s</imdb>"\
+                    "<title>%s</title>"\
+                    "<year>%s</year>"\
+                    "<thumbnail>%s</thumbnail>"\
+                    "<fanart>%s</fanart>"\
+                    "<summary>%s</summary>"\
+                    "</meta>"\
+                    "<link>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>search</sublink>"\
+                    "<sublink>searchsd</sublink>"\
+                    "</link>"\
+                    "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2,link3,link4)
+        else:
+            (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
+            summary = remove_non_ascii(summary)
+            title = remove_non_ascii(title)                  
+            xml += "<item>"\
+                    "<title>%s</title>"\
+                    "<meta>"\
+                    "<content>movie</content>"\
+                    "<imdb>%s</imdb>"\
+                    "<title>%s</title>"\
+                    "<year>%s</year>"\
+                    "<thumbnail>%s</thumbnail>"\
+                    "<fanart>%s</fanart>"\
+                    "<summary>%s</summary>"\
+                    "</meta>"\
+                    "<link>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>search</sublink>"\
+                    "<sublink>searchsd</sublink>"\
+                    "</link>"\
+                    "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2,link3,link4,link5)
     xml += "<dir>"\
-           "<title>[COLOR dodgerblue]Next Page >>[/COLOR]</title>"\
+           "<title>[COLOR white ]%s[/COLOR]                [COLOR dodgerblue]Next Page >>[/COLOR]</title>"\
            "<Airtable>newest_releases/%s</Airtable>"\
            "<thumbnail>http://www.clker.com/cliparts/a/f/2/d/1298026466992020846arrow-hi.png</thumbnail>"\
-           "</dir>" % (call)
+           "</dir>" % (url, call)
 
     jenlist = JenList(xml)
     display_list(jenlist.get_list(), jenlist.get_content_type())
@@ -356,7 +530,7 @@ def pull_tmdb(title,year,tmdb):
         return thumbnail,fanart,imdb,summary
 
     except:
-        return "","","",""
+        return "","",""
 
 def remove_non_ascii(text):
     return unidecode(text)

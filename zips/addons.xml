@@ -80,7 +80,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[COLORlime]TEMPEST[/COLOR]" version="5.3" provider-name="TTMedia">
+<addon id="plugin.video.tempest" name="[COLORlime]TEMPEST[/COLOR]" version="5.4" provider-name="TTMedia">
     <requires>
       <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
