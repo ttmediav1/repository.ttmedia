@@ -15,9 +15,9 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.bosstechmediaV2"
-       name="BossTech Media [COLOR red]V2[/COLOR]"
-       version="1.2"
+<addon id="plugin.video.bosstechmediaV3"
+       name="BossTech Media [COLOR red]V3[/COLOR]"
+       version="1.3"
        provider-name="TT Media">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -28,9 +28,9 @@
         <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">BOSSTECH MEDIA[COLORred]V2[/COLOR]</summary>
+    <summary lang="en">BOSSTECH MEDIA[COLORred]V3[/COLOR]</summary>
     <language>en</language>
-    <description lang="en">[COLORlightskyblue]BOSSTECH MEDIAV2 ADDON - SUPPLIER OF GREAT QUALITY AND STABLE STREAMS.[/COLOR]</description>
+    <description lang="en">[COLORlightskyblue]BOSSTECH MEDIA V3 ADDON - SUPPLIER OF GREAT QUALITY AND STABLE STREAMS.[/COLOR]</description>
      <platform>all</platform>
   </extension>
 </addon>
@@ -113,7 +113,7 @@
     </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="TTMedia Repository" version="1.1.3" provider-name="TTMedia">
+<addon id="repository.ttmedia" name="TTMedia Repository" version="1.1.4" provider-name="TTMedia">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>

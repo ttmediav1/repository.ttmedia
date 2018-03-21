@@ -1,0 +1,20 @@
+<?xml version="1.1" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.bosstechmediaV3"
+       name="BossTech Media [COLOR red]V3[/COLOR]"
+       version="1.3"
+       provider-name="TT Media">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="script.module.requests" />
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">BOSSTECH MEDIA[COLORred]V3[/COLOR]</summary>
+    <language>en</language>
+    <description lang="en">[COLORlightskyblue]BOSSTECH MEDIA V3 ADDON - SUPPLIER OF GREAT QUALITY AND STABLE STREAMS.[/COLOR]</description>
+     <platform>all</platform>
+  </extension>
+</addon>
