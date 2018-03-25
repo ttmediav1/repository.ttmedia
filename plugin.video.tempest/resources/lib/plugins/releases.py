@@ -50,7 +50,6 @@ import os
 import xbmc
 import xbmcaddon
 import json
-import __builtin__
 from koding import route
 from ..plugin import Plugin
 from resources.lib.util.context import get_context_items
@@ -64,7 +63,6 @@ from unidecode import unidecode
 
 CACHE_TIME = 3600  # change to wanted cache time in seconds
 
-TMDB_api_key = __builtin__.tmdb_api_key
 addon_fanart = xbmcaddon.Addon().getAddonInfo('fanart')
 addon_icon = xbmcaddon.Addon().getAddonInfo('icon')
 AddonName = xbmc.getInfoLabel('Container.PluginName')
@@ -213,14 +211,6 @@ def new_releases(url):
                     "<sublink>searchsd</sublink>"\
                     "</link>"\
                     "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1)
-            (trail,tube) = pull_trailer(tmdb)        
-            if tube != "":     
-                xml += "<item>"\
-                        "<title>     [COLOR dodgerblue]Trailer,[/COLOR] %s, %s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>https://www.youtube.com/watch?v=%s&feature=youtube</link>"\
-                        "</item>" % (title,trail,thumbnail,fanart,tube)                    
         elif "-*-" in link3:
             (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
             summary = remove_non_ascii(summary)
@@ -244,14 +234,6 @@ def new_releases(url):
                     "<sublink>searchsd</sublink>"\
                     "</link>"\
                     "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2)
-            (trail,tube) = pull_trailer(tmdb)        
-            if tube != "":     
-                xml += "<item>"\
-                        "<title>     [COLOR dodgerblue]Trailer,[/COLOR] %s, %s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>https://www.youtube.com/watch?v=%s&feature=youtube</link>"\
-                        "</item>" % (title,trail,thumbnail,fanart,tube)                    
         elif "-*-" in link4:
             (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
             summary = remove_non_ascii(summary)
@@ -275,15 +257,7 @@ def new_releases(url):
                     "<sublink>search</sublink>"\
                     "<sublink>searchsd</sublink>"\
                     "</link>"\
-                    "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2,link3)
-            (trail,tube) = pull_trailer(tmdb)        
-            if tube != "":     
-                xml += "<item>"\
-                        "<title>     [COLOR dodgerblue]Trailer,[/COLOR] %s, %s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>https://www.youtube.com/watch?v=%s&feature=youtube</link>"\
-                        "</item>" % (title,trail,thumbnail,fanart,tube)                                    
+                    "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2,link3)                
         elif "-*-" in link5:
             (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
             summary = remove_non_ascii(summary)
@@ -309,14 +283,6 @@ def new_releases(url):
                     "<sublink>searchsd</sublink>"\
                     "</link>"\
                     "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2,link3,link4)
-            (trail,tube) = pull_trailer(tmdb)        
-            if tube != "":     
-                xml += "<item>"\
-                        "<title>     [COLOR dodgerblue]Trailer,[/COLOR] %s, %s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>https://www.youtube.com/watch?v=%s&feature=youtube</link>"\
-                        "</item>" % (title,trail,thumbnail,fanart,tube)                    
         else:
             (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
             summary = remove_non_ascii(summary)
@@ -342,14 +308,6 @@ def new_releases(url):
                     "<sublink>searchsd</sublink>"\
                     "</link>"\
                     "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2,link3,link4,link5)
-            (trail,tube) = pull_trailer(tmdb)        
-            if tube != "":     
-                xml += "<item>"\
-                        "<title>     [COLOR dodgerblue]Trailer,[/COLOR] %s, %s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>https://www.youtube.com/watch?v=%s&feature=youtube</link>"\
-                        "</item>" % (title,trail,thumbnail,fanart,tube)                    
     xml += "<dir>"\
            "<title>[COLOR white ]%s[/COLOR]                [COLOR dodgerblue]Next Page >>[/COLOR]</title>"\
            "<Airtable>new_releases/%s</Airtable>"\
@@ -451,14 +409,6 @@ def newest_releases(url):
                     "<sublink>searchsd</sublink>"\
                     "</link>"\
                     "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1)
-            (trail,tube) = pull_trailer(tmdb)        
-            if tube != "":     
-                xml += "<item>"\
-                        "<title>     [COLOR dodgerblue]Trailer,[/COLOR] %s, %s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>https://www.youtube.com/watch?v=%s&feature=youtube</link>"\
-                        "</item>" % (title,trail,thumbnail,fanart,tube)                                   
         elif "-*-" in link3:
             (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
             summary = remove_non_ascii(summary)
@@ -482,14 +432,6 @@ def newest_releases(url):
                     "<sublink>searchsd</sublink>"\
                     "</link>"\
                     "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2)
-            (trail,tube) = pull_trailer(tmdb)        
-            if tube != "":     
-                xml += "<item>"\
-                        "<title>     [COLOR dodgerblue]Trailer,[/COLOR] %s, %s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>https://www.youtube.com/watch?v=%s&feature=youtube</link>"\
-                        "</item>" % (title,trail,thumbnail,fanart,tube)                   
         elif "-*-" in link4:
             (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
             summary = remove_non_ascii(summary)
@@ -513,15 +455,7 @@ def newest_releases(url):
                     "<sublink>search</sublink>"\
                     "<sublink>searchsd</sublink>"\
                     "</link>"\
-                    "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2,link3)
-            (trail,tube) = pull_trailer(tmdb)        
-            if tube != "":     
-                xml += "<item>"\
-                        "<title>     [COLOR dodgerblue]Trailer,[/COLOR] %s, %s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>https://www.youtube.com/watch?v=%s&feature=youtube</link>"\
-                        "</item>" % (title,trail,thumbnail,fanart,tube)                                     
+                    "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2,link3)                
         elif "-*-" in link5:
             (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
             summary = remove_non_ascii(summary)
@@ -547,14 +481,6 @@ def newest_releases(url):
                     "<sublink>searchsd</sublink>"\
                     "</link>"\
                     "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2,link3,link4)
-            (trail,tube) = pull_trailer(tmdb)        
-            if tube != "":     
-                xml += "<item>"\
-                        "<title>     [COLOR dodgerblue]Trailer,[/COLOR] %s, %s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>https://www.youtube.com/watch?v=%s&feature=youtube</link>"\
-                        "</item>" % (title,trail,thumbnail,fanart,tube)                    
         else:
             (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
             summary = remove_non_ascii(summary)
@@ -580,14 +506,6 @@ def newest_releases(url):
                     "<sublink>searchsd</sublink>"\
                     "</link>"\
                     "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2,link3,link4,link5)
-            (trail,tube) = pull_trailer(tmdb)        
-            if tube != "":     
-                xml += "<item>"\
-                        "<title>     [COLOR dodgerblue]Trailer,[/COLOR] %s, %s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>https://www.youtube.com/watch?v=%s&feature=youtube</link>"\
-                        "</item>" % (title,trail,thumbnail,fanart,tube)                    
     xml += "<dir>"\
            "<title>[COLOR white ]%s[/COLOR]                [COLOR dodgerblue]Next Page >>[/COLOR]</title>"\
            "<Airtable>newest_releases/%s</Airtable>"\
@@ -612,23 +530,7 @@ def pull_tmdb(title,year,tmdb):
         return thumbnail,fanart,imdb,summary
 
     except:
-        return "","","",""
-
-def pull_trailer(tmdb):
-    try:
-        url2 = "https://api.themoviedb.org/3/movie/%s/videos?api_key=586aa0e416c8d3350aee09a2ebc178ac&language=en-US" % tmdb
-        match2 = requests.get(url2).json()
-        res = (match2['results'])
-        many = res[0]
-        trail = (many['name'])
-        tube = (many['key'])
-        # for many in res:
-        #     trail = (many['name'])
-        #     tube = (many['key'])        
-        return trail,tube
-    except:
-        return "",""                
-
+        return "","",""
 
 def remove_non_ascii(text):
     return unidecode(text)
