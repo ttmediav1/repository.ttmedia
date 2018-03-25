@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.tempest" name="[COLORlime]TEMPEST[/COLOR]" version="5.4" provider-name="TTMedia">
+<addon id="plugin.video.tempest" name="[COLORlime]TEMPEST[/COLOR]" version="5.5" provider-name="TTMedia">
     <requires>
       <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -22,7 +22,7 @@
     <extension point="xbmc.addon.metadata">
       <summary lang="en">[COLORred]EPIC TUNES TUBE N FLIX[/COLOR]</summary>
       <summary lang="he"></summary>
-      <description lang="en">[COLORlawngreen]THE AUTHOR OF THIS ADDON DO NOT HOST ANY OF THE CONTENT WHICH IS FOUND AND HAVE NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS.[/COLOR]</description>
+      <description lang="en">[COLORlawngreen]THE AUTHOR OF THIS ADDON DOES NOT HOST ANY OF THE CONTENT WHICH IS FOUND IN IT AND HAVE NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS.[/COLOR][COLORred]SPECIAL SHOUT OUT TO THE ORIGINAL DEVS OF JEN AND TO ALL THE DEVS IN THE JEN GROUP WITHOUT THEM THIS ADDON WOULDNT OF BEEN POSSIBLE!![/COLOR]</description>
       <description lang="he"></description>
       <disclaimer lang="en">[COLORlawngreen]THE AUTHOR OF THIS ADDON DO NOT HOST ANY OF THE CONTENT WHICH IS FOUND AND HAVE NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS.[/COLOR]</disclaimer>
       <disclaimer lang="he"></disclaimer>
