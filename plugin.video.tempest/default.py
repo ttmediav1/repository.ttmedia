@@ -46,6 +46,8 @@ import resources.lib.util.views
 from resources.lib.plugins import *
 from language import get_string as _
 from resources.lib.plugin import run_hook
+import weblogin
+import gethtml
 
 
 addon_id = xbmcaddon.Addon().getAddonInfo('id')
@@ -56,34 +58,56 @@ art_path = os.path.join(addon_folder, addon_id)
 content_type = "files"
 
 
+
+def Notify(title,message,times):
+        xbmc.executebuiltin("XBMC.Notification("+title+","+message+","+times+")")
+
+		
+
+
+
+
+
+def LOGIN(username,password,hidesuccess):
+        root_xml_url = "http://ttmedia.live/tempest/main.xml"
+        uc = username[0].upper() + username[1:]
+        lc = username.lower()
+        true_path =  koding.Physical_Path('special://home/addons/plugin.video.tempest/')
+        logged_in = weblogin.doLogin(true_path,username,password)
+    
+     
+        if logged_in == True:
+            Notify('Welcome',uc+'','4000')
+            get_list(root_xml_url)
+        elif logged_in == False:
+
+                Notify('Login Failure',uc+' could not login','4000')
+                koding.Add_Dir(
+                    name=_("You must be logged in"),
+                    url=_("You are not logged in"),
+                    mode="message",
+                    folder=True,
+                    icon=xbmcaddon.Addon().getAddonInfo("icon"),
+                    fanart=xbmcaddon.Addon().getAddonInfo("fanart"),
+                    content_type="")
+                
+			 
 @route("main")
-def root():
-    """root menu of the addon"""
-    if not get_list(root_xml_url):
-        koding.Add_Dir(
-            name=_("Message"),
-            url=_("Sorry, server is down"),
-            mode="message",
-            folder=True,
-            icon=xbmcaddon.Addon().getAddonInfo("icon"),
-            fanart=xbmcaddon.Addon().getAddonInfo("fanart"),
-            content_type="")
-        koding.Add_Dir(
-            name=_("Search"),
-            url="",
-            mode="Search",
-            folder=True,
-            icon=xbmcaddon.Addon().getAddonInfo("icon"),
-            fanart=xbmcaddon.Addon().getAddonInfo("fanart"),
-            content_type="")
-        koding.Add_Dir(
-            name=_("Testings"),
-            url='{"file_name":"testings.xml"}',
-            mode="Testings",
-            folder=True,
-            icon=xbmcaddon.Addon().getAddonInfo("icon"),
-            fanart=xbmcaddon.Addon().getAddonInfo("fanart"),
-            content_type="")
+def STARTUP_ROUTINES():
+        #deal with bug that happens if the datapath doesn't exist
+
+        #check if user has enabled use-login setting
+        usrsettings = xbmcaddon.Addon(id='plugin.video.tempest')
+        use_account = usrsettings.getSetting('use-account')
+
+        if use_account == 'true':
+             #get username and password and do login with them
+             #also get whether to hid successful login notification
+             username = usrsettings.getSetting('username')
+             password = usrsettings.getSetting('password')
+             hidesuccess = usrsettings.getSetting('hide-successful-login-messages')
+
+             LOGIN(username,password,hidesuccess)   
 
 
 @route(mode='get_list_uncached', args=["url"])
