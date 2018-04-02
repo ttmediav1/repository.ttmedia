@@ -42,10 +42,10 @@
                action="RunPlugin(plugin://plugin.video.tempest/?mode=ResolverSettings)"/>
       <!-- filtering settings -->
       <setting label="30735" type="lsep" visible="false"/>
-      <setting id="allow_openload" label="30736" type="bool" default="true" visible="true"/>
-      <setting id="allow_the_video_me" label="30737" type="bool" default="true" visible="true"/>
-      <setting id="allow_vidup_me" label="30738" type="bool" default="true" visible="true"/>
-      <setting id="allow_debrid" label="30743" type="bool" default="true" visible="true"/>
+      <setting id="allow_openload" label="30736" type="bool" default="false" visible="true"/>
+      <setting id="allow_the_video_me" label="30737" type="bool" default="false" visible="true"/>
+      <setting id="allow_vidup_me" label="30738" type="bool" default="false" visible="true"/>
+      <setting id="allow_debrid" label="30743" type="bool" default="false" visible="true"/>
       <setting label="30760" type="lsep" visible="false"/>
       <setting id="disable_messages" label="30767" type="bool" default="false" visible="false"/>
       <setting id="enable_offensive" label="30761" type="bool" default="false" enable="eq(-1,false)" visible="false"/>
