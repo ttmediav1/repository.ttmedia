@@ -80,6 +80,55 @@
   </extension>
 </addon>
 
+<addon id="plugin.video.tellyone" name="[B][COLORlime]TELLYONE[/COLOR][/B]" version="1.0.0" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.livestreamer" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.routing" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_gb">[COLORred]FAVOURITE TV CHANNELS[/COLOR]</summary>
+    <description lang="en_gb">[COLORred]FAVOURITE TV CHANNELS[/COLOR]</description>
+    <disclaimer lang="en_gb">[COLORlime]WE DO NOT HOST OR HAVE ANY AFFILIATION WITH THE SOURCES[/COLOR]</disclaimer>
+    <language></language>
+    <platform>all</platform>
+    <license></license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <source></source>
+  </extension>
+</addon>
+
+<addon id="plugin.video.tellytwo" name="[B][COLORlime]TELLYTWO[/COLOR][/B]" version="1.0.0" provider-name="[COLORlime]TTMedia[/COLOR]">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.pyamf" />
+    <import addon="script.module.livestreamer" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.routing" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_gb">[COLORred]FAVOURITE TV CHANNELS FROM AROUND THE WORLD[/COLOR]</summary>
+    <description lang="en_gb">[COLORred]FAVOURITE TV CHANNELS FROM AROUND THE WORLD[/COLOR]</description>
+    <disclaimer lang="en_gb">[COLORlime]WE DO NOT HOST OR HAVE ANY AFFILIATION WITH ANY OF THE SOURCES[/COLOR]</disclaimer>
+    <language></language>
+    <platform>all</platform>
+    <license></license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <source></source>
+  </extension>
+</addon>
+
 <addon id="plugin.video.tempest" name="[COLORlime]TEMPEST[/COLOR]" version="6.0" provider-name="TTMedia">
     <requires>
       <import addon="xbmc.python" version="2.19.0" />
@@ -113,7 +162,7 @@
     </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="TTMedia Repository" version="1.1.8" provider-name="TTMedia">
+<addon id="repository.ttmedia" name="TTMedia Repository" version="1.1.9" provider-name="TTMedia">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
