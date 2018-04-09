@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.tempest" name="[COLORlime]TEMPEST[/COLOR]" version="6.0" provider-name="TTMedia">
+<addon id="plugin.video.tempest" name="[COLORlime]TEMPEST[/COLOR]" version="6.1" provider-name="TTMedia">
     <requires>
       <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -10,9 +10,14 @@
         <import addon="script.module.xmltodict" version="0.9.0" />
         <import addon="script.module.thetvdb" />
         <import addon="script.module.metadatautils" />
+		<import addon="script.module.raccuktvnow" version="1.0" />
+		<import addon="script.module.raccnettv"  version="1.0" />
+		<import addon="script.video.F4mProxy" version="2.8.7" />
+		<import addon="script.module.livestreamer" optional="true" />
         <!--<import addon="script.module.web-pdb" version="1.0"/>-->
         <import addon="script.module.resolveurl" />
         <import addon="plugin.video.youtube" />
+		<import addon="plugin.video.f4mTester" version="2.7.2" />
 		<import addon="plugin.video.SportsDevil" version="2017.11.15NL1115" />
 		</requires>
     <extension point="xbmc.python.pluginsource" library="default.py">

@@ -35,6 +35,21 @@
   </extension>
 </addon>
 
+<addon id="plugin.video.f4mTester" name="f4mTester" version="2.7.2" provider-name="Shani">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.video.F4mProxy" version="2.7.1"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>f4mTester</summary>
+        <description></description>
+        <platform>all</platform>
+    </extension>
+</addon>
+
 <addon id="plugin.video.live.streamspro"
        name="LiveStreamsPro"
        version="2.8.1"
@@ -173,7 +188,7 @@ For updates check the readme.
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[COLORlime]TEMPEST[/COLOR]" version="6.0" provider-name="TTMedia">
+<addon id="plugin.video.tempest" name="[COLORlime]TEMPEST[/COLOR]" version="6.1" provider-name="TTMedia">
     <requires>
       <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -184,9 +199,14 @@ For updates check the readme.
         <import addon="script.module.xmltodict" version="0.9.0" />
         <import addon="script.module.thetvdb" />
         <import addon="script.module.metadatautils" />
+		<import addon="script.module.raccuktvnow" version="1.0" />
+		<import addon="script.module.raccnettv"  version="1.0" />
+		<import addon="script.video.F4mProxy" version="2.8.7" />
+		<import addon="script.module.livestreamer" optional="true" />
         <!--<import addon="script.module.web-pdb" version="1.0"/>-->
         <import addon="script.module.resolveurl" />
         <import addon="plugin.video.youtube" />
+		<import addon="plugin.video.f4mTester" version="2.7.2" />
 		<import addon="plugin.video.SportsDevil" version="2017.11.15NL1115" />
 		</requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
@@ -206,7 +226,7 @@ For updates check the readme.
     </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="TTMedia Repository" version="1.2.0" provider-name="TTMedia">
+<addon id="repository.ttmedia" name="TTMedia Repository" version="1.2.1" provider-name="TTMedia">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
@@ -237,5 +257,104 @@ For updates check the readme.
 		<description lang="en">[COLORlime]THIS REPOSITORY HAS THE LATEST WORK FROM TTMEDIA[/COLOR]</description>
 		<genre></genre>
 </extension>
+</addon>
+
+<addon id="script.module.livestreamer"
+       name="livestreamer"
+       version="1.12.0"
+       provider-name="Christopher Rosell">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.requests"
+                      version="1.1.0"
+                     optional="false"/>
+    <import addon="script.module.singledispatch"
+                      version="3.4.0.3"
+                     optional="false"/>
+    <import addon="script.module.futures"
+                      version="2.2.0"
+                     optional="false"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib"/>
+  <extension point="xbmc.addon.metadata">
+    <summary>Livestreamer extracts streams from various services</summary>
+    <description>Livestreamer is a command-line utility that pipes video streams from various services into a video player, such as VLC. The main purpose of Livestreamer is to allow the user to avoid buggy and CPU heavy flash plugins but still be able to enjoy various streamed content. There is also an API available for developers who want access to the video stream data.</description>
+    <platform>all</platform>
+    <license>Simplified BSD</license>
+    <source>https://github.com/chrippa/livestreamer.git</source>
+    <website>http://livestreamer.io</website>
+  </extension>
+</addon>
+
+<addon id="script.module.raccnettv" name="RACC Live NetTv APK" version="1.0" provider-name="RACC">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.pyamf" />
+    <import addon="script.module.livestreamer" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.routing" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>all</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_gb">RACC Live NetTv Module</summary>
+    <description lang="en_gb">Provides you streams from Live NetTv Apk</description>
+    <disclaimer lang="en_gb"></disclaimer>
+    <language></language>
+    <platform>all</platform>
+    <license></license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <source></source>
+  </extension>
+</addon>
+
+<addon id="script.module.raccuktvnow" name="RACC UkTvNow APK" version="1.0" provider-name="RACC">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.livestreamer" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.routing" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>all</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_gb">UkTvNow APK</summary>
+    <description lang="en_gb">Module for UkTvNow APK</description>
+    <disclaimer lang="en_gb"></disclaimer>
+    <language></language>
+    <platform>all</platform>
+    <license></license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <source></source>
+  </extension>
+</addon>
+
+<addon id="script.video.F4mProxy"
+	     name="F4mProxy"
+	     version="2.8.7"
+	     provider-name="Shani">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0" />
+    <import addon="script.module.requests" />
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+    <extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>executable</provides>
+  </extension>
+
+
+
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Proxy for f4m</summary>
+    <description lang="en">Use this addon to play F4m v1 and v2 streams</description>
+  </extension>
 </addon>
 </addons>
