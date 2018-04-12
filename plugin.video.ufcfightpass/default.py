@@ -7,9 +7,12 @@ from bs4 import BeautifulSoup
 addon           = xbmcaddon.Addon(id='plugin.video.ufcfightpass')
 addon_url       = sys.argv[0]
 addon_handle    = int(sys.argv[1])
+addon_icon      = addon.getAddonInfo('icon')
 addon_BASE_PATH = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
 COOKIE_FILE     = os.path.join(addon_BASE_PATH, 'cookies.lwp')
 CACHE_FILE      = os.path.join(addon_BASE_PATH, 'data.json')
+c_base_url      = 'https://www.ufc.tv/category/'
+ua              = 'Mozilla/5.0 (Linux; Android 6.0.1; D6603 Build/23.5.A.0.570; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/56.0.2924.87 Mobile Safari/537.36 android mobile ufc 7.0310'
 
 
 def get_creds():
@@ -23,11 +26,6 @@ def get_creds():
 
 def post_auth(creds):
     url = 'https://www.ufc.tv/page/fightpass' 
-    #ua = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36'
-    ua = 'Mozilla/5.0 (iPad; CPU OS 8_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12F69'
-
-    #TODO: create a common func to load a session with cookies already set
-    #TODO: don't attempt to login unless we need to??
     cj = cookielib.LWPCookieJar(COOKIE_FILE)
     try:
         cj.load()
@@ -67,7 +65,7 @@ def post_auth(creds):
 
     if auth_resp.code == 200:
         #TODO: need to handle login locked scenario as well
-        soup = BeautifulSoup(rdata)
+        soup = BeautifulSoup(rdata,"html.parser")
         code = soup.find('code').get_text()
         if code == 'loginsuccess':
             return True
@@ -78,12 +76,9 @@ def post_auth(creds):
 
 
 def publish_point(video):
-    # Fetch the stream url for the video
-    # TODO: if this fails, it may also be cause the cookie has expired / logged in on another device (status 400)
-    #  * in this case, we may need to re-auth, so we can play the video
     url = 'https://www.ufc.tv/service/publishpoint'
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0.1; D6603 Build/23.5.A.0.570; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/56.0.2924.87 Mobile Safari/537.36 android mobile ufc 6.1213'
+        'User-Agent': ua
     }
 
     payload = {
@@ -101,55 +96,46 @@ def publish_point(video):
 
     s = requests.Session()
     s.cookies = cj
-    resp = s.post(url, data=payload, headers=headers, verify=False)
+    resp = s.post(url, data=payload, headers=headers)
     # normally status 400 if have an expired session
     status = resp.status_code
     result = resp.json()
     if not result:
         return status, None
-    return status, result['path']
+
+    o_path = result['path']
+    h_path = o_path.replace('android', 'ced')
+    # does the hd video resource exist?
+    resp = s.get(h_path, data=payload, headers=headers)
+    if resp.status_code == 404:
+        return status, o_path
+
+    return resp.status_code, h_path
 
 
 def get_categories():
-    # Fetch the main UFC Fight Pass cat-a-ma-gories
-    url = 'https://www.ufc.tv/page/fightpass'
-    #ua = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36'
-    ua = 'Mozilla/5.0 (iPad; CPU OS 8_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12F69'
-
-    cj = cookielib.LWPCookieJar(COOKIE_FILE)
-    try:
-        cj.load(COOKIE_FILE, ignore_discard=True)
-    except:
-        pass
-
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (iPad; CPU OS 8_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12F69'
-    }
-
-    s = requests.Session()
-    s.cookies = cj
-    resp = s.get(url, headers=headers, verify=True)
-    html = resp.text
-
+    # Fetch the main UFC Fight Pass category menu data
+    data = get_data(c_base_url + 'fightpass')
     results = []
-    
-    soup = BeautifulSoup(html, 'html.parser')
-    
-    
-    for match in soup.findAll('a', {'class' : 'menu-link'}):
-        d = str(match['href'])
-        u = match['href']
-        
-        if 'ufc.tv' in d:
-        
-            c = {
-                'title': d.rsplit('/', 1)[-1],
-                'url' : u
-            }
-        
-            results.append(c)
 
-    return results
+    for c in data['subCategories']:
+        results.append({
+            'title': c['name'],
+            'url': c_base_url +  c['seoName'].replace('FIGHTPASS-LIVE-EVENTS', 'LIVE-EVENTS'),
+            'level': 'top'
+        })
+
+    # append the Just Added category as well
+    results.append({
+        'title': 'Just Added', 
+        'url': c_base_url + 'JUST-ADDED', 
+        'level': 'top'
+    })
+
+    return {
+        'paging': None,
+        'items': results
+    }
 
 
 def main():
@@ -175,24 +161,23 @@ def main():
             create_free_menu()
         else:
             # fetch the main categories to start, and display the main menu
-            # TODO: add featured categories like: Trending on Fight Pass, Recent Events etc
             categories = get_categories()
             build_menu(categories)
 
 
 def create_free_menu():
-    # TODO: this should load / save to cache as well? Refactor needed.
     data = get_data('http://www.ufc.tv/category/free-video')
     vids = get_parsed_vids(data)
     build_menu(vids)
 
 
-def build_menu(items):
+def build_menu(itemData):
     listing = []
-    first = items[0]
-    is_folder = 'id' not in first.keys()
+    first = itemData['items'][0]
+    is_folder = 'id' not in first
+    is_top_level = 'level' in first
 
-    for i in items:
+    for i in itemData['items']:
         thumb = i['thumb'] if not is_folder else None
         # stupid encoding hack for now..
         try:
@@ -200,25 +185,82 @@ def build_menu(items):
         except:
             i_title = i['title']
 
-        title = '[B][{0}][/B]  {1}'.format(i['airdate'], i_title) if not is_folder else i_title
-        item = xbmcgui.ListItem(label=title, thumbnailImage=thumb)   
+        live_state = ''
+        if 'isLive' in i and i['isLive'] == 1:
+            live_state = ' - [COLOR green]LIVE NOW[/COLOR]'
+
+        if is_folder and 'Live Events' in i_title:
+            live_count = get_live_count()
+            title = '{0} [B][COLOR green]({1})[/COLOR][/B]'.format(i_title, live_count) if live_count > 0 else i_title
+        else:
+            title = '[B][{0}{1}][/B]  {2}'.format(i['airdate'], live_state, i_title) if not is_folder else i_title
+        
+        item = xbmcgui.ListItem(label=title, thumbnailImage=thumb)
+
         if is_folder:
             url = '{0}?action=traverse&u={1}&t={2}'.format(addon_url, i['url'], i_title)
         else:
             url = '{0}?action=play&i={1}&t={2}'.format(addon_url, i['id'], i_title)
+            # generate appropriate context menu
+            ctx = get_ctx_items(i)
+            if len(ctx) > 0:
+                item.addContextMenuItems(get_ctx_items(i), replaceItems=True)
 
         listing.append((url, item, is_folder))
 
+    if is_top_level:
+        # append My Queue menu item - refactor to allow pulling other single action based options like search
+        item = xbmcgui.ListItem(label='My Queue') 
+        listing.append(('{0}?action=queue'.format(addon_url), item, True))
+
+    # generate paging navigation
+    if 'paging' in itemData and itemData['paging']:
+        pg_items = get_paging(itemData['paging'])
+        if len(pg_items) > 0:
+            listing.extend(pg_items)
+
     if len(listing) > 0:
         xbmcplugin.addDirectoryItems(addon_handle, listing, len(listing))
-        # force thumbnail view mode??
-        #xbmc.executebuiltin('Container.SetViewMode(500)')
-        xbmcplugin.endOfDirectory(addon_handle)
+        xbmcplugin.endOfDirectory(addon_handle, cacheToDisc=False)
 
 
-def get_data(url):
+def get_paging(pagingData):
+    items = []
+    pn = int(pagingData['pageNumber'])
+    tp = int(pagingData['totalPages'])
+    url = dict(parse_qsl(sys.argv[2][1:]))['u']
+    if pn < tp:
+        # next
+        item = xbmcgui.ListItem(label='[B]- [I]Page %s of %s[/I] - Next Page[/B] >' %(pn, tp))
+        items.append(('{0}?action=traverse&u={1}&pn={2}'.format(addon_url, url, pn+1), item, True))
+        # goto page
+        #item = xbmcgui.ListItem(label='[B][I]Goto Page..[/I][/B]')
+        #items.append(('{0}?action=goto_pn&u={1}&c={2}&m={3}'.format(addon_url, url, pn, tp), item, True))
+        return items
+    return []
+
+
+def get_ctx_items(item):
+    ctx = []
+    params = dict(parse_qsl(sys.argv[2][1:]))
+    if params and params['action'] == 'queue':
+        ctx_path = '{0}?action=queueDel&i={1}'.format(addon_url, item['id'])
+        ctx.append(('Remove from My Queue', 'XBMC.RunPlugin({0})'.format(ctx_path)))
+        ctx.append(('Refresh My Queue', 'Container.Refresh'))
+    else:
+        ctx_path = '{0}?action=queueSet&i={1}'.format(addon_url, item['id'])
+        ctx.append(('Add to My Queue', 'XBMC.RunPlugin({0})'.format(ctx_path)))
+    return ctx
+
+
+def get_data(url, params=None):
+    if params is None:
+        params = {
+            'format': 'json'
+        }
+
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36'
+        'User-Agent': ua
     }
 
     cj = cookielib.LWPCookieJar(COOKIE_FILE)
@@ -229,110 +271,255 @@ def get_data(url):
 
     s = requests.Session()
     s.cookies = cj
-    resp = s.get(url, headers=headers, verify=False)
+    resp = s.get(url, headers=headers, params=params)
     if not resp.status_code == 200:
         return None
-    return resp.content
+
+    return resp.json()
+
+# refactor to consolidate common api client code..
+def post_data(url, payload):
+    headers = {
+        'User-Agent': ua
+    }
+
+    cj = cookielib.LWPCookieJar(COOKIE_FILE)
+    try:
+        cj.load(COOKIE_FILE, ignore_discard=True)
+    except:
+        pass
+
+    s = requests.Session()
+    s.cookies = cj
+    resp = s.post(url, data=payload, headers=headers)
+    if not resp.status_code == 200:
+        return None
+
+    return resp.json()
 
 
 def get_parsed_subs(data):
-    url = 'http://www.ufc.tv/category/'
-    # patch multiple class li tag returned from server -- IE: <li class="select" class="last">..</li>
-    # parser does not pick up both -- just the last class attr it sees
-    pattern = 'class=\"select\" class=\"last\"'
-    if re.compile(pattern).search(data):
-        data = re.sub(pattern, 'class=\"select\"', data)
+    # if we're at video depth, signal as such
+    if 'programs' in data or 'subCategories' not in data:
+        return []
 
-    soup  = BeautifulSoup(data)
-    lists = soup.find_all('ul', 'subMenuList')
-    lists[:] = [l for l in lists if not l.find('li', class_='select')]
+    subCategories = []
+    for sc in data['subCategories']:
+        subCategories.append({
+            'title': sc['name'], 
+            'url': c_base_url + sc['seoName']
+        })
 
-    s_list = []
+    return {
+        'paging': None, 
+        'items': subCategories
+    }
 
-    if len(lists) > 0:
-        subs = lists[0].find_all('a') 
-        if len(subs) > 0:     
-            for sub in subs:
-                t = sub.get_text().encode('utf-8')
-                u = url + sub['href']
-                s_list.append({
-                    'title': t, 
-                    'url': u
-                })
-
-    return s_list
-
-
+    
 def get_parsed_vids(data):
-    soup = BeautifulSoup(data)
-    vids = soup.find_all('table', 'narrowDetail oneCol')
+    if 'programs' not in data:
+        return []
+
+    img_base_url = 'https://neulionmdnyc-a.akamaihd.net/u/ufc/thumbs/'
     v_list = []
-    if len(vids) > 0:     
-        for vid in vids:
-            i_src   = vid.find('img', 'thumbImg')['src']
-            v_id    = re.compile('(\d+)_').search(i_src).group(0)[:-1]
-            v_title = vid.find('a', 'txt name').get_text().encode('utf-8')
-            v_date  = vid.find('span', 'item first').get_text()
-            v_plot  = vid.find('div', 'txt desc').get_text().encode('utf-8')
-            v_thumb = i_src
+    
+    for v in data['programs']:
 
-            v_list.append({
-                'id': v_id, 
-                'title': v_title, 
-                'thumb': v_thumb, 
-                'airdate': v_date, 
-                'plot': v_plot
+        if 'beginDateTime' in v:
+            v_date = v['beginDateTime']
+        else:
+            v_date  = v['releaseDate']
+
+        v_list.append({
+            'id': v['id'], 
+            'title': get_title(v), 
+            'thumb': img_base_url + v['image'], 
+            'airdate': datetime.datetime.strftime(parse_date(v_date, '%Y-%m-%dT%H:%M:%S.%f'), '%Y-%m-%d'), 
+            'plot': v['description'], 
+            'isLive': v['liveState'] if 'liveState' in v else 0
+        })
+      
+    return {
+        'paging': data['paging'] if 'paging' in data else None,
+        'items': v_list
+    }
+
+
+def get_title(program):
+    name  = program['name'].encode('utf-8')
+    if 'programCode' in program and program['programCode'].strip():
+        pcode = program['programCode'].encode('utf-8')
+        return '{0} - {1}'.format(pcode, name)
+    else:
+        return name
+
+
+def get_live_count():
+    try:
+        data = get_data(c_base_url + 'LIVE-EVENTS')
+        return sum(1 for i in data['programs'] if 'liveState' in i and i['liveState'] == 1)
+    except:
+        return 0
+
+
+def load_queue():
+    queued = queue_get()
+    if len(queued) > 0:
+        build_menu(queued)
+    else:
+        xbmcplugin.endOfDirectory(addon_handle, cacheToDisc=False)
+
+
+def get_accessToken():
+    payload = {
+        'format': 'json'
+    }
+    data = post_data('https://www.ufc.tv/secure/accesstoken', payload)
+    if data and 'accessToken' in data['data']:
+        return data['data']['accessToken']
+    return None
+
+
+def queue_get():
+    q_data = get_pers('https://apis.neulion.com/personalization_ufc/v1/playlist/get')
+    if 'contents' in q_data:
+        q_ids = [q['id'] for q in q_data['contents']]
+
+        if len(q_ids) > 0:
+            ids = ','.join(q_ids)
+            results = get_data('https://ufc.tv/service/programs', params={
+                'ids': ids,
+                'format': 'json'
             })
+            return get_parsed_vids(results)
 
-    return v_list
+    return []
+
+
+def get_pers(url, pid=None, ptype=None, count=0):
+    token = get_accessToken()
+    params = {
+        'token': token
+    }
+
+    if pid and ptype:
+        params['id'] = pid
+        params['type'] = ptype
+        
+    data = get_data(url, params=params)
+
+    if 'result' in data and data['result'] == 'unauthorized': # status still 200??
+        if count < 3:  # allow 3 retries on failure before bailing
+            # we need to re-auth and update token
+            print('UFCFP: get_pers re-auth for token (retry %s/3)' %(count+1))
+            if post_auth(get_creds()):
+                return get_pers(url, pid, ptype, (count+1))
+        else:
+            return None
+
+    return data
+
+
+def queue_set(id):
+    resp = get_pers('https://apis.neulion.com/personalization_ufc/v1/playlist/set', id, 'program')
+    if 'result' in resp and resp['result'] == 'success': 
+        notify('Success', 'Video added to queue')
+    else:
+        notify('Error', 'Unable to add video to queue')
+
+
+def queue_del(id):
+    resp = get_pers('https://apis.neulion.com/personalization_ufc/v1/playlist/delete', id, 'program')
+    if 'result' in resp and resp['result'] == 'success':
+        xbmc.executebuiltin('Container.Refresh') 
+    else:
+        notify('Error', 'Unable to remove video from queue')
+
+
+def goto_page(url, curr_pn, max_pn):
+    pn = 0
+    input_pn = xbmcgui.Dialog().numeric(0, 'Go to page number:')
+    if input_pn:
+        pn = int(input_pn)
+    if pn > 0 and pn <= max_pn:
+        traverse(url, pn)
+    else:
+        xbmcgui.Dialog().ok('Error', 'Invalid page selected. Returning to page %s.' %(curr_pn))
+        traverse(url, curr_pn)
+
+
+def parse_date(dateString, format='%Y-%m-%d %H:%M:%S.%f'):
+    try:
+        p_date = datetime.datetime.strptime(dateString, format)
+    except TypeError:
+        p_date = datetime.datetime.fromtimestamp(time.mktime(time.strptime(dateString, format)))
+    return p_date
 
 
 def needs_refresh(cache_date):
-    try:
-        p_date = datetime.datetime.strptime(cache_date, '%Y-%m-%d %H:%M:%S.%f')
-    except TypeError:
-        p_date = datetime.datetime.fromtimestamp(time.mktime(time.strptime(cache_date, '%Y-%m-%d %H:%M:%S.%f')))
-
+    p_date = parse_date(cache_date)
     delta = (datetime.datetime.now() - p_date).seconds / 60
     interval = addon.getSetting('cacheInterval')
     print 'UFCFP: Minutes elapsed since last cached: {0}. Set at: {1}.'.format(delta, interval)
     return delta >= int(interval)
 
 
-def traverse(url):
-    print("UFCFP: Traversing categories for URL: " + url)
+def traverse(url, pn=None):
+    p_url = url + '/%s' %(pn) if pn else url
+    print("UFCFP: Traversing categories for URL: " + p_url)
     # check / load from cache if available and prior to next refresh interval
     items  = None
-    cached = get_cacheItem(url)
+    cached = None
+
+    if should_cache(p_url):
+        cached = get_cacheItem(p_url)
+
     if cached and not needs_refresh(cached['lastCached']):
         items = cached['data']
         print('UFCFP: Using cached data..')
 
     else:
         print('UFCFP: No cached data. Fetching new data..')
-        data = get_data(url)
+        params = None
+        if pn:
+            params = {
+                'format': 'json', 
+                'pn': pn
+            }
+
+        data = get_data(url, params)
+
         if not data:
             # ideally, we need to throw an error here, because we received no data from the server
             print('UFCFP get_data() returned no data')
             dialog = xbmcgui.Dialog()
             dialog.ok('Error', 'Unable to load content. Check log for more details.')
+            return
 
         items = get_parsed_subs(data)
-        save_cacheItem(url, {
-            'data': items, 
-            'lastCached': str(datetime.datetime.now())
-        })
 
         if len(items) == 0:
             # no sub categories, so we're likely at video list depth
             items = get_parsed_vids(data)
-            save_cacheItem(url, {
-                'data': items, 
+            if len(items) == 0:
+                dialog = xbmcgui.Dialog()
+                dialog.ok('No content', 'No content found.')
+                return
+
+        # save the sub-category or video list data to cache
+        if should_cache(p_url):
+            save_cacheItem(p_url, {
+                'data': items,
                 'lastCached': str(datetime.datetime.now())
             })
-            # TODO: sort??
 
     build_menu(items)
+
+
+def should_cache(url):
+    if 'LIVE-EVENTS' in url or 'JUST-ADDED' in url:
+        return False
+    return True
 
 
 def play_video(v_id, v_title):
@@ -349,6 +536,7 @@ def play_video(v_id, v_title):
             dialog.ok('Authorization Error', 'Authorization to UFC Fight Pass failed.')
 
     if stream:
+        stream = stream + '|User-Agent=' + ua
         item = xbmcgui.ListItem(label=v_title)
         xbmc.Player().play(stream, item)
     else:
@@ -366,10 +554,24 @@ def router(paramstring):
         elif action == 'play':
             play_video(params['i'], params['t'])
         elif action == 'traverse':
-            traverse(params['u'])
+            pn = None
+            if 'pn' in params:
+                pn = params['pn']
+            traverse(params['u'], pn)
+        elif action == 'queue':
+            load_queue()
+        elif action == 'queueSet':
+            queue_set(params['i'])
+        elif action == 'queueDel':
+            queue_del(params['i'])
+        elif action == 'goto_pn':
+            goto_page(params['u'], params['c'], params['m'])
+
     else:
         main()
 
+def notify(header, msg, wait=3000, icon=addon_icon):
+    xbmc.executebuiltin('Notification(%s,%s,%s,%s)' %(header, msg, wait, icon))
 
 
 # data caching layer -- should move this into another class..
