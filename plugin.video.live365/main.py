@@ -24,6 +24,7 @@ sys.path.append( os.path.join( RESOURCES, "lib" ) )
 FANART=PATH+'/fanart.jpg'
 
 
+
 ## COMMON Functions
 
 def addLinkItem(name, url, mode, params=1, iconimage='DefaultFolder.png', infoLabels=False, IsPlayable=True,fanart=FANART,itemcount=1,contextmenu=None):
