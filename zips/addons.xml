@@ -95,32 +95,6 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.live365" name="LIVE365" version="1.0.2" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="service.cronxbmc" optional="true"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="main.py">
-        <provides>video</provides>
-    </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">[B][COLORred]LIVE SPORTS 365[/COLOR][/B]</summary>
-    <description lang="en">[B][COLORred]LIVE SPORTS 365[/COLOR][/B]</description>
-    <disclaimer lang="en">[B][COLORlime]TTMEDIA DOES NOT HOST ANY OF THE MATERIAL IN THIS ADD-ON.[/COLOR][/B]</disclaimer>
-    <language></language>
-    <platform>all</platform>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    <forum></forum>
-    <website></website>
-    <email></email>
-  <assets>
-    <icon></icon>
-    <fanart></fanart>
-  </assets>
-  <news></news>
-  </extension>
-</addon>
-
 <addon
   id="plugin.video.SportsDevil"
   version="2017.11.15.NL1115"
@@ -190,7 +164,7 @@ For updates check the readme.
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="6.6" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="6.7" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
       <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -201,6 +175,7 @@ For updates check the readme.
         <import addon="script.module.xmltodict" version="0.9.0" />
         <import addon="script.module.thetvdb" />
         <import addon="script.module.metadatautils" />
+		<import addon="script.module.live365" version="1.0.3" />
 		<import addon="script.module.raccuktvnow" version="1.0" />
 		<import addon="script.module.raccnettv"  version="1.0" />
 		<import addon="script.video.F4mProxy" version="2.8.7" />
@@ -208,7 +183,7 @@ For updates check the readme.
         <!--<import addon="script.module.web-pdb" version="1.0"/>-->
         <import addon="script.module.resolveurl" />
         <import addon="plugin.video.youtube" />
-		<import addon="plugin.video.live365" version="1.0.0" />
+
 		<import addon="plugin.video.streammovie" version="1.0.0" />
 		<import addon="plugin.video.ufcfightpass" version="0.9.1" />
 		<import addon="plugin.video.f4mTester" version="2.7.2" />
@@ -253,7 +228,7 @@ For updates check the readme.
   </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="TTMedia Repository" version="1.3.0" provider-name="TTMedia">
+<addon id="repository.ttmedia" name="TTMedia Repository" version="1.3.1" provider-name="TTMedia">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
@@ -284,6 +259,32 @@ For updates check the readme.
 		<description lang="en">[COLORlime]THIS REPOSITORY HAS THE LATEST WORK FROM TTMEDIA[/COLOR]</description>
 		<genre></genre>
 </extension>
+</addon>
+
+<addon id="script.module.live365" name="LIVE365" version="1.0.3" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="service.cronxbmc" optional="true"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="main.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">[B][COLORred]LIVE SPORTS 365[/COLOR][/B]</summary>
+    <description lang="en">[B][COLORred]LIVE SPORTS 365[/COLOR][/B]</description>
+    <disclaimer lang="en">[B][COLORlime]TTMEDIA DOES NOT HOST ANY OF THE MATERIAL IN THIS ADD-ON.[/COLOR][/B]</disclaimer>
+    <language></language>
+    <platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+  <assets>
+    <icon>icon.png</icon>
+    <fanart>fanart.jpg</fanart>
+  </assets>
+  <news></news>
+  </extension>
 </addon>
 
 <addon id="script.module.livenettv" name="[B][COLORlime]LIVE NETTV[/COLOR][/B]" version="1.1" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
