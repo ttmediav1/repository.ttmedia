@@ -1,7 +1,7 @@
 <settings>
     <setting id="autoplay" value="true" />
-    <setting id="password" value="kellogg" />
-    <setting id="username" value="kellogg" />
+    <setting id="password" value="" />
+    <setting id="username" value="" />
     <setting id="view" value="Wall" />
 </settings>
 

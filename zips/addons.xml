@@ -17,8 +17,8 @@
 
 <addon id="plugin.video.bosstechmediaV3"
        name="BossTech Media [COLOR red]V3[/COLOR]"
-       version="1.3"
-       provider-name="TT Media">
+       version="1.4"
+       provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
 	<import addon="script.module.requests" />
@@ -30,7 +30,7 @@
   <extension point="xbmc.addon.metadata">
     <summary lang="en">BOSSTECH MEDIA[COLORred]V3[/COLOR]</summary>
     <language>en</language>
-    <description lang="en">[COLORlightskyblue]BOSSTECH MEDIA V3 ADDON - SUPPLIER OF GREAT QUALITY AND STABLE STREAMS.[/COLOR]</description>
+    <description lang="en">[B][COLORlightskyblue]BOSSTECH MEDIA V3 ADDON SUPPLIER OF GREAT QUALITY AND STABLE STREAMS.[/COLOR][/B]</description>
      <platform>all</platform>
   </extension>
 </addon>
@@ -95,7 +95,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.live365" name="LIVE365" version="1.0.1" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.live365" name="LIVE365" version="1.0.2" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="service.cronxbmc" optional="true"/>
@@ -114,7 +114,7 @@
     <website></website>
     <email></email>
   <assets>
-    <icon>icon.png</icon>
+    <icon></icon>
     <fanart></fanart>
   </assets>
   <news></news>
@@ -167,7 +167,7 @@ For updates check the readme.
 
 <addon id="plugin.video.streammovie"
        name="[B][COLORwhite]Stream[/COLOR][/B][B][COLORred]Movie[/COLOR][/B]"
-       version="1.0.0"
+       version="1.0.2"
        provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -180,17 +180,17 @@ For updates check the readme.
         <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-      <summary lang="en">[B][COLORred]EPIC ONE CLICK FLIX[/COLOR][/B]</summary>
+      <summary lang="en">[COLORred]EPIC ONE CLICK FLIX[/COLOR]</summary>
       <summary lang="he"></summary>
-      <description lang="en"></description>
+      <description lang="en">[B][COLORred]EPIC ONE CLICK FLIX[/COLOR][/B]</description>
       <description lang="he"></description>
-      <disclaimer lang="en">[COLORlawngreen]THE AUTHOR OF THIS ADDON DO NOT HOST ANY OF THE CONTENT WHICH IS FOUND AND HAVE NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS.[/COLOR]</disclaimer>
+      <disclaimer lang="en">[B][COLORlime]THE AUTHOR OF THIS ADDON DO NOT HOST ANY OF THE CONTENT WHICH IS FOUND AND HAVE NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS[/COLOR][/B]</disclaimer>
       <disclaimer lang="he"></disclaimer>
       <platform>all</platform>
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[COLORlime]TEMPEST[/COLOR]" version="6.5" provider-name="TTMedia">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="6.6" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
       <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -219,11 +219,11 @@ For updates check the readme.
     </extension>
     <extension point="xbmc.service" library="service.py" start="[login|startup]" />
     <extension point="xbmc.addon.metadata">
-      <summary lang="en">[COLORred]EPIC TUNES TUBE N FLIX[/COLOR]</summary>
+      <summary lang="en">[B][COLORred]EPIC TUNES TUBE N FLIX[/COLOR][/B]</summary>
       <summary lang="he"></summary>
-      <description lang="en">[COLORlawngreen]THE AUTHOR OF THIS ADDON DOES NOT HOST ANY OF THE CONTENT WHICH IS FOUND IN IT AND HAVE NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS.[/COLOR][COLORred]SPECIAL SHOUT OUT TO THE ORIGINAL DEVS OF JEN AND TO ALL THE DEVS IN THE JEN GROUP WITHOUT THEM THIS ADDON WOULDNT OF BEEN POSSIBLE!![/COLOR]</description>
+      <description lang="en">[B][COLORlawngreen]THE AUTHOR OF THIS ADDON DOES NOT HOST ANY OF THE CONTENT WHICH IS FOUND IN IT AND HAVE NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS.[/COLOR][/B][B][COLORred]SPECIAL SHOUT OUT TO THE ORIGINAL DEVS OF JEN AND TO ALL THE DEVS IN THE JEN GROUP WITHOUT THEM THIS ADDON WOULDNT OF BEEN POSSIBLE!![/COLOR][/B]</description>
       <description lang="he"></description>
-      <disclaimer lang="en">[COLORlawngreen]THE AUTHOR OF THIS ADDON DO NOT HOST ANY OF THE CONTENT WHICH IS FOUND AND HAVE NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS.[/COLOR]</disclaimer>
+      <disclaimer lang="en">[B][COLORlawngreen]THE AUTHOR OF THIS ADDON DO NOT HOST ANY OF THE CONTENT WHICH IS FOUND AND HAVE NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS.[/COLOR][/B]</disclaimer>
       <disclaimer lang="he"></disclaimer>
       <platform>all</platform>
         <website>www.ttmedia.live</website>
@@ -253,7 +253,7 @@ For updates check the readme.
   </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="TTMedia Repository" version="1.2.9" provider-name="TTMedia">
+<addon id="repository.ttmedia" name="TTMedia Repository" version="1.3.0" provider-name="TTMedia">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
@@ -286,6 +286,55 @@ For updates check the readme.
 </extension>
 </addon>
 
+<addon id="script.module.livenettv" name="[B][COLORlime]LIVE NETTV[/COLOR][/B]" version="1.1" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.pyamf" />
+    <import addon="script.module.livestreamer" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.routing" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>all</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_gb">[B][COLORred]LIVE NETTV[/COLOR][/B]</summary>
+    <description lang="en_gb">[B][COLORlime]PROVIDES YOU STREAMS FROM LIVE NETTV[/COLOR][/B]</description>
+    <disclaimer lang="en_gb"></disclaimer>
+    <language></language>
+    <platform>all</platform>
+    <license></license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <source></source>
+  </extension>
+</addon>
+
+<addon id="script.module.livenow" name="[B][COLORlime]LIVE NOW[/COLOR][/B]" version="1.1" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.livestreamer" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.routing" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>all</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_gb">[B][COLORred]LIVE TV[/COLOR][/B]</summary>
+    <description lang="en_gb">[B][COLORlime]THE AUTHOR OFF THIS ADD-ON DOES NOT HOST ANY OF THE CONTENT[/COLOR][/B]</description>
+    <disclaimer lang="en_gb"></disclaimer>
+    <language></language>
+    <platform>all</platform>
+    <license></license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <source></source>
+  </extension>
+</addon>
+
 <addon id="script.module.livestreamer"
        name="livestreamer"
        version="1.12.0"
@@ -311,55 +360,6 @@ For updates check the readme.
     <license>Simplified BSD</license>
     <source>https://github.com/chrippa/livestreamer.git</source>
     <website>http://livestreamer.io</website>
-  </extension>
-</addon>
-
-<addon id="script.module.raccnettv" name="RACC Live NetTv APK" version="1.0" provider-name="RACC">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.pyamf" />
-    <import addon="script.module.livestreamer" />
-    <import addon="script.module.requests" />
-    <import addon="script.module.routing" />
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="addon.py">
-    <provides>all</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en_gb">RACC Live NetTv Module</summary>
-    <description lang="en_gb">Provides you streams from Live NetTv Apk</description>
-    <disclaimer lang="en_gb"></disclaimer>
-    <language></language>
-    <platform>all</platform>
-    <license></license>
-    <forum></forum>
-    <website></website>
-    <email></email>
-    <source></source>
-  </extension>
-</addon>
-
-<addon id="script.module.raccuktvnow" name="RACC UkTvNow APK" version="1.0" provider-name="RACC">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.livestreamer" />
-    <import addon="script.module.requests" />
-    <import addon="script.module.routing" />
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="addon.py">
-    <provides>all</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en_gb">UkTvNow APK</summary>
-    <description lang="en_gb">Module for UkTvNow APK</description>
-    <disclaimer lang="en_gb"></disclaimer>
-    <language></language>
-    <platform>all</platform>
-    <license></license>
-    <forum></forum>
-    <website></website>
-    <email></email>
-    <source></source>
   </extension>
 </addon>
 
