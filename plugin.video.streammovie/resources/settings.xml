@@ -1,8 +1,0 @@
-<settings>
-	<category label="General">
-		<setting id="username" label="Username" option="hidden" type="text" default="" />
-		<setting id="password" label="Password" option="hidden" type="text" default="" />
-		<setting id="autoplay" label="Auto Play Item" type="bool" default="false" />
-		<setting id="view" label="View Type" type="labelenum" default="unset" values="Wall|List" />
-	</category> 
-</settings>
