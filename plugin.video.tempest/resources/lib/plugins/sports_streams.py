@@ -41,8 +41,8 @@ from unidecode import unidecode
 
 CACHE_TIME = 3600  # change to wanted cache time in seconds
 
-addon_fanart = xbmcaddon.Addon().getAddonInfo('fanart')
-addon_icon = xbmcaddon.Addon().getAddonInfo('icon')
+addon_fanart = xbmcaddon.Addon().getAddonInfo('http://ttmedia.live/tempest/fanart2.jpg')
+addon_icon = xbmcaddon.Addon().getAddonInfo('https://upload.wikimedia.org/wikipedia/commons/d/db/Sports_portal_bar_icon.png')
 User_Agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36'
 
 class Sports_streams(Plugin):
@@ -54,8 +54,8 @@ class Sports_streams(Plugin):
             if "games" in item.get("sport_stream", ""):
                 result_item = {
                     'label': item["title"],
-                    'icon': item.get("thumbnail", addon_icon),
-                    'fanart': item.get("fanart", addon_fanart),
+                    'icon': item.get("https://upload.wikimedia.org/wikipedia/commons/d/db/Sports_portal_bar_icon.png", addon_icon),
+                    'fanart': item.get("http://ttmedia.live/tempest/fanart2.jpg", addon_fanart),
                     'mode': "Sport_Stream",
                     'url': item.get("sport_stream", ""),
                     'folder': True,
