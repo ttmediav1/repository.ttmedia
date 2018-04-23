@@ -139,7 +139,7 @@ For updates check the readme.
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="6.9" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="7.0" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
       <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
