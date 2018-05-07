@@ -10,7 +10,7 @@ item_info_build=LiveSports - %s
 
 item_info_name=pUrl
 item_info_from=@PARAM1@
-item_info_build=http://livesports.pw/embedn.php?file=%s&height=397&width=650
+item_info_build=http://livesports.pw/embedna.php?file=%s&height=397&width=650
 #item_info_convert=debug
 
 item_info_name=hls_url1_

@@ -47,6 +47,7 @@ def drenchDec(data, key):
 
 def zadd(data):
     if re.search(".*\w+\s*=\s*eval\(\"\(\"\+\w+\+", data):
+        
         jsvar = re.findall(".*\w+\s*=\s*eval\(\"\(\"\+(\w+)\+", data)[0]
         matches = re.findall(jsvar+'\s+\+=\s*(\w+)',data)
         jsall = ''
@@ -56,6 +57,7 @@ def zadd(data):
                 tmp = re.findall(match+'\s*=\s*[\'\"](.*?)[\"\'];',data)
                 if len(tmp)>0:
                     jsall += tmp[0]
+            #lib.common.log("JairoXZADD:" + data)
             tmp_ = re.sub(firstword+r".*eval\(\"\(\"\+\w+\+\"\)\"\);", jsall, data, count=1, flags=re.DOTALL)
             data = tmp_
         except:
@@ -87,10 +89,12 @@ def zadd(data):
 #     return data
 
 def zadd2(data):
-    #lib.common.log("JairoXZADD:" + data)
-    if re.search(".*\w+\s*=\s*eval\(\"\(\"\s*\+\s*\w+",data):
+    #lib.common.log("JairoXZADD2:" + data)
+    if re.search(r".*\w+\s*=\s*eval\(\"\(\"\s*\+\s*\w+",data):
         #jsvar = re.findall(".*\w+\s*=\s*eval\(\"\(\"\+(\w+)\+", data)[0]
-        matches = re.findall('\w+\s*=\s*\w+\s*\+\s*(\w+)',data)
+        matches = re.findall(r'\w+\s*=\s*\w+\s*\+\s*(\w+)',data)
+        if len(matches)==0:
+            matches = re.findall(r'\w+\s*=\s*\w+\s*\+\s*\'\'\s*\+\s*(\w+);',data)
         jsall = ''
         try:
             firstword = matches[0]
@@ -100,19 +104,22 @@ def zadd2(data):
                     tmp = re.findall(r";(%s)\s*=\s*'(.*?)';"%match,data)
                 if len(tmp)>0:
                     jsall += tmp[0][1]
-            #lib.common.log("JairoXZADD:" + jsall)
-            if re.compile(r"jwplayer\(\'\w+.*eval\(\"\(\"\s*\+\s*\w+\s*\+\s*\"\)\"\);", flags=re.DOTALL).findall(data):
-                    tmp_ = re.sub(r"jwplayer\(\'\w+.*eval\(\"\(\"\s*\+\s*\w+\s*\+\s*\"\)\"\);", jsall, data, count=1, flags=re.DOTALL)
-            if re.compile(r"\w+\.\w+\({.*}\s+</script>(.*)</script>", flags=re.DOTALL).findall(data):
+            
+            if re.compile(r"(jwplayer\(['\"]\w+.*?\}\);).*?eval\(\"\(\"", flags=re.DOTALL).findall(data):
+                tmp_ = re.sub(r"(jwplayer\(['\"]\w+.*?\}\);).*?eval\(\"\(\"", '\\1'+jsall, data, count=1, flags=re.DOTALL)
+            elif re.compile(r"\w+\.\w+\({.*}\s+</script>(.*)</script>", flags=re.DOTALL).findall(data):
                 tmp_ = re.sub(r"\w+.\w+\({.*}\s+</script>(.*)</script>", jsall, data, count=1, flags=re.DOTALL)
-            if re.search(r'player.attach.*?<\/script>', data, re.DOTALL) != None:
+            elif re.search(r'player.attach.*?<\/script>', data, re.DOTALL) != None:
                 tmp_ = re.sub(r'player.attach.*?<\/script>', jsall, data, count=1, flags=re.DOTALL)
-            data = tmp_
+            else: tmp_ = None
+            
+            if not tmp_ is None: data = tmp_
         except:
             data = data
             pass
 
     return data
+
 
 def zdecode(data):
     import csv

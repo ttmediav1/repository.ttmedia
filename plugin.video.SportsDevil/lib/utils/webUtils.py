@@ -100,6 +100,9 @@ class BaseRequest(object):
             referer = self.fixurl(referer.replace('wizhdsports.be','wizhdsports.is').replace('ibrod.tv','www.ibrod.tv').replace('livetv123.net','livetv.sx'))
         
         headers = {'Referer': referer}
+        
+        if 'liveonlinetv247' in urlparse.urlsplit(url).netloc: mobile = True
+
         if mobile:
             self.s.headers.update({'User-Agent' : 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1'})
             
@@ -127,8 +130,14 @@ class BaseRequest(object):
 
         if 'vipleague' in url or 'strikeout' in url or 'homerun' or 'nbastreams' in url:
             self.s.verify = False
+        
+        if 'bypassed' in url or 'livecamtv' in url:
+            self.s.verify = False
 
-        if 'firstonetv' in url:
+        if 'firstonetv' in url: 
+            self.s.verify = False
+
+        if 'vaughnlive.tv' in url:
             self.s.verify = False
 
         
@@ -155,9 +164,20 @@ class BaseRequest(object):
                 #headers['Content-Type'] = 'application/x-www-form-urlencoded'
                 #headers['User-Agent'] = self.s.headers['User-Agent']
                 #lib.common.log("JairoX10:" + form_data[0][1])
-               
+            if 'firstonetv' in url and len(form_data) > 0:    
+                # tmp_data = dict(form_data)
+                # cookies = str(tmp_data['cookie'])
+                # cookies = cookies.replace('___', ';')
+                cookies = requests.utils.dict_from_cookiejar(self.s.cookies)
+                evercookie = {'evercookie_cache': '', 'evercookie_etag': '', 'evercookie_png': '', 'f1tvuvid': ''}
+                cookies.update(evercookie)
+                cookiestr = "; ".join(["=".join([key, str(val)]) for key, val in cookies.items()])
+                headers['cookie'] = cookiestr
+                # tmp_data.pop('cookie')
+                # form_data = tmp_data.items()
 
             r = self.s.post(url, headers=headers, data=form_data, timeout=20)
+            
         else:
             try:
                 r = self.s.get(url, headers=headers, timeout=20)

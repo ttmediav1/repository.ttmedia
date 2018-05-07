@@ -8,11 +8,14 @@ def findall(data,regex):
     return result
 
 def parseTextToGroups(txt, regex):
-    p = re.compile(regex, re.DOTALL + re.MULTILINE + re.UNICODE)
-    m = p.match(txt)
-    if m:
-        return m.groups()
-    else:
+    try:
+        p = re.compile(regex, re.DOTALL + re.MULTILINE + re.UNICODE)
+        m = p.match(txt)
+        if m:
+            return m.groups()
+        else:
+            return None
+    except:
         return None
     
 def parseText(txt, regex, variables=[]):

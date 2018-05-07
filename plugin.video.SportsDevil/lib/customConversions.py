@@ -185,9 +185,9 @@ def getInfo(item, params, src, xml=False, mobile=False):
         pass
 
     common.log('Get Info from: "'+ paramPage + '" from "' + referer + '"')
-    #common.log('JairoX1:' + paramRegex)
+    #common.log('JairoX_GETINFO1:' + paramRegex)
     data = common.getHTML(paramPage, form_data, referer, xml, mobile, ignoreCache=False, demystify=True)
-    #common.log('JairoX2:' + str(data.encode('ascii', 'ignore').decode('ascii')))
+    #common.log('JairoX_GETINFO2:' + str(data.encode('ascii', 'ignore').decode('ascii')))
     return reg.parseText(data, paramRegex, variables)
 
 def hex2ascii(src):
@@ -416,7 +416,7 @@ def bcast64(src):
         n = s << 2 | o >> 4
         r = (o & 15) << 4 | u >> 2
         i = (u & 3) << 6 | a
-        t = t + chr(n);
+        t = t + chr(n)
         if (u != 64):
             t = t + chr(r)
         if (a != 64):
