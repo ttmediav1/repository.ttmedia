@@ -196,7 +196,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="7.6" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="7.5" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
       <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -213,7 +213,6 @@
 		<import addon="script.module.livestreamer" optional="true" />
 		<import addon="script.module.streamlink.base" version="2018.02.24" />
 		<import addon="script.module.streamlink.crypto" version="1.4.0" />
-		<import addon="script.module.IlluminatiPair" version="1.1" />
         <!--<import addon="script.module.web-pdb" version="1.0"/>-->
         <import addon="script.module.resolveurl" />
 		<import addon="plugin.video.livenettv" version="1.3" />
@@ -264,7 +263,7 @@
   </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="TTMedia Repository" version="1.4.1" provider-name="TTMedia">
+<addon id="repository.ttmedia" name="TTMedia Repository" version="1.4.0" provider-name="TTMedia">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
@@ -297,7 +296,7 @@
 </extension>
 </addon>
 
-<addon id="script.IlluminatiPair" name="[COLORlime]PAIRING TOOL[/COLOR]" version="1.1" provider-name="[B][I][COLORlime]TTMedia[/COLOR][/I][/B]">
+<addon id="script.IlluminatiPair" name="[COLORlime]PAIRING TOOL[/COLOR]" version="1.1" provider-name="[B][I][COLORlime]Klepto[/COLOR][/I][/B]">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 	</requires>

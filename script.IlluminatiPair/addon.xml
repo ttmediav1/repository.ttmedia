@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.IlluminatiPair" name="[COLORlime]PAIRING TOOL[/COLOR]" version="1.1" provider-name="[B][I][COLORlime]TTMedia[/COLOR][/I][/B]">
+<addon id="script.IlluminatiPair" name="[COLORlime]PAIRING TOOL[/COLOR]" version="1.1" provider-name="[B][I][COLORlime]Klepto[/COLOR][/I][/B]">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 	</requires>
