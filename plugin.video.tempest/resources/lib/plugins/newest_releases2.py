@@ -23,18 +23,10 @@
     Returns the New Releases List-
 
     <dir>
-    <title>New Releases</title>
-    <Airtable>new_releases/page1</Airtable>
+    <title>Newest Releases2</title>
+    <Airtable>newest_releases2</Airtable>
     </dir>
 
-
-
-    Returns the Newest Releases List-
-
-    <dir>
-    <title>Newest Releases</title>
-    <Airtable>newest_releases/page1</Airtable>
-    </dir>
 
 
     --------------------------------------------------------------
@@ -50,6 +42,7 @@ import os
 import xbmc
 import xbmcaddon
 import json
+import __builtin__
 from koding import route
 from ..plugin import Plugin
 from resources.lib.util.context import get_context_items
@@ -63,24 +56,25 @@ from unidecode import unidecode
 
 CACHE_TIME = 3600  # change to wanted cache time in seconds
 
+TMDB_api_key = __builtin__.tmdb_api_key
 addon_fanart = xbmcaddon.Addon().getAddonInfo('fanart')
 addon_icon = xbmcaddon.Addon().getAddonInfo('icon')
 AddonName = xbmc.getInfoLabel('Container.PluginName')
 AddonName = xbmcaddon.Addon(AddonName).getAddonInfo('id')
 
 
-class RELEASES(Plugin):
-    name = "releases"
+class NEWEST_RELEASES2(Plugin):
+    name = "newest_releases2"
 
     def process_item(self, item_xml):
         if "<Airtable>" in item_xml:
             item = JenItem(item_xml)
-            if "new_releases/" in item.get("Airtable", ""):
+            if "newest_releases2" in item.get("Airtable", ""):
                 result_item = {
                     'label': item["title"],
                     'icon': item.get("thumbnail", addon_icon),
                     'fanart': item.get("fanart", addon_fanart),
-                    'mode': "new_releases",
+                    'mode': "newest_releasesv2",
                     'url': item.get("Airtable", ""),
                     'folder': True,
                     'imdb': "0",
@@ -95,308 +89,28 @@ class RELEASES(Plugin):
                     'fanart_image': result_item["fanart"]
                 }
                 result_item['fanart_small'] = result_item["fanart"]
-                return result_item
-            elif "newest_releases" in item.get("Airtable", ""):
-                result_item = {
-                    'label': item["title"],
-                    'icon': item.get("thumbnail", addon_icon),
-                    'fanart': item.get("fanart", addon_fanart),
-                    'mode': "newest_releases",
-                    'url': item.get("Airtable", ""),
-                    'folder': True,
-                    'imdb': "0",
-                    'season': "0",
-                    'episode': "0",
-                    'info': {},
-                    'year': "0",
-                    'context': get_context_items(item),
-                    "summary": item.get("summary", None)
-                }
-                result_item["properties"] = {
-                    'fanart_image': result_item["fanart"]
-                }
-                result_item['fanart_small'] = result_item["fanart"]
-                return result_item                                   
+                return result_item                                  
                                
 
-@route(mode='new_releases', args=["url"])
+@route(mode='newest_releasesv2', args=["url"])
 def new_releases(url):
     xml = ""
-    url = url.replace("new_releases/", "")
-    at = Airtable('appTkr2yvgd1LTyD6', 'Releases_New', api_key='keyOHaxsTGzHU9EEh')
-    match = at.get_all(maxRecords=700, sort=['title'])
-    results = re.compile("link5': u'(.+?)'.+?link4': u'(.+?)'.+?tmdb': u'(.+?)'.+?link1': u'(.+?)'.+?link3': u'(.+?)'.+?link2': u'(.+?)'.+?title': u'(.+?)'.+?year': u'(.+?)'",re.DOTALL).findall(str(match))
-    total = len(results)
-    if total>1:
-        Page1 = results[0:24]
-    if total>25:
-        Page2 = results[25:49]
-    if total>49:
-        Page3 = results[50:74]
-    if total>74:
-        Page4 = results[75:99]
-    if total>99:
-        Page5 = results[100:124]
-    if total>124:
-        Page6 = results[125:149]
-    if total>149:
-        Page7 = results[150:174]
-    if total>174:
-        Page8 = results[175:199]
-    if total>199:
-        Page9 = results[200:224]
-    if total>224:
-        Page10 = results[225:249]
-    if total>249:
-        Page11 = results[250:274]
-    if total>274:
-        Page12 = results[275:299]
-    if url == "page1":
-        page_num = Page1
-        call = "page2"
-    if url == "page2":
-        page_num = Page2
-        call = "page3"
-    if url == "page3":
-        page_num = Page3
-        call = "page4"
-    if url == "page4":
-        page_num = Page4
-        call = "page5"
-    if url == "page5":
-        page_num = Page5
-        call = "page6"
-    if url == "page6":
-        page_num = Page6
-        call = "page7"
-    if url == "page7":
-        page_num = Page7
-        call = "page8"
-    if url == "page8":
-        page_num = Page8
-        call = "page9"
-    if url == "page9":
-        page_num = Page9
-        call = "page10"
-    if url == "page10":
-        page_num = Page10
-        call = "page11"
-    if url == "page11":
-        page_num = Page11
-        call = "page12"
-    if url == "page12":
-        page_num = Page12
-        call = "page13"
-        
-    for link5,link4,tmdb,link1,link3,link2,title,year in page_num:
-        if "-*-" in link2:
-            (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
-            summary = remove_non_ascii(summary)
-            title = remove_non_ascii(title)
-            link2 = link2.replace("-*-","")
-            xml += "<item>"\
-                    "<title>%s</title>"\
-                    "<meta>"\
-                    "<content>movie</content>"\
-                    "<imdb>%s</imdb>"\
-                    "<title>%s</title>"\
-                    "<year>%s</year>"\
-                    "<thumbnail>%s</thumbnail>"\
-                    "<fanart>%s</fanart>"\
-                    "<summary>%s</summary>"\
-                    "</meta>"\
-                    "<link>"\
-                    "<sublink>%s</sublink>"\
-                    "<sublink>search</sublink>"\
-                    "<sublink>searchsd</sublink>"\
-                    "</link>"\
-                    "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1)
-        elif "-*-" in link3:
-            (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
-            summary = remove_non_ascii(summary)
-            title = remove_non_ascii(title)
-            link3 = link3.replace("-*-","")
-            xml += "<item>"\
-                    "<title>%s</title>"\
-                    "<meta>"\
-                    "<content>movie</content>"\
-                    "<imdb>%s</imdb>"\
-                    "<title>%s</title>"\
-                    "<year>%s</year>"\
-                    "<thumbnail>%s</thumbnail>"\
-                    "<fanart>%s</fanart>"\
-                    "<summary>%s</summary>"\
-                    "</meta>"\
-                    "<link>"\
-                    "<sublink>%s</sublink>"\
-                    "<sublink>%s</sublink>"\
-                    "<sublink>search</sublink>"\
-                    "<sublink>searchsd</sublink>"\
-                    "</link>"\
-                    "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2)
-        elif "-*-" in link4:
-            (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
-            summary = remove_non_ascii(summary)
-            title = remove_non_ascii(title)
-            link4 = link4.replace("-*-","")
-            xml += "<item>"\
-                    "<title>%s</title>"\
-                    "<meta>"\
-                    "<content>movie</content>"\
-                    "<imdb>%s</imdb>"\
-                    "<title>%s</title>"\
-                    "<year>%s</year>"\
-                    "<thumbnail>%s</thumbnail>"\
-                    "<fanart>%s</fanart>"\
-                    "<summary>%s</summary>"\
-                    "</meta>"\
-                    "<link>"\
-                    "<sublink>%s</sublink>"\
-                    "<sublink>%s</sublink>"\
-                    "<sublink>%s</sublink>"\
-                    "<sublink>search</sublink>"\
-                    "<sublink>searchsd</sublink>"\
-                    "</link>"\
-                    "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2,link3)                
-        elif "-*-" in link5:
-            (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
-            summary = remove_non_ascii(summary)
-            title = remove_non_ascii(title)
-            link5 = link5.replace("-*-","")
-            xml += "<item>"\
-                    "<title>%s</title>"\
-                    "<meta>"\
-                    "<content>movie</content>"\
-                    "<imdb>%s</imdb>"\
-                    "<title>%s</title>"\
-                    "<year>%s</year>"\
-                    "<thumbnail>%s</thumbnail>"\
-                    "<fanart>%s</fanart>"\
-                    "<summary>%s</summary>"\
-                    "</meta>"\
-                    "<link>"\
-                    "<sublink>%s</sublink>"\
-                    "<sublink>%s</sublink>"\
-                    "<sublink>%s</sublink>"\
-                    "<sublink>%s</sublink>"\
-                    "<sublink>search</sublink>"\
-                    "<sublink>searchsd</sublink>"\
-                    "</link>"\
-                    "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2,link3,link4)
-        else:
-            (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
-            summary = remove_non_ascii(summary)
-            title = remove_non_ascii(title)                  
-            xml += "<item>"\
-                    "<title>%s</title>"\
-                    "<meta>"\
-                    "<content>movie</content>"\
-                    "<imdb>%s</imdb>"\
-                    "<title>%s</title>"\
-                    "<year>%s</year>"\
-                    "<thumbnail>%s</thumbnail>"\
-                    "<fanart>%s</fanart>"\
-                    "<summary>%s</summary>"\
-                    "</meta>"\
-                    "<link>"\
-                    "<sublink>%s</sublink>"\
-                    "<sublink>%s</sublink>"\
-                    "<sublink>%s</sublink>"\
-                    "<sublink>%s</sublink>"\
-                    "<sublink>%s</sublink>"\
-                    "<sublink>search</sublink>"\
-                    "<sublink>searchsd</sublink>"\
-                    "</link>"\
-                    "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2,link3,link4,link5)
-    xml += "<dir>"\
-           "<title>[COLOR white ]%s[/COLOR]                [COLOR dodgerblue]Next Page >>[/COLOR]</title>"\
-           "<Airtable>new_releases/%s</Airtable>"\
-           "<thumbnail>http://www.clker.com/cliparts/a/f/2/d/1298026466992020846arrow-hi.png</thumbnail>"\
-           "</dir>" % (url, call)
-
-    jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
-        
-@route(mode='newest_releases', args=["url"])
-def newest_releases(url):
-    xml = ""
-    url = url.replace("newest_releases/", "")
     at = Airtable('app4O4BNC5yEy9wNa', 'Releases_Newest', api_key='keyOHaxsTGzHU9EEh')
     match = at.get_all(maxRecords=700, view='Grid view')
     results = re.compile("link5': u'(.+?)'.+?link4': u'(.+?)'.+?tmdb': u'(.+?)'.+?link1': u'(.+?)'.+?link3': u'(.+?)'.+?link2': u'(.+?)'.+?title': u'(.+?)'.+?year': u'(.+?)'",re.DOTALL).findall(str(match))
-    total = len(results)
-    if total>1:
-        Page1 = results[0:24]
-    if total>25:
-        Page2 = results[25:49]
-    if total>49:
-        Page3 = results[50:74]
-    if total>74:
-        Page4 = results[75:99]
-    if total>99:
-        Page5 = results[100:124]
-    if total>124:
-        Page6 = results[125:149]
-    if total>149:
-        Page7 = results[150:174]
-    if total>174:
-        Page8 = results[175:199]
-    if total>199:
-        Page9 = results[200:224]
-    if total>224:
-        Page10 = results[225:249]
-    if total>249:
-        Page11 = results[250:274]
-    if total>274:
-        Page12 = results[275:299]
-    if url == "page1":
-        page_num = Page1
-        call = "page2"
-    if url == "page2":
-        page_num = Page2
-        call = "page3"
-    if url == "page3":
-        page_num = Page3
-        call = "page4"
-    if url == "page4":
-        page_num = Page4
-        call = "page5"
-    if url == "page5":
-        page_num = Page5
-        call = "page6"
-    if url == "page6":
-        page_num = Page6
-        call = "page7"
-    if url == "page7":
-        page_num = Page7
-        call = "page8"
-    if url == "page8":
-        page_num = Page8
-        call = "page9"
-    if url == "page9":
-        page_num = Page9
-        call = "page10"
-    if url == "page10":
-        page_num = Page10
-        call = "page11"
-    if url == "page11":
-        page_num = Page11
-        call = "page12"
-    if url == "page12":
-        page_num = Page12
-        call = "page13"
-        
-    for link5,link4,tmdb,link1,link3,link2,title,year in page_num:
+    url2 = "https://api.themoviedb.org/3/list/68656?api_key=586aa0e416c8d3350aee09a2ebc178ac&language=en-US"
+    html2 = requests.get(url2).content
+    match2 = json.loads(html2)    
+    for link5,link4,tmdb,link1,link3,link2,title,year in results:
+        (thumbnail,fanart,summary) = tmdb_info(tmdb,match2)
         if "-*-" in link2:
-            (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
-            summary = remove_non_ascii(summary)
             title = remove_non_ascii(title)
-            link2 = link2.replace("-*-","")
+            summary = remove_non_ascii(summary)
             xml += "<item>"\
                     "<title>%s</title>"\
                     "<meta>"\
                     "<content>movie</content>"\
-                    "<imdb>%s</imdb>"\
+                    "<imdb></imdb>"\
                     "<title>%s</title>"\
                     "<year>%s</year>"\
                     "<thumbnail>%s</thumbnail>"\
@@ -408,17 +122,15 @@ def newest_releases(url):
                     "<sublink>search</sublink>"\
                     "<sublink>searchsd</sublink>"\
                     "</link>"\
-                    "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1)
+                    "</item>" % (title,title,year,thumbnail,fanart,summary,link1)   
         elif "-*-" in link3:
-            (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
-            summary = remove_non_ascii(summary)
             title = remove_non_ascii(title)
-            link3 = link3.replace("-*-","")
+            summary = remove_non_ascii(summary)
             xml += "<item>"\
                     "<title>%s</title>"\
                     "<meta>"\
                     "<content>movie</content>"\
-                    "<imdb>%s</imdb>"\
+                    "<imdb></imdb>"\
                     "<title>%s</title>"\
                     "<year>%s</year>"\
                     "<thumbnail>%s</thumbnail>"\
@@ -431,17 +143,15 @@ def newest_releases(url):
                     "<sublink>search</sublink>"\
                     "<sublink>searchsd</sublink>"\
                     "</link>"\
-                    "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2)
+                    "</item>" % (title,title,year,thumbnail,fanart,summary,link1,link2)
         elif "-*-" in link4:
-            (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
-            summary = remove_non_ascii(summary)
             title = remove_non_ascii(title)
-            link4 = link4.replace("-*-","")
+            summary = remove_non_ascii(summary)
             xml += "<item>"\
                     "<title>%s</title>"\
                     "<meta>"\
                     "<content>movie</content>"\
-                    "<imdb>%s</imdb>"\
+                    "<imdb></imdb>"\
                     "<title>%s</title>"\
                     "<year>%s</year>"\
                     "<thumbnail>%s</thumbnail>"\
@@ -455,41 +165,38 @@ def newest_releases(url):
                     "<sublink>search</sublink>"\
                     "<sublink>searchsd</sublink>"\
                     "</link>"\
-                    "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2,link3)                
+                    "</item>" % (title,title,year,thumbnail,fanart,summary,link1,link2,link3) 
         elif "-*-" in link5:
-            (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
-            summary = remove_non_ascii(summary)
             title = remove_non_ascii(title)
-            link5 = link5.replace("-*-","")
-            xml += "<item>"\
-                    "<title>%s</title>"\
-                    "<meta>"\
-                    "<content>movie</content>"\
-                    "<imdb>%s</imdb>"\
-                    "<title>%s</title>"\
-                    "<year>%s</year>"\
-                    "<thumbnail>%s</thumbnail>"\
-                    "<fanart>%s</fanart>"\
-                    "<summary>%s</summary>"\
-                    "</meta>"\
-                    "<link>"\
-                    "<sublink>%s</sublink>"\
-                    "<sublink>%s</sublink>"\
-                    "<sublink>%s</sublink>"\
-                    "<sublink>%s</sublink>"\
-                    "<sublink>search</sublink>"\
-                    "<sublink>searchsd</sublink>"\
-                    "</link>"\
-                    "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2,link3,link4)
-        else:
-            (thumbnail, fanart, imdb, summary) = pull_tmdb(title,year,tmdb)
             summary = remove_non_ascii(summary)
-            title = remove_non_ascii(title)                  
             xml += "<item>"\
                     "<title>%s</title>"\
                     "<meta>"\
                     "<content>movie</content>"\
-                    "<imdb>%s</imdb>"\
+                    "<imdb></imdb>"\
+                    "<title>%s</title>"\
+                    "<year>%s</year>"\
+                    "<thumbnail>%s</thumbnail>"\
+                    "<fanart>%s</fanart>"\
+                    "<summary>%s</summary>"\
+                    "</meta>"\
+                    "<link>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>%s</sublink>"\
+                    "<sublink>search</sublink>"\
+                    "<sublink>searchsd</sublink>"\
+                    "</link>"\
+                    "</item>" % (title,title,year,thumbnail,fanart,summary,link1,link2,link3,link4)
+        else:
+            title = remove_non_ascii(title)
+            summary = remove_non_ascii(summary)
+            xml += "<item>"\
+                    "<title>%s</title>"\
+                    "<meta>"\
+                    "<content>movie</content>"\
+                    "<imdb></imdb>"\
                     "<title>%s</title>"\
                     "<year>%s</year>"\
                     "<thumbnail>%s</thumbnail>"\
@@ -505,32 +212,29 @@ def newest_releases(url):
                     "<sublink>search</sublink>"\
                     "<sublink>searchsd</sublink>"\
                     "</link>"\
-                    "</item>" % (title,imdb,title,year,thumbnail,fanart,summary,link1,link2,link3,link4,link5)
-    xml += "<dir>"\
-           "<title>[COLOR white ]%s[/COLOR]                [COLOR dodgerblue]Next Page >>[/COLOR]</title>"\
-           "<Airtable>newest_releases/%s</Airtable>"\
-           "<thumbnail>http://www.clker.com/cliparts/a/f/2/d/1298026466992020846arrow-hi.png</thumbnail>"\
-           "</dir>" % (url, call)
-
+                    "</item>" % (title,title,year,thumbnail,fanart,summary,link1,link2,link3,link4,link5)                                                               
     jenlist = JenList(xml)
     display_list(jenlist.get_list(), jenlist.get_content_type())
 
-def pull_tmdb(title,year,tmdb):
+def tmdb_info(tmdb,match2):
     try:
-        search_title = title.replace(" ", "%20")
-        url = 'https://api.themoviedb.org/3/movie/%s?api_key=586aa0e416c8d3350aee09a2ebc178ac&language=en-US' % tmdb
-        html = requests.get(url).content
-        match = json.loads(html)
-        thumbnail = (match['poster_path'])
-        fanart = (match['backdrop_path'])
-        imdb = (match['imdb_id'])
-        summary = (match['overview'])
-        thumbnail = "https://image.tmdb.org/t/p/original"+str(thumbnail)
-        fanart = "https://image.tmdb.org/t/p/original"+str(fanart)
-        return thumbnail,fanart,imdb,summary
-
+        tmdb_res = match2['items']
+        for res in tmdb_res:
+            movie_id = str(res['id'])
+            if movie_id == tmdb:           
+                thumbnail = res['poster_path']
+                if not thumbnail:
+                    thumbnail = ""
+                summary = res['overview']
+                fanart = res['backdrop_path']
+                if not fanart:
+                    fanart = ""
+                thumbnail = "https://image.tmdb.org/t/p/original"+str(thumbnail)
+                fanart = "https://image.tmdb.org/t/p/original"+str(fanart)
+        return thumbnail,fanart,summary        
     except:
         return "","",""
+
 
 def remove_non_ascii(text):
     return unidecode(text)

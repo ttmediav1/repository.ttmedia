@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addons>
-<addon id="plugin.program.ttmediawizard" name="[COLORlime]TTMedia Wizard[/COLOR]" version="3.1" provider-name="[COLORred]TTMedia[/COLOR]">
+<addon id="plugin.program.ttmediawizard" name="[COLORlime]TTMedia Wizard[/COLOR]" version="3.2" provider-name="[COLORred]TTMedia[/COLOR]">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
@@ -146,6 +146,27 @@
   </extension>
 </addon>
 
+<addon id="plugin.video.rd"
+       name="AUTHORIZE RD"
+       version="1.0.5"
+       provider-name="Rogue">
+<requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.beautifulsoup" version="3.2.1"/>
+    <import addon="script.module.beautifulsoup4" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.simplejson" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">[COLOR blue]AddOn To Authorize Real DeBrid[/COLOR]</summary>
+    <description lang="en">[COLOR blue]AddOn To Authorize Real DeBrid[/COLOR]</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon
   id="plugin.video.SportsDevil"
   version="2018.04.11"
@@ -175,7 +196,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="7.4" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="7.5" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
       <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -242,7 +263,7 @@
   </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="TTMedia Repository" version="1.3.9" provider-name="TTMedia">
+<addon id="repository.ttmedia" name="TTMedia Repository" version="1.4.0" provider-name="TTMedia">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
