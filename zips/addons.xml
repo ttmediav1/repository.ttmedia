@@ -95,6 +95,55 @@
   </extension>
 </addon>
 
+<addon id="plugin.video.livenettv" name="Live NetTv" version="1.1" provider-name="TTMedia">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.pyamf" />
+    <import addon="script.module.livestreamer" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.routing" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>all</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_gb">LIVE NETTV</summary>
+    <description lang="en_gb">PROVIDES STREAMS FROM LIVE NETTV</description>
+    <disclaimer lang="en_gb"></disclaimer>
+    <language></language>
+    <platform>all</platform>
+    <license></license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <source></source>
+  </extension>
+</addon>
+
+<addon id="plugin.video.livetvnow" name="LiveTvNow" version="1.1" provider-name="TTMedia">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.livestreamer" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.routing" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>all</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_gb">LIVE UKTVNOW</summary>
+    <description lang="en_gb"></description>
+    <disclaimer lang="en_gb"></disclaimer>
+    <language></language>
+    <platform>all</platform>
+    <license></license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <source></source>
+  </extension>
+</addon>
+
 <addon id="plugin.video.rd"
        name="AUTHORIZE RD"
        version="1.0.5"
@@ -145,7 +194,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="7.8" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="7.9" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
       <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -166,6 +215,8 @@
         <import addon="script.module.resolveurl" />
         <import addon="plugin.video.youtube" />
 		<import addon="plugin.video.ufcfightpass" version="0.9.1" />
+		<import addon="plugin.video.livetvnow" version="1.1" />
+		<import addon="plugin.video.livenettv" version="1.1" />
 		<import addon="plugin.video.f4mTester" version="2.7.2" />
 		<import addon="plugin.video.SportsDevil" version="2018.04.11" />
 
@@ -210,7 +261,7 @@
   </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="TTMedia Repository" version="1.4.3" provider-name="TTMedia">
+<addon id="repository.ttmedia" name="TTMedia Repository" version="1.4.4" provider-name="TTMedia">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
@@ -310,55 +361,6 @@
     <license>Simplified BSD</license>
     <source>https://github.com/chrippa/livestreamer.git</source>
     <website>http://livestreamer.io</website>
-  </extension>
-</addon>
-
-<addon id="script.module.raccnettv" name="Live NetTv" version="1.0" provider-name="Thunder/RACC">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.pyamf" />
-    <import addon="script.module.livestreamer" />
-    <import addon="script.module.requests" />
-    <import addon="script.module.routing" />
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="addon.py">
-    <provides>all</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en_gb">RACC Live NetTv Module</summary>
-    <description lang="en_gb">Provides you streams from Live NetTv Apk</description>
-    <disclaimer lang="en_gb"></disclaimer>
-    <language></language>
-    <platform>all</platform>
-    <license></license>
-    <forum></forum>
-    <website></website>
-    <email></email>
-    <source></source>
-  </extension>
-</addon>
-
-<addon id="script.module.raccuktvnow" name="UkTvNow" version="1.0" provider-name="RACC">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.livestreamer" />
-    <import addon="script.module.requests" />
-    <import addon="script.module.routing" />
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="addon.py">
-    <provides>all</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en_gb">UkTvNow APK</summary>
-    <description lang="en_gb">Module for UkTvNow APK</description>
-    <disclaimer lang="en_gb"></disclaimer>
-    <language></language>
-    <platform>all</platform>
-    <license></license>
-    <forum></forum>
-    <website></website>
-    <email></email>
-    <source></source>
   </extension>
 </addon>
 

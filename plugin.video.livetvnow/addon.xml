@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.raccnettv" name="Live NetTv" version="1.0" provider-name="Thunder/RACC">
+<addon id="plugin.video.livetvnow" name="LiveTvNow" version="1.1" provider-name="TTMedia">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.pyamf" />
     <import addon="script.module.livestreamer" />
     <import addon="script.module.requests" />
     <import addon="script.module.routing" />
@@ -11,8 +10,8 @@
     <provides>all</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en_gb">RACC Live NetTv Module</summary>
-    <description lang="en_gb">Provides you streams from Live NetTv Apk</description>
+    <summary lang="en_gb">LIVE UKTVNOW</summary>
+    <description lang="en_gb"></description>
     <disclaimer lang="en_gb"></disclaimer>
     <language></language>
     <platform>all</platform>

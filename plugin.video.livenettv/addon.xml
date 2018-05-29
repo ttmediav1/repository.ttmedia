@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.raccuktvnow" name="UkTvNow" version="1.0" provider-name="RACC">
+<addon id="plugin.video.livenettv" name="Live NetTv" version="1.1" provider-name="TTMedia">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.pyamf" />
     <import addon="script.module.livestreamer" />
     <import addon="script.module.requests" />
     <import addon="script.module.routing" />
@@ -10,8 +11,8 @@
     <provides>all</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en_gb">UkTvNow APK</summary>
-    <description lang="en_gb">Module for UkTvNow APK</description>
+    <summary lang="en_gb">LIVE NETTV</summary>
+    <description lang="en_gb">PROVIDES STREAMS FROM LIVE NETTV</description>
     <disclaimer lang="en_gb"></disclaimer>
     <language></language>
     <platform>all</platform>
