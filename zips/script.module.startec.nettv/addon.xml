@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.livenettv" name="[B][COLORlime]LIVE NETTV[/COLOR][/B]" version="1.3" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="script.module.raccnettv" name="Live NetTv" version="1.0" provider-name="Thunder/RACC">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.pyamf" />
@@ -11,10 +11,9 @@
     <provides>all</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en_gb">[B][COLORred]LIVE NETTV[/COLOR][/B]</summary>
-    <description lang="en_gb">[B][COLORlime]PROVIDES YOU STREAMS FROM LIVE NETTV[/COLOR][/B]</description>
-    <disclaimer lang="en_gb">[B][COLORlime]THE AUTOR OF THIS ADD-ON DOSE NOT HOST ANY OF THE CONTENT WHICH IS FOUND IN IT AND HAVE NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS.[/COLOR][/B]</disclaimer>
-	<disclaimer lang="en_gb">[B][COLORred]CREDITS TO ORIGINAL AUTHOR RACC[/COLOR][/B]</disclaimer>
+    <summary lang="en_gb">RACC Live NetTv Module</summary>
+    <description lang="en_gb">Provides you streams from Live NetTv Apk</description>
+    <disclaimer lang="en_gb"></disclaimer>
     <language></language>
     <platform>all</platform>
     <license></license>
