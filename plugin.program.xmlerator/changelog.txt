@@ -1,0 +1,6 @@
+v5.0.4 Added text color and text bold to settings options
+
+v5.0.5 Bug fixes, color tags, numeric pad changed to keyboard
+v5.0.6 Bug fixes
+v5.0.7 Reverted to older working version
+v5.0.8 Added error code for same folder
