@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST REworked[/COLOR][/B]" version="8.2" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST REworked[/COLOR][/B]" version="8.3" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
       <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -17,7 +17,7 @@
 		<import addon="script.module.streamlink.base" version="2018.02.24" />
 		<import addon="script.module.streamlink.crypto" version="1.4.0" />
         <!--<import addon="script.module.web-pdb" version="1.0"/>-->
-        <import addon="script.module.resolveurl" version="5.0.10" />
+        <import addon="script.module.resolveurl" />
         <import addon="plugin.video.youtube" />
 		<import addon="plugin.video.ufcfightpass" version="0.9.1" />
 		<import addon="plugin.program.xmlerator" version="5.1.0" />
