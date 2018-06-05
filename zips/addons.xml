@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addons>
-<addon id="plugin.program.ttmediawizard" name="[COLORlime]TTMedia Wizard[/COLOR]" version="3.2" provider-name="[COLORred]TTMedia[/COLOR]">
+<addon id="plugin.program.ttmediawizard" name="[COLORlime]TTMedia Wizard[/COLOR]" version="3.3" provider-name="[COLORred]TTMedia[/COLOR]">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
@@ -214,7 +214,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="8.8" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="8.9" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
       <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -234,7 +234,7 @@
         <!--<import addon="script.module.web-pdb" version="1.0"/>-->
         <import addon="script.module.resolveurl" />
         <import addon="plugin.video.youtube" />
-		<import addon="plugin.video.ufcfightpass" version="0.9.1" />
+		<import addon="plugin.video.ufcfightpass" version="1.2.1" />
 		<import addon="plugin.program.xmlerator" version="5.1.0" />
 		<import addon="plugin.video.btmedia" version="1.0" />
 		<import addon="plugin.video.bosstechmediaV3" version="1.4" />
@@ -261,7 +261,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.video.ufcfightpass" name="UFC Fight Pass" version="0.9.1" provider-name="portse">
+<addon id="plugin.video.ufcfightpass" name="UFC Fight Pass" version="1.2.1" provider-name="portse">
   <requires>
     <import addon="xbmc.python" version="2.19.0"/>
     <import addon="script.module.requests" version="2.9.1"/>
@@ -271,8 +271,8 @@
   <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary>UFC Fight Pass Kodi Video Plugin</summary>
-    <description>Subscription based access to UFC Fight Pass online content</description>
+    <summary>UFC FIGHT PASS KODI VIDEO PLUGIN</summary>
+    <description>SUBSCRIPTION BASED ACCESS TO UFC FIGHT PASS ONLINE CONTENT</description>
     <platform>all</platform>
     <language>en</language>
     <disclaimer></disclaimer>
@@ -283,7 +283,7 @@
   </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="TTMedia Repository" version="1.5.2" provider-name="TTMedia">
+<addon id="repository.ttmedia" name="TTMedia Repository" version="1.5.3" provider-name="TTMedia">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
