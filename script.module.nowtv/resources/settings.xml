@@ -1,0 +1,7 @@
+<settings>
+    <category label="General">
+        <setting label="Use livestreamer" type="bool" id="livestreamer" default="true"/>
+    </category>
+    <setting id="auth_token" value="" />
+    <setting id="auth_token_time" value="0" />
+</settings>
