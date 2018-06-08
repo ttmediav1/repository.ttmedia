@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.video.plasmatvguide.ini.creator"
-version="1.0.0"
+version="1.0.2"
 name="Plasma TV Guide InI File Generator"
 provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
 <requires>
