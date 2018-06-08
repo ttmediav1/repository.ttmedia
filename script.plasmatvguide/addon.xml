@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.plasmatvguide" name="[B][COLORlime]Plasma TV Guide[/COLOR][/B]" version="1.0.O" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+	<requires>
+		<import addon="xbmc.python" version="2.19.0"/>
+		<import addon="script.module.simplejson" version="3.3.0"/>
+        <import addon="script.module.requests" />
+		<import addon="plugin.video.opentvguide.ini.creator" />
+	</requires>
+	<extension point="xbmc.python.script" library="addon.py">
+            <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.service" library="service.py" start="login"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">[B][COLORlime]PLASMA TV GUIDE ALLOWS YOU TO COMBINE SOME OF YOUR FAVOURITE LIVE TV ADD-ONS FOR USE WITH A FULLY WORKING EPG[/COLOR][/B]</summary>
+		<description lang="en">[B][COLORlime]PLASMA TV GUIDE ALLOWS YOU TO COMBINE SOME OF YOUR FAVOURITE LIVE TV ADD-ONS FOR USE WITH A FULLY WORKING EPG[/COLOR][/B]</description>
+		<disclaimer lang="en">[B][COLORred]PLASMA TV GUIDE IS BASED ON THE ORIGINAL TV GUIDE ADDON BY TWINTHER AND BLUEZED[/COLOR][/B]</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GPLv2</license>
+		<forum></forum>
+		<source></source>
+        <website></website>
+		<email></email>
+		<news></news>
+		<assets>
+          <icon>resources/icon.png</icon>
+          <fanart>resources/fanart.jpg</fanart>
+          <screenshot></screenshot>
+          <screenshot></screenshot>
+          <screenshot></screenshot>
+        </assets>
+	</extension>
+</addon>
