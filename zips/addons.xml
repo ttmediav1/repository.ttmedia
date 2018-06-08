@@ -233,7 +233,7 @@ provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="9.5" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="9.6" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
       <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -245,6 +245,7 @@ provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
         <import addon="script.module.thetvdb" />
         <import addon="script.module.metadatautils" />
 		<import addon="script.module.live365" version="1.0.3" />
+		<import addon="script.module.simplejson" version="3.3.0" />
 		<import addon="script.module.plasmatvguide" version="1.0.2" />
 		<import addon="script.module.streamz" version="1.0.0" />
 		<import addon="script.video.F4mProxy" version="2.8.7" />
@@ -305,7 +306,7 @@ provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
   </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="TTMedia Repository" version="1.5.9" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="repository.ttmedia" name="TTMedia Repository" version="1.6.0" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
@@ -439,6 +440,27 @@ provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
           <screenshot></screenshot>
         </assets>
 	</extension>
+</addon>
+
+<addon id="script.module.simplejson"
+       name="simplejson"
+       version="3.3.0"
+       provider-name="Martijn">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <language></language>
+    <summary lang="en">Simple, fast, extensible JSON encoder/decoder for Python</summary>
+    <description lang="en">Simple, fast, extensible JSON encoder/decoder for Python</description>
+    <disclaimer lang="en">Code taken from https://pypi.python.org/pypi/simplejson/</disclaimer>
+    <license>MIT License, Academic Free License v. 2.1</license>
+    <website>https://pypi.python.org/pypi/simplejson/</website>
+    <source>https://pypi.python.org/pypi/simplejson/</source>
+  </extension>
 </addon>
 
 <addon id="script.module.streamlink.base" name="Streamlink Library" version="2018.02.24" provider-name="Twilight0">
