@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="plugin.video.plasmatvguide.ini.creator"
-version="1.0.2"
-name="Plasma TV Guide InI File Generator"
+<addon id="plugin.video.opentvguide.ini.creator"
+version="1.0.3"
+name="Open TV Guide InI File Generator"
 provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
 <requires>
   <import addon="xbmc.python" version="2.20.0"/>
@@ -12,7 +12,7 @@ provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
   <provides>executable</provides>
 </extension>
 <extension point="xbmc.addon.metadata">
-  <summary lang="en">[B][COLORlime]PLASMA TV GUIDE INI FILE GENERATOR[/COLOR][/B]</summary>
+  <summary lang="en">[B][COLORlime]OPEN TV GUIDE INI FILE GENERATOR[/COLOR][/B]</summary>
   <description lang="en">.</description>
   <disclaimer lang="en">.</disclaimer>
 </extension>

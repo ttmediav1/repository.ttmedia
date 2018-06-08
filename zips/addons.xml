@@ -164,9 +164,9 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.plasmatvguide.ini.creator"
-version="1.0.2"
-name="Plasma TV Guide InI File Generator"
+<addon id="plugin.video.opentvguide.ini.creator"
+version="1.0.3"
+name="Open TV Guide InI File Generator"
 provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
 <requires>
   <import addon="xbmc.python" version="2.20.0"/>
@@ -177,7 +177,7 @@ provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
   <provides>executable</provides>
 </extension>
 <extension point="xbmc.addon.metadata">
-  <summary lang="en">[B][COLORlime]PLASMA TV GUIDE INI FILE GENERATOR[/COLOR][/B]</summary>
+  <summary lang="en">[B][COLORlime]OPEN TV GUIDE INI FILE GENERATOR[/COLOR][/B]</summary>
   <description lang="en">.</description>
   <disclaimer lang="en">.</disclaimer>
 </extension>
@@ -233,7 +233,7 @@ provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="9.6" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="9.8" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
       <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -246,7 +246,7 @@ provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
         <import addon="script.module.metadatautils" />
 		<import addon="script.module.live365" version="1.0.3" />
 		<import addon="script.module.simplejson" version="3.3.0" />
-		<import addon="script.module.plasmatvguide" version="1.0.2" />
+		<import addon="script.opentvguide" version="1.0.3" />
 		<import addon="script.module.streamz" version="1.0.0" />
 		<import addon="script.video.F4mProxy" version="2.8.7" />
 		<import addon="script.module.livestreamer" optional="true" />
@@ -256,7 +256,7 @@ provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
         <import addon="script.module.resolveurl" />
 		<import addon="script.module.tvtime" version="1.0.1" />
         <import addon="plugin.video.youtube" />
-		<import addon="plugin.video.plasmatvguide.ini.creator" version="1.0.2" />
+		<import addon="plugin.video.opentvguide.ini.creator" version="1.0.3" />
 		<import addon="plugin.video.ufcfightpass" version="1.2.1" />
 		<import addon="plugin.program.xmlerator" version="5.1.0" />
 		<import addon="plugin.video.btmedia" version="1.0" />
@@ -306,7 +306,7 @@ provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
   </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="TTMedia Repository" version="1.6.0" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="repository.ttmedia" name="TTMedia Repository" version="1.6.1" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
@@ -407,39 +407,6 @@ provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <source>https://github.com/chrippa/livestreamer.git</source>
     <website>http://livestreamer.io</website>
   </extension>
-</addon>
-
-<addon id="script.plasmatvguide" name="[B][COLORlime]Plasma TV Guide[/COLOR][/B]" version="1.0.2" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
-	<requires>
-		<import addon="xbmc.python" version="2.19.0"/>
-		<import addon="script.module.simplejson" version="3.3.0"/>
-        <import addon="script.module.requests" />
-		<import addon="plugin.video.plasmatvguide.ini.creator" version="1.0.2" />
-	</requires>
-	<extension point="xbmc.python.script" library="addon.py">
-            <provides>executable</provides>
-    </extension>
-    <extension point="xbmc.service" library="service.py" start="login"/>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">[B][COLORlime]PLASMA TV GUIDE ALLOWS YOU TO COMBINE SOME OF YOUR FAVOURITE LIVE TV ADD-ONS FOR USE WITH A FULLY WORKING EPG[/COLOR][/B]</summary>
-		<description lang="en">[B][COLORlime]PLASMA TV GUIDE ALLOWS YOU TO COMBINE SOME OF YOUR FAVOURITE LIVE TV ADD-ONS FOR USE WITH A FULLY WORKING EPG[/COLOR][/B]</description>
-		<disclaimer lang="en">[B][COLORred]PLASMA TV GUIDE IS BASED ON THE ORIGINAL TV GUIDE ADDON BY TWINTHER AND BLUEZED[/COLOR][/B]</disclaimer>
-		<language></language>
-		<platform>all</platform>
-		<license>GPLv2</license>
-		<forum></forum>
-		<source></source>
-        <website></website>
-		<email></email>
-		<news></news>
-		<assets>
-          <icon>resources/icon.png</icon>
-          <fanart>resources/fanart.jpg</fanart>
-          <screenshot></screenshot>
-          <screenshot></screenshot>
-          <screenshot></screenshot>
-        </assets>
-	</extension>
 </addon>
 
 <addon id="script.module.simplejson"
@@ -549,6 +516,39 @@ provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <email></email>
     <source></source>
   </extension>
+</addon>
+
+<addon id="script.opentvguide" name="[B][COLORlime]Plasma TV Guide[/COLOR][/B]" version="1.0.3" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+	<requires>
+		<import addon="xbmc.python" version="2.19.0"/>
+		<import addon="script.module.simplejson" version="3.3.0"/>
+        <import addon="script.module.requests" />
+		<import addon="plugin.video.plasmatvguide.ini.creator" />
+	</requires>
+	<extension point="xbmc.python.script" library="addon.py">
+            <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.service" library="service.py" start="login"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">[B][COLORlime]PLASMA TV GUIDE ALLOWS YOU TO COMBINE SOME OF YOUR FAVOURITE LIVE TV ADD-ONS FOR USE WITH A FULLY WORKING EPG[/COLOR][/B]</summary>
+		<description lang="en">[B][COLORlime]PLASMA TV GUIDE ALLOWS YOU TO COMBINE SOME OF YOUR FAVOURITE LIVE TV ADD-ONS FOR USE WITH A FULLY WORKING EPG[/COLOR][/B]</description>
+		<disclaimer lang="en">[B][COLORred]PLASMA TV GUIDE IS BASED ON THE ORIGINAL TV GUIDE ADDON BY TWINTHER AND BLUEZED[/COLOR][/B]</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GPLv2</license>
+		<forum></forum>
+		<source></source>
+        <website></website>
+		<email></email>
+		<news></news>
+		<assets>
+          <icon>resources/icon.png</icon>
+          <fanart>resources/fanart.jpg</fanart>
+          <screenshot></screenshot>
+          <screenshot></screenshot>
+          <screenshot></screenshot>
+        </assets>
+	</extension>
 </addon>
 
 <addon id="script.video.F4mProxy"

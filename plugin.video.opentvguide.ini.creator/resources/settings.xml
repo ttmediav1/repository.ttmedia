@@ -1,6 +1,6 @@
 <settings>
 <category label="addons.ini File">
-<setting id="addons.folder" label="Folder" type="folder" default="special://userdata/addon_data/script.plasmavguide/"/>
+<setting id="addons.folder" label="Folder" type="folder" default="special://userdata/addon_data/script.opentvguide/"/>
 <setting id="addons.file" label="Filename" type="text" default="addons.ini"/>
 </category>
 <!--<category label="Display">
