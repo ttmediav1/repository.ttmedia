@@ -233,7 +233,7 @@ provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="9.3" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="9.4" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
       <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -245,7 +245,7 @@ provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
         <import addon="script.module.thetvdb" />
         <import addon="script.module.metadatautils" />
 		<import addon="script.module.live365" version="1.0.3" />
-		<import addon="script.plasmatvguide" version="1.0.0" />
+		<import addon="script.plasmatvguide" version="1.0.1" />
 		<import addon="script.module.streamz" version="1.0.0" />
 		<import addon="script.video.F4mProxy" version="2.8.7" />
 		<import addon="script.module.livestreamer" optional="true" />
@@ -305,7 +305,7 @@ provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
   </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="TTMedia Repository" version="1.5.7" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="repository.ttmedia" name="TTMedia Repository" version="1.5.8" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
@@ -496,12 +496,12 @@ provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
   </extension>
 </addon>
 
-<addon id="script.plasmatvguide" name="[B][COLORlime]Plasma TV Guide[/COLOR][/B]" version="1.0.O" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="script.plasmatvguide" name="[B][COLORlime]Plasma TV Guide[/COLOR][/B]" version="1.0.1" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
         <import addon="script.module.requests" />
-		<import addon="plugin.video.opentvguide.ini.creator" />
+		<import addon="plugin.video.plasmatvguide.ini.creator" />
 	</requires>
 	<extension point="xbmc.python.script" library="addon.py">
             <provides>executable</provides>
