@@ -214,7 +214,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="9.9" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.0.0" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
       <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -228,6 +228,7 @@
 		<import addon="script.module.live365" version="1.0.3" />
 		<import addon="script.module.simplejson"  />
 		<import addon="script.module.streamz" version="1.0.0" />
+		<import addon="script.module.tvtap" version="1.1" />
 		<import addon="script.video.F4mProxy" version="2.8.7" />
 		<import addon="script.module.livestreamer" optional="true" />
 		<import addon="script.module.streamlink.base" version="2018.02.24" />
@@ -285,7 +286,7 @@
   </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="TTMedia Repository" version="1.6.3" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="repository.ttmedia" name="TTMedia Repository" version="1.6.4" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
@@ -463,6 +464,30 @@
     <description lang="en_gb">[B][COLORred]STREAMING LIVE TV[/COLOR][/B]</description>
     <disclaimer lang="en_gb">[B][COLORlime]THE AUTOR OF THIS ADD-ON DOSE NOT HOST ANY OF THE CONTENT WHICH IS FOUND IN IT AND HAVE NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS.[/COLOR][/B]</disclaimer>
 	<disclaimer lang="en_gb">[B][COLORred]CREDITS TO ORIGINAL AUTHOR RACC[/COLOR][/B]</disclaimer>
+    <language></language>
+    <platform>all</platform>
+    <license></license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <source></source>
+  </extension>
+</addon>
+
+<addon id="script.module.tvtap" name="TvTap" version="1.1" provider-name="RACC">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.livestreamer" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.routing" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>all</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_gb">RACC TVTAP MODULE.</summary>
+    <description lang="en_gb"></description>
+    <disclaimer lang="en_gb"></disclaimer>
     <language></language>
     <platform>all</platform>
     <license></license>
