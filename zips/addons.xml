@@ -214,7 +214,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.0.1" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.0.2" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
       <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -251,12 +251,12 @@
     </extension>
     <extension point="xbmc.service" library="service.py" start="[login|startup]" />
     <extension point="xbmc.addon.metadata">
-      <summary lang="en">[COLORred]EPIC TUNES TUBE N FLIX[/COLOR]</summary>
+      <summary lang="en">[B][COLORred]EPIC TUNES TUBE N FLIX[/COLOR][/B]</summary>
       <summary lang="he"></summary>
       <description lang="en">[B][COLORlawngreen]THE AUTHOR OF THIS ADDON DOES NOT HOST ANY OF THE CONTENT WHICH IS FOUND IN IT AND HAVE NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS.[/COLOR][/B]
-	                         [B][COLORred]CREDITS TO THE ORIGINAL DEVS OF JEN AND TO RACC,MR KNOW AND TO ALL THE DEVS IN THE JEN GROUP WITHOUT THEM THIS ADDON WOULDNT OF BEEN POSSIBLE!![/COLOR][/B]</description>
+	  <description lang="en">[B][COLORred]CREDITS TO THE ORIGINAL DEVS OF JEN AND TO RACC,MR KNOW,BLUEZED,AND TO ALL THE DEVS IN THE JEN GROUP WITHOUT THEM THIS ADDON WOULDNT OF BEEN POSSIBLE!![/COLOR][/B]</description>
       <description lang="he"></description>
-      <disclaimer lang="en">[B][COLORlawngreen]THE AUTHOR OF THIS ADDON DO NOT HOST ANY OF THE CONTENT WHICH IS FOUND AND HAVE NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS.[/COLOR][/B]</disclaimer>
+      <disclaimer lang="en">[B][COLORlawngreen]THE AUTHOR OF THIS ADDON DOES NOT HOST ANY OF THE CONTENT WHICH IS FOUND AND HAS NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS AND OR XBMC/KODI[/COLOR][/B]</disclaimer>
       <disclaimer lang="en"></disclaimer>
       <platform>all</platform>
         <website>www.ttmedia.live</website>
@@ -286,7 +286,7 @@
   </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="TTMedia Repository" version="1.6.5" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="repository.ttmedia" name="TTMedia Repository" version="1.6.6" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
