@@ -100,7 +100,7 @@ def get_stream(url):
         site_time = site_hour3+":"+site_minute
         xml += "<item>"\
                "<title>[COLOR blue]Sports Streams Time GMT+3 = (%s)[/COLOR]</title>"\
-               "<thumbnail>http://www.logotypes101.com/logos/997/AD71A2CC84DD8DDE7932F9BC585926E1/Sports.png</thumbnail>"\
+               "<thumbnail>http://ttmedia.live/logos/SPORTS3.png</thumbnail>"\
                "<fanart>http://sportz4you.com/blog/wp-content/uploads/2016/01/0b46b20.jpg</fanart>"\
                "<link></link>"\
                "</item>" % (site_time)                        
@@ -110,7 +110,7 @@ def get_stream(url):
             head1 = head1.replace("&nbsp;", "")
             xml += "<item>"\
                    "<title>[COLOR blue]%s[/COLOR]</title>"\
-                   "<thumbnail>http://www.logotypes101.com/logos/997/AD71A2CC84DD8DDE7932F9BC585926E1/Sports.png</thumbnail>"\
+                   "<thumbnail>http://ttmedia.live/logos/SPORTS3.png</thumbnail>"\
                    "<fanart>http://sportz4you.com/blog/wp-content/uploads/2016/01/0b46b20.jpg</fanart>"\
                    "<link></link>"\
                    "</item>" % (head1)            
@@ -125,7 +125,7 @@ def get_stream(url):
                 link = "plugin://plugin.video.SportsDevil/?mode=1&amp;item=catcher%3dstreams%26url="+link
                 xml += "<plugin>"\
                        "<title>%s - %s</title>"\
-                       "<thumbnail>http://www.logotypes101.com/logos/997/AD71A2CC84DD8DDE7932F9BC585926E1/Sports.png</thumbnail>"\
+                       "<thumbnail>http://ttmedia.live/logos/SPORTS3.png</thumbnail>"\
                        "<fanart>http://sportz4you.com/blog/wp-content/uploads/2016/01/0b46b20.jpg</fanart>"\
                        "<link>%s</link>"\
                        "</plugin>" % (time,name,link)
@@ -136,7 +136,7 @@ def get_stream(url):
                 link = "plugin://plugin.video.SportsDevil/?mode=1&amp;item=catcher%3dstreams%26url="+link
                 xml += "<plugin>"\
                        "<title>%s - %s</title>"\
-                       "<thumbnail>http://www.logotypes101.com/logos/997/AD71A2CC84DD8DDE7932F9BC585926E1/Sports.png</thumbnail>"\
+                       "<thumbnail>http://ttmedia.live/logos/SPORTS3.png</thumbnail>"\
                        "<fanart>http://sportz4you.com/blog/wp-content/uploads/2016/01/0b46b20.jpg</fanart>"\
                        "<link>%s</link>"\
                        "</plugin>" % (time,name,link)
@@ -146,7 +146,7 @@ def get_stream(url):
                 head2 = head2.replace("&nbsp;", "")
                 xml += "<item>"\
                        "<title>[COLOR blue]%s[/COLOR]</title>"\
-                       "<thumbnail>http://www.logotypes101.com/logos/997/AD71A2CC84DD8DDE7932F9BC585926E1/Sports.png</thumbnail>"\
+                       "<thumbnail>http://ttmedia.live/logos/SPORTS3.png</thumbnail>"\
                        "<fanart>http://sportz4you.com/blog/wp-content/uploads/2016/01/0b46b20.jpg</fanart>"\
                        "<link></link>"\
                        "</item>" % (head2)
@@ -159,7 +159,7 @@ def get_stream(url):
                 link = "plugin://plugin.video.SportsDevil/?mode=1&amp;item=catcher%3dstreams%26url="+link 
                 xml += "<plugin>"\
                        "<title>%s - %s</title>"\
-                       "<thumbnail>http://www.logotypes101.com/logos/997/AD71A2CC84DD8DDE7932F9BC585926E1/Sports.png</thumbnail>"\
+                       "<thumbnail>http://ttmedia.live/logos/SPORTS3.png</thumbnail>"\
                        "<fanart>http://sportz4you.com/blog/wp-content/uploads/2016/01/0b46b20.jpg</fanart>"\
                        "<link>%s</link>"\
                        "</plugin>" % (time,name,link)

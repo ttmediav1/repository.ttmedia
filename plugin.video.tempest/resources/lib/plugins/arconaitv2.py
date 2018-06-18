@@ -142,7 +142,7 @@ def get_shows2(url):
             title1 = title1.replace("\\'", "")
             link1 = link1.replace("\\'", "")
             link1 = "plugin://plugin.video.SportsDevil/?mode=1&amp;item=catcher%3dstreams%26url=https://www.arconaitv.us/"+link1
-            image1 = "http://www.userlogos.org/files/logos/nickbyalongshot/film.png"                
+            image1 = "http://ttmedia.live/logos/LIVE3.png"                
             xml += "<plugin>"\
                    "<title>%s</title>"\
                    "<link>"\
@@ -170,7 +170,7 @@ def get_cable2(url):
             title2 = title2.replace("\\'", "")
             link2 = link2.replace("\\'", "")
             link2 = "plugin://plugin.video.SportsDevil/?mode=1&amp;item=catcher%3dstreams%26url=https://www.arconaitv.us/"+link2
-            image2 = "http://www.userlogos.org/files/logos/nickbyalongshot/film.png"                
+            image2 = "http://ttmedia.live/logos/LIVE3.png"                
             xml += "<plugin>"\
                    "<title>%s</title>"\
                    "<link>"\
@@ -202,7 +202,7 @@ def get_movies2(url):
             title3 = title3.replace("\\'", "")
             link3 = link3.replace("\\'", "")
             link3 = "plugin://plugin.video.SportsDevil/?mode=1&amp;item=catcher%3dstreams%26url=https://www.arconaitv.us/"+link3
-            image3 = "http://www.userlogos.org/files/logos/nickbyalongshot/film.png"                
+            image3 = "http://ttmedia.live/logos/LIVE3.png"                
             xml += "<plugin>"\
                    "<title>%s</title>"\
                    "<link>"\
