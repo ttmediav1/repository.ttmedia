@@ -1,5 +1,5 @@
-# Addon Name: Jen
-# Addon id: plugin.video.jen
+# Addon Name: Jen Unleashed
+# Addon id: plugin.video.jen.unleased
 # Addon Provider: Team Jen
 msgid ""
 msgstr ""

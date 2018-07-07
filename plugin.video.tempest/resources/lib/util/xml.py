@@ -234,10 +234,6 @@ wrapper class for jen list functions
             title = item["title"]
             if title == "":
                 title = item["name"]
-                koding.dolog("depricated: <name>")
-                koding.dolog("name: " + repr(title))
-                koding.dolog("Use <title> instead of <name> in your xml")
-                koding.dolog("#####################")
             try:
                 title = xbmcaddon.Addon().getLocalizedString(int(title))
             except ValueError:
@@ -364,7 +360,6 @@ wrapper class for jen list functions
             'info': {},
             'year': year,
             'context': context,
-            'plot': item.get("summary", None),
             "summary": item.get("summary", None)
         }
         if fanart:
@@ -469,7 +464,6 @@ def display_list(items, content_type):
             info_labels=item["info"],
             set_property=item.get("properties", {}),
             set_art={"poster": item["icon"]})
-        # xbmcgui.Dialog().textviewer('info',str(item["info"]))
     xbmcplugin.setContent(int(sys.argv[1]), content_type)
 
 
