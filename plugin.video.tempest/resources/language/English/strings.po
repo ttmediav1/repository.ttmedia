@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "#30200"
-msgid "[COLOR teal]use-account[/COLOR]"
+msgid "[COLOR teal]Use-Account[/COLOR]"
 msgstr ""
 
 msgctxt "#30201"
@@ -28,7 +28,6 @@ msgstr ""
 msgctxt "#30203"
 msgid "hide-successful-login-messages"
 msgstr ""
-
 
 msgctxt "#30401"
 msgid "[COLOR teal]Are You Sure?[/COLOR]"
@@ -247,7 +246,7 @@ msgid "Offer to install required 3rd party repositories"
 msgstr ""
 
 msgctxt "#30758"
-msgid "Enable debugging mode"
+msgid "Enable Debugging Mode"
 msgstr ""
 
 msgctxt "#30760"
@@ -806,4 +805,12 @@ msgstr ""
 
 msgctxt "#30059"
 msgid "All Episodes"
+msgstr ""
+
+msgctxt "#30060"
+msgid "Root XML Location"
+msgstr ""
+
+msgctxt "#30061"
+msgid "Search DB Location"
 msgstr ""
