@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.1.2" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.1.3" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
       <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -8,6 +8,7 @@
         <import addon="script.module.requests" version="2.9.1" />
         <import addon="script.module.addon.common" version="2.0.0" />
         <import addon="script.module.xmltodict" version="0.9.0" />
+		<import addon="script.module.dateutil" />
         <import addon="script.module.thetvdb" />
         <import addon="script.module.metadatautils" />
 		<import addon="script.module.live365" version="1.0.3" />
@@ -36,7 +37,7 @@
     </extension>
     <extension point="xbmc.service" library="service.py" start="[login|startup]" />
     <extension point="xbmc.addon.metadata">
-      <summary lang="en">[COLORred]EPIC TUNES TUBE N FLIX[/COLOR]</summary>
+      <summary lang="en">[B][COLORred]EPIC TUNES TUBE N FLIX[/COLOR][/B]</summary>
       <summary lang="he"></summary>
       <description lang="en">[B][COLORlawngreen]THE AUTHOR OF THIS ADDON DOES NOT HOST ANY OF THE CONTENT WHICH IS FOUND IN IT AND HAVE NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS.[/COLOR][/B]
 	                         [B][COLORred]CREDITS TO THE ORIGINAL DEVS OF JEN AND TO RACC,MR KNOW,BLUEZED,AND TO ALL THE DEVS IN THE JEN GROUP WITHOUT THEM THIS ADDON WOULDNT OF BEEN POSSIBLE!![/COLOR][/B]</description>
