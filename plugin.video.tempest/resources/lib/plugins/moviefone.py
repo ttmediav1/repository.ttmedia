@@ -1,7 +1,7 @@
 """
 
     Copyright (C) 2018, Jen Team
-    -- 7-2-18 Version 3.2.0 --
+    -- 7-2-18 Version 3.1.0 --
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@
 import requests,re,json,os
 import koding
 import __builtin__
-import xbmc,xbmcaddon,xbmcgui
+import xbmc,xbmcaddon
 from koding import route
 from resources.lib.plugin import Plugin
 from resources.lib.util.context import get_context_items
@@ -168,30 +168,28 @@ def get_game(url):
                    "<fanart>%s</fanart>"\
                    "<summary>%s</summary>"\
                    "</meta>"\
-                   "<moviefone>link**%s**%s**%s</moviefone>"\
-                   "</item>" % (name,thumbnail,thumbnail,summary,link1,name,thumbnail)            
+                   "<moviefone>link**%s</moviefone>"\
+                   "</item>" % (name,thumbnail,thumbnail,summary,link1)            
         try:
             next_page = int(current)+1
-            xml += "<item>"\
+            xml += "<dir>"\
                    "<title>[COLOR dodgerblue]Next Page >>[/COLOR]</title>"\
                    "<moviefone>trailers/%s</moviefone>"\
                    "<thumbnail>http://www.clker.com/cliparts/a/f/2/d/1298026466992020846arrow-hi.png</thumbnail>"\
-                   "</item>" % (next_page)                                  
+                   "</dir>" % (next_page)                                  
         except:
             pass
     except:
         pass        
     jenlist = JenList(xml)
     display_list(jenlist.get_list(), jenlist.get_content_type()) 
-#
+
 @route(mode='get_moviefone_trailer_link', args=["url"])
 def get_game(url):
     xml = ""
     try:
         koding.Show_Busy(status=True)
-        link1 = url.split("**")[-3]
-        name = url.split("**")[-2]
-        thumbnail = url.split("**")[-1]        
+        link1 = url.split("**")[-1]
         html2 = requests.get(link1).content
         match2 = re.compile('<div id="trailer-player">.+?src="(.+?)"',re.DOTALL).findall(html2)
         link2 = "http:" + match2[0]
@@ -199,8 +197,7 @@ def get_game(url):
         match3 = re.compile('"videoUrls":.+?,"(.+?)"',re.DOTALL).findall(html3)
         link3 = match3[0]
         koding.Show_Busy(status=False )
-        info = xbmcgui.ListItem(name, thumbnailImage=thumbnail)
-        xbmc.Player().play(link3,info)
+        xbmc.Player().play(link3)
     except:
         pass                        
 
@@ -227,8 +224,8 @@ def get_result(url):
                    "<fanart>%s</fanart>"\
                    "<summary></summary>"\
                    "</meta>"\
-                   "<moviefone>link**%s**%s**%s</moviefone>"\
-                   "</item>" % (name,thumbnail,thumbnail,link2,name,thumbnail)
+                   "<moviefone>link**%s</moviefone>"\
+                   "</item>" % (name,thumbnail,thumbnail,link2)
     except:
         pass                                               
     jenlist = JenList(xml)
@@ -250,7 +247,7 @@ def search_trailers(url):
                 if key2 == "Trailers":
                     name = name.replace("&#039;","")
                     name = remove_non_ascii(name)
-                    summary = clean_search(summary)                   
+                    summary = clean_search(summary)
                     xml += "<item>"\
                            "<title>%s</title>"\
                            "<meta>"\
@@ -268,6 +265,16 @@ def search_trailers(url):
             if xml == "":
                 xml += "<item>"\
                        "<title>No Results</title>"\
+                       "<meta>"\
+                       "<content>movie</content>"\
+                       "<imdb></imdb>"\
+                       "<title></title>"\
+                       "<year></year>"\
+                       "<thumbnail></thumbnail>"\
+                       "<fanart></fanart>"\
+                       "<summary></summary>"\
+                       "</meta>"\
+                       "<link></link>"\
                        "</item>"                                      
         except:
             pass                                 
@@ -287,14 +294,4 @@ def clean_search(title):
     title = re.sub('\\\|/|\(|\)|\[|\]|\{|\}|-|:|;|\*|\?|"|\'|<|>|\_|\.|\?', ' ', title)
     title = ' '.join(title.split())
     return title            
-
-                       # "<meta>"\
-                       # "<content>movie</content>"\
-                       # "<imdb></imdb>"\
-                       # "<title></title>"\
-                       # "<year></year>"\
-                       # "<thumbnail></thumbnail>"\
-                       # "<fanart></fanart>"\
-                       # "<summary></summary>"\
-                       # "</meta>"\
-                       # "<link></link>"\            
+            
