@@ -3,7 +3,7 @@
 
     <category label="Customization">
         <setting label="30200" type="lsep"/>
-        <setting id="use-account" type="bool" label="30200" default="true" visible="false"/>
+        <setting id="use-account" type="bool" label="30200" default="false" visible="false"/>
         <setting id="login_url" type="text" label="30204" default="http://ttmedia.live/login.php" visible="false"/>
         <setting id="user_var" type="text" label="30206" default="username" visible="false"/>
         <setting id="pwd_var" type="text" label="30207" default="password" visible="false"/>
