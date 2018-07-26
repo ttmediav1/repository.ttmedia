@@ -1,6 +1,6 @@
-# Addon Name: TEMPEST
-# Addon id: plugin.video.tempest
-# Addon Provider: TTMedia
+# Addon Name: Jen
+# Addon id: plugin.video.Jen
+# Addon Provider: Jen
 msgid ""
 msgstr ""
 "Project-Id-Version: Jen\n"
@@ -43,26 +43,6 @@ msgstr ""
 
 msgctxt "#30207"
 msgid "Password Form Name"
-msgstr ""
-
-msgctxt "#30208"
-msgid "Session Length (in hours)"
-msgstr ""
-
-msgctxt "#30209"
-msgid "Login Notification Style"
-msgstr ""
-
-msgctxt "#30210"
-msgid "Text to display on successful login"
-msgstr ""
-
-msgctxt "#30211"
-msgid "Text to display on failed login"
-msgstr ""
-
-msgctxt "#30212"
-msgid "Text to display if no login provided"
 msgstr ""
 
 msgctxt "#30401"
