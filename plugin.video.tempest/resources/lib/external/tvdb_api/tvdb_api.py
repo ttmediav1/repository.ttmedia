@@ -250,7 +250,7 @@ class Tvdb:
                 time.sleep(0.5)
         
         if resp is None:
-            raise Exception("No response from url %s"  % url)
+            raise
             
         return resp.content
         
