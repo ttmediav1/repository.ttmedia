@@ -1,6 +1,10 @@
 v5.0.4 Added text color and text bold to settings options
-
 v5.0.5 Bug fixes, color tags, numeric pad changed to keyboard
 v5.0.6 Bug fixes
 v5.0.7 Reverted to older working version
 v5.0.8 Added error code for same folder
+v5.3.0 Added sorting code thanks to Bugatsino
+v5.4.0 Minor bug fix
+v5.5.0 Moved the saved xmls to the userdata/addon_data/plugin.program.xmlerator folder
+       This was done to avoid xmls being deleted when updating the addon.
+       BE SURE to move or save your current xmls from the addon folder, they will be deleted when you update!

@@ -3,6 +3,7 @@
 """
     Addon for genrating xml files from TMDB, IMDB, and Trakt list numbers
     Copyright (C) 2018, TonyH
+    -- Thanks to Bugatsinho for the sorting code--
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,7 +22,7 @@
 
 
 import os
-import urlparse
+import sys
 import time
 import xbmc
 import xbmcaddon
@@ -38,8 +39,16 @@ addon_id     = xbmcaddon.Addon().getAddonInfo('id')
 dialog       = xbmcgui.Dialog()
 home_folder  = xbmc.translatePath('special://home/')
 addon_folder = os.path.join(home_folder,'addons')
-art_path     = os.path.join(addon_folder,addon_id)
-xml_path     = os.path.join(art_path,'xmls')
+art_path     = os.path.join(addon_folder, addon_id)
+#xml_path     = os.path.join(art_path, 'xmls')
+userdata_folder = os.path.join(home_folder,'userdata')
+addon_data_folder = os.path.join(userdata_folder,'addon_data')
+xmlerator_data = os.path.join(addon_data_folder,addon_id)
+xml_path     = os.path.join(xmlerator_data, 'xmls')
+if os.path.exists(xml_path):
+    pass
+else:
+    os.mkdir(xml_path, 0755)
 debug        = koding.Addon_Setting('debug')
 tmdb_api_key = koding.Addon_Setting(setting='TMDB_api',addon_id=addon_id)
 trakt_client_id = koding.Addon_Setting(setting='Trakt_api',addon_id=addon_id)
@@ -55,13 +64,15 @@ def Main_Menu():
     Add_Dir(name='TMDB Lists', url = "", mode='tmdb', folder=False, icon=os.path.join(art_path,'tmdb.png'), fanart=os.path.join(art_path,'fanart.jpg'))
     Add_Dir(name='IMDB Lists', url="", mode='imdb', folder=False, icon=os.path.join(art_path,'imdb.png'), fanart=os.path.join(art_path,'fanart.jpg'))
     Add_Dir(name='Trakt Lists', url="", mode='trakt', folder=False, icon=os.path.join(art_path,'trakt.png'), fanart=os.path.join(art_path,'fanart.jpg'))
+    Add_Dir(name='Sort xml by Year', url="year", mode='sortarisma', folder=False, icon=os.path.join(art_path, 'icon.png'), fanart=os.path.join(art_path, 'fanart.jpg'))
+    Add_Dir(name='Sort xml by Title', url="title", mode='sortarisma', folder=False, icon=os.path.join(art_path, 'icon.png'), fanart=os.path.join(art_path, 'fanart.jpg'))
     
 @route(mode="directions")
 def display_directions():
-    koding.Text_Box('Directions','1. Open the settings and enter your TMDB api key and, Trakt user name and Client key.\n'
+    koding.Text_Box('Directions','1. Open the settings and enter your TMDB api key and, Trakt user name and Client id.\n'
                                  'The TMDB api key is needed for ALL lists.\n'
                                  '2. Click on TMDB, IMDB, or Trakt Lists and you will be promted for a folder name.\n'
-                                 'This will create a folder in the addons/xmls/ folder with the name that you chose.\n'
+                                 'This will create a folder in the userdata/addon_data/plugin.program.xmlerator/xmls folder with the name that you chose.\n'
                                  'The xmls will be created in this folder.\n'
                                  '3. Enter your list number or list name in the dialog box.\n'
                                  'Trakt lists require a user name with a matching list name.\n'
@@ -75,22 +86,28 @@ def display_directions():
                                  'the seasons xml for that show. The seasons xml will need a link to the location\n'
                                  'of the episodes xml.')
 
+
 @route(mode="settings")
 def open_settings():
-    koding.Open_Settings("","",click=True,stop_script=True)
+    koding.Open_Settings("", "", click=True, stop_script=True)
 
-@route(mode="trakt",args=["url"])
+
+@route(mode="trakt", args=["url"])
 def trakt_info(url):
     try:
         folder_name = output_folder()
         list_number3 = koding.Keyboard(heading='Trakt List Name')
-        list_name = list_number3.replace(" ","-")
-        user = trakt_user_name.replace(" ","-")
+        list_name = list_number3.replace(" ", "-")
+        user = trakt_user_name.replace(" ", "-")
         headers = {
             'Content-Type': 'application/json',
             'trakt-api-version': '2',
             'trakt-api-key': trakt_client_id}
-        url = "https://api.trakt.tv/users/%s/lists/%s/items/" % (user,list_name)
+        url1 = "https://api.trakt.tv/users/%s/lists/%s/" % (user, list_name)
+        html1 = requests.get(url1,headers=headers).content
+        match1 = json.loads(html1)
+        length = match1['item_count']
+        url = "https://api.trakt.tv/users/%s/lists/%s/items/" % (user, list_name)
         count = 0
         dp = xbmcgui.DialogProgress()
         dp.create("[COLOR ghostwhite]Writing XML's....  [/COLOR]")        
@@ -100,7 +117,6 @@ def trakt_info(url):
             html = requests.get(url,headers=headers).json()
             for res in html:   
                 media = res['type']
-                length = len(media)
                 count = count + 1
                 progress(length,count,dp)                 
                 if media == 'movie':
@@ -124,10 +140,9 @@ def trakt_info(url):
                 try:
                     time.sleep(.2)            
                     tmdb_url = 'http://api.themoviedb.org/3/find/' +imdb+ '?api_key=' +tmdb_api_key+ '&external_source=imdb_id'
-                    headers = {'User-Agent':User_Agent}
-                    tmdbhtml = requests.get(tmdb_url,headers=headers,timeout=20).content
+                    headers = {'User-Agent': User_Agent}
+                    tmdbhtml = requests.get(tmdb_url, headers=headers, timeout=20).content
                     match = json.loads(tmdbhtml)
-                    #koding.Show_Busy(status=True)
                     movie_results = match['movie_results']
                     tv_results = match['tv_results']
                     if movie_results:
@@ -161,38 +176,34 @@ def trakt_info(url):
                 except:
                     icon = "none"
                     fanart = "none"
-                print_movie_xml(list_name,media,name,year,imdb,tmdb,icon,fanart,folder_name)
-
-        #koding.Show_Busy(status=False)                                     
+                print_movie_xml(list_name, media, name, year, imdb, tmdb, icon, fanart, folder_name)
+                                    
     except:
         pass
 
-@route(mode="imdb",args=["url"])
+
+@route(mode="imdb", args=["url"])
 def imdb_info(url):
     try:
         folder_name = output_folder()    
-        # folder_name = koding.Keyboard(heading='Output Folder Name')
-        # folder_name = folder_name.replace(" ","_")
-        #xml_folder = os.path.join(xml_path,folder_name)
-        # os.mkdir( xml_folder, 0755 )
         list_number2 = koding.Keyboard(heading='IMDB List Number')
-        list_number2 = list_number2.replace("ls","")
+        list_number2 = list_number2.replace("ls", "")
         url = "http://www.imdb.com/list/ls%s/" % int(list_number2)
         html = requests.get(url).content
-        match2 = re.compile('<h1 class="header list-name">(.+?)</h1>',re.DOTALL).findall(html)       
-        list_name = match2[0]
-        list_name = clean_search(list_name)
-        list_name = list_name.replace(" ", "_")
-        #koding.Show_Busy(status=True)
-        (url,html) = Pull_info(html,list_name,url,folder_name)
-        print "pass1"
+        match2 = re.compile('<h1 class="header list-name">(.+?)</h1>.+?<div class="desc lister-total-num-results">(.+?)</div>',re.DOTALL).findall(html)       
+        for list_name, total_list in match2:
+            list_name = clean_search(list_name)
+            list_name = list_name.replace(" ", "_")
+            total_list = total_list.replace("titles", "").replace(" ", "")
+            (url, html) = Pull_info(html, list_name, url, folder_name, total_list)
+            print "pass1"
     except:
         pass
     try:
         match3 = re.compile('<a class="flat-button lister-page-next next-page" href="(.+?)"',re.DOTALL).findall(html)
         url = "http://www.imdb.com"+match3[0]
         html = requests.get(url).content
-        (url,html) = Pull_info(html,list_name,url,folder_name)
+        (url,html) = Pull_info(html, list_name, url, folder_name, total_list)
         print "pass2"
     except:
         pass
@@ -240,20 +251,19 @@ def imdb_info(url):
         match3 = re.compile('<a class="flat-button lister-page-next next-page" href="(.+?)"',re.DOTALL).findall(html)
         url = "http://www.imdb.com"+match3[0]
         html = requests.get(url).content
-        (url,html) = Pull_info(html,list_name,url,folder_name)
+        (url, html) = Pull_info(html, list_name, url, folder_name)
         print "pass8"
     except:
         pass
-    #koding.Show_Busy(status=False)
 
-def Pull_info(html,list_name,url,folder_name):
-    xml_folder = os.path.join(xml_path,folder_name)
-    File = os.path.join(xml_folder,list_name)
-    #File = File.replace(" ", "_")
-    open('%s.xml'%(File),'a')   
+
+def Pull_info(html, list_name, url, folder_name, total_list):
+    xml_folder = os.path.join(xml_path, folder_name)
+    File = os.path.join(xml_folder, list_name)
+    open('%s.xml'% File, 'a')
     block = re.compile('<div class="lister-list">(.+?)<div class="row text-center lister-working hidden"></div>',re.DOTALL).findall(html)
     match = re.compile('<img alt="(.+?)".+?data-tconst="(.+?)".+?<span class="lister-item-year text-muted unbold">(.+?)</span>',re.DOTALL).findall(str(block))
-    length = len(match)
+    length = int(total_list)
     count = 0
     dp = xbmcgui.DialogProgress()
     dp.create("[COLOR ghostwhite]Writing XML's....  [/COLOR]")    
@@ -261,7 +271,7 @@ def Pull_info(html,list_name,url,folder_name):
         icon = ""
         fanart = ""
         count = count + 1
-        progress(length,count,dp)        
+        progress(length, count, dp)
         try:
             time.sleep(.2)           
             tmdb_url = 'http://api.themoviedb.org/3/find/' +imdb+ '?api_key=' +tmdb_api_key+ '&external_source=imdb_id'
@@ -285,7 +295,7 @@ def Pull_info(html,list_name,url,folder_name):
                         icon = ""
                         key = "thumbnail"
                         show_name = ""
-                        missing_art(show_name,name,key,folder_name)
+                        missing_art(show_name, name, key, folder_name)
                     date = results['release_date']
                     year = date.split("-")[0]
                     fanart = results['backdrop_path']
@@ -293,7 +303,7 @@ def Pull_info(html,list_name,url,folder_name):
                         fanrt = ""
                         key = "fanart"
                         show_name = ""
-                        missing_art(show_name,name,key,folder_name)
+                        missing_art(show_name, name, key, folder_name)
                     tmdb = results['id']
                     if not tmdb:
                         tmdb = "none"
@@ -303,7 +313,7 @@ def Pull_info(html,list_name,url,folder_name):
                         icon = ""
                         key = "thumbnail"
                         show_name = ""
-                        missing_art(show_name,name,key,folder_name)                    
+                        missing_art(show_name, name, key, folder_name)
                     date = results['first_air_date']
                     year = date.split("-")[0]
                     fanart = results['backdrop_path']
@@ -311,23 +321,24 @@ def Pull_info(html,list_name,url,folder_name):
                         fanart = ""
                         key = "fanart"
                         show_name = ""
-                        missing_art(show_name,name,key,folder_name)                    
+                        missing_art(show_name, name, key, folder_name)
                     tmdb = results['id']
                     if not tmdb:
                         tmdb = "none"
-                    get_tv_seasons(tmdb,fanart,imdb,folder_name)                                   
+                    get_tv_seasons(tmdb, fanart, imdb, folder_name)
         except:
             icon = ""
             fanart = ""
 
-        print_movie_xml(list_name,media,name,year,imdb,tmdb,icon,fanart,folder_name)
+        print_movie_xml(list_name, media, name, year, imdb, tmdb, icon, fanart, folder_name)
 
     return url,html
 
-@route(mode="tmdb",args=["url"])
+
+@route(mode="tmdb", args=["url"])
 def Tmdb_info(url):
     folder_name = output_folder()
-    xml_folder = os.path.join(xml_path,folder_name)
+    xml_folder = os.path.join(xml_path, folder_name)
     list_number = koding.Keyboard(heading='TMDB List Number')
     start_url = "https://api.themoviedb.org/3/list/%s?api_key=%s&language=en-US"% (int(list_number) ,tmdb_api_key)
     html = requests.get(start_url).content
@@ -335,14 +346,13 @@ def Tmdb_info(url):
     list_name = match['name']
     list_name = list_name.replace(" ", "_")
     list_name = clean_search(list_name)
-    #koding.Show_Busy(status=True)
     if not list_name:
         list_name = match['description']
     res = match['items']
     if not res:
         res = match['results']
-    xml_folder = os.path.join(xml_path,folder_name)       
-    File = os.path.join(xml_folder,list_name)
+    xml_folder = os.path.join(xml_path, folder_name)
+    File = os.path.join(xml_folder, list_name)
     length = len(res)
     count = 0
     dp = xbmcgui.DialogProgress()
@@ -358,7 +368,7 @@ def Tmdb_info(url):
                 icon = ""
                 key = "thumbnail"
                 show_name = ""
-                missing_art(show_name,name,key,folder_name)
+                missing_art(show_name, name, key, folder_name)
             name = results['title']
             date = results['release_date']
             year = date.split("-")[0]
@@ -367,7 +377,7 @@ def Tmdb_info(url):
                 fanart = ""
                 key = "fanart"
                 show_name = ""
-                missing_art(show_name,name,key,folder_name)
+                missing_art(show_name, name, key, folder_name)
             tmdb = results['id']
             url2 = "https://api.themoviedb.org/3/movie/%s/external_ids?api_key=%s"% (tmdb, tmdb_api_key)
             html2 = requests.get(url2).content
@@ -383,7 +393,7 @@ def Tmdb_info(url):
                 icon = ""
                 key = "thumbnail"
                 show_name = ""
-                missing_art(show_name,name,key,folder_name)
+                missing_art(show_name, name, key, folder_name)
             name = results['name']
             date = results['first_air_date']
             year = date.split("-")[0]
@@ -392,7 +402,7 @@ def Tmdb_info(url):
                 fanart = ""
                 key = "fanart"
                 show_name = ""
-                missing_art(show_name,name,key,folder_name)
+                missing_art(show_name, name, key, folder_name)
             tmdb = results['id']
             url2 = "https://api.themoviedb.org/3/movie/%s/external_ids?api_key=%s"% (tmdb, tmdb_api_key)
             html2 = requests.get(url2).content
@@ -401,17 +411,16 @@ def Tmdb_info(url):
                 imdb = match2['imdb_id']
             except:
                 imdb = "none"       
-            get_tv_seasons(tmdb,fanart,imdb,folder_name)
-        print_movie_xml(list_name,media,name,year,imdb,tmdb,icon,fanart,folder_name)
-    #koding.Show_Busy(status=False)
- 
-def print_movie_xml(list_name,media,name,year,imdb,tmdb,icon,fanart,folder_name):
+            get_tv_seasons(tmdb, fanart, imdb, folder_name)
+        print_movie_xml(list_name, media, name, year, imdb, tmdb, icon, fanart, folder_name)
+
+
+def print_movie_xml(list_name, media, name, year, imdb, tmdb, icon, fanart, folder_name):
     try:       
         if media == "movie":
             name = remove_non_ascii(name)
             xml_folder = os.path.join(xml_path,folder_name)
-            File = os.path.join(xml_folder,list_name)
-            #File = File.replace(" ","_")      
+            File = os.path.join(xml_folder,list_name)      
             f = open('%s.xml'%(File),'a')
             f.write('<item>\n')
             if bold_value == "true":
@@ -436,7 +445,6 @@ def print_movie_xml(list_name,media,name,year,imdb,tmdb,icon,fanart,folder_name)
             name = remove_non_ascii(name)
             xml_folder = os.path.join(xml_path,folder_name)
             File = os.path.join(xml_folder,list_name)
-            #File = File.replace(" ","_")
             f = open('%s.xml'%(File),'a')
             f.write('<dir>\n')
             if bold_value == "true":
@@ -456,19 +464,19 @@ def print_movie_xml(list_name,media,name,year,imdb,tmdb,icon,fanart,folder_name)
             f.close()
     except:
         pass
-    
-def get_tv_seasons(tmdb,fanart,imdb,folder_name):
+
+
+def get_tv_seasons(tmdb, fanart, imdb, folder_name):
     try:      
-        url = "https://api.themoviedb.org/3/tv/%s?api_key=%s&language=en-US"% (tmdb,tmdb_api_key)
+        url = "https://api.themoviedb.org/3/tv/%s?api_key=%s&language=en-US" % (tmdb, tmdb_api_key)
         html = requests.get(url).content
         match = json.loads(html)
         seas = match['seasons']
         show_name = match['original_name']
-        show_name = show_name.replace(":","")
+        show_name = show_name.replace(":", "")
         show_name = clean_search(show_name)
-        xml_folder = os.path.join(xml_path,folder_name)
-        File_show = os.path.join(xml_folder,show_name)
-        #File_show = File_show.replace(" ","_")
+        xml_folder = os.path.join(xml_path, folder_name)
+        File_show = os.path.join(xml_folder, show_name)
         open('%s.xml'%(File_show),'w')
         for seasons in seas:   
             sea_name = seasons['name']
@@ -480,32 +488,32 @@ def get_tv_seasons(tmdb,fanart,imdb,folder_name):
             icon = seasons['poster_path']
             if not 'poster_path':
                 key = "thumbnail"
-                missing_art(show_name,sea_name,key,folder_name)
+                missing_art(show_name, sea_name, key, folder_name)
                 icon = ""
             sea_num = seasons['season_number']
             if not sea_num:
                 sea_num = ""
-            get_episodes(tmdb,sea_num,fanart,sea_name,show_name,imdb,folder_name)    
-            print_seasons_xml(show_name,sea_name,year,fanart,icon,imdb,sea_num,folder_name)
+            get_episodes(tmdb, sea_num, fanart, sea_name, show_name, imdb, folder_name)
+            print_seasons_xml(show_name, sea_name, year, fanart, icon, imdb, sea_num, folder_name)
 
     except:
         pass
-    
-def print_seasons_xml(show_name,sea_name,year,fanart,icon,imdb,sea_num,folder_name):
+
+
+def print_seasons_xml(show_name, sea_name, year, fanart, icon, imdb, sea_num, folder_name):
     try:
-        xml_folder = os.path.join(xml_path,folder_name)
-        File_show = os.path.join(xml_folder,show_name)
-        #File_show = File_show.replace(" ","_")
-        f = open('%s.xml'%(File_show),'a')
+        xml_folder = os.path.join(xml_path, folder_name)
+        File_show = os.path.join(xml_folder, show_name)
+        f = open('%s.xml' % File_show,'a')
         f.write('<dir>\n')
         if bold_value == "true":
-            f.write('\t<title>[B][COLOR=%s]%s[/COLOR][/B]</title>\n' % (Text_color,sea_name))
+            f.write('\t<title>[B][COLOR=%s]%s[/COLOR][/B]</title>\n' % (Text_color, sea_name))
         else:
-            f.write('\t<title>[COLOR=%s]%s[/COLOR]</title>\n' % (Text_color,sea_name))
+            f.write('\t<title>[COLOR=%s]%s[/COLOR]</title>\n' % (Text_color, sea_name))
         f.write('\t<meta>\n')
         f.write('\t<imdb>%s</imdb>\n' % imdb)
         f.write('\t<content>season</content>\n')
-        f.write('\t<season>%s</season>\n' % (sea_num))
+        f.write('\t<season>%s</season>\n' % sea_num)
         f.write('\t<year>%s</year>\n' % year)
         f.write('\t</meta>\n')
         f.write('\t<link></link>\n')
@@ -515,19 +523,18 @@ def print_seasons_xml(show_name,sea_name,year,fanart,icon,imdb,sea_num,folder_na
         f.close()   
     except:
         pass
-    
-def get_episodes(tmdb,sea_num,fanart,sea_name,show_name,imdb,folder_name):
+
+
+def get_episodes(tmdb, sea_num, fanart, sea_name, show_name, imdb, folder_name):
     try:
-        
-        url = "https://api.themoviedb.org/3/tv/%s/season/%s?api_key=%s&language=en-US"% (tmdb,sea_num, tmdb_api_key)
+        url = "https://api.themoviedb.org/3/tv/%s/season/%s?api_key=%s&language=en-US" % (tmdb, sea_num, tmdb_api_key)
         html = requests.get(url).content
         match = json.loads(html)
         episodes = match['episodes']
         Episodes = show_name+"_"+sea_name
-        xml_folder = os.path.join(xml_path,folder_name)
-        File_episode = os.path.join(xml_folder,Episodes)
-        #File_episode= File_episode.replace(" ","_")
-        f = open('%s.xml'%(File_episode),'w')
+        xml_folder = os.path.join(xml_path, folder_name)
+        File_episode = os.path.join(xml_folder, Episodes)
+        f = open('%s.xml' % File_episode, 'wb')
         for epi in episodes:
             name = epi['name']
             episode_num = epi['episode_number']
@@ -535,36 +542,36 @@ def get_episodes(tmdb,sea_num,fanart,sea_name,show_name,imdb,folder_name):
             icon = epi['still_path']
             if not icon:
                 key = "thumbnail"
-                missing_art(show_name,name,key,folder_name)
+                missing_art(show_name, name, key, folder_name)
                 icon = ""
             date = epi['air_date']
             if not date:
                 year = ""            
             else:
                 year = date.split("-")[0]
-            print_episodes_xml(show_name,sea_name,fanart,name,season_num,episode_num,icon,year,imdb,folder_name)
+            print_episodes_xml(show_name, sea_name, fanart, name, season_num, episode_num, icon, year, imdb, folder_name)
     except:
         pass
-    
-def print_episodes_xml(show_name,sea_name,fanart,name,season_num,episode_num,icon,year,imdb,folder_name):
+
+
+def print_episodes_xml(show_name, sea_name, fanart, name, season_num, episode_num, icon, year, imdb, folder_name):
     try:        
-        Episodes = show_name+"_"+sea_name
-        xml_folder = os.path.join(xml_path,folder_name)
-        File_episode = os.path.join(xml_folder,Episodes)
-        #File_episode= File_episode.replace(" ","_")
-        f = open('%s.xml'%(File_episode),'a')
+        Episodes = show_name + "_" + sea_name
+        xml_folder = os.path.join(xml_path ,folder_name)
+        File_episode = os.path.join(xml_folder, Episodes)
+        f = open('%s.xml' % File_episode, 'a')
         f.write('<item>\n')
         if bold_value == "true":
-            f.write('\t<title>[B][COLOR=%s]%s[/COLOR][/B]</title>\n' % (Text_color,name))
+            f.write('\t<title>[B][COLOR=%s]%s[/COLOR][/B]</title>\n' % (Text_color, name))
         else:
-            f.write('\t<title>[COLOR=%s]%s[/COLOR]</title>\n' % (Text_color,name))
+            f.write('\t<title>[COLOR=%s]%s[/COLOR]</title>\n' % (Text_color, name))
         f.write('\t<meta>\n')
         f.write('\t<imdb>%s</imdb>\n' % imdb)
         f.write('\t<content>episode</content>\n')
-        f.write('\t<tvshowtitle>%s</tvshowtitle>\n' % (show_name))
+        f.write('\t<tvshowtitle>%s</tvshowtitle>\n' % show_name)
         f.write('\t<year>%s</year>\n' % year)
-        f.write('\t<season>%s</season>\n' % (season_num))
-        f.write('\t<episode>%s</episode>\n' % (episode_num))
+        f.write('\t<season>%s</season>\n' % season_num)
+        f.write('\t<episode>%s</episode>\n' % episode_num)
         f.write('\t</meta>\n')
         f.write('\t<link>\n')
         f.write('\t<sublink>search</sublink>\n')
@@ -576,7 +583,53 @@ def print_episodes_xml(show_name,sea_name,fanart,name,season_num,episode_num,ico
         f.close()
     except:
         pass
-    
+
+
+@route(mode='sortarisma', args=['url'])
+def sort_xml(url):
+    dg = xbmcgui.Dialog()
+    selected = dg.browse(1, 'Select XML', 'files', '.xml', False, False, xml_path, False)
+    with open(selected, 'rb') as xml:
+        from dom_parser import parseDOM as dom
+        read = xml.read()
+        items = dom(read, 'item')
+        final = ''
+        if 'year' in url:
+            head1 = '[B][COLORgold]Select Sorting Method[/COLOR][/B]'
+            head2 = '[COLORgold]NEWEST to OLDEST[/COLOR]'
+            head3 = '[COLORgold]OLDEST to NEWEST[/COLOR]'
+
+            ret = dg.select(head1, [head2, head3])
+            if ret == -1:
+                return
+            elif ret == 0:
+                rev = True
+                xml_name = '_newtoold_year.xml'
+            else:
+                rev = False
+                xml_name = '_oldtonew_year.xml'
+
+            sort_items = sorted(items, key=lambda item: dom(item, 'year'), reverse=rev)
+
+            with open(selected[:-4] + xml_name, 'wb') as f:
+                for item in sort_items:
+                    final += '<item>\n\t' + item + '\n</item>\n'
+                f.write(final)
+                f.close()
+            xml.close()
+            xbmcgui.Dialog().ok('XMLerator', 'NEW SORTED XML CREATED', '', '')
+
+        else:
+            sort_items = sorted(items, key=lambda item: dom(item, 'title'), reverse=False)
+            with open(selected[:-4] + '_title_sorted.xml', 'wb') as f:
+                for item in sort_items:
+                    final += '<item>\n\t' + item + '\n</item>\n'
+                f.write(final)
+                f.close()
+            xml.close()
+            xbmcgui.Dialog().ok('XMLerator', 'NEW SORTED XML CREATED', '', '')
+
+
 def clean_search(title):
     if title == None: return
     title = re.sub('&#(\d+);', '', title)
@@ -590,45 +643,50 @@ def clean_search(title):
     title = ' '.join(title.split())
     return title    
 
-def missing_art(show_name,name,key,folder_name):
+
+def missing_art(show_name, name, key, folder_name):
     missing_art = 'missing_art'
-    xml_folder = os.path.join(xml_path,folder_name)
-    File_missing_art = os.path.join(xml_folder,missing_art)
-    f = open('%s.txt'%(File_missing_art), 'a')
+    xml_folder = os.path.join(xml_path, folder_name)
+    File_missing_art = os.path.join(xml_folder, missing_art)
+    f = open('%s.txt' % File_missing_art, 'a')
     if show_name == "":
         f.write('Movie : '+name+' - missing - '+key+'\n')
     else:
         f.write('TV Show : '+show_name+' : '+name+' - missing - '+key+'\n')
     f.close()
 
+
 def remove_non_ascii(text):
     return unidecode(text)
 
+
 def output_folder():
     folder_name = koding.Keyboard(heading='Output Folder Name')
-    folder_name = folder_name.replace(" ","_")
-    xml_folder = os.path.join(xml_path,folder_name)
+    folder_name = folder_name.replace(" ", "_")
+    xml_folder = os.path.join(xml_path, folder_name)
     if os.path.exists(xml_folder):
          koding.Notify(title='Folder Already Exists', message='Choose a different folder', duration=5000)
          xml_folder = output_folder()
     else:
-        os.mkdir( xml_folder, 0755 )
+        os.mkdir(xml_folder, 0755)
         return folder_name    
 
-def progress(length,count,dp):
+
+def progress(length, count, dp):
     try:
         percent = (count * 100) / length
         if dp.iscanceled():
-            raise Exception("Cancelled")
             dp.close()
+            raise Exception("Cancelled")
         else:
-            dp.update(percent,"%s of %s written"% (count,length))
+            dp.update(percent, "%s of %s written" % (count, length))
     except:
         percent = 100
         dp.update(percent)
     if dp.iscanceled():
+        dp.close()
         raise Exception("Canceled")
-        dp.close() 
+
 
 if __name__ == "__main__":
     Run(default='main')

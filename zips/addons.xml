@@ -15,7 +15,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.program.xmlerator" name="XMLerator" version="5.1.0" provider-name="TonyH">
+<addon id="plugin.program.xmlerator" name="XMLerator" version="5.5.0" provider-name="TonyH">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.python.koding.aio" version="0.9.6.6"/>
@@ -214,17 +214,17 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.1.9" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.2.0" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
-      <import addon="xbmc.python" version="2.19.0" />
+        <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
         <import addon="script.module.python.koding.aio" version="0.9.6.6" />
         <import addon="script.module.beautifulsoup" version="3.2.1" />
         <import addon="script.module.requests" version="2.9.1" />
         <import addon="script.module.addon.common" version="2.0.0" />
         <import addon="script.module.xmltodict" version="0.9.0" />
-		<import addon="script.module.dateutil" />
-        <import addon="script.module.thetvdb" />
+        <import addon="script.module.dateutil" />
+		<import addon="script.module.thetvdb" />
         <import addon="script.module.metadatautils" />
 		<import addon="script.module.live365" version="1.0.3" />
 		<import addon="script.module.simplejson"  />
@@ -236,17 +236,17 @@
 		<import addon="script.module.streamlink.crypto" version="1.4.0" />
         <!--<import addon="script.module.web-pdb" version="1.0"/>-->
         <import addon="script.module.resolveurl" />
+        <!--<import addon="script.module.urlresolver" />-->
 		<import addon="script.module.tvtime" version="1.0.1" />
-        <import addon="plugin.video.youtube" />
+		<import addon="plugin.video.youtube" />
 		<import addon="plugin.video.ufcfightpass" version="1.2.1" />
-		<import addon="plugin.program.xmlerator" version="5.1.0" />
+		<import addon="plugin.program.xmlerator" version="5.5.0" />
 		<import addon="plugin.video.btmedia" version="1.0" />
 		<import addon="plugin.video.bosstechmediaV3" version="1.4" />
 		<import addon="plugin.video.livenettv" version="1.1" />
 		<import addon="plugin.video.f4mTester" version="2.7.2" />
 		<import addon="plugin.video.SportsDevil" version="2018.04.11" />
-
-		</requires>
+    </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>audio video</provides>
     </extension>
@@ -255,7 +255,7 @@
       <summary lang="en">[COLORred]EPIC TUNES TUBE N FLIX[/COLOR]</summary>
       <summary lang="he"></summary>
       <description lang="en">[B][COLORlawngreen]THE AUTHOR OF THIS ADDON DOES NOT HOST ANY OF THE CONTENT WHICH IS FOUND IN IT AND HAVE NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS.[/COLOR][/B]
-[B][COLORred]CREDITS TO THE ORIGINAL DEVS OF JEN AND TO RACC,MR KNOW,BLUEZED,AND TO ALL THE DEVS IN THE JEN GROUP AND ESPECIALLY DEVS IN KRITIKTV GROUP WITHOUT THEM THIS ADDON WOULDNT OF BEEN POSSIBLE!![/COLOR][/B]</description>
+                             [B][COLORred]CREDITS TO THE ORIGINAL DEVS OF JEN AND TO RACC,MR KNOW,BLUEZED,AND TO ALL THE DEVS IN THE JEN GROUP AND ESPECIALLY DEVS IN KRITIKTV GROUP WITHOUT THEM THIS ADDON WOULDNT OF BEEN POSSIBLE!![/COLOR][/B]</description>
       <description lang="he"></description>
       <disclaimer lang="en">[B][COLORlawngreen]THE AUTHOR OF THIS ADDON DOES NOT HOST ANY OF THE CONTENT WHICH IS FOUND AND HAS NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS AND OR XBMC/KODI[/COLOR][/B]</disclaimer>
       <disclaimer lang="en"></disclaimer>
@@ -287,7 +287,7 @@
   </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="TTMedia Repository" version="1.8.3" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="repository.ttmedia" name="TTMedia Repository" version="1.8.4" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>

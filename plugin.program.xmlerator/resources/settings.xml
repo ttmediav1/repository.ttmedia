@@ -2,10 +2,10 @@
 <settings>
     <category label="General">
       <setting label="TMDB" type="lsep"/>
-      <setting id= "TMDB_api" type="text" label="TMDB Api key" default="TMDB" visible="true"/>
+      <setting id= "TMDB_api" type="text" option="hidden" label="TMDB Api key" default="TMDB" visible="true"/>
 	  <setting label="Trakt" type="lsep"/>
       <setting id= "Trakt_user" type="text" label="Trakt User Name" default="user name" visible="true"/>
-	  <setting id= "Trakt_api" type="text" label="Trakt Client key" default="api" visible="true"/>
+	  <setting id= "Trakt_api" type="text" option="hidden" label="Trakt Client key" default="api" visible="true"/>
 	</category>  
 	<category label="XML Options">
 	  <setting label="Text" type="lsep"/>

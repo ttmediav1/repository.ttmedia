@@ -1,6 +1,8 @@
 """
-    air_table big movie list.py
-    Copyright (C) 2018, Team OTB
+    air_table All Sports Replays
+    Copyright (C) 2018,
+    Version 1.0.0
+    Jen Live Chat group
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,88 +19,14 @@
 
     -------------------------------------------------------------
 
-    Usage:
-
-    ---------------------
+    Usage Examples:
 
     <dir>
-    <title>Action Movies</title>
-    <bml>genre/Action</bml>
-	</dir>
+    <title>All Sports Replays</title>
+    <all_sports_replays>all</all_sports_replays>
+    </dir> 
+ 
 
-	<dir>
-    <title>Adventure Movies</title>
-    <bml>genre/Adventure</bml>
-	</dir>
-
-    <dir>
-    <title>Comedy Movies</title>
-    <bml>genre/Comedy</bml>
-	</dir>
-
-    <dir>
-    <title>Documentary Movies</title>
-    <bml>genre/Documentary</bml>
-	</dir>
-
-    <dir>
-    <title>Drama Movies</title>
-    <bml>genre/Drama</bml>
-	</dir>
-
-    <dir>
-    <title>Family Movies</title>
-    <bml>genre/Family</bml>
-	</dir>
-
-    <dir>
-    <title>Horror Movies</title>
-    <bml>genre/Horror</bml>
-	</dir>
-
-    <dir>
-    <title>Kids Movies</title>
-    <bml>genre/Kids</bml>
-	</dir>
-
-    <dir>
-    <title>Romance Movies</title>
-    <bml>genre/Romance</bml>
-	</dir>
-
-    <dir>
-    <title>SciFi Movies</title>
-    <bml>genre/SciFi</bml>
-	</dir>
-
-    <dir>
-    <title>Standup Comedy Movies</title>
-    <bml>genre/Standup Comedy</bml>
-	</dir>
-
-    <dir>
-    <title>Thriller Movies</title>
-    <bml>genre/Thriller</bml>
-	</dir>
-
-    <dir>
-    <title>War Movies</title>
-    <bml>genre/War</bml>
-	</dir>
-
-    <dir>
-    <title>Western Movies</title>
-    <bml>genre/Western</bml>
-	</dir>
-
-    -----------------------
-
-    Gener tag with metadata
-
-    <dir>
-    <title>Action Movies</title>
-    <bml>genre_meta/Action</bml>
-    </dir>
     --------------------------------------------------------------
 
 """
@@ -111,17 +39,21 @@ import re
 import os
 import xbmc
 import xbmcaddon
-import json
 from koding import route
 from ..plugin import Plugin
 from resources.lib.util.context import get_context_items
 from resources.lib.util.xml import JenItem, JenList, display_list
 from requests.exceptions import HTTPError
 import posixpath
-import time
+import datetime, time
 from six.moves.urllib.parse import unquote
 from six.moves.urllib.parse import quote
 from unidecode import unidecode
+from dateutil.parser import parse
+from dateutil.tz import gettz
+from dateutil.tz import tzlocal
+try: import json
+except ImportError: import simplejson as json
 
 CACHE_TIME = 3600  # change to wanted cache time in seconds
 
@@ -131,18 +63,37 @@ AddonName = xbmc.getInfoLabel('Container.PluginName')
 AddonName = xbmcaddon.Addon(AddonName).getAddonInfo('id')
 
 
-class Big_Movie_List(Plugin):
-    name = "big_movie_list"
+try:
+    local_tzinfo = tzlocal()
+    locale_timezone = json.loads(xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Settings.GetSettingValue", "params": {"setting": "locale.timezone"}, "id": 1}'))
+    if locale_timezone['result']['value']:
+        local_tzinfo = gettz(locale_timezone['result']['value'])
+except:
+    pass
+
+def convDateUtil(timestring, newfrmt='default', in_zone='UTC'):
+    if newfrmt == 'default':
+        newfrmt = xbmc.getRegion('time').replace(':%S','')
+    try:
+        in_time = parse(timestring)
+        in_time_with_timezone = in_time.replace(tzinfo=gettz(in_zone))
+        local_time = in_time_with_timezone.astimezone(local_tzinfo)
+        return local_time.strftime(newfrmt)
+    except:
+        return timestring
+
+class All_Sports_Replays(Plugin):
+    name = "all_sports_replays"
 
     def process_item(self, item_xml):
-        if "<bml>" in item_xml:
-            item = JenItem(item_xml)
-            if "all" in item.get("bml", ""):
+        if "<all_sports_replays>" in item_xml:
+            item = JenItem(item_xml) 
+            if item.get("all_sports_replays", "") == "all":
                 result_item = {
                     'label': item["title"],
                     'icon': item.get("thumbnail", addon_icon),
                     'fanart': item.get("fanart", addon_fanart),
-                    'mode': "open_bml_movies",
+                    'mode': "open_the_all_sports",
                     'url': "",
                     'folder': True,
                     'imdb': "0",
@@ -157,14 +108,60 @@ class Big_Movie_List(Plugin):
                     'fanart_image': result_item["fanart"]
                 }
                 result_item['fanart_small'] = result_item["fanart"]
-                return result_item              
-            elif "genre" in item.get("bml", ""):    
+                return result_item 
+            elif "leagues/" in item.get("all_sports_replays", ""):
+                sports = ['MMA_REPLAY','GOLF_REPLAY', 'TENNIS_REPLAY', 'MLS_REPLAY','NHL_REPLAY','NBA_REPLAY','BOXING_REPLAY','WRESTLING_REPLAY','OLYMPICS','TONY_REPLAY']
+                info = item.get("all_sports_replays", "")
+                tag = info.split("/")[1]
+                if tag in sports:   
+                    result_item = {
+                        'label': item["title"],
+                        'icon': item.get("thumbnail", addon_icon),
+                        'fanart': item.get("fanart", addon_fanart),
+                        'mode': "open_the_other_leagues_replays",
+                        'url': item.get("all_sports_replays", ""),
+                        'folder': True,
+                        'imdb': "0",
+                        'season': "0",
+                        'episode': "0",
+                        'info': {},
+                        'year': "0",
+                        'context': get_context_items(item),
+                        "summary": item.get("summary", None)
+                    }
+                    result_item["properties"] = {
+                        'fanart_image': result_item["fanart"]
+                    }
+                    result_item['fanart_small'] = result_item["fanart"]
+                    return result_item
+                else:                                               
+                    result_item = {
+                        'label': item["title"],
+                        'icon': item.get("thumbnail", addon_icon),
+                        'fanart': item.get("fanart", addon_fanart),
+                        'mode': "open_the_leagues_replays",
+                        'url': item.get("all_sports_replays", ""),
+                        'folder': True,
+                        'imdb': "0",
+                        'season': "0",
+                        'episode': "0",
+                        'info': {},
+                        'year': "0",
+                        'context': get_context_items(item),
+                        "summary": item.get("summary", None)
+                    }
+                    result_item["properties"] = {
+                        'fanart_image': result_item["fanart"]
+                    }
+                    result_item['fanart_small'] = result_item["fanart"]
+                    return result_item 
+            elif "seasons/" in item.get("all_sports_replays", ""):
                 result_item = {
                     'label': item["title"],
                     'icon': item.get("thumbnail", addon_icon),
                     'fanart': item.get("fanart", addon_fanart),
-                    'mode': "open_action_movies",
-                    'url': item.get("bml", ""),
+                    'mode': "open_the_seasons_replays",
+                    'url': item.get("all_sports_replays", ""),
                     'folder': True,
                     'imdb': "0",
                     'season': "0",
@@ -178,14 +175,14 @@ class Big_Movie_List(Plugin):
                     'fanart_image': result_item["fanart"]
                 }
                 result_item['fanart_small'] = result_item["fanart"]
-                return result_item 
-            elif "movie_meta" in item.get("bml", ""):    
+                return result_item
+            elif "week/" in item.get("all_sports_replays", ""):
                 result_item = {
                     'label': item["title"],
                     'icon': item.get("thumbnail", addon_icon),
                     'fanart': item.get("fanart", addon_fanart),
-                    'mode': "open_movie_meta_movies",
-                    'url': item.get("bml", ""),
+                    'mode': "open_the_weeks_replays",
+                    'url': item.get("all_sports_replays", ""),
                     'folder': True,
                     'imdb': "0",
                     'season': "0",
@@ -199,184 +196,242 @@ class Big_Movie_List(Plugin):
                     'fanart_image': result_item["fanart"]
                 }
                 result_item['fanart_small'] = result_item["fanart"]
-                return result_item 
-            elif "genre_meta" in item.get("bml", ""):    
-                result_item = {
-                    'label': item["title"],
-                    'icon': item.get("thumbnail", addon_icon),
-                    'fanart': item.get("fanart", addon_fanart),
-                    'mode': "open_genre_meta_movies",
-                    'url': item.get("bml", ""),
-                    'folder': True,
-                    'imdb': "0",
-                    'season': "0",
-                    'episode': "0",
-                    'info': {},
-                    'year': "0",
-                    'context': get_context_items(item),
-                    "summary": item.get("summary", None)
-                }
-                result_item["properties"] = {
-                    'fanart_image': result_item["fanart"]
-                }
-                result_item['fanart_small'] = result_item["fanart"]
-                return result_item 
+                return result_item
 
-@route(mode='open_bml_movies')
-def open_movies():
+
+@route(mode='open_the_all_sports')
+def open_table():
     xml = ""
-    at = Airtable('app5BLIVaH0fAWvnE', 'Imported_table', api_key='keyikW1exArRfNAWj')
-    match = at.get_all(maxRecords=700, sort=['name'])  
+    at = Airtable('appighRQxbaYJz1um', 'sports_replay_main', api_key='keybx0HglywRKFmyS')
+    match = at.get_all(maxRecords=700, view='Grid view') 
     for field in match:
         try:
             res = field['fields']   
-            name = res['name']
+            name = res['Name']
             name = remove_non_ascii(name)
-            #imdb = res['imdb']
-            trailer = res['trailer']
-            summary = res['summary']
-            summary = remove_non_ascii(summary)
-            xml += "<item>"\
-                   "<title>%s</title>"\
-                   "<meta>"\
-                   "<content>movie</content>"\
-                   "<imdb></imdb>"\
-                   "<title></title>"\
-                   "<year></year>"\
-                   "<thumbnail>%s</thumbnail>"\
-                   "<fanart>%s</fanart>"\
-                   "<summary>%s</summary>"\
-                   "</meta>"\
-                   "<link>"\
-                   "<sublink>%s</sublink>"\
-                   "<sublink>%s</sublink>"\
-                   "<sublink>%s</sublink>"\
-                   "<sublink>%s</sublink>"\
-                   "<sublink>%s</sublink>"\
-                   "<sublink>%s(Trailer)</sublink>"\
-                   "</link>"\
-                   "</item>" % (name,res['thumbnail'],res['fanart'],summary,res['link_a'],res['link_b'],res['link_c'],res['link_d'],res['link_e'],trailer)                    
+            thumbnail = res['thumbnail']
+            fanart = res['fanart']
+            link = res['link']                           
+            xml +=  "<item>"\
+                    "<title>%s</title>"\
+                    "<thumbnail>%s</thumbnail>"\
+                    "<fanart>%s</fanart>"\
+                    "<link>"\
+                    "<all_sports_replays>leagues/%s</all_sports_replays>"\
+                    "</link>"\
+                    "</item>" % (name,thumbnail,fanart,link)                                          
         except:
             pass                                                                     
     jenlist = JenList(xml)
     display_list(jenlist.get_list(), jenlist.get_content_type())
 
-@route(mode='open_action_movies',args=["url"])
-def open_action_movies(url):
+@route(mode='open_the_leagues_replays',args=["url"])
+def open_table(url):
     xml = ""
-    genre = url.split("/")[-1]
-    at = Airtable('app5BLIVaH0fAWvnE', 'Imported_table', api_key='keyikW1exArRfNAWj')
-    try:
-        match = at.search('type', genre)
-        for field in match:
-            res = field['fields']   
-            name = res['name']
-            #imdb = res['imdb']
-            trailer = res['trailer']
-            name = remove_non_ascii(name)
-            summary = res['summary']
-            summary = remove_non_ascii(summary) 
-            xml += "<item>"\
-                   "<title>%s</title>"\
-                   "<meta>"\
-                   "<content>movie</content>"\
-                   "<imdb></imdb>"\
-                   "<title></title>"\
-                   "<year></year>"\
-                   "<thumbnail>%s</thumbnail>"\
-                   "<fanart>%s</fanart>"\
-                   "<summary>%s</summary>"\
-                   "</meta>"\
-                   "<link>"\
-                   "<sublink>%s(Link 1)</sublink>"\
-                   "<sublink>%s(Link 2)</sublink>"\
-                   "<sublink>%s(Link 3)</sublink>"\
-                   "<sublink>%s(Link 4)</sublink>"\
-                   "<sublink>%s(Link 5)</sublink>"\
-                   "<sublink>%s(Trailer)</sublink>"\
-                   "</link>"\
-                   "</item>" % (name,res['thumbnail'],res['fanart'],summary,res['link_a'],res['link_b'],res['link_c'],res['link_d'],res['link_e'],trailer)                   
-    except:
-        pass                  
-    jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
-
-@route(mode='open_movie_meta_movies',args=["url"])
-def open_movie_meta_movies(url):
-    xml = ""                           
-    at = Airtable('app5BLIVaH0fAWvnE', 'Imported_table', api_key='keyikW1exArRfNAWj')
-    match = at.get_all(maxRecords=700, sort=['name'])  
+    table = url.split("/")[-2]
+    key = url.split("/")[-1]
+    at = Airtable(key, table, api_key='keybx0HglywRKFmyS')
+    match = at.get_all(maxRecords=700, view='Grid view')                                  
     for field in match:
         try:
             res = field['fields']   
-            name = res['name']
+            name = res['Name']
             name = remove_non_ascii(name)
-            imdb = res['imdb']
-            trailer = res['trailer']
-            summary = res['summary']
-            summary = remove_non_ascii(summary) 
-            xml += "<item>"\
-                   "<title>%s</title>"\
-                   "<meta>"\
-                   "<content>movie</content>"\
-                   "<imdb>%s</imdb>"\
-                   "<title></title>"\
-                   "<year></year>"\
-                   "<thumbnail>%s</thumbnail>"\
-                   "<fanart>%s</fanart>"\
-                   "<summary>%s</summary>"\
-                   "</meta>"\
-                   "<link>"\
-                   "<sublink>%s(Link 1)</sublink>"\
-                   "<sublink>%s(Link 2)</sublink>"\
-                   "<sublink>%s(Link 3)</sublink>"\
-                   "<sublink>%s(Link 4)</sublink>"\
-                   "<sublink>%s(Link 5)</sublink>"\
-                   "<sublink>%s(Trailer)</sublink>"\
-                   "</link>"\
-                   "</item>" % (name,imdb,res['thumbnail'],res['fanart'],summary,res['link_a'],res['link_b'],res['link_c'],res['link_d'],res['link_e'],trailer)
+            thumbnail = res['thumbnail']
+            fanart = res['fanart']
+            link = res['link']                        
+            xml +=  "<item>"\
+                    "<title>%s</title>"\
+                    "<thumbnail>%s</thumbnail>"\
+                    "<fanart>%s</fanart>"\
+                    "<link>"\
+                    "<all_sports_replays>seasons/%s</all_sports_replays>"\
+                    "</link>"\
+                    "</item>" % (name,thumbnail,fanart,link)                                          
+
         except:
-            pass           
+            pass                                                                     
     jenlist = JenList(xml)
     display_list(jenlist.get_list(), jenlist.get_content_type())
 
-@route(mode='open_genre_meta_movies',args=["url"])
-def open_genre_meta_movies(url):
+@route(mode='open_the_other_leagues_replays',args=["url"])
+def open_table(url):
     xml = ""
-    genre = url.split("/")[-1]
-    at = Airtable('app5BLIVaH0fAWvnE', 'Imported_table', api_key='keyikW1exArRfNAWj')
-    try:
-        match = at.search('type', genre)
-        for field in match:
+    table = url.split("/")[-2]
+    key = url.split("/")[-1]
+    at = Airtable(key, table, api_key='keybx0HglywRKFmyS')
+    match = at.get_all(maxRecords=700, view='Grid view') 
+    for field in match:
+        try:
             res = field['fields']   
-            name = res['name']
-            imdb = res['imdb']
-            trailer = res['trailer']
+            name = res['Name']
             name = remove_non_ascii(name)
-            summary = res['summary']
-            summary = remove_non_ascii(summary) 
-            xml += "<item>"\
-                   "<title>%s</title>"\
-                   "<meta>"\
-                   "<content>movie</content>"\
-                   "<imdb>%s</imdb>"\
-                   "<title></title>"\
-                   "<year></year>"\
-                   "<thumbnail>%s</thumbnail>"\
-                   "<fanart>%s</fanart>"\
-                   "<summary>%s</summary>"\
-                   "</meta>"\
-                   "<link>"\
-                   "<sublink>%s(Link 1)</sublink>"\
-                   "<sublink>%s(Link 2)</sublink>"\
-                   "<sublink>%s(Link 3)</sublink>"\
-                   "<sublink>%s(Link 4)</sublink>"\
-                   "<sublink>%s(Link 5)</sublink>"\
-                   "<sublink>%s(Trailer)</sublink>"\
-                   "</link>"\
-                   "</item>" % (name,imdb,res['thumbnail'],res['fanart'],summary,res['link_a'],res['link_b'],res['link_c'],res['link_d'],res['link_e'],trailer)                   
-    except:
-        pass                  
+            thumbnail = res['thumbnail']
+            fanart = res['fanart']
+            link1 = res['link1']
+            link2 = res['link2']
+            link3 = res['link3']
+            link4 = res['link4']                                   
+            if link2 == "-":
+                xml +=  "<item>"\
+                        "<title>%s</title>"\
+                        "<thumbnail>%s</thumbnail>"\
+                        "<fanart>%s</fanart>"\
+                        "<link>"\
+                        "<sublink>%s</sublink>"\
+                        "</link>"\
+                        "</item>" % (name,thumbnail,fanart,link1)                                          
+            elif link3 == "-":
+                xml +=  "<item>"\
+                        "<title>%s</title>"\
+                        "<thumbnail>%s</thumbnail>"\
+                        "<fanart>%s</fanart>"\
+                        "<link>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "</link>"\
+                        "</item>" % (name,thumbnail,fanart,link1,link2)
+            elif link4 == "-":
+                xml +=  "<item>"\
+                        "<title>%s</title>"\
+                        "<thumbnail>%s</thumbnail>"\
+                        "<fanart>%s</fanart>"\
+                        "<link>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "</link>"\
+                        "</item>" % (name,thumbnail,fanart,link1,link2,link3)
+            else:                
+                xml +=  "<item>"\
+                        "<title>%s</title>"\
+                        "<thumbnail>%s</thumbnail>"\
+                        "<fanart>%s</fanart>"\
+                        "<link>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "</link>"\
+                        "</item>" % (name,thumbnail,fanart,link1,link2,link3,link4)                                          
+
+        except:
+            pass                                                                     
+    jenlist = JenList(xml)
+    display_list(jenlist.get_list(), jenlist.get_content_type())
+
+@route(mode='open_the_seasons_replays',args=["url"])
+def open_table(url):
+    xml = ""
+    table = url.split("/")[-2]
+    key = url.split("/")[-1]
+    at = Airtable(key, table, api_key='keybx0HglywRKFmyS')
+    match = at.search('category', 'Week' ,view='Grid view') 
+    for field in match:
+        try:
+            res = field['fields']   
+            name = res['Name']
+            name = remove_non_ascii(name)
+            thumbnail = res['thumbnail']
+            fanart = res['fanart']
+            category = res['category']                        
+            xml +=  "<item>"\
+                    "<title>%s</title>"\
+                    "<thumbnail>%s</thumbnail>"\
+                    "<fanart>%s</fanart>"\
+                    "<link>"\
+                    "<all_sports_replays>week/%s/%s/%s</all_sports_replays>"\
+                    "</link>"\
+                    "</item>" % (name,thumbnail,fanart,name,table,key)                                          
+
+        except:
+            pass                                                                     
+    jenlist = JenList(xml)
+    display_list(jenlist.get_list(), jenlist.get_content_type())
+
+@route(mode='open_the_weeks_replays',args=["url"])
+def open_table(url):
+    xml = ""
+    table = url.split("/")[-2]
+    key = url.split("/")[-1]
+    cat = url.split("/")[-3]
+    at = Airtable(key, table, api_key='keybx0HglywRKFmyS')
+    match = at.search('category', cat ,view='Grid view') 
+    for field in match:
+        try:
+            res = field['fields']   
+            name = res['Name']
+            name = remove_non_ascii(name)
+            thumbnail = res['thumbnail']
+            fanart = res['fanart']
+            category = res['category']
+            score = res['score']
+            if score == "-":
+                score = ""
+            link1 = res['link1']
+            link2 = res['link2']
+            link3 = res['link3']
+            link4 = res['link4']
+            link5 = res['link5']            
+            dsp = name + "    " + "[B][COLORdodgerblue]%s[/COLOR][/B]" % score                        
+            if link2 == "-":
+                xml +=  "<item>"\
+                        "<title>%s</title>"\
+                        "<thumbnail>%s</thumbnail>"\
+                        "<fanart>%s</fanart>"\
+                        "<link>"\
+                        "<sublink>%s</sublink>"\
+                        "</link>"\
+                        "</item>" % (dsp,thumbnail,fanart,link1)                                          
+            elif link3 == "-":
+                xml +=  "<item>"\
+                        "<title>%s</title>"\
+                        "<thumbnail>%s</thumbnail>"\
+                        "<fanart>%s</fanart>"\
+                        "<link>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "</link>"\
+                        "</item>" % (dsp,thumbnail,fanart,link1,link2)
+            elif link4 == "-":
+                xml +=  "<item>"\
+                        "<title>%s</title>"\
+                        "<thumbnail>%s</thumbnail>"\
+                        "<fanart>%s</fanart>"\
+                        "<link>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "</link>"\
+                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3)
+            elif link5 == "-":
+                xml +=  "<item>"\
+                        "<title>%s</title>"\
+                        "<thumbnail>%s</thumbnail>"\
+                        "<fanart>%s</fanart>"\
+                        "<link>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "</link>"\
+                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4)
+            else:                
+                xml +=  "<item>"\
+                        "<title>%s</title>"\
+                        "<thumbnail>%s</thumbnail>"\
+                        "<fanart>%s</fanart>"\
+                        "<link>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "</link>"\
+                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4,link5)                                          
+
+        except:
+            pass                                                                     
     jenlist = JenList(xml)
     display_list(jenlist.get_list(), jenlist.get_content_type())
 
