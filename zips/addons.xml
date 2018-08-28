@@ -214,7 +214,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.2.0" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.2.1" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -287,7 +287,7 @@
   </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="TTMedia Repository" version="1.8.4" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="repository.ttmedia" name="TTMedia Repository" version="1.8.5" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
