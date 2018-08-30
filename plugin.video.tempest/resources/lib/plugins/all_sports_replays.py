@@ -110,7 +110,7 @@ class All_Sports_Replays(Plugin):
                 result_item['fanart_small'] = result_item["fanart"]
                 return result_item 
             elif "leagues/" in item.get("all_sports_replays", ""):
-                sports = ['MMA_REPLAY','GOLF_REPLAY', 'TENNIS_REPLAY', 'MLS_REPLAY','NHL_REPLAY','NBA_REPLAY','BOXING_REPLAY','WRESTLING_REPLAY','OLYMPICS','TONY_REPLAY']
+                sports = ['NFL','MLB']
                 info = item.get("all_sports_replays", "")
                 tag = info.split("/")[1]
                 if tag in sports:   
@@ -118,7 +118,7 @@ class All_Sports_Replays(Plugin):
                         'label': item["title"],
                         'icon': item.get("thumbnail", addon_icon),
                         'fanart': item.get("fanart", addon_fanart),
-                        'mode': "open_the_other_leagues_replays",
+                        'mode': "open_the_leagues_replays",
                         'url': item.get("all_sports_replays", ""),
                         'folder': True,
                         'imdb': "0",
@@ -139,7 +139,7 @@ class All_Sports_Replays(Plugin):
                         'label': item["title"],
                         'icon': item.get("thumbnail", addon_icon),
                         'fanart': item.get("fanart", addon_fanart),
-                        'mode': "open_the_leagues_replays",
+                        'mode': "open_the_other_leagues_replays",
                         'url': item.get("all_sports_replays", ""),
                         'folder': True,
                         'imdb': "0",

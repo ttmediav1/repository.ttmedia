@@ -1,7 +1,7 @@
 """
-    air_table Sports Leagues
+    Air_table Sports Leagues
     Copyright (C) 2018,
-    Version 1.0.5
+    Version 1.0.6
     Jen Live Chat group
 
     This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,6 @@
     Usage Examples:
 
 
-    Returns the Big Movie list-
-
     <dir>
     <title>All Leagues</title>
     <sports_leagues>all</sports_leagues>
@@ -31,32 +29,32 @@
 
     <dir>
     <title>NFL</title>
-    <sports_leagues>nfl</sports_leagues>
+    <sports_leagues>league/NFL/appPHCMrs8obfEUPB</sports_leagues>
     </dir>
 
     <dir>
     <title>NBA</title>
-    <sports_leagues>nba</sports_leagues>
+    <sports_leagues>league/NBA/apptSKCkSkXp3rq4Z</sports_leagues>
     </dir>
 
     <dir>
     <title>NHL</title>
-    <sports_leagues>nhl</sports_leagues>
+    <sports_leagues>league/NHL/appJ1nGNe5G1za9fg</sports_leagues>
     </dir>
 
     <dir>
     <title>MLB</title>
-    <sports_leagues>mlb</sports_leagues>
+    <sports_leagues>league/MLB/appX7OeLbtR24KCGo</sports_leagues>
     </dir>           
 
     <dir>
     <title>PPV</title>
-    <sports_leagues>ppv</sports_leagues>
+    <sports_leagues>league/PPV/appNnFoE57hSCh7Uo</sports_leagues>
     </dir>
 
     <dir>
     <title>Wrestling</title>
-    <sports_leagues>wwe</sports_leagues>
+    <sports_leagues>league/Wrestling/appQdoXXIKKVOZRBl</sports_leagues>
     </dir> 
 
     --------------------------------------------------------------
@@ -118,134 +116,8 @@ class Sports_Leagues(Plugin):
 
     def process_item(self, item_xml):
         if "<sports_leagues>" in item_xml:
-            item = JenItem(item_xml)
-            if item.get("sports_leagues", "") == "nfl":
-                result_item = {
-                    'label': item["title"],
-                    'icon': item.get("thumbnail", addon_icon),
-                    'fanart': item.get("fanart", addon_fanart),
-                    'mode': "open_the_nfl_league",
-                    'url': item.get("sports_leagues", ""),
-                    'folder': True,
-                    'imdb': "0",
-                    'season': "0",
-                    'episode': "0",
-                    'info': {},
-                    'year': "0",
-                    'context': get_context_items(item),
-                    "summary": item.get("summary", None)
-                }
-                result_item["properties"] = {
-                    'fanart_image': result_item["fanart"]
-                }
-                result_item['fanart_small'] = result_item["fanart"]
-                return result_item              
-            elif item.get("sports_leagues", "") == "mlb":
-                result_item = {
-                    'label': item["title"],
-                    'icon': item.get("thumbnail", addon_icon),
-                    'fanart': item.get("fanart", addon_fanart),
-                    'mode': "open_the_mlb_league",
-                    'url': item.get("sports_leagues", ""),
-                    'folder': True,
-                    'imdb': "0",
-                    'season': "0",
-                    'episode': "0",
-                    'info': {},
-                    'year': "0",
-                    'context': get_context_items(item),
-                    "summary": item.get("summary", None)
-                }
-                result_item["properties"] = {
-                    'fanart_image': result_item["fanart"]
-                }
-                result_item['fanart_small'] = result_item["fanart"]
-                return result_item
-            elif item.get("sports_leagues", "") == "nba":
-                result_item = {
-                    'label': item["title"],
-                    'icon': item.get("thumbnail", addon_icon),
-                    'fanart': item.get("fanart", addon_fanart),
-                    'mode': "open_the_nba_league",
-                    'url': item.get("sports_leagues", ""),
-                    'folder': True,
-                    'imdb': "0",
-                    'season': "0",
-                    'episode': "0",
-                    'info': {},
-                    'year': "0",
-                    'context': get_context_items(item),
-                    "summary": item.get("summary", None)
-                }
-                result_item["properties"] = {
-                    'fanart_image': result_item["fanart"]
-                }
-                result_item['fanart_small'] = result_item["fanart"]
-                return result_item
-            elif item.get("sports_leagues", "") == "nhl":
-                result_item = {
-                    'label': item["title"],
-                    'icon': item.get("thumbnail", addon_icon),
-                    'fanart': item.get("fanart", addon_fanart),
-                    'mode': "open_the_nhl_league",
-                    'url': item.get("sports_leagues", ""),
-                    'folder': True,
-                    'imdb': "0",
-                    'season': "0",
-                    'episode': "0",
-                    'info': {},
-                    'year': "0",
-                    'context': get_context_items(item),
-                    "summary": item.get("summary", None)
-                }
-                result_item["properties"] = {
-                    'fanart_image': result_item["fanart"]
-                }
-                result_item['fanart_small'] = result_item["fanart"]
-                return result_item                
-            elif item.get("sports_leagues", "") == "ppv":
-                result_item = {
-                    'label': item["title"],
-                    'icon': item.get("thumbnail", addon_icon),
-                    'fanart': item.get("fanart", addon_fanart),
-                    'mode': "open_the_ppv_league",
-                    'url': item.get("sports_leagues", ""),
-                    'folder': True,
-                    'imdb': "0",
-                    'season': "0",
-                    'episode': "0",
-                    'info': {},
-                    'year': "0",
-                    'context': get_context_items(item),
-                    "summary": item.get("summary", None)
-                }
-                result_item["properties"] = {
-                    'fanart_image': result_item["fanart"]
-                }
-                result_item['fanart_small'] = result_item["fanart"]
-                return result_item 
-            elif item.get("sports_leagues", "") == "wwe":
-                result_item = {
-                    'label': item["title"],
-                    'icon': item.get("thumbnail", addon_icon),
-                    'fanart': item.get("fanart", addon_fanart),
-                    'mode': "open_the_wwe_league",
-                    'url': item.get("sports_leagues", ""),
-                    'folder': True,
-                    'imdb': "0",
-                    'season': "0",
-                    'episode': "0",
-                    'info': {},
-                    'year': "0",
-                    'context': get_context_items(item),
-                    "summary": item.get("summary", None)
-                }
-                result_item["properties"] = {
-                    'fanart_image': result_item["fanart"]
-                }
-                result_item['fanart_small'] = result_item["fanart"]
-                return result_item 
-            elif item.get("sports_leagues", "") == "all":
+            item = JenItem(item_xml)              
+            if item.get("sports_leagues", "") == "all":
                 result_item = {
                     'label': item["title"],
                     'icon': item.get("thumbnail", addon_icon),
@@ -266,12 +138,58 @@ class Sports_Leagues(Plugin):
                 }
                 result_item['fanart_small'] = result_item["fanart"]
                 return result_item 
-            elif "nfl_season/" in item.get("sports_leagues", ""):
+            elif "league/" in item.get("sports_leagues", ""):
+                sports = ['NFL','NBA']
+                info = item.get("sports_leagues", "")
+                tag = info.split("/")[1]
+                if tag in sports:                
+                    result_item = {
+                        'label': item["title"],
+                        'icon': item.get("thumbnail", addon_icon),
+                        'fanart': item.get("fanart", addon_fanart),
+                        'mode': "open_the_league_main",
+                        'url': item.get("sports_leagues", ""),
+                        'folder': True,
+                        'imdb': "0",
+                        'season': "0",
+                        'episode': "0",
+                        'info': {},
+                        'year': "0",
+                        'context': get_context_items(item),
+                        "summary": item.get("summary", None)
+                    }
+                    result_item["properties"] = {
+                        'fanart_image': result_item["fanart"]
+                    }
+                    result_item['fanart_small'] = result_item["fanart"]
+                    return result_item
+                else:
+                    result_item = {
+                        'label': item["title"],
+                        'icon': item.get("thumbnail", addon_icon),
+                        'fanart': item.get("fanart", addon_fanart),
+                        'mode': "open_the_other_league_main",
+                        'url': item.get("sports_leagues", ""),
+                        'folder': True,
+                        'imdb': "0",
+                        'season': "0",
+                        'episode': "0",
+                        'info': {},
+                        'year': "0",
+                        'context': get_context_items(item),
+                        "summary": item.get("summary", None)
+                    }
+                    result_item["properties"] = {
+                        'fanart_image': result_item["fanart"]
+                    }
+                    result_item['fanart_small'] = result_item["fanart"]
+                    return result_item                    
+            elif "season/" in item.get("sports_leagues", ""):
                 result_item = {
                     'label': item["title"],
                     'icon': item.get("thumbnail", addon_icon),
                     'fanart': item.get("fanart", addon_fanart),
-                    'mode': "open_the_nfl_season",
+                    'mode': "open_the_league_seasons",
                     'url': item.get("sports_leagues", ""),
                     'folder': True,
                     'imdb': "0",
@@ -287,12 +205,12 @@ class Sports_Leagues(Plugin):
                 }
                 result_item['fanart_small'] = result_item["fanart"]
                 return result_item
-            elif "nfl_week/" in item.get("sports_leagues", ""):
+            elif "week/" in item.get("sports_leagues", ""):
                 result_item = {
                     'label': item["title"],
                     'icon': item.get("thumbnail", addon_icon),
                     'fanart': item.get("fanart", addon_fanart),
-                    'mode': "open_the_nfl_week",
+                    'mode': "open_the_week_list",
                     'url': item.get("sports_leagues", ""),
                     'folder': True,
                     'imdb': "0",
@@ -309,11 +227,10 @@ class Sports_Leagues(Plugin):
                 result_item['fanart_small'] = result_item["fanart"]
                 return result_item
 
-
-@route(mode='open_the_nfl_league',args=["url"])
-def open_table(url):
+@route(mode='open_the_all_league')
+def open_table():
     xml = ""
-    at = Airtable('appPHCMrs8obfEUPB', 'nfl_season', api_key='keyikW1exArRfNAWj')
+    at = Airtable('appbwmFXMwN9WaOu2', 'Leagues', api_key='keyikW1exArRfNAWj')
     match = at.get_all(maxRecords=700, view='Grid view') 
     for field in match:
         try:
@@ -322,26 +239,165 @@ def open_table(url):
             name = remove_non_ascii(name)
             thumbnail = res['thumbnail']
             fanart = res['fanart']
-            link = res['link']
+            link = res['link']                        
             xml +=  "<item>"\
                     "<title>%s</title>"\
                     "<thumbnail>%s</thumbnail>"\
                     "<fanart>%s</fanart>"\
                     "<link>"\
-                    "<sports_leagues>nfl_season/%s</sports_leagues>"\
+                    "<sports_leagues>league/%s</sports_leagues>"\
                     "</link>"\
-                    "</item>" % (name,thumbnail,fanart,link) 
+                    "</item>" % (name,thumbnail,fanart,link)                                          
+
         except:
             pass                                                                     
     jenlist = JenList(xml)
     display_list(jenlist.get_list(), jenlist.get_content_type())
 
-@route(mode='open_the_nfl_season',args=["url"])
+@route(mode='open_the_league_main',args=["url"])
 def open_table(url):
     xml = ""
+    table = url.split("/")[-2]
     key = url.split("/")[-1]
-    at = Airtable('appeeTuJYoF1QmAdm', 'NFL', api_key='keyikW1exArRfNAWj')
-    match = at.search('category', key ,view='Grid view') 
+    at = Airtable(key, table, api_key='keyikW1exArRfNAWj')
+    match = at.get_all(maxRecords=700, view='Grid view')                                  
+    for field in match:
+        try:
+            res = field['fields']   
+            name = res['Name']
+            name = remove_non_ascii(name)
+            thumbnail = res['thumbnail']
+            fanart = res['fanart']
+            link = res['link']                        
+            xml +=  "<item>"\
+                    "<title>%s</title>"\
+                    "<thumbnail>%s</thumbnail>"\
+                    "<fanart>%s</fanart>"\
+                    "<link>"\
+                    "<sports_leagues>season/%s</sports_leagues>"\
+                    "</link>"\
+                    "</item>" % (name,thumbnail,fanart,link)                                          
+
+        except:
+            pass                                                                     
+    jenlist = JenList(xml)
+    display_list(jenlist.get_list(), jenlist.get_content_type())
+
+@route(mode='open_the_other_league_main',args=["url"])
+def open_table(url):
+    xml = ""
+    table = url.split("/")[-2]
+    key = url.split("/")[-1]
+    at = Airtable(key, table, api_key='keyikW1exArRfNAWj')
+    match = at.get_all(maxRecords=700, view='Grid view')                                  
+    for field in match:
+        try:
+            res = field['fields']   
+            name = res['Name']
+            name = remove_non_ascii(name)
+            thumbnail = res['thumbnail']
+            fanart = res['fanart']
+            link1 = res['link1']
+            link2 = res['link2']
+            link3 = res['link3']
+            link4 = res['link4']
+            link5 = res['link5']
+            link6 = res['link6']
+            time = res['Time']
+            if time == "-":
+                time = ""
+                dsp = name    
+            else:
+                if "Final Score" in time:
+                    time2 = time
+                    dec = ""
+                else:    
+                    time2 = time.split("@")[-1]
+                    dec = time.split("@")[0]    
+                (display_time) = convDateUtil(time2, 'default', 'US/Eastern')
+                dsp = ("[B][COLORdodgerblue]%s  %s[/COLOR][/B]" % (dec,display_time)) + "    " + name
+            if link2 == "-":
+                xml +=  "<item>"\
+                        "<title>%s</title>"\
+                        "<thumbnail>%s</thumbnail>"\
+                        "<fanart>%s</fanart>"\
+                        "<link>"\
+                        "<sublink>%s</sublink>"\
+                        "</link>"\
+                        "</item>" % (dsp,thumbnail,fanart,link1)                                          
+            elif link3 == "-":
+                xml +=  "<item>"\
+                        "<title>%s</title>"\
+                        "<thumbnail>%s</thumbnail>"\
+                        "<fanart>%s</fanart>"\
+                        "<link>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "</link>"\
+                        "</item>" % (dsp,thumbnail,fanart,link1,link2)
+            elif link4 == "-":
+                xml +=  "<item>"\
+                        "<title>%s</title>"\
+                        "<thumbnail>%s</thumbnail>"\
+                        "<fanart>%s</fanart>"\
+                        "<link>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "</link>"\
+                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3)
+            elif link5 == "-":
+                xml +=  "<item>"\
+                        "<title>%s</title>"\
+                        "<thumbnail>%s</thumbnail>"\
+                        "<fanart>%s</fanart>"\
+                        "<link>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "</link>"\
+                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4)
+            elif link6 == "-":
+                xml +=  "<item>"\
+                        "<title>%s</title>"\
+                        "<thumbnail>%s</thumbnail>"\
+                        "<fanart>%s</fanart>"\
+                        "<link>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "</link>"\
+                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4,link5)
+            else:                
+                xml +=  "<item>"\
+                        "<title>%s</title>"\
+                        "<thumbnail>%s</thumbnail>"\
+                        "<fanart>%s</fanart>"\
+                        "<link>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "<sublink>%s</sublink>"\
+                        "</link>"\
+                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4,link5,link6)                                          
+
+        except:
+            pass                                                                     
+    jenlist = JenList(xml)
+    display_list(jenlist.get_list(), jenlist.get_content_type())
+
+@route(mode='open_the_league_seasons',args=["url"])
+def open_table(url):
+    xml = ""
+    table = url.split("/")[-2]
+    key = url.split("/")[-1]
+    at = Airtable(key, table, api_key='keyikW1exArRfNAWj')
+    match = at.search('category', 'Week' ,view='Grid view') 
     for field in match:
         try:
             res = field['fields']   
@@ -354,20 +410,22 @@ def open_table(url):
                     "<thumbnail>%s</thumbnail>"\
                     "<fanart>%s</fanart>"\
                     "<link>"\
-                    "<sports_leagues>nfl_week/%s</sports_leagues>"\
+                    "<sports_leagues>week/%s/%s/%s</sports_leagues>"\
                     "</link>"\
-                    "</item>" % (name,thumbnail,fanart,name) 
+                    "</item>" % (name,thumbnail,fanart,table,key,name) 
         except:
             pass                                                                     
     jenlist = JenList(xml)
     display_list(jenlist.get_list(), jenlist.get_content_type())
 
-@route(mode='open_the_nfl_week',args=["url"])
+@route(mode='open_the_week_list',args=["url"])
 def open_table(url):
     xml = ""
-    key = url.split("/")[-1]
-    at = Airtable('appeeTuJYoF1QmAdm', 'NFL', api_key='keyikW1exArRfNAWj')
-    match = at.search('category', key ,view='Grid view') 
+    table = url.split("/")[-3]
+    key = url.split("/")[-2]
+    tag = url.split("/")[-1]
+    at = Airtable(key, table, api_key='keyikW1exArRfNAWj')
+    match = at.search('category', tag ,view='Grid view') 
     for field in match:
         try:
             res = field['fields']   
@@ -463,534 +521,6 @@ def open_table(url):
                         "<sublink>%s</sublink>"\
                         "</link>"\
                         "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4,link5,link6) 
-        except:
-            pass                                                                     
-    jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
-
-                       
-@route(mode='open_the_mlb_league',args=["url"])
-def open_table(url):
-    xml = ""
-    table = url
-    at = Airtable('appX7OeLbtR24KCGo', table, api_key='keyikW1exArRfNAWj')
-    match = at.get_all(maxRecords=700, view='Grid view') 
-    for field in match:
-        try:
-            res = field['fields']   
-            name = res['Name']
-            name = remove_non_ascii(name)
-            thumbnail = res['thumbnail']
-            fanart = res['fanart']
-            link1 = res['link1']
-            link2 = res['link2']
-            link3 = res['link3']
-            link4 = res['link4']
-            link5 = res['link5']
-            link6 = res['link6']            
-            time = res['Time']
-            if time == "-":
-                time = ""
-                dsp = name
-            else:    
-                (display_time) = convDateUtil(time, 'default', 'US/Eastern')
-                dsp = ("[B][COLORdodgerblue]%s[/COLOR][/B]" % display_time) + "    " + name                                                            
-            if link2 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1)                                          
-            elif link3 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2)
-            elif link4 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3)
-            elif link5 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4)
-            elif link6 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4,link5)
-            else:                
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4,link5,link6) 
-        except:
-            pass                                                                     
-    jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
-
-@route(mode='open_the_nba_league',args=["url"])
-def open_table(url):
-    xml = ""
-    table = url
-    at = Airtable('appLIISIf69EqjaoA', table, api_key='keyikW1exArRfNAWj')
-    match = at.get_all(maxRecords=700, view='Grid view') 
-    for field in match:
-        try:
-            res = field['fields']   
-            name = res['Name']
-            name = remove_non_ascii(name)
-            thumbnail = res['thumbnail']
-            fanart = res['fanart']
-            link1 = res['link1']
-            link2 = res['link2']
-            link3 = res['link3']
-            link4 = res['link4']
-            link5 = res['link5']
-            link6 = res['link6']            
-            time = res['Time']
-            if time == "-":
-                time = ""
-                dsp = name
-            else:    
-                (display_time) = convDateUtil(time, 'default', 'US/Eastern')
-                dsp = ("[B][COLORdodgerblue]%s[/COLOR][/B]" % display_time) + "    " + name                                     
-            if link2 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1)                                          
-            elif link3 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2)
-            elif link4 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3)
-            elif link5 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4)
-            elif link6 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4,link5)
-            else:                
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4,link5,link6) 
-        except:
-            pass                                                                     
-    jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
-
-@route(mode='open_the_nhl_league',args=["url"])
-def open_table(url):
-    xml = ""
-    table = url
-    at = Airtable('appJ1nGNe5G1za9fg', table, api_key='keyikW1exArRfNAWj')
-    match = at.get_all(maxRecords=700, view='Grid view') 
-    for field in match:
-        try:
-            res = field['fields']   
-            name = res['Name']
-            name = remove_non_ascii(name)
-            thumbnail = res['thumbnail']
-            fanart = res['fanart']
-            link1 = res['link1']
-            link2 = res['link2']
-            link3 = res['link3']
-            link4 = res['link4']
-            link5 = res['link5']
-            link6 = res['link6']            
-            time = res['Time']
-            if time == "-":
-                time = ""
-                dsp = name
-            else:    
-                (display_time) = convDateUtil(time, 'default', 'US/Eastern')
-                dsp = ("[B][COLORdodgerblue]%s[/COLOR][/B]" % display_time) + "    " + name                                     
-            if link2 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1)                                          
-            elif link3 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2)
-            elif link4 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3)
-            elif link5 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4)
-            elif link6 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4,link5)
-            else:                
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4,link5,link6) 
-        except:
-            pass                                                                     
-    jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
-
-@route(mode='open_the_ppv_league',args=["url"])
-def open_table(url):
-    xml = ""
-    table = url
-    at = Airtable('appNnFoE57hSCh7Uo', table, api_key='keyikW1exArRfNAWj')
-    match = at.get_all(maxRecords=700, view='Grid view') 
-    for field in match:
-        try:
-            res = field['fields']   
-            name = res['Name']
-            name = remove_non_ascii(name)
-            thumbnail = res['thumbnail']
-            fanart = res['fanart']
-            link1 = res['link1']
-            link2 = res['link2']
-            link3 = res['link3']
-            link4 = res['link4']
-            link5 = res['link5']
-            link6 = res['link6']            
-            time = res['Time']
-            if time == "-":
-                time = ""
-                dsp = name
-            else:    
-                (display_time) = convDateUtil(time, 'default', 'US/Eastern')
-                dsp = ("[B][COLORdodgerblue]%s[/COLOR][/B]" % display_time) + "    " + name                                     
-            if link2 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1)                                          
-            elif link3 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2)
-            elif link4 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3)
-            elif link5 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4)
-            elif link6 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4,link5)
-            else:                
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4,link5,link6) 
-        except:
-            pass                                                                     
-    jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
-
-@route(mode='open_the_wwe_league',args=["url"])
-def open_table(url):
-    xml = ""
-    table = url
-    at = Airtable('appQdoXXIKKVOZRBl', table, api_key='keyikW1exArRfNAWj')
-    match = at.get_all(maxRecords=700, view='Grid view') 
-    for field in match:
-        try:
-            res = field['fields']   
-            name = res['Name']
-            name = remove_non_ascii(name)
-            thumbnail = res['thumbnail']
-            fanart = res['fanart']
-            link1 = res['link1']
-            link2 = res['link2']
-            link3 = res['link3']
-            link4 = res['link4']
-            link5 = res['link5']
-            link6 = res['link6']            
-            time = res['Time']
-            if time == "-":
-                time = ""
-                dsp = name
-            else:    
-                (display_time) = convDateUtil(time, 'default', 'US/Eastern')
-                dsp = ("[B][COLORdodgerblue]%s[/COLOR][/B]" % display_time) + "    " + name                                     
-            if link2 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1)                                          
-            elif link3 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2)
-            elif link4 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3)
-            elif link5 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4)
-            elif link6 == "-":
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4,link5)
-            else:                
-                xml +=  "<item>"\
-                        "<title>%s</title>"\
-                        "<thumbnail>%s</thumbnail>"\
-                        "<fanart>%s</fanart>"\
-                        "<link>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "<sublink>%s</sublink>"\
-                        "</link>"\
-                        "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4,link5,link6)
-        except:
-            pass                                                                     
-    jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
-
-@route(mode='open_the_all_league')
-def open_table():
-    xml = ""
-    at = Airtable('appbwmFXMwN9WaOu2', 'Leagues', api_key='keyikW1exArRfNAWj')
-    match = at.get_all(maxRecords=700, view='Grid view') 
-    for field in match:
-        try:
-            res = field['fields']   
-            name = res['Name']
-            name = remove_non_ascii(name)
-            thumbnail = res['thumbnail']
-            fanart = res['fanart']
-            link = res['link']                        
-            xml +=  "<item>"\
-                    "<title>%s</title>"\
-                    "<thumbnail>%s</thumbnail>"\
-                    "<fanart>%s</fanart>"\
-                    "<link>"\
-                    "<sports_leagues>%s</sports_leagues>"\
-                    "</link>"\
-                    "</item>" % (name,thumbnail,fanart,link)                                          
-
         except:
             pass                                                                     
     jenlist = JenList(xml)
