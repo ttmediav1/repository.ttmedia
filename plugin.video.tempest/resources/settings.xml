@@ -107,7 +107,7 @@
     </category>
 
     <!-- Third party install options -->
-    <!--  <category label="30740">
+    <!-- <category label="30740">
             <setting id="installaddons"     label="30766"   type="bool"   default="false"   visible="true"/>
             <setting label="30762"  type="lsep" />
             <setting label="30763"  type="lsep" />
