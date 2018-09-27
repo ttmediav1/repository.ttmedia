@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addons>
-<addon id="plugin.program.ttmediawizard" name="[COLORlime]TTMedia Wizard[/COLOR]" version="3.5" provider-name="[COLORred]TTMedia[/COLOR]">
+<addon id="plugin.program.ttmediawizard" name="[COLORlime]TTMedia Wizard[/COLOR]" version="3.6" provider-name="[COLORred]TTMedia[/COLOR]">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
@@ -39,10 +39,10 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.bosstechmediaV3"
-       name="BossTech Media [COLOR red]V3[/COLOR]"
-       version="1.4"
-       provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.bosstechmediaV4"
+       name="BossTech Media [COLOR red]V4[/COLOR]"
+       version="1.5"
+       provider-name="[COLORlime]TT Media[/COLOR]">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
 	<import addon="script.module.requests" />
@@ -52,9 +52,9 @@
         <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">BOSSTECH MEDIA[COLORred]V3[/COLOR]</summary>
+    <summary lang="en">BOSSTECH MEDIA[COLORred]V4[/COLOR]</summary>
     <language>en</language>
-    <description lang="en">[B][COLORlightskyblue]BOSSTECH MEDIA V3 ADDON SUPPLIER OF GREAT QUALITY AND STABLE STREAMS.[/COLOR][/B]</description>
+    <description lang="en">[COLORlightskyblue]BOSSTECH MEDIAV4 ADDON - SUPPLIER OF GREAT QUALITY AND STABLE STREAMS.[/COLOR]</description>
      <platform>all</platform>
   </extension>
 </addon>
@@ -214,7 +214,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.2.7" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.2.8" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -237,12 +237,11 @@
         <!--<import addon="script.module.web-pdb" version="1.0"/>-->
         <import addon="script.module.resolveurl" />
         <!--<import addon="script.module.urlresolver" />-->
-		<import addon="script.module.tvtime" version="1.0.1" />
 		<import addon="plugin.video.youtube" />
 		<import addon="plugin.video.ufcfightpass" version="1.2.1" />
 		<import addon="plugin.program.xmlerator" version="5.5.0" />
 		<import addon="plugin.video.btmedia" version="1.0" />
-		<import addon="plugin.video.bosstechmediaV3" version="1.4" />
+		<import addon="plugin.video.bosstechmediaV4" version="1.5" />
 		<import addon="plugin.video.livenettv" version="1.1" />
 		<import addon="plugin.video.f4mTester" version="2.7.2" />
 		<import addon="plugin.video.SportsDevil" version="2018.04.11" />
@@ -255,7 +254,7 @@
       <summary lang="en">[COLORred]EPIC TUNES TUBE N FLIX[/COLOR]</summary>
       <summary lang="he"></summary>
       <description lang="en">[B][COLORlawngreen]THE AUTHOR OF THIS ADDON DOES NOT HOST ANY OF THE CONTENT WHICH IS FOUND IN IT AND HAVE NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS.[/COLOR][/B]
-                             [B][COLORred]CREDITS TO THE ORIGINAL DEVS OF JEN AND TO RACC,MR KNOW,BLUEZED,AND TO ALL THE DEVS IN THE JEN GROUP AND ESPECIALLY DEVS IN KRITIKTV GROUP WITHOUT THEM THIS ADDON WOULDNT OF BEEN POSSIBLE!![/COLOR][/B]</description>
+      [B][COLORred]CREDITS TO THE ORIGINAL DEVS OF JEN AND TO RACC,MR KNOW,BLUEZED,AND TO ALL THE DEVS IN THE JEN GROUP AND ESPECIALLY DEVS IN KRITIKTV GROUP WITHOUT THEM THIS ADDON WOULDNT OF BEEN POSSIBLE!![/COLOR][/B]</description>
       <description lang="he"></description>
       <disclaimer lang="en">[B][COLORlawngreen]THE AUTHOR OF THIS ADDON DOES NOT HOST ANY OF THE CONTENT WHICH IS FOUND AND HAS NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS AND OR XBMC/KODI[/COLOR][/B]</disclaimer>
       <disclaimer lang="en"></disclaimer>
@@ -287,7 +286,7 @@
   </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="TTMedia Repository" version="1.9.2" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="repository.ttmedia" name="TTMedia Repository" version="1.9.3" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
@@ -488,30 +487,6 @@
   <extension point="xbmc.addon.metadata">
     <summary lang="en_gb">RACC TVTAP MODULE.</summary>
     <description lang="en_gb"></description>
-    <disclaimer lang="en_gb"></disclaimer>
-    <language></language>
-    <platform>all</platform>
-    <license></license>
-    <forum></forum>
-    <website></website>
-    <email></email>
-    <source></source>
-  </extension>
-</addon>
-
-<addon id="script.module.tvtime" name="[B][COLORlime]Tv Time[/COLOR][/B]" version="1.0.1" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.livestreamer" />
-    <import addon="script.module.requests" />
-    <import addon="script.module.routing" />
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="addon.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en_gb">TV TIME</summary>
-    <description lang="en_gb">TV TIME</description>
     <disclaimer lang="en_gb"></disclaimer>
     <language></language>
     <platform>all</platform>
