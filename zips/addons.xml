@@ -214,7 +214,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.2.8" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.2.9" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -240,7 +240,6 @@
 		<import addon="plugin.video.youtube" />
 		<import addon="plugin.video.ufcfightpass" version="1.2.1" />
 		<import addon="plugin.program.xmlerator" version="5.5.0" />
-		<import addon="plugin.video.btmedia" version="1.0" />
 		<import addon="plugin.video.bosstechmediaV4" version="1.5" />
 		<import addon="plugin.video.livenettv" version="1.1" />
 		<import addon="plugin.video.f4mTester" version="2.7.2" />
@@ -286,7 +285,7 @@
   </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="TTMedia Repository" version="1.9.3" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="repository.ttmedia" name="TTMedia Repository" version="1.9.4" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
