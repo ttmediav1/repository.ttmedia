@@ -14,7 +14,7 @@
         <setting label="Cool Choices" type="lsep"/>
         <setting id="news_win" type="bool" label="Enable News Dialog" default="false" visible="true"/>
         <setting id="dlimage" type="bool" label="Enable Image Downloader" default="false" visible="true"/>
-        <setting id="SESSION_HOURS" type="text" label="Session Length for Password Protected XMLs" default="1" visible="true"/>
+        <setting id="SESSION_HOURS" type="text" label="Session Length for Password Protected XMLs" default="24" visible="true"/>
         <setting label="Display" type="lsep"/>
         <setting label="Enable Settings Context item" type="bool" id="settings_context" default="true"/>
         <setting label="Enable Trailer Context item" type="bool" id="trailer_context" default="true"/>
@@ -67,10 +67,10 @@
 
         <!-- filtering settings -->
         <setting label="30735" type="lsep"/>
-        <setting id="allow_debrid" label="30743" type="bool" default="false"/>
-        <setting id="allow_openload" label="30736" type="bool" default="false"/>
-        <setting id="allow_the_video_me" label="30737" type="bool" default="false"/>
-        <setting id="allow_vidup_me" label="30738" type="bool" default="false"/>
+        <setting id="allow_debrid" label="30743" type="bool" default="true"/>
+        <setting id="allow_openload" label="30736" type="bool" default="true"/>
+        <setting id="allow_the_video_me" label="30737" type="bool" default="true"/>
+        <setting id="allow_vidup_me" label="30738" type="bool" default="true"/>
         <setting label="30760" type="lsep" visible="false"/>
         <setting id="disable_messages" label="30767" type="bool" default="false" visible="false"/>
         <setting id="enable_offensive" label="30761" type="bool" default="false" enable="eq(-1,false)" visible="false"/>
@@ -81,7 +81,7 @@
 
     <!-- APIS -->
     <category label="Enter Own API's">
-        <setting id="debug" type="bool" label="API's" default="false" visible="true"/>
+        <setting id="debug" type="bool" label="API's" default="true" visible="true"/>
         <setting id="first_run" label="first run" type="bool" default="false" visible="false"/>
         <setting label="Cache Location" id="cache_folder" type="folder" default="special://profile/addon_data/plugin.video.tempest/" visible="false"/>
         <setting label="TVDB API Key" type="text" id="tvdb_api_key" option="hidden" default="146E7EB2B9C689B2" visible="eq(-3,true)"/>
@@ -97,7 +97,7 @@
 
     <!-- Dev mode - future features for playlisters and developers -->
     <category label="30770">
-        <setting id="debug" type="bool" label="30758" default="false" visible="true"/>
+        <setting id="debug" type="bool" label="30758" default="true" visible="true"/>
         <setting id="root_xml" type="text" label="30060" option="hidden" default="http://ttmedia.live/tempest/main.xml" visible="false"/>
         <setting id="message_xml_url" type="text" label="News File Location" option="hidden" default="file://news.xml" visible="false"/>
         <setting id="current_version" type="text" label="Current API Set Version" option="hidden" default="0" visible="false"/>
