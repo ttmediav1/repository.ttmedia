@@ -34,9 +34,9 @@
     </category>
 
     <!-- custom login settings -->
-    <!--    <category label="Account">
+        <category label="Account">
         <setting label="30200" type="lsep"/>
-        <setting id="use-account" type="bool" label="30200" default="false" visible="false"/>
+        <setting id="use-account" type="bool" label="30200" default="true" visible="true"/>
         <setting id="username" type="text" label="30201" default="" enable="!eq(-1,false)"/>
         <setting id="password" type="text" label="30202" default="" option="hidden" enable="!eq(-2,false)"/>
         <setting id="login_message_style" type="select" label="30209" values="notification|popup|none" default="notification" visible="true" enable="!eq(-3,false)" />
