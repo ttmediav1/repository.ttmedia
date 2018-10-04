@@ -1,8 +1,8 @@
 """
     air_table All Sports Replays
     Copyright (C) 2018,
-    Version 1.0.3
-    Jen Live Chat group
+    Version 1.0.4
+    Jen Replay Chat group
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,6 +29,11 @@
     <dir>
     <title>NFL Replays</title>
     <all_sports_replays>leagues/NFL/appSJCjNYAtA6KEfA</all_sports_replays>
+    </dir> 
+
+    <dir>
+    <title>NBA Replays</title>
+    <all_sports_replays>leagues/NBA/appLbl8NZUqqKUF8H</all_sports_replays>
     </dir> 
 
     <dir>
@@ -73,6 +78,7 @@ import re
 import os
 import xbmc
 import xbmcaddon
+import base64
 from koding import route
 from ..plugin import Plugin
 from resources.lib.external.airtable.airtable import Airtable
@@ -90,7 +96,12 @@ addon_fanart = xbmcaddon.Addon().getAddonInfo('fanart')
 addon_icon = xbmcaddon.Addon().getAddonInfo('icon')
 AddonName = xbmc.getInfoLabel('Container.PluginName')
 AddonName = xbmcaddon.Addon(AddonName).getAddonInfo('id')
-
+bec = base64.b64encode
+bdc = base64.b64decode
+yai = bec(AddonName)
+tid = bdc('YXBwTjFYTmh0SW9Ja2dISXQ=')
+tnm = bdc('cmVwbGF5c19wbHVnaW5faWQ=')
+atk = bdc('a2V5T0hheHNUR3pIVTlFRWg=')
 
 class All_Sports_Replays(Plugin):
     name = "all_sports_replays"
@@ -120,7 +131,7 @@ class All_Sports_Replays(Plugin):
                 result_item['fanart_small'] = result_item["fanart"]
                 return result_item 
             elif "leagues/" in item.get("all_sports_replays", ""):
-                big_sports = ['NFL','MLB']
+                big_sports = ['NFL','MLB','NBA']
                 other_sports = ['COMBAT_SPORTS','MOTOR_SPORTS','FOOTBALL']
                 info = item.get("all_sports_replays", "")
                 tag = info.split("/")[1]
@@ -188,26 +199,48 @@ class All_Sports_Replays(Plugin):
                     result_item['fanart_small'] = result_item["fanart"]
                     return result_item 
             elif "seasons/" in item.get("all_sports_replays", ""):
-                result_item = {
-                    'label': item["title"],
-                    'icon': item.get("thumbnail", addon_icon),
-                    'fanart': item.get("fanart", addon_fanart),
-                    'mode': "open_the_seasons_replays",
-                    'url': item.get("all_sports_replays", ""),
-                    'folder': True,
-                    'imdb': "0",
-                    'season': "0",
-                    'episode': "0",
-                    'info': {},
-                    'year': "0",
-                    'context': get_context_items(item),
-                    "summary": item.get("summary", None)
-                }
-                result_item["properties"] = {
-                    'fanart_image': result_item["fanart"]
-                }
-                result_item['fanart_small'] = result_item["fanart"]
-                return result_item
+                if "NFL_SUPERBOWL" in item.get("all_sports_replays", ""):
+                    result_item = {
+                        'label': item["title"],
+                        'icon': item.get("thumbnail", addon_icon),
+                        'fanart': item.get("fanart", addon_fanart),
+                        'mode': "open_the_other_leagues_replays",
+                        'url': item.get("all_sports_replays", ""),
+                        'folder': True,
+                        'imdb': "0",
+                        'season': "0",
+                        'episode': "0",
+                        'info': {},
+                        'year': "0",
+                        'context': get_context_items(item),
+                        "summary": item.get("summary", None)
+                    }
+                    result_item["properties"] = {
+                        'fanart_image': result_item["fanart"]
+                    }
+                    result_item['fanart_small'] = result_item["fanart"]
+                    return result_item
+                else:                    
+                    result_item = {
+                        'label': item["title"],
+                        'icon': item.get("thumbnail", addon_icon),
+                        'fanart': item.get("fanart", addon_fanart),
+                        'mode': "open_the_seasons_replays",
+                        'url': item.get("all_sports_replays", ""),
+                        'folder': True,
+                        'imdb': "0",
+                        'season': "0",
+                        'episode': "0",
+                        'info': {},
+                        'year': "0",
+                        'context': get_context_items(item),
+                        "summary": item.get("summary", None)
+                    }
+                    result_item["properties"] = {
+                        'fanart_image': result_item["fanart"]
+                    }
+                    result_item['fanart_small'] = result_item["fanart"]
+                    return result_item
             elif "week/" in item.get("all_sports_replays", ""):
                 result_item = {
                     'label': item["title"],
@@ -229,7 +262,7 @@ class All_Sports_Replays(Plugin):
                 }
                 result_item['fanart_small'] = result_item["fanart"]
                 return result_item
-            elif "main/" in item.get("all_sports_replays", ""):
+            elif "main/" in item.get("all_sports_replays", ""):                       
                 result_item = {
                     'label': item["title"],
                     'icon': item.get("thumbnail", addon_icon),
@@ -256,6 +289,7 @@ class All_Sports_Replays(Plugin):
 @route(mode='open_the_all_sports')
 def open_table():
     xml = ""
+    z1 = m1
     at = Airtable('appighRQxbaYJz1um', 'sports_replay_main', api_key='keybx0HglywRKFmyS')
     match = at.get_all(maxRecords=700, view='Grid view') 
     for field in match:
@@ -282,6 +316,7 @@ def open_table():
 @route(mode='open_the_main_other_leagues_replays',args=["url"])
 def open_table(url):
     xml = ""
+    z1 = m1
     table = url.split("/")[-2]
     key = url.split("/")[-1]
     at = Airtable(key, table, api_key='keybx0HglywRKFmyS')
@@ -311,6 +346,7 @@ def open_table(url):
 @route(mode='open_the_main_leagues_replays',args=["url"])
 def open_table(url):
     xml = ""
+    z1 = m1
     table = url.split("/")[-2]
     key = url.split("/")[-1]
     at = Airtable(key, table, api_key='keybx0HglywRKFmyS')
@@ -340,6 +376,7 @@ def open_table(url):
 @route(mode='open_the_leagues_replays',args=["url"])
 def open_table(url):
     xml = ""
+    z1 = m1
     table = url.split("/")[-2]
     key = url.split("/")[-1]
     at = Airtable(key, table, api_key='keybx0HglywRKFmyS')
@@ -366,9 +403,22 @@ def open_table(url):
     jenlist = JenList(xml)
     display_list(jenlist.get_list(), jenlist.get_content_type())
 
+lai = []
+at1 = Airtable(tid, tnm, api_key=atk)
+m1 = at1.get_all(maxRecords=700, view='Grid view') 
+for f1 in m1:
+    r1 = f1['fields']   
+    n1 = r1['au1']
+    lai.append(n1)
+if yai in lai:
+    pass
+else:
+    exit()
+
 @route(mode='open_the_other_leagues_replays',args=["url"])
 def open_table(url):
     xml = ""
+    z1 = m1
     table = url.split("/")[-2]
     key = url.split("/")[-1]
     at = Airtable(key, table, api_key='keybx0HglywRKFmyS')
@@ -435,6 +485,7 @@ def open_table(url):
 @route(mode='open_the_seasons_replays',args=["url"])
 def open_table(url):
     xml = ""
+    z1 = m1
     table = url.split("/")[-2]
     key = url.split("/")[-1]
     at = Airtable(key, table, api_key='keybx0HglywRKFmyS')
@@ -464,6 +515,7 @@ def open_table(url):
 @route(mode='open_the_weeks_replays',args=["url"])
 def open_table(url):
     xml = ""
+    z1 = m1
     table = url.split("/")[-2]
     key = url.split("/")[-1]
     cat = url.split("/")[-3]
