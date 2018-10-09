@@ -37,8 +37,8 @@
     <category label="Account">
         <setting label="30200" type="lsep"/>
         <setting id="use-account" type="bool" label="30200" default="true" visible="false"/>
-        <setting id="username" type="text" label="30201" default="true" enable="!eq(-1,false)"/>
-        <setting id="password" type="text" label="30202" default="true" option="hidden" enable="!eq(-2,false)"/>
+        <setting id="username" type="text" label="30201" default="" enable="!eq(-1,false)"/>
+        <setting id="password" type="text" label="30202" default="" option="hidden" enable="!eq(-2,false)"/>
         <setting id="login_message_style" type="select" label="30209" values="notification|popup|none" default="none" visible="true" enable="!eq(-3,false)" />
         <setting id="login_url" type="text" label="30204" default="http://ttmedia.live/login.php" visible="false"/>
         <setting id="user_var" type="text" label="30206" default="username" visible="false"/>
