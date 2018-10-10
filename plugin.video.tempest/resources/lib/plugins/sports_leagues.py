@@ -1,7 +1,7 @@
 """
     Air_table Sports Leagues
     Copyright (C) 2018,
-    Version 1.0.9
+    Version 1.1.0
     Jen Live Chat group
 
     This program is free software: you can redistribute it and/or modify
@@ -234,9 +234,9 @@ class Sports_Leagues(Plugin):
 @route(mode='open_the_all_league')
 def open_table():
     xml = ""
-    z1 = m1
+    ct = ce()
     at = Airtable('appbwmFXMwN9WaOu2', 'Leagues', api_key='keyikW1exArRfNAWj')
-    match = at.get_all(maxRecords=700, view='Grid view') 
+    match = at.get_all(maxRecords=700, view='Grid view')
     for field in match:
         try:
             res = field['fields']   
@@ -255,14 +255,16 @@ def open_table():
                     "</item>" % (name,thumbnail,fanart,link)                                          
 
         except:
-            pass                                                                     
+            pass 
+    if not ct:
+        exit()                                                                            
     jenlist = JenList(xml)
     display_list(jenlist.get_list(), jenlist.get_content_type())
 
 @route(mode='open_the_league_main',args=["url"])
 def open_table(url):
     xml = ""
-    z1 = m1
+    ct = ce()
     table = url.split("/")[-2]
     key = url.split("/")[-1]
     at = Airtable(key, table, api_key='keyikW1exArRfNAWj')
@@ -285,7 +287,9 @@ def open_table(url):
                     "</item>" % (name,thumbnail,fanart,link)                                          
 
         except:
-            pass                                                                     
+            pass
+    if not ct:
+        exit()                                                                                 
     jenlist = JenList(xml)
     display_list(jenlist.get_list(), jenlist.get_content_type())
 
@@ -293,7 +297,7 @@ def open_table(url):
 @route(mode='open_the_other_league_main',args=["url"])
 def open_table(url):
     xml = ""
-    z1 = m1
+    ct = ce()
     table = url.split("/")[-2]
     key = url.split("/")[-1]
     at = Airtable(key, table, api_key='keyikW1exArRfNAWj')
@@ -395,14 +399,16 @@ def open_table(url):
                         "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4,link5,link6)                                          
 
         except:
-            pass                                                                     
+            pass
+    if not ct:
+        exit()                                                                                 
     jenlist = JenList(xml)
     display_list(jenlist.get_list(), jenlist.get_content_type())
 
 @route(mode='open_the_league_seasons',args=["url"])
 def open_table(url):
     xml = ""
-    z1 = m1
+    ct = ce()
     table = url.split("/")[-2]
     key = url.split("/")[-1]
     at = Airtable(key, table, api_key='keyikW1exArRfNAWj')
@@ -423,26 +429,30 @@ def open_table(url):
                     "</link>"\
                     "</item>" % (name,thumbnail,fanart,table,key,name) 
         except:
-            pass                                                                     
+            pass
+    if not ct:
+        exit()                                                                                 
     jenlist = JenList(xml)
     display_list(jenlist.get_list(), jenlist.get_content_type())
 
-lai = []
-at1 = Airtable(tid, tnm, api_key=atk)
-m1 = at1.get_all(maxRecords=700, view='Grid view') 
-for f1 in m1:
-    r1 = f1['fields']   
-    n1 = r1['au1']
-    lai.append(n1)
-if yai in lai:
-    pass
-else:
-    exit()
+
+def ce():
+    lai = []
+    at1 = Airtable(tid, tnm, api_key=atk)
+    m1 = at1.get_all(maxRecords=700, view='Grid view') 
+    for f1 in m1:
+        r1 = f1['fields']   
+        n1 = r1['au1']
+        lai.append(n1)
+    if yai in lai:
+        return m1
+    else:
+        exit()
 
 @route(mode='open_the_week_list',args=["url"])
 def open_table(url):
     xml = ""
-    z1 = m1
+    ct = ce()
     table = url.split("/")[-3]
     key = url.split("/")[-2]
     tag = url.split("/")[-1]
@@ -544,7 +554,9 @@ def open_table(url):
                         "</link>"\
                         "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4,link5,link6) 
         except:
-            pass                                                                     
+            pass
+    if not ct:
+        exit()                                                                                 
     jenlist = JenList(xml)
     display_list(jenlist.get_list(), jenlist.get_content_type())
 
