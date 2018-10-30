@@ -29,17 +29,17 @@
 
     <dir>
     <title>NFL</title>
-    <sports_leagues>league/NFL/appPHCMrs8obfEUPB</sports_leagues>
+    <sports_leagues>league/NFL_SEASON/appyzm2NK67UsLLQY</sports_leagues>
     </dir>
 
     <dir>
     <title>NBA</title>
-    <sports_leagues>league/NBA/apptSKCkSkXp3rq4Z</sports_leagues>
+    <sports_leagues>league/NBA_SEASON/appOFHP8kvFcZ2ZcT</sports_leagues>
     </dir>
 
     <dir>
     <title>NHL</title>
-    <sports_leagues>league/NHL/appJ1nGNe5G1za9fg</sports_leagues>
+    <sports_leagues>league/NHL_SEASON/appzZpCSDyX83ZLuG</sports_leagues>
     </dir>
 
     <dir>
@@ -114,7 +114,7 @@ def convDateUtil(timestring, newfrmt='default', in_zone='UTC'):
         return local_time.strftime(newfrmt)
     except:
         return timestring
-
+#'mode': "open_the_league_main",
 class Sports_Leagues(Plugin):
     name = "sports_leagues"
 
@@ -151,7 +151,7 @@ class Sports_Leagues(Plugin):
                         'label': item["title"],
                         'icon': item.get("thumbnail", addon_icon),
                         'fanart': item.get("fanart", addon_fanart),
-                        'mode': "open_the_league_main",
+                        'mode': "open_the_league_seasons",
                         'url': item.get("sports_leagues", ""),
                         'folder': True,
                         'imdb': "0",
@@ -234,9 +234,9 @@ class Sports_Leagues(Plugin):
 @route(mode='open_the_all_league')
 def open_table():
     xml = ""
-    ct = ce()
+    z1 = m1
     at = Airtable('appbwmFXMwN9WaOu2', 'Leagues', api_key='keyikW1exArRfNAWj')
-    match = at.get_all(maxRecords=700, view='Grid view')
+    match = at.get_all(maxRecords=700, view='Grid view') 
     for field in match:
         try:
             res = field['fields']   
@@ -255,16 +255,14 @@ def open_table():
                     "</item>" % (name,thumbnail,fanart,link)                                          
 
         except:
-            pass 
-    if not ct:
-        exit()                                                                            
+            pass                                                                     
     jenlist = JenList(xml)
     display_list(jenlist.get_list(), jenlist.get_content_type())
 
 @route(mode='open_the_league_main',args=["url"])
 def open_table(url):
     xml = ""
-    ct = ce()
+    z1 = m1
     table = url.split("/")[-2]
     key = url.split("/")[-1]
     at = Airtable(key, table, api_key='keyikW1exArRfNAWj')
@@ -287,9 +285,7 @@ def open_table(url):
                     "</item>" % (name,thumbnail,fanart,link)                                          
 
         except:
-            pass
-    if not ct:
-        exit()                                                                                 
+            pass                                                                     
     jenlist = JenList(xml)
     display_list(jenlist.get_list(), jenlist.get_content_type())
 
@@ -297,7 +293,7 @@ def open_table(url):
 @route(mode='open_the_other_league_main',args=["url"])
 def open_table(url):
     xml = ""
-    ct = ce()
+    z1 = m1
     table = url.split("/")[-2]
     key = url.split("/")[-1]
     at = Airtable(key, table, api_key='keyikW1exArRfNAWj')
@@ -399,16 +395,14 @@ def open_table(url):
                         "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4,link5,link6)                                          
 
         except:
-            pass
-    if not ct:
-        exit()                                                                                 
+            pass                                                                     
     jenlist = JenList(xml)
     display_list(jenlist.get_list(), jenlist.get_content_type())
 
 @route(mode='open_the_league_seasons',args=["url"])
 def open_table(url):
     xml = ""
-    ct = ce()
+    z1 = m1
     table = url.split("/")[-2]
     key = url.split("/")[-1]
     at = Airtable(key, table, api_key='keyikW1exArRfNAWj')
@@ -429,30 +423,26 @@ def open_table(url):
                     "</link>"\
                     "</item>" % (name,thumbnail,fanart,table,key,name) 
         except:
-            pass
-    if not ct:
-        exit()                                                                                 
+            pass                                                                     
     jenlist = JenList(xml)
     display_list(jenlist.get_list(), jenlist.get_content_type())
 
-
-def ce():
-    lai = []
-    at1 = Airtable(tid, tnm, api_key=atk)
-    m1 = at1.get_all(maxRecords=700, view='Grid view') 
-    for f1 in m1:
-        r1 = f1['fields']   
-        n1 = r1['au1']
-        lai.append(n1)
-    if yai in lai:
-        return m1
-    else:
-        exit()
+lai = []
+at1 = Airtable(tid, tnm, api_key=atk)
+m1 = at1.get_all(maxRecords=700, view='Grid view') 
+for f1 in m1:
+    r1 = f1['fields']   
+    n1 = r1['au1']
+    lai.append(n1)
+if yai in lai:
+    pass
+else:
+    exit()
 
 @route(mode='open_the_week_list',args=["url"])
 def open_table(url):
     xml = ""
-    ct = ce()
+    z1 = m1
     table = url.split("/")[-3]
     key = url.split("/")[-2]
     tag = url.split("/")[-1]
@@ -554,9 +544,7 @@ def open_table(url):
                         "</link>"\
                         "</item>" % (dsp,thumbnail,fanart,link1,link2,link3,link4,link5,link6) 
         except:
-            pass
-    if not ct:
-        exit()                                                                                 
+            pass                                                                     
     jenlist = JenList(xml)
     display_list(jenlist.get_list(), jenlist.get_content_type())
 
