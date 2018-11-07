@@ -2,7 +2,7 @@
 """
     air_table.py
     Copyright (C) 2018,
-    Version 2.0.1
+    Version 2.0.2
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -296,7 +296,7 @@ def twenty_four_seven():
 def get_channels2():
     xml = ""
     at = Airtable('appycq5PhSS0tygok', 'TV_channels2', api_key='keyikW1exArRfNAWj')
-    match = at.get_all(maxRecords=700, sort=['channel'])
+    match = at.get_all(maxRecords=1200, sort=['channel'])
     for field in match:
         try:
             res = field['fields']

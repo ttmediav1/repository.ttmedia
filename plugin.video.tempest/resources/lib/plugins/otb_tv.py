@@ -1,7 +1,7 @@
 """
     air_table OTB Tv Shows
     Copyright (C) 2018,
-    Version 1.0.0
+    Version 1.0.1
     Team OTB
 
     This program is free software: you can redistribute it and/or modify
@@ -135,7 +135,7 @@ class OTB_TV(Plugin):
 def open_otb_tv_shows():
     xml = ""
     at = Airtable('appPIqgXesUHBVoOd', 'tv_shows', api_key='keyu3sl4tsBzw02pw')
-    match = at.get_all(maxRecords=700, sort=['name'])
+    match = at.get_all(maxRecords=1200, sort=['name'])
     for field in match:
         try:
             res = field['fields']

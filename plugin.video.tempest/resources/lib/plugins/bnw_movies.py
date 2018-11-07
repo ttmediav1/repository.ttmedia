@@ -1,6 +1,6 @@
 """
     air_table_bnw.py
-    Version 3.0.0
+    Version 3.0.1
     Copyright (C) 2018,
 	Team OTB
 
@@ -94,7 +94,7 @@ class BNW_Movies(Plugin):
 def open_movies():
     xml = ""
     at = Airtable('appbXfuDDhnWqYths', 'bnw_movies', api_key='keyikW1exArRfNAWj')
-    match = at.get_all(maxRecords=700, sort=['name'])  
+    match = at.get_all(maxRecords=1200, sort=['name'])  
     for field in match:
         try:
             res = field['fields']

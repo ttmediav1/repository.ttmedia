@@ -1,6 +1,7 @@
 """
     air_table big movie list.py
     Copyright (C) 2018, Team OTB
+	Version 1.0.1
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -226,7 +227,7 @@ class Big_Movie_List(Plugin):
 def open_movies():
     xml = ""
     at = Airtable('app5BLIVaH0fAWvnE', 'Imported_table', api_key='keyikW1exArRfNAWj')
-    match = at.get_all(maxRecords=700, sort=['name'])  
+    match = at.get_all(maxRecords=1200, sort=['name'])  
     for field in match:
         try:
             res = field['fields']   
@@ -305,7 +306,7 @@ def open_action_movies(url):
 def open_movie_meta_movies(url):
     xml = ""                           
     at = Airtable('app5BLIVaH0fAWvnE', 'Imported_table', api_key='keyikW1exArRfNAWj')
-    match = at.get_all(maxRecords=700, sort=['name'])  
+    match = at.get_all(maxRecords=1200, sort=['name'])  
     for field in match:
         try:
             res = field['fields']   
