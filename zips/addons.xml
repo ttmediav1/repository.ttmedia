@@ -139,31 +139,6 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.livenettv" name="Live NetTv" version="1.1" provider-name="TTMedia">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.pyamf" />
-    <import addon="script.module.livestreamer" />
-    <import addon="script.module.requests" />
-    <import addon="script.module.routing" />
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="addon.py">
-    <provides>all</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en_gb">LIVE NETTV</summary>
-    <description lang="en_gb">PROVIDES STREAMS FROM LIVE NETTV</description>
-    <disclaimer lang="en_gb"></disclaimer>
-    <language></language>
-    <platform>all</platform>
-    <license></license>
-    <forum></forum>
-    <website></website>
-    <email></email>
-    <source></source>
-  </extension>
-</addon>
-
 <addon id="plugin.video.rd"
        name="AUTHORIZE RD"
        version="1.0.5"
@@ -214,7 +189,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.4.6" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.4.7" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -228,8 +203,8 @@
         <import addon="script.module.metadatautils" />
 		<import addon="script.module.live365" version="1.0.3" />
 		<import addon="script.module.simplejson"  />
-		<import addon="script.module.streamz" version="1.0.0" />
-		<import addon="script.module.tvtap" version="1.1" />
+		<import addon="script.module.mobdro" version="11" />
+		<import addon="script.module.tt" version="1.2" />
 		<import addon="script.video.F4mProxy" version="2.8.7" />
 		<import addon="script.module.livestreamer" optional="true" />
 		<import addon="script.module.streamlink.base" version="2018.02.24" />
@@ -241,7 +216,6 @@
 		<import addon="plugin.video.ufcfightpass" version="1.2.1" />
 		<import addon="plugin.program.xmlerator" version="5.5.0" />
 		<import addon="plugin.video.bosstechmediaV4" version="1.5" />
-		<import addon="plugin.video.livenettv" version="1.1" />
 		<import addon="plugin.video.f4mTester" version="2.7.2" />
 		<import addon="plugin.video.SportsDevil" version="2018.04.11" />
     </requires>
@@ -285,7 +259,7 @@
   </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="[B][COLORlime]TTMedia Repository[/COLOR][/B]" version="2.0.9" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="repository.ttmedia" name="[B][COLORlime]TTMedia Repository[/COLOR][/B]" version="2.1.0" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
@@ -388,6 +362,30 @@
   </extension>
 </addon>
 
+<addon id="script.module.mobdro" name="Mobdro" version="11" provider-name="RACC">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.livestreamer" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.routing" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_gb">Mobdro</summary>
+    <description lang="en_gb">Mobdro</description>
+    <disclaimer lang="en_gb"></disclaimer>
+    <language></language>
+    <platform>all</platform>
+    <license></license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <source></source>
+  </extension>
+</addon>
+
 <addon id="script.module.simplejson"
        name="simplejson"
        version="3.3.0"
@@ -448,7 +446,7 @@
   </extension>
 </addon>
 
-<addon id="script.module.streamz" name="[B][COLORlime]STREAMZ[/COLOR][/B]" version="1.0.1" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="script.module.tt" name="TvTap" version="1.2" provider-name="RACC">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.livestreamer" />
@@ -459,34 +457,9 @@
     <provides>all</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en_gb">[B][COLORred]STREAMING LIVE TV[/COLOR][/B]</summary>
-    <description lang="en_gb">[B][COLORred]STREAMING LIVE TV[/COLOR][/B]</description>
-    <disclaimer lang="en_gb">[B][COLORlime]THE AUTOR OF THIS ADD-ON DOSE NOT HOST ANY OF THE CONTENT WHICH IS FOUND IN IT AND HAVE NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS.[/COLOR][/B]</disclaimer>
-	<disclaimer lang="en_gb">[B][COLORred]CREDITS TO ORIGINAL AUTHOR RACC[/COLOR][/B]</disclaimer>
-    <language></language>
-    <platform>all</platform>
-    <license></license>
-    <forum></forum>
-    <website></website>
-    <email></email>
-    <source></source>
-  </extension>
-</addon>
-
-<addon id="script.module.tvtap" name="TvTap" version="1.1" provider-name="RACC">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.livestreamer" />
-    <import addon="script.module.requests" />
-    <import addon="script.module.routing" />
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="addon.py">
-    <provides>all</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en_gb">RACC TVTAP MODULE.</summary>
-    <description lang="en_gb"></description>
-    <disclaimer lang="en_gb"></disclaimer>
+    <summary lang="en"></summary>
+    <description lang="en">Tap Tv Android Apk</description>
+    <disclaimer lang="en"></disclaimer>
     <language></language>
     <platform>all</platform>
     <license></license>
