@@ -96,7 +96,7 @@ def Releases(url):
     xml = ""
     at = Airtable('appuNAD2qFkbCe4i8', 'Releases', api_key='keyZmzuBZ1XPQ0M1A')
     match = at.get_all(maxRecords=700, view='Grid view')
-    url2 = "https://api.themoviedb.org/3/list/91781?api_key=ed4b23b00254d1a6bbff12a70f2bc1a1&language=en-US"
+    url2 = "https://api.themoviedb.org/3/list/96428?api_key=20d53bcd9a2ee7d575badbc6f59446c6&language=en-US"
     html2 = requests.get(url2).content
     match2 = json.loads(html2)    
     for field in match:
