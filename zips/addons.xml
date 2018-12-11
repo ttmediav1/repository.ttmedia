@@ -189,7 +189,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.5.8" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.5.9" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -203,7 +203,6 @@
         <import addon="script.module.metadatautils" />
 		<import addon="script.module.live365" version="1.0.3" />
 		<import addon="script.module.simplejson"  />
-		<import addon="script.module.mobdro" />
 		<import addon="script.module.tt" />
 		<import addon="script.video.F4mProxy" version="2.8.7" />
 		<import addon="script.module.livestreamer" optional="true" />
@@ -213,7 +212,6 @@
         <import addon="script.module.resolveurl" />
         <!--<import addon="script.module.urlresolver" />-->
 		<import addon="plugin.video.youtube" />
-		<import addon="plugin.video.ufcfightpass" version="1.2.1" />
 		<import addon="plugin.program.xmlerator" version="5.5.0" />
 		<import addon="plugin.video.bosstechmediaV4" version="1.5" />
 		<import addon="plugin.video.f4mTester" version="2.7.2" />
