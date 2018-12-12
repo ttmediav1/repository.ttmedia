@@ -1,5 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addons>
+<addon id="plugin.program.advancedsettings"
+       name="Easy Advanced Settings"
+       version="0.8.8"
+       provider-name="TTMedia">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource"
+               	library="default.py">
+        <provides>video executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary>CREATE,VIEW,EDIT AND DELETE YOUR ADVANCEDSETTINGS.XML FILE</summary>
+        <description>WITH THIS TOOL YOU CAN CREATE YOUR ADVANCED SETTINGS DIRECTLY IN KODI..IF YOU DON'T KNOW WHAT A SETTING DOES, DON'T ENABLE IT!</description>
+        <platform>all</platform>
+        <language>en</language>
+        <license>GNU GENERAL PUBLIC LICENSE</license>
+        <forum></forum>
+        <website></website>
+        <source></source>
+        <email></email>
+    </extension>
+
+</addon>
+
+<addon id="plugin.program.aptoide" version="2018.01.08" name="Aptoide" provider-name="TTMedia">
+	<requires>
+		<import addon="xbmc.python" version="2.19.0" />
+		<import addon="script.module.requests" />
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="main.py">
+		<provides>video executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+        <description>INSTALL/DOWNLOAD APK FROM APTOIDE APK STORE</description>
+
+		<summary lang="en">APTOIDE APK STORE</summary>
+		<platform>all</platform>
+		<forum>-</forum>
+		<website>-</website>
+		<source>-</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>-</news>
+	</extension>
+</addon>
+
 <addon id="plugin.program.ttmediawizard" name="[COLORlime]TTMedia Wizard[/COLOR]" version="3.7" provider-name="[COLORred]TTMedia[/COLOR]">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -55,26 +105,6 @@
     <summary lang="en">BOSSTECH MEDIA[COLORred]V4[/COLOR]</summary>
     <language>en</language>
     <description lang="en">[COLORlightskyblue]BOSSTECH MEDIAV4 ADDON - SUPPLIER OF GREAT QUALITY AND STABLE STREAMS.[/COLOR]</description>
-     <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id="plugin.video.btmedia"
-       name="BOSS-TECH Media"
-       version="1.0"
-       provider-name="TTMedia">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-	<import addon="script.module.requests" />
-  </requires>
-  <extension point="xbmc.python.pluginsource"
-            library="default.py">
-        <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">BOSS-TECH Media</summary>
-    <language>en</language>
-    <description lang="en">BOSS-TECH Media Official Addon - Supplier of Great Quality and Stable Streams</description>
      <platform>all</platform>
   </extension>
 </addon>
@@ -139,27 +169,6 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.rd"
-       name="AUTHORIZE RD"
-       version="1.0.5"
-       provider-name="Rogue">
-<requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.beautifulsoup" version="3.2.1"/>
-    <import addon="script.module.beautifulsoup4" />
-    <import addon="script.module.requests" />
-    <import addon="script.module.simplejson" />
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">[COLOR blue]AddOn To Authorize Real DeBrid[/COLOR]</summary>
-    <description lang="en">[COLOR blue]AddOn To Authorize Real DeBrid[/COLOR]</description>
-    <platform>all</platform>
-  </extension>
-</addon>
-
 <addon
   id="plugin.video.SportsDevil"
   version="2018.04.11"
@@ -189,7 +198,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.5.9" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.6.0" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -202,7 +211,7 @@
 		<import addon="script.module.thetvdb" />
         <import addon="script.module.metadatautils" />
 		<import addon="script.module.live365" version="1.0.3" />
-		<import addon="script.module.simplejson"  />
+		<import addon="script.module.simplejson" />
 		<import addon="script.module.tt" />
 		<import addon="script.video.F4mProxy" version="2.8.7" />
 		<import addon="script.module.livestreamer" optional="true" />
@@ -212,6 +221,8 @@
         <import addon="script.module.resolveurl" />
         <!--<import addon="script.module.urlresolver" />-->
 		<import addon="plugin.video.youtube" />
+		<import addon="plugin.program.advancedsettings" />
+		<import addon="plugin.program.aptoide" />
 		<import addon="plugin.program.xmlerator" version="5.5.0" />
 		<import addon="plugin.video.bosstechmediaV4" version="1.5" />
 		<import addon="plugin.video.f4mTester" version="2.7.2" />
@@ -225,7 +236,7 @@
       <summary lang="en">[COLORred]EPIC TUNES TUBE N FLIX[/COLOR]</summary>
       <summary lang="he"></summary>
       <description lang="en">[B][COLORlawngreen]THE AUTHOR OF THIS ADDON DOES NOT HOST ANY OF THE CONTENT WHICH IS FOUND IN IT AND HAVE NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS.[/COLOR][/B]
-      [B][COLORred]CREDITS TO THE ORIGINAL DEVS OF JEN AND TO RACC,MR KNOW,BLUEZED,AND TO ALL THE DEVS IN THE JEN GROUP AND ESPECIALLY DEVS IN KRITIKTV GROUP WITHOUT THEM THIS ADDON WOULDNT OF BEEN POSSIBLE!![/COLOR][/B]</description>
+     [B][COLORred]CREDITS TO THE ORIGINAL DEVS OF JEN AND TO RACC,MR KNOW,BLUEZED,AND TO ALL THE DEVS IN THE JEN GROUP AND ESPECIALLY DEVS IN KRITIKTV GROUP WITHOUT THEM THIS ADDON WOULDNT OF BEEN POSSIBLE!![/COLOR][/B]</description>
       <description lang="he"></description>
       <disclaimer lang="en">[B][COLORlawngreen]THE AUTHOR OF THIS ADDON DOES NOT HOST ANY OF THE CONTENT WHICH IS FOUND AND HAS NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS AND OR XBMC/KODI[/COLOR][/B]</disclaimer>
       <disclaimer lang="en"></disclaimer>
@@ -235,29 +246,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.video.ufcfightpass" name="UFC Fight Pass" version="1.2.1" provider-name="portse">
-  <requires>
-    <import addon="xbmc.python" version="2.19.0"/>
-    <import addon="script.module.requests" version="2.9.1"/>
-    <import addon="script.module.beautifulsoup4" version="4.3.1" />
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-  <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary>UFC FIGHT PASS KODI VIDEO PLUGIN</summary>
-    <description>SUBSCRIPTION BASED ACCESS TO UFC FIGHT PASS ONLINE CONTENT</description>
-    <platform>all</platform>
-    <language>en</language>
-    <disclaimer></disclaimer>
-    <license>MIT</license>
-    <forum></forum>
-    <website></website>
-    <source></source>
-  </extension>
-</addon>
-
-<addon id="repository.ttmedia" name="[B][COLORlime]TTMedia Repository[/COLOR][/B]" version="2.1.0" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="repository.ttmedia" name="[B][COLORlime]TTMedia Repository[/COLOR][/B]" version="2.1.1" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
@@ -288,22 +277,6 @@
 		<description lang="en">[COLORlime]THIS REPOSITORY HAS THE LATEST WORK FROM TTMEDIA[/COLOR]</description>
 		<genre></genre>
 </extension>
-</addon>
-
-<addon id="script.IlluminatiPair" name="[COLORlime]PAIRING TOOL[/COLOR]" version="1.1" provider-name="[B][I][COLORlime]Klepto[/COLOR][/I][/B]">
-	<requires>
-		<import addon="xbmc.python" version="2.1.0"/>
-	</requires>
-	<extension point="xbmc.python.script" library="addon.py">
-		<provides>script executable</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">PAIRING / AUTHORIZATION TOOL</summary>
-		<description lang="en">THIS TOOL ALLOWS YOU TO PAIR YOUR DEVICE WITH VARIOUS PAIRING SITES SUCH AS OPENLOAD AS WELL AS AUTHORIZE YOUR REAL DEBRID ACCOUNT FOR URLRESOLVER AND/OR RESOLVEURL. IT IS NOT COMPATIBLE WITH FIRESTICKS!</description>
-		<disclaimer lang="en"></disclaimer>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-	</extension>
 </addon>
 
 <addon id="script.module.live365" name="LIVE365" version="1.0.4" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
@@ -357,30 +330,6 @@
     <license>Simplified BSD</license>
     <source>https://github.com/chrippa/livestreamer.git</source>
     <website>http://livestreamer.io</website>
-  </extension>
-</addon>
-
-<addon id="script.module.mobdro" name="Mobdro" version="11" provider-name="RACC">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.livestreamer" />
-    <import addon="script.module.requests" />
-    <import addon="script.module.routing" />
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="addon.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en_gb">Mobdro</summary>
-    <description lang="en_gb">Mobdro</description>
-    <disclaimer lang="en_gb"></disclaimer>
-    <language></language>
-    <platform>all</platform>
-    <license></license>
-    <forum></forum>
-    <website></website>
-    <email></email>
-    <source></source>
   </extension>
 </addon>
 

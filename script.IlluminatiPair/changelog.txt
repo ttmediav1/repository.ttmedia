@@ -1,6 +1,0 @@
-v1.1 (05/09/2018)
-- Added RD authorization
-- Updated fanart
-
-v1.0 (04/18/2018)
-- Initial release
