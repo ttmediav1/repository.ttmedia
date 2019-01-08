@@ -1,7 +1,7 @@
 """
     Air_table Sports Leagues
     Copyright (C) 2018,
-    Version 1.1.0
+    Version 2.0.0
     Jen Live Chat group
 
     This program is free software: you can redistribute it and/or modify
@@ -29,17 +29,17 @@
 
     <dir>
     <title>NFL</title>
-    <sports_leagues>league/NFL_SEASON/appyzm2NK67UsLLQY</sports_leagues>
+    <sports_leagues>league/NFL/appyzm2NK67UsLLQY</sports_leagues>
     </dir>
 
     <dir>
     <title>NBA</title>
-    <sports_leagues>league/NBA_SEASON/appOFHP8kvFcZ2ZcT</sports_leagues>
+    <sports_leagues>league/NBA/appOFHP8kvFcZ2ZcT</sports_leagues>
     </dir>
 
     <dir>
     <title>NHL</title>
-    <sports_leagues>league/NHL_SEASON/appzZpCSDyX83ZLuG</sports_leagues>
+    <sports_leagues>league/NHL/appzZpCSDyX83ZLuG</sports_leagues>
     </dir>
 
     <dir>
@@ -234,7 +234,17 @@ class Sports_Leagues(Plugin):
 @route(mode='open_the_all_league')
 def open_table():
     xml = ""
-    z1 = m1
+    lai = []
+    at1 = Airtable(tid, tnm, api_key=atk)
+    m1 = at1.get_all(maxRecords=700, view='Grid view') 
+    for f1 in m1:
+        r1 = f1['fields']   
+        n1 = r1['au1']
+        lai.append(n1)
+    if yai in lai:
+        pass
+    else:
+        exit()    
     at = Airtable('appbwmFXMwN9WaOu2', 'Leagues', api_key='keyikW1exArRfNAWj')
     match = at.get_all(maxRecords=700, view='Grid view') 
     for field in match:
@@ -262,7 +272,17 @@ def open_table():
 @route(mode='open_the_league_main',args=["url"])
 def open_table(url):
     xml = ""
-    z1 = m1
+    lai = []
+    at1 = Airtable(tid, tnm, api_key=atk)
+    m1 = at1.get_all(maxRecords=700, view='Grid view') 
+    for f1 in m1:
+        r1 = f1['fields']   
+        n1 = r1['au1']
+        lai.append(n1)
+    if yai in lai:
+        pass
+    else:
+        exit()    
     table = url.split("/")[-2]
     key = url.split("/")[-1]
     at = Airtable(key, table, api_key='keyikW1exArRfNAWj')
@@ -293,7 +313,17 @@ def open_table(url):
 @route(mode='open_the_other_league_main',args=["url"])
 def open_table(url):
     xml = ""
-    z1 = m1
+    lai = []
+    at1 = Airtable(tid, tnm, api_key=atk)
+    m1 = at1.get_all(maxRecords=700, view='Grid view') 
+    for f1 in m1:
+        r1 = f1['fields']   
+        n1 = r1['au1']
+        lai.append(n1)
+    if yai in lai:
+        pass
+    else:
+        exit()    
     table = url.split("/")[-2]
     key = url.split("/")[-1]
     at = Airtable(key, table, api_key='keyikW1exArRfNAWj')
@@ -402,7 +432,17 @@ def open_table(url):
 @route(mode='open_the_league_seasons',args=["url"])
 def open_table(url):
     xml = ""
-    z1 = m1
+    lai = []
+    at1 = Airtable(tid, tnm, api_key=atk)
+    m1 = at1.get_all(maxRecords=700, view='Grid view') 
+    for f1 in m1:
+        r1 = f1['fields']   
+        n1 = r1['au1']
+        lai.append(n1)
+    if yai in lai:
+        pass
+    else:
+        exit()    
     table = url.split("/")[-2]
     key = url.split("/")[-1]
     at = Airtable(key, table, api_key='keyikW1exArRfNAWj')
@@ -427,22 +467,21 @@ def open_table(url):
     jenlist = JenList(xml)
     display_list(jenlist.get_list(), jenlist.get_content_type())
 
-lai = []
-at1 = Airtable(tid, tnm, api_key=atk)
-m1 = at1.get_all(maxRecords=700, view='Grid view') 
-for f1 in m1:
-    r1 = f1['fields']   
-    n1 = r1['au1']
-    lai.append(n1)
-if yai in lai:
-    pass
-else:
-    exit()
 
 @route(mode='open_the_week_list',args=["url"])
 def open_table(url):
     xml = ""
-    z1 = m1
+    lai = []
+    at1 = Airtable(tid, tnm, api_key=atk)
+    m1 = at1.get_all(maxRecords=700, view='Grid view') 
+    for f1 in m1:
+        r1 = f1['fields']   
+        n1 = r1['au1']
+        lai.append(n1)
+    if yai in lai:
+        pass
+    else:
+        exit()    
     table = url.split("/")[-3]
     key = url.split("/")[-2]
     tag = url.split("/")[-1]
