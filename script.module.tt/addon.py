@@ -17,6 +17,7 @@
 
 from __future__ import unicode_literals
 
+import sys
 import xbmc
 import xbmcgui
 import xbmcaddon
@@ -25,6 +26,7 @@ from xbmcgui import ListItem
 from routing import Plugin
 
 import os
+import traceback
 import requests
 import requests_cache
 from datetime import timedelta
@@ -40,7 +42,7 @@ addon = xbmcaddon.Addon()
 plugin = Plugin()
 plugin.name = addon.getAddonInfo("name")
 user_agent = "Dalvik/2.1.0 (Linux; U; Android 5.1.1; AFTS Build/LVY48F)"
-player_user_agent = "mediaPlayerhttp/2.1 (Linux;Android 5.1) ExoPlayerLib/2.6.1"
+player_user_agent = "mediaPlayerhttp/2.4 (Linux;Android 5.1) ExoPlayerLib/2.6.1"
 USER_DATA_DIR = xbmc.translatePath(addon.getAddonInfo("profile")).decode("utf-8")  # !!
 CACHE_TIME = int(addon.getSetting("cache_time"))
 CACHE_FILE = os.path.join(USER_DATA_DIR, "cache")
@@ -50,9 +52,10 @@ if not os.path.exists(USER_DATA_DIR):
     os.makedirs(USER_DATA_DIR)
 
 s = requests_cache.CachedSession(CACHE_FILE, allowable_methods="POST", expire_after=expire_after, old_data_on_error=True)
+s.hooks = {"response": lambda r, *args, **kwargs: r.raise_for_status()}
 s.headers.update({"User-Agent": "USER-AGENT-tvtap-APP-V2"})
-token_url = "http://tvtap.net/tvtap1/index_new.php?case=get_channel_link_with_token_tvtap"
-list_url = "http://tvtap.net/tvtap1/index_new.php?case=get_all_channels"
+token_url = "http://tvtap.net/tvtap1/index_tvtappro.php?case=get_channel_link_with_token_tvtap_updated"
+list_url = "http://tvtap.net/tvtap1/index_tvtappro.php?case=get_all_channels"
 
 
 def quote(s, safe=""):
@@ -61,22 +64,19 @@ def quote(s, safe=""):
 
 @plugin.route("/")
 def root():
-    categories = {
-        "01": "UK & USA Channels",
-        "02": "Movies",
-        "03": "Music",
-        "04": "News",
-        "05": "Sport",
-        "06": "Documentary",
-        "07": "Kids",
-        "08": "Food",
-        "09": "Religious",
-    }
     list_items = []
-    for cat in categories.keys():
-        li = ListItem(categories[cat])
-        url = plugin.url_for(list_channels, cat_id=cat.lstrip("0"))
-        list_items.append((url, li, True))
+    r = s.post(list_url, headers={"app-token": "9120163167c05aed85f30bf88495bd89"}, data={"username": "603803577"}, timeout=15)
+    if "Could not connect" in r.content:
+        s.cache.clear()
+    ch = r.json()
+    category_list = []
+    for c in ch["msg"]["channels"]:
+        category = '{0}'.format(c.get('cat_name'))
+        if category not in category_list:
+            category_list.append(category)
+            li = ListItem(category)
+            url = plugin.url_for(list_channels, cat_id=c.get('cat_id'))
+            list_items.append((url, li, True))
 
     xbmcplugin.addSortMethod(plugin.handle, xbmcplugin.SORT_METHOD_LABEL)
     xbmcplugin.addDirectoryItems(plugin.handle, list_items)
@@ -87,15 +87,18 @@ def root():
 def list_channels(cat_id=None):
     list_items = []
     r = s.post(list_url, headers={"app-token": "9120163167c05aed85f30bf88495bd89"}, data={"username": "603803577"}, timeout=15)
+    if "Could not connect" in r.content:
+        s.cache.clear()
     ch = r.json()
 
     for c in ch["msg"]["channels"]:
         if c["cat_id"] == cat_id:
             image = "http://tvtap.net/tvtap1/{0}|User-Agent={1}".format(quote(c.get("img"), "/"), quote(user_agent))
-            li = ListItem(c["channel_name"].rstrip("."))
+            title = '{0} - {1}'.format(c.get('country'),c.get('channel_name').rstrip('.,-'))
+            li = ListItem(title)
             li.setProperty("IsPlayable", "true")
             li.setArt({"thumb": image, "icon": image})
-            li.setInfo(type="Video", infoLabels={"Title": c["channel_name"].rstrip("."), "mediatype": "video", "PlayCount": 0})
+            li.setInfo(type="Video", infoLabels={"Title": title, "mediatype": "video"})
             try:
                 li.setContentLookup(False)
             except AttributeError:
@@ -108,10 +111,10 @@ def list_channels(cat_id=None):
     xbmcplugin.endOfDirectory(plugin.handle)
 
 
-@plugin.route("/play/<ch_id>")
+@plugin.route("/play/<ch_id>/play.pvr")
 def play(ch_id):
     # 178.132.6.54 81.171.8.162
-    key = b"19087321"
+    key = b"98221122"
 
     r = s.post(list_url, headers={"app-token": "9120163167c05aed85f30bf88495bd89"}, data={"username": "603803577"}, timeout=15)
     ch = r.json()
@@ -125,7 +128,6 @@ def play(ch_id):
 
     with s.cache_disabled():
         r = s.post(token_url, headers={"app-token": "9120163167c05aed85f30bf88495bd89"}, data={"channel_id": ch_id, "username": "603803577"}, timeout=15)
-        r.raise_for_status()
 
     links = []
     for stream in r.json()["msg"]["channel"][0].keys():
@@ -176,21 +178,24 @@ def play(ch_id):
             li = ListItem(title, path=media_url)
             li.setArt({"thumb": image, "icon": image})
             li.setMimeType("application/vnd.apple.mpegurl")
-            try:
-                li.setContentLookup(False)
-            except AttributeError:
-                pass
     else:
         li = ListItem(title, path=media_url)
         li.setArt({"thumb": image, "icon": image})
+
+    try:
+        li.setContentLookup(False)
+    except AttributeError:
+        pass
 
     xbmcplugin.setResolvedUrl(plugin.handle, True, li)
 
 
 if __name__ == "__main__":
     try:
-        plugin.run()
+        plugin.run(sys.argv)
         s.close()
     except requests.exceptions.RequestException as e:
         dialog = xbmcgui.Dialog()
         dialog.notification(plugin.name, str(e), xbmcgui.NOTIFICATION_ERROR)
+        traceback.print_exc()
+        xbmcplugin.endOfDirectory(plugin.handle, False)

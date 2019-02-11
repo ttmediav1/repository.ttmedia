@@ -50,7 +50,7 @@
 	</extension>
 </addon>
 
-<addon id="plugin.program.ttmediawizard" name="[COLORlime]TTMedia Wizard[/COLOR]" version="3.7" provider-name="[COLORred]TTMedia[/COLOR]">
+<addon id="plugin.program.ttmediawizard" name="[COLORlime]TTMedia Wizard[/COLOR]" version="3.8" provider-name="[COLORred]TTMedia[/COLOR]">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
@@ -246,7 +246,7 @@
     </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="[B][COLORlime]TTMedia Repository[/COLOR][/B]" version="2.1.1" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="repository.ttmedia" name="[B][COLORlime]TTMedia Repository[/COLOR][/B]" version="2.1.2" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
@@ -393,7 +393,7 @@
   </extension>
 </addon>
 
-<addon id="script.module.tt" name="TvTap" version="1.2" provider-name="RACC">
+<addon id="script.module.tt" name="TvTap" version="1.4" provider-name="RACC">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.livestreamer" />
@@ -404,9 +404,10 @@
     <provides>all</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en"></summary>
-    <description lang="en">Tap Tv Android Apk</description>
-    <disclaimer lang="en"></disclaimer>
+    <reuselanguageinvoker>true</reuselanguageinvoker>
+    <summary lang="en_gb">tvtap</summary>
+    <description lang="en_gb">tvtap apk</description>
+    <disclaimer lang="en_gb"></disclaimer>
     <language></language>
     <platform>all</platform>
     <license></license>
