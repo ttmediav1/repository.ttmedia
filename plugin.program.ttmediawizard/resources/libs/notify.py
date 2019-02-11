@@ -269,7 +269,7 @@ def autoConfig(msg='', TxtColor='0xFFFFFFFF', Font='font12', BorderWidth=10):
 			elif self.Button2.isSelected(): buffermode = 2
 			elif self.Button3.isSelected(): buffermode = 3
 			if os.path.exists(ADVANCED):
-				choice = DIALOG.yesno(ADDONTITLE, "[COLOR %s]There is currently an active [COLOR %s]AdvancedSettings.xml[/COLOR], would you like to remove it and continue?[/COLOR]" % (COLOR2, COLOR1), yeslabel="[B][COLOR springgreen]Remove Settings[/COLOR][/B]", nolabel="[B][COLOR red]Cancel Write[/COLOR][/B]")
+				choice = DIALOG.yesno(ADDONTITLE, "[COLOR %s]There is currently an active [COLOR %s]AdvancedSettings.xml[/COLOR], would you like to remove it and continue?[/COLOR]" % (COLOR2, COLOR1), yeslabel="[B][COLOR green]Remove Settings[/COLOR][/B]", nolabel="[B][COLOR red]Cancel Write[/COLOR][/B]")
 				if choice == 0: return
 				try: os.remove(ADVANCED)
 				except: f = open(ADVANCED, 'w'); f.close()
@@ -322,110 +322,6 @@ def autoConfig(msg='', TxtColor='0xFFFFFFFF', Font='font12', BorderWidth=10):
 	TempWindow.doModal() 
 	del TempWindow
 
-def QautoConfig(msg='', TxtColor='0xFFFFFFFF', Font='font10', BorderWidth=10):
-	class MyWindow(xbmcgui.WindowDialog):
-		scr={};
-		def __init__(self,msg='',L=0,T=0,W=1280,H=720,TxtColor='0xFFFFFFFF',Font='font10',BorderWidth=10):
-			buttonfocus, buttonnofocus = artwork('button')
-			self.BG=xbmcgui.ControlImage(L+BorderWidth,T+BorderWidth,W-(BorderWidth*2),H-(BorderWidth*2), FANART, aspectRatio=0)
-			self.addControl(self.BG)
-			top = T+BorderWidth
-			leftside = L+BorderWidth
-			rightside = L+(W/2)-(BorderWidth*2)		
-			header = '[COLOR %s]Quick Advanced Settings Configurator[/COLOR]' % (COLOR2)
-			self.Header=xbmcgui.ControlLabel(L, top, W, 30, header, font='font13', textColor=TxtColor, alignment=0x00000002)
-			self.addControl(self.Header)
-			top += 30+BorderWidth
-			freeMemory = int(float(wiz.getInfo('System.Memory(free)')[:-2])*.33)
-			recMemory = int(float(wiz.getInfo('System.Memory(free)')[:-2])*.23)
-			self.videomin = 0; self.videomax = freeMemory if freeMemory < 2000 else 2000
-			self.recommendedVideo = recMemory if recMemory < 500 else 500; self.currentVideo = self.recommendedVideo
-			current1 = '[COLOR %s]Video Cache Size[/COLOR]=[COLOR %s]%s MB[/COLOR]' % (COLOR1, COLOR2, self.currentVideo)
-			recommended1 = '[COLOR %s]Video Cache Size:[/COLOR] [COLOR %s]%s MB[/COLOR]' % (COLOR1, COLOR2, self.recommendedVideo)
-			self.curlmin = 0; self.curlmax = 20
-			self.recommendedCurl = 10; self.currentCurl = self.recommendedCurl
-			curlpos = wiz.percentage(self.currentCurl, self.curlmax)
-			recommended2 = '[COLOR %s]CURL Timeout/CURL Low Speed:[/COLOR] [COLOR %s]%ss[/COLOR]' % (COLOR1, COLOR2, self.recommendedCurl)
-			self.readmin = 0; self.readmax = 10
-			self.recommendedRead = 5; self.currentRead = self.recommendedRead
-			readpos = wiz.percentage(self.currentRead, self.readmax)
-			recommended3 = '[COLOR %s]Read Buffer Factor:[/COLOR] [COLOR %s]%s[/COLOR]' % (COLOR1, COLOR2, self.recommendedRead)
-			recommended4 = '[COLOR %s]Buffer Mode:[/COLOR] [COLOR %s]2[/COLOR]' %(COLOR1, COLOR2)
-			msgbox='[COLOR %s]These settings will be written to the advancesettings.xml[/COLOR]\r\n\r\n%s\r\n%s\r\n%s\r\n%s' %(COLOR1, recommended4, recommended1, recommended3, recommended2)
-			self.box=xbmcgui.ControlTextBox(L+25,T+50,W,H, font='font14')
-			self.addControl(self.box)
-			self.box.setText(msgbox)
-			self.buttonWrite=xbmcgui.ControlButton(leftside,T+H-40-BorderWidth,(W/2)-(BorderWidth*2),35,"Write File",textColor="0xFF000000",focusedColor="0xFF000000",alignment=2,focusTexture=buttonfocus,noFocusTexture=buttonnofocus)
-			self.buttonCancel=xbmcgui.ControlButton(rightside+BorderWidth*2,T+H-40-BorderWidth,(W/2)-(BorderWidth*2),35,"Cancel",textColor="0xFF000000",focusedColor="0xFF000000",alignment=2,focusTexture=buttonfocus,noFocusTexture=buttonnofocus)			
-			self.addControl(self.buttonWrite); self.addControl(self.buttonCancel)
-			self.setFocus(self.buttonCancel)			
-			self.buttonWrite.controlLeft(self.buttonCancel); self.buttonWrite.controlRight(self.buttonCancel); self.buttonCancel.controlLeft(self.buttonWrite); self.buttonCancel.controlRight(self.buttonWrite)
-			
-		def doExit(self):
-			self.CloseWindow()			
-		def updateCurrent(self, control):
-			if control == self.videoCacheSize:
-				self.currentVideo = (self.videomax)*self.videoCacheSize.getPercent()/100
-				current = '[COLOR %s]Current:[/COLOR] [COLOR %s]%s MB[/COLOR]' % (COLOR1, COLOR2, int(self.currentVideo))
-				self.currentVideo1.setText(current)
-				
-			elif control == self.CURLTimeout:
-				self.currentCurl = (self.curlmax)*self.CURLTimeout.getPercent()/100
-				current = '[COLOR %s]Current:[/COLOR] [COLOR %s]%ss[/COLOR]' % (COLOR1, COLOR2, int(self.currentCurl))
-				self.currentCurl2.setText(current)
-				
-			elif control == self.readBufferFactor:
-				self.currentRead = (self.readmax)*self.readBufferFactor.getPercent()/100
-				current = '[COLOR %s]Current:[/COLOR] [COLOR %s]%s[/COLOR]' % (COLOR1, COLOR2, int(self.currentRead))
-				self.currentRead3.setText(current)
-		def doWrite(self):
-			buffermode = 2
-			if os.path.exists(ADVANCED):
-				choice = DIALOG.yesno(ADDONTITLE, "[COLOR %s]There is currently an active [COLOR %s]AdvancedSettings.xml[/COLOR], would you like to remove it and continue?[/COLOR]" % (COLOR2, COLOR1), yeslabel="[B][COLOR green]Remove Settings[/COLOR][/B]", nolabel="[B][COLOR red]Cancel Write[/COLOR][/B]")
-				if choice == 0: return
-				try: os.remove(ADVANCED)
-				except: f = open(ADVANCED, 'w'); f.close()
-			if KODIV < 17:
-				with open(ADVANCED, 'w+') as f:
-					f.write('<advancedsettings>\n')
-					f.write('	<network>\n')
-					f.write('		<buffermode>%s</buffermode>\n' % buffermode)
-					f.write('		<cachemembuffersize>%s</cachemembuffersize>\n' % int(self.currentVideo*1024*1024))
-					f.write('		<readbufferfactor>%s</readbufferfactor>\n' % self.currentRead)
-					f.write('		<curlclienttimeout>%s</curlclienttimeout>\n' % self.currentCurl)
-					f.write('		<curllowspeedtime>%s</curllowspeedtime>\n' % self.currentCurl)
-					f.write('	</network>\n')
-					f.write('</advancedsettings>\n')
-				f.close()
-			else:
-				with open(ADVANCED, 'w+') as f:
-					f.write('<advancedsettings>\n')
-					f.write('	<cache>\n')
-					f.write('		<buffermode>%s</buffermode>\n' % buffermode)
-					f.write('		<memorysize>%s</memorysize>\n' % int(self.currentVideo*1024*1024))
-					f.write('		<readfactor>%s</readfactor>\n' % self.currentRead)
-					f.write('	</cache>\n')
-					f.write('	<network>\n')
-					f.write('		<curlclienttimeout>%s</curlclienttimeout>\n' % self.currentCurl)
-					f.write('		<curllowspeedtime>%s</curllowspeedtime>\n' % self.currentCurl)
-					f.write('	</network>\n')
-					f.write('</advancedsettings>\n')
-				f.close()
-				wiz.LogNotify("[COLOR %s]%s[/COLOR]" % (COLOR1, ADDONTITLE), '[COLOR %s]AdvancedSettings.xml have been written[/COLOR]' % COLOR2)
-			self.CloseWindow()			
-		def onControl(self, control):
-			if   control==self.buttonWrite: self.doWrite()
-			elif control==self.buttonCancel:  self.doExit()
-		def onAction(self, action):
-			try: F=self.getFocus()
-			except: F=False
-			if action == ACTION_PREVIOUS_MENU:  self.doExit()
-			elif action == ACTION_NAV_BACK:       self.doExit()			
-		def CloseWindow(self): self.close()
-	maxW=1280; maxH=720; W=int(700); H=int(350); L=int((maxW-W)/2); T=int((maxH-H)/2); 
-	TempWindow=MyWindow(L=L,T=T,W=W,H=H,TxtColor=TxtColor,Font=Font,BorderWidth=BorderWidth); 
-	TempWindow.doModal() 
-	del TempWindow
 ##########################
 ### Converted to XML
 ##########################
@@ -484,33 +380,6 @@ def apkInstaller(apk):
 	popup.doModal()
 	del popup
 
-def speedTest(img):
-	class speedTest(xbmcgui.WindowXMLDialog):
-		def __init__(self,*args,**kwargs):
-			self.imgfile    = kwargs['img']
-		
-		def onInit(self):
-			self.imagespeed = 101
-			self.button     = 201
-			self.showdialog()
-			
-		def showdialog(self):
-			self.setFocus(self.getControl(self.button))
-			self.getControl(self.imagespeed).setImage(self.imgfile)
-
-		def onClick(self,controlID): self.CloseWindow()
-
-		def onAction(self,action):
-			if action in [ACTION_PREVIOUS_MENU, ACTION_BACKSPACE, ACTION_NAV_BACK, ACTION_SELECT_ITEM, ACTION_MOUSE_LEFT_CLICK, ACTION_MOUSE_LONG_CLICK]: self.CloseWindow()
-
-		def CloseWindow(self):
-			self.close()
-	
-	popup = speedTest('SpeedTest.xml', ADDON.getAddonInfo('path'), 'DefaultSkin', img=img)
-	popup.doModal()
-	del popup
-
-	
 def firstRunSettings():
 	class firstRun(xbmcgui.WindowXMLDialog):
 		def __init__(self,*args,**kwargs):
@@ -569,7 +438,7 @@ def firstRun():
 	class MyWindow(xbmcgui.WindowXMLDialog):
 		def __init__(self, *args, **kwargs):
 			self.title = THEME3 % ADDONTITLE
-			self.msg   = "[COLOR white]Thank You for Choosing This Wizard\nSelect [/COLOR]'[B][COLOR springgreen]Build Menu[/COLOR][/B]'[COLOR white] To Install a Custom Build Or Select [/COLOR]'[B][COLOR red]MayBe Later[/COLOR][/B]'[COLOR white] And You Can Install a Build Later From This Wizard"
+			self.msg   = "Currently no build installed from %s.\n\nSelect 'Build Menu' to install a Community Build from us or 'Ignore' to never see this message again.\n\nThank you for choosing %s." % (ADDONTITLE, ADDONTITLE)
 			self.msg   = THEME2 % self.msg
 
 		def onInit(self):
