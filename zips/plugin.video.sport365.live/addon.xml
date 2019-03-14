@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="plugin.video.sport365.live" name="Sport365" version="2.0.0" provider-name="TTMedia">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.requests" version="2.19.1"/>
+        <import addon="plugin.video.f4mTester" />
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="main.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en"></summary>
+    <description lang="en"></description>
+    <disclaimer lang="en">SPORT365 LIVE DOES NOT PROVIDE ANY STREAMS OF ITS OWN. STREAM QUALITY, CONTENT AND COPYRIGHT ARE RESPONSIBILITY OF THE AD-FINANCED SOURCE WEB SITE.</disclaimer>
+    <language>en</language>
+    <platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <website></website>
+    <twitter></twitter>
+  <assets>
+    <icon>icon.png</icon>
+    <fanart>fanart.png</fanart>
+  </assets>
+  <news>
+  </news>
+  </extension>
+</addon>

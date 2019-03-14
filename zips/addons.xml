@@ -124,6 +124,48 @@
     </extension>
 </addon>
 
+<addon id="plugin.video.FightClub" name="[COLOR gold][B]F[COLOR silver]ight Club[/B][/COLOR]" version="1.00" provider-name="TTMedia">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.simplejson"/>
+    <import addon="script.common.plugin.cache"/>
+    <import addon="script.module.metahandler"/>
+	<import addon="script.module.requests"/>
+	<import addon="script.module.resolveurl"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="fc.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">FIGHT CLUB WWE,UFC AND BOXING</summary>
+    <description lang="en">ALL REPLAYS AND STREAMS OBTAINED USING SCRAPERS FROM OPENLY AVAILABLE SOURCES. FIGHT CLUB DOES NOT HOST ANY OF THE CONTAINED CONTENT AND ANY COPYRIGHT NOTICES SHOULD BE SENT TO THE HOSTING WEBSITE</description>
+    <platform>all</platform>
+	<assets>
+	<icon>icon.png</icon>
+    <fanart>fanart.jpg</fanart>
+    <screenshot>resources/screenshots/1.jpg</screenshot>
+    <screenshot>resources/screenshots/2.jpg</screenshot>
+    <screenshot>resources/screenshots/3.jpg</screenshot>
+</assets>
+  </extension>
+</addon>
+
+<addon id="plugin.video.kickoff" name="[COLOR blue]Kick Off[/COLOR]" version="2.0.0" provider-name="TTMedia">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.addon.common" version="2.0.0" />
+    <import addon="script.module.resolveurl" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">KICK OFF</summary>
+    <description lang="en">NO STREAMS ARE HOSTED BY THIS ADDON, IT SCRAPES THEM FROM FREELY AVAILABLE SOURCES</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="plugin.video.live.streamspro"
        name="LiveStreamsPro"
        version="2.8.1"
@@ -169,6 +211,33 @@
   </extension>
 </addon>
 
+<addon id="plugin.video.sport365.live" name="Sport365" version="2.0.0" provider-name="TTMedia">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.requests" version="2.19.1"/>
+        <import addon="plugin.video.f4mTester" />
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="main.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en"></summary>
+    <description lang="en"></description>
+    <disclaimer lang="en">SPORT365 LIVE DOES NOT PROVIDE ANY STREAMS OF ITS OWN. STREAM QUALITY, CONTENT AND COPYRIGHT ARE RESPONSIBILITY OF THE AD-FINANCED SOURCE WEB SITE.</disclaimer>
+    <language>en</language>
+    <platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <website></website>
+    <twitter></twitter>
+  <assets>
+    <icon>icon.png</icon>
+    <fanart>fanart.png</fanart>
+  </assets>
+  <news>
+  </news>
+  </extension>
+</addon>
+
 <addon
   id="plugin.video.SportsDevil"
   version="2018.04.11"
@@ -198,7 +267,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.6.2" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.6.4" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -212,7 +281,6 @@
         <import addon="script.module.metadatautils" />
 		<import addon="script.module.live365" version="1.0.3" />
 		<import addon="script.module.simplejson" />
-		<import addon="script.module.tt" />
 		<import addon="script.video.F4mProxy" version="2.8.7" />
 		<import addon="script.module.livestreamer" optional="true" />
 		<import addon="script.module.streamlink.base" version="2018.02.24" />
@@ -220,6 +288,9 @@
         <!--<import addon="script.module.web-pdb" version="1.0"/>-->
         <import addon="script.module.resolveurl" />
         <!--<import addon="script.module.urlresolver" />-->
+		<import addon="plugin.video.sport365.live" />
+		<import addon="plugin.video.kickoff" />
+		<import addon="plugin.video.FightClub" />
 		<import addon="plugin.video.youtube" />
 		<import addon="plugin.program.advancedsettings" />
 		<import addon="plugin.program.aptoide" />
@@ -246,7 +317,7 @@
     </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="[B][COLORlime]TTMedia Repository[/COLOR][/B]" version="2.1.2" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="repository.ttmedia" name="[B][COLORlime]TTMedia Repository[/COLOR][/B]" version="2.1.3" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
@@ -277,32 +348,6 @@
 		<description lang="en">[COLORlime]THIS REPOSITORY HAS THE LATEST WORK FROM TTMEDIA[/COLOR]</description>
 		<genre></genre>
 </extension>
-</addon>
-
-<addon id="script.module.live365" name="LIVE365" version="1.0.4" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="service.cronxbmc" optional="true"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="main.py">
-        <provides>video</provides>
-    </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">[B][COLORred]LIVE SPORTS 365[/COLOR][/B]</summary>
-    <description lang="en">[B][COLORred]LIVE SPORTS 365[/COLOR][/B]</description>
-    <disclaimer lang="en">[B][COLORlime]TTMEDIA DOES NOT HOST ANY OF THE MATERIAL IN THIS ADD-ON.[/COLOR][/B]</disclaimer>
-    <language></language>
-    <platform>all</platform>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    <forum></forum>
-    <website></website>
-    <email></email>
-  <assets>
-    <icon>icon.png</icon>
-    <fanart>fanart.jpg</fanart>
-  </assets>
-  <news></news>
-  </extension>
 </addon>
 
 <addon id="script.module.livestreamer"
@@ -390,31 +435,6 @@
     <source>https://github.com/Twilight0/script.module.streamlink.crypto</source>
     <platform>all</platform>
     <license>MIT</license>
-  </extension>
-</addon>
-
-<addon id="script.module.tt" name="TvTap" version="1.4" provider-name="RACC">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.livestreamer" />
-    <import addon="script.module.requests" />
-    <import addon="script.module.routing" />
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="addon.py">
-    <provides>all</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <reuselanguageinvoker>true</reuselanguageinvoker>
-    <summary lang="en_gb">tvtap</summary>
-    <description lang="en_gb">tvtap apk</description>
-    <disclaimer lang="en_gb"></disclaimer>
-    <language></language>
-    <platform>all</platform>
-    <license></license>
-    <forum></forum>
-    <website></website>
-    <email></email>
-    <source></source>
   </extension>
 </addon>
 
