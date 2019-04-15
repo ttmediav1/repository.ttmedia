@@ -15,7 +15,7 @@ fanart       = xbmc.translatePath(os.path.join('special://home/addons/' + addon_
 username     = control.setting('Username')
 password     = control.setting('Password')
 
-host         = 'http://www.ipcctv.org'
+host         = 'http://lltv.xyz'
 port         = '80'
 
 live_url     = '%s:%s/enigma2.php?username=%s&password=%s&type=get_live_categories'%(host,port,username,password)
