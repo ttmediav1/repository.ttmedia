@@ -24,6 +24,8 @@ from downloader import Downloader
 from favouritesManager import FavouritesManager
 
 import entities.CListItem as ListItem
+from entities.CList import CList
+
 
 from utils import xbmcUtils
 
@@ -34,6 +36,7 @@ from customModulesManager import CustomModulesManager
 from addonInstaller import install
 
 from utils.beta.t0mm0.common.addon import Addon
+
 
 #from cacheManager import CacheManager
 
@@ -51,6 +54,7 @@ class Mode:
     INSTALLADDON = 12
     CHROME = 13
     WEBDRIVER = 14
+    SLPROXY = 15
 
 
 class Main:
@@ -76,6 +80,14 @@ class Main:
         if not videoItem:
             return
 
+        if ('offline' in videoItem['url']):
+            common.showInfo('Stream is offline - please try again later.')
+            return
+
+        if any(x in videoItem['url'] for x in ['hls://', 'hlsvariant://', 'httpstream://', 'hds://', 'akamaihd://']):
+            self.playSLProxy(videoItem)
+            return
+        
         listitem = self.createXBMCListItem(videoItem)
 
         title = videoItem['videoTitle']
@@ -87,6 +99,23 @@ class Main:
         else:
             url = urllib.unquote_plus(videoItem['url'])
             xbmc.Player().play(url, listitem)
+    
+    def playSLProxy(self, videoItem):
+        if not videoItem:
+            return
+
+        from dsp import streamlink_proxy
+        slProxy = streamlink_proxy.SLProxy_Helper()
+        
+        listitem = self.createXBMCListItem(videoItem)
+        title = videoItem['videoTitle']
+        url = videoItem['url']
+
+        if title:
+            listitem.setInfo('video', {'title': title})
+        
+        slProxy.playSLink(url, listitem)
+        pass
 
     def launchChrome(self, url, title):
         action = 'RunPlugin(%s)' % ('plugin://plugin.program.chrome.launcher/?kiosk=yes&mode=showSite&stopPlayback=yes&url=' + url)
@@ -177,12 +206,13 @@ class Main:
                 lItem['url'] =  lItem['url'] % (urllib.quote_plus(search_phrase))
 
         url = lItem['url']
-
+        
         if url == common.Paths.customModulesFile: 
             self.customModulesManager.getCustomModules()
 
         tmpList = None
         result = self.parser.parse(lItem)
+        
         if result.code == ParsingResult.Code.SUCCESS:
             tmpList = result.list
         elif result.code == ParsingResult.Code.CFGFILE_NOT_FOUND:
@@ -206,7 +236,7 @@ class Main:
             tmp = ListItem.create()
             tmp['title'] = 'Favourites'
             tmp['type'] = 'rss'
-            tmp['icon'] = os.path.join(common.Paths.imgDir, 'bookmark.png')
+            tmp['icon'] = os.path.join(common.Paths.imgDir, 'icons/favourites.png')
             tmp['url'] = str(common.Paths.favouritesFile)
             tmpList.items.insert(0, tmp)
             
@@ -219,10 +249,11 @@ class Main:
             tmp = ListItem.create()
             tmp['title'] = 'Add item...'
             tmp['type'] = 'command'
-            tmp['icon'] = os.path.join(common.Paths.imgDir, 'bookmark_add.png')
-            action = 'RunPlugin(%s)' % (self.base + '?mode=' + str(Mode.ADDITEM) + '&url=' + url)
+            tmp['icon'] = os.path.join(common.Paths.imgDir, 'icons/add_favourites.png')
+            action = 'RunPlugin(%s)' % (self.base + '?mode=' + str(Mode.ADDITEM) + '&item=url=' + url)
             tmp['url'] = action
-            tmpList.items.append(tmp)
+            tmpList.items.append(tmp)                   
+            
         
         # Create menu or play, if it's a single video and autoplay is enabled
         count = len(tmpList.items)
@@ -246,6 +277,7 @@ class Main:
         return tmpList
 
     def createXBMCListItem(self, item):        
+        
         title = item['title']
         m_type = item['type']
         icon = item['icon']    
@@ -364,6 +396,10 @@ class Main:
                         if float(common.xbmcVersion) >= 17.5:
                             liz.setMimeType('application/vnd.apple.mpegurl')
                             liz.setProperty('inputstream.adaptive.manifest_type', 'hls')
+                            if '|' in url:
+                                url,strhdr = url.split('|')
+                                liz.setProperty('inputstream.adaptive.stream_headers', strhdr)
+                                liz.setPath(url)
                         else:
                             liz.setProperty('inputstreamaddon', None)
                             liz.setContentLookup(True)
@@ -372,8 +408,9 @@ class Main:
                         liz.setMimeType('application/dash+xml')
                         liz.setProperty('inputstream.adaptive.manifest_type', 'mpd')                                        
                         
-                    elif v_type == 'adaptive_drm':
-                        pass
+                    elif v_type == 'adaptive_ism':
+                        liz.setProperty('inputstream.adaptive.manifest_type', 'ism')
+                        liz.setMimeType('application/vnd.ms-sstr+xml')
                     
                 else:
                     pass
@@ -388,6 +425,7 @@ class Main:
 
 
     def addListItem(self, lItem, totalItems):
+
         def createContextMenuItem(label, mode, codedItem):
             action = 'XBMC.RunPlugin(%s)' % (self.addon.build_plugin_url({'mode': str(mode), 'item': codedItem}))
             return (label, action)
@@ -399,7 +437,7 @@ class Main:
                     v = v.encode('utf8')
                 elif isinstance(v, str):
                     # Must be encoded in UTF-8
-                    v.decode('utf8')
+                    v.decode('utf8')                    
                 out_dict[k] = v
             return urllib.urlencode(out_dict)
         
@@ -407,7 +445,7 @@ class Main:
         definedIn = lItem['definedIn']
 
         codedItem = urllib.quote(encoded_dict(lItem.infos))
-
+        
         if definedIn:
             # Queue
             #contextMenuItem = createContextMenuItem('Queue', Mode.QUEUE, codedItem)
@@ -446,14 +484,26 @@ class Main:
             m_type = 'rss'
         
         if m_type == 'video':
-            u = self.base + '?mode=' + str(Mode.PLAY) + '&item=' + codedItem
-            if lItem['IsDownloadable']:
-                contextMenuItem = createContextMenuItem('Download', Mode.DOWNLOAD, codedItem)
-                contextMenuItems.append(contextMenuItem)
+            if any(x in lItem['url'] for x in ['hls://', 'hlsvariant://', 'httpstream://', 'hds://', 'akamaihd://']):
+                u = self.base + '?mode=' + str(Mode.SLPROXY) + '&item=' + codedItem
+                m_type = 'slproxy'
+            else:
+                u = self.base + '?mode=' + str(Mode.PLAY) + '&item=' + codedItem
+                if lItem['IsDownloadable']:
+                    contextMenuItem = createContextMenuItem('Download', Mode.DOWNLOAD, codedItem)
+                    contextMenuItems.append(contextMenuItem)
+            isFolder = False
+        elif m_type == 'slproxy':
+            u = self.base + '?mode=' + str(Mode.SLPROXY) + '&item=' + codedItem
             isFolder = False
         elif m_type.find('command') > -1:
             u = self.base + '?mode=' + str(Mode.EXECUTE) + '&item=' + codedItem
             isFolder = False
+        elif m_type == 'virtualdir': #open external addon dir
+            u = lItem['url']
+            isFolder = True
+            liz.setProperty('IsPlayable','false')
+            
         else:
             u = self.base + '?mode=' + str(Mode.VIEW) + '&item=' + codedItem
             isFolder = True
@@ -561,7 +611,6 @@ class Main:
                 
             else:
                 [mode, item] = self._parseParameters()
-
                 # switch(mode)
                 if mode == Mode.VIEW:
                     tmpList = self.parseView(item)
@@ -579,10 +628,12 @@ class Main:
 
 
                 elif mode == Mode.ADDITEM:
+                    
                     tmp = os.path.normpath(paramstring.split('url=')[1])
                     if tmp:
                         suffix = tmp.split(os.path.sep)[-1]
                         tmp = tmp.replace(suffix,'') + urllib.quote_plus(suffix)
+                        
                     if self.favouritesManager.add(tmp):
                         xbmc.executebuiltin('Container.Refresh()')
 
@@ -604,6 +655,9 @@ class Main:
 
                 elif mode == Mode.PLAY:
                     self.playVideo(item)
+                
+                elif mode == Mode.SLPROXY:
+                    self.playSLProxy(item)
                 
                 elif mode == Mode.WEBDRIVER:
                     url = urllib.quote(item['url'])

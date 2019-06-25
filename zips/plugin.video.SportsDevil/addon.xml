@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon
   id="plugin.video.SportsDevil"
-  version="2018.04.11"
+  version="2019.05.24"
   name="SportsDevil"
   provider-name="SportsDevil">
   <requires>
@@ -10,19 +10,19 @@
    <import addon="script.module.simplejson" />
    <import addon="script.module.six" />
    <import addon="script.module.requests" />
-   <import addon="script.module.streamlink.base" />
    <import addon="plugin.video.f4mTester" />
+   <import addon="script.module.slproxy" />
   </requires>
-  <extension 
+  <extension
     point="xbmc.python.pluginsource"
     library="default.py">
    <provides>video</provides>
   </extension>
-  <extension point="xbmc.service" library="service/streamlink_proxy.py" start="startup" />
+  <!-- <extension point="xbmc.service" library="service/streamlink_proxy.py" /> -->
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">SportsDevil addon</summary>
-    <description lang="en">PLAY VIDEOS OF DIFFERENT AD-FINANCED SPORTS STREAMING SITES.</description>
-	<disclaimer lang="en">SPORTSDEVIL DOES NOT PROVIDE ANY STREAMS OF ITS OWN; STREAM QUALITY, CONTENT AND COPYRIGHT ARE RESPONSIBILITY OF THE AD-FINANCED SOURCE WEB SITE. FOR UPDATES - CHECK THE README.</disclaimer>
+    <summary lang="en">SportsDevil</summary>
+    <description lang="en">[I]There can only be one.[/I][CR][CR]Unofficial Kodi Addon.</description>
+    <disclaimer lang="en">There can only be one.</disclaimer>
     <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
     <platform>all</platform>
   </extension>

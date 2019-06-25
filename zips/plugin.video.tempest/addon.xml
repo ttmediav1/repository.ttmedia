@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.6.4" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.6.5" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -8,10 +8,10 @@
         <import addon="script.module.requests" version="2.9.1" />
         <import addon="script.module.addon.common" version="2.0.0" />
         <import addon="script.module.xmltodict" version="0.9.0" />
+		<import addon="script.module.feedparser" />
         <import addon="script.module.dateutil" />
 		<import addon="script.module.thetvdb" />
         <import addon="script.module.metadatautils" />
-		<import addon="script.module.live365" version="1.0.3" />
 		<import addon="script.module.simplejson" />
 		<import addon="script.video.F4mProxy" version="2.8.7" />
 		<import addon="script.module.livestreamer" optional="true" />
@@ -21,15 +21,13 @@
         <import addon="script.module.resolveurl" />
         <!--<import addon="script.module.urlresolver" />-->
 		<import addon="plugin.video.sport365.live" />
-		<import addon="plugin.video.kickoff" />
-		<import addon="plugin.video.FightClub" />
 		<import addon="plugin.video.youtube" />
 		<import addon="plugin.program.advancedsettings" />
 		<import addon="plugin.program.aptoide" />
 		<import addon="plugin.program.xmlerator" version="5.5.0" />
 		<import addon="plugin.video.bosstechmediaV4" version="1.5" />
 		<import addon="plugin.video.f4mTester" version="2.7.2" />
-		<import addon="plugin.video.SportsDevil" version="2018.04.11" />
+		<import addon="plugin.video.SportsDevil"  />
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>audio video</provides>
