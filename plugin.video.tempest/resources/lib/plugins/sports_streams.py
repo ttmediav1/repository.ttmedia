@@ -90,7 +90,7 @@ class Sports_streams(Plugin):
             if "games" in item.get("sport_stream", ""):
                 result_item = {
                     'label': item["title"],
-                    'icon': "https://i.pinimg.com/736x/a2/b9/7c/a2b97c577ff82928cc53591c33ba8f75--stream-online-daytona--live.jpg",
+                    'icon': "http://ttmedia.live/tempest/icon.png",
                     'fanart': item.get("fanart", addon_fanart),
                     'mode': "Sport_Stream",
                     'url': item.get("sport_stream", ""),
