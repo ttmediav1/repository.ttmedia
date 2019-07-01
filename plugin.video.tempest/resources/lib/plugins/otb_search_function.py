@@ -34,20 +34,25 @@
 
 
 import requests,re,os,xbmc,xbmcaddon
-import koding
+import base64,pickle,koding,time,sqlite3
 from koding import route
 from ..plugin import Plugin
 from resources.lib.util.context import get_context_items
-from resources.lib.util.xml import JenItem, JenList, display_list
+from resources.lib.util.xml import JenItem, JenList, display_list, display_data, clean_url
 from resources.lib.external.airtable.airtable import Airtable
 from unidecode import unidecode
 
-CACHE_TIME = 3600  # change to wanted cache time in seconds
+CACHE_TIME = 86400  # change to wanted cache time in seconds
 
+addon_id = xbmcaddon.Addon().getAddonInfo('id')
 addon_fanart = xbmcaddon.Addon().getAddonInfo('fanart')
 addon_icon = xbmcaddon.Addon().getAddonInfo('icon')
 AddonName = xbmc.getInfoLabel('Container.PluginName')
-AddonName = xbmcaddon.Addon(AddonName).getAddonInfo('id')
+home_folder = xbmc.translatePath('special://home/')
+user_data_folder = os.path.join(home_folder, 'userdata')
+addon_data_folder = os.path.join(user_data_folder, 'addon_data')
+database_path = os.path.join(addon_data_folder, addon_id)
+database_loc = os.path.join(database_path, 'database.db')
 
 
 class OTB_Search_Function(Plugin):
@@ -81,6 +86,7 @@ class OTB_Search_Function(Plugin):
 
 @route(mode='open_otb_search_movies')
 def open_movie_results():
+    pins = ""
     xml = ""
     show = koding.Keyboard(heading='Movie Name')
     movie_list = []
@@ -106,7 +112,7 @@ def open_movie_results():
         except:
             pass       
     at3 = Airtable('appbXfuDDhnWqYths', 'bnw_movies', api_key='keyikW1exArRfNAWj')
-    match5 = at3.get_all(maxRecords=700, sort=["name"])
+    match5 = at3.get_all(maxRecords=1200, sort=["name"])
     for field3 in match5:
         res3 = field3['fields']        
         name3 = res3['name']
@@ -122,7 +128,7 @@ def open_movie_results():
             "<title>[COLOR=orange][B]Movie was not found[/B][/COLOR]</title>"\
             "</item>"
         jenlist = JenList(xml)
-        display_list(jenlist.get_list(), jenlist.get_content_type())                     
+        display_list(jenlist.get_list(), jenlist.get_content_type(), pins)                     
     for item in search_result:
         item2 = str(item)
         item2 = remove_non_ascii(item2)
@@ -258,7 +264,7 @@ def open_movie_results():
             pass                 
         
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 def display_xml(name2,trailer,summary,thumbnail,fanart,link_a,link_b,link_c,link_d,link_e):
     xml = ""

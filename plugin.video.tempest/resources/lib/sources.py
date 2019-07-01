@@ -15,6 +15,20 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+ Update :2019-3-11
+ Version 2.0 Jen
+    Updated to include torrent and magnet links in xml
+
+<title>[/COLOR]</title>
+<link>
+<sublink>magnet:?xt=urn:btih:9CA50DA836B52A6BCB06AAA91BB2478FD96F5DD0&dn=A+Beautiful+Mind+%282001%29+1080p+BrRip+x264+-+YIFY</sublink>
+</link>
+<thumbnail></thumbnail>
+<fanart></fanart>
+</item>
+
+
 """
 import random
 
@@ -794,7 +808,7 @@ def get_sources(item):
                     exclude=exclude_scrapers,
                     player=jenplayer,
                 )
-        elif preset.startswith("http") or preset.startswith("plugin"):
+        elif preset.startswith("http") or preset.startswith("plugin") or preset.endswith('.torrent') or preset.startswith('magnet'):
             # direct link
             if "/playlist" in preset and "youtube" in preset:
                 busy_dialog.close()
@@ -815,7 +829,8 @@ def get_sources(item):
                     item=listitem,
                     player=jenplayer,
                     resolver=resolveurl,
-                )
+                )      
+                
         else:
             # who knows
             busy_dialog.close()

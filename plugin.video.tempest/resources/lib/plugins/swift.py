@@ -12,6 +12,10 @@
     worth it, you can buy him a beer in return. - Muad'Dib
     ----------------------------------------------------------------------------
 
+<dir>
+<title>Swift streams</title>
+<swift>allthespice</swift>
+</dir>
 
 """
 
@@ -109,6 +113,7 @@ class SwiftLive(Plugin):
 
 @route(mode='SwiftMain', args=["url"])
 def get_swiftstreamz(url):
+    pins = ""
     xml = ""
     url = url.replace('allthespice/', '')  # Strip our category tag off.
     try:
@@ -145,11 +150,12 @@ def get_swiftstreamz(url):
         pass
 
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 
 @route(mode='SwiftCat', args=["url"])
 def get_swiftstreamz_category(url):
+    pins = ""
     xml = ""
     url = url.replace('swiftcategory/', '')  # Strip our category tag off.
     try:
@@ -187,7 +193,7 @@ def get_swiftstreamz_category(url):
         pass
 
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 
 @route(mode='SwiftPlay', args=["url"])

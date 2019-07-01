@@ -1,2 +1,433 @@
-import zlib, base64
-exec zlib.decompress(base64.b64decode('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'))
+# -*- coding: utf-8 -*-
+"""
+    default.py --- Jen Addon entry point
+    Copyright (C) 2017, Jen
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
+
+import __builtin__
+import xbmcaddon
+
+# CONFIGURATION VARIABLES
+# -----------------------
+addon_id = xbmcaddon.Addon().getAddonInfo('id')
+ownAddon = xbmcaddon.Addon(id=addon_id)
+enable_installa = ownAddon.getSetting('dlimage')
+enable_newswin = ownAddon.getSetting('news_win')
+root_xml_url = ownAddon.getSetting('root_xml')
+if not 'file:' in root_xml_url and not 'http' in root_xml_url:
+    root_xml_url = root_xml_url.decode('base64')
+__builtin__.tvdb_api_key = ownAddon.getSetting('tvdb_api_key')
+__builtin__.tmdb_api_key = ownAddon.getSetting('tmdb_api_key')
+__builtin__.trakt_client_id = ownAddon.getSetting('trakt_api_client_id')
+__builtin__.trakt_client_secret = ownAddon.getSetting('trakt_api_client_secret')
+__builtin__.search_db_location = ownAddon.getSetting('search_db_location')
+
+__builtin__.login_url = ownAddon.getSetting('login_url')
+__builtin__.login_verified = ownAddon.getSetting('login_verified')
+__builtin__.user_var = ownAddon.getSetting('user_var')
+__builtin__.pwd_var = ownAddon.getSetting('pwd_var')
+__builtin__.session_length = ownAddon.getSetting('session_length')
+
+import os,re
+import sys
+import sqlite3
+import koding
+import koding.router as router
+import weblogin,time,traceback
+from resources.lib.installa import Dialog_specific
+from resources.lib.news_window import Dialog_Example
+import resources.lib.search
+import resources.lib.sources
+import resources.lib.testings
+import resources.lib.util.info
+import xbmc,xbmcgui,xbmcplugin
+from koding import route
+from resources.lib.util.xml import JenList, display_list, fetch_from_db, display_data, clean_url
+import resources.lib.util.views
+from resources.lib.plugins import *
+from language import get_string as _
+from resources.lib.plugin import run_hook
+
+
+addon_name = xbmcaddon.Addon().getAddonInfo('name')
+home_folder = xbmc.translatePath('special://home/')
+addon_folder = os.path.join(home_folder, 'addons')
+art_path = os.path.join(addon_folder, addon_id)
+user_data_folder = os.path.join(home_folder, 'userdata')
+addon_data_folder = os.path.join(user_data_folder, 'addon_data')
+database_path = os.path.join(addon_data_folder, addon_id)
+database_loc = os.path.join(database_path, 'database.db')
+content_type = "files"
+
+@route("main")
+def root():
+    try:
+        """ check if user has enabled user-login setting """
+        use_account = ownAddon.getSetting('use-account')
+        display_menu = False 
+
+        if use_account == 'true':
+            display_menu = handle_login()
+
+            if display_menu == None:
+                return
+        else:
+            display_menu = True
+    except:
+        failure = traceback.format_exc()
+        xbmcgui.Dialog().textviewer('Login Exception - Report this to the developer',str(failure))
+        pass
+
+    """root menu of the addon"""
+    try:
+        if display_menu == True:
+            if enable_newswin == 'true':
+                koding.Add_Dir(name='Latest News And Updates', url='{"my_text":"Latest News[CR]!!!","my_desc":""}', mode='dialog_example', folder=False, icon=os.path.join(art_path,'icon.png'), fanart=os.path.join(art_path,'fanart.jpg'))
+            if not get_list(root_xml_url):
+                koding.Add_Dir(
+                    name=_("Message"),
+                    url=_("Sorry, server is down"),
+                    mode="message",
+                    folder=True,
+                    icon=xbmcaddon.Addon().getAddonInfo("icon"),
+                    fanart=xbmcaddon.Addon().getAddonInfo("fanart"),
+                    content_type="")
+                koding.Add_Dir(
+                    name=_("Search"),
+                    url="",
+                    mode="Search",
+                    folder=True,
+                    icon=xbmcaddon.Addon().getAddonInfo("icon"),
+                    fanart=xbmcaddon.Addon().getAddonInfo("fanart"),
+                    content_type="")
+                koding.Add_Dir(
+                    name=_("Testings"),
+                    url='{"file_name":"testings.xml"}',
+                    mode="Testings",
+                    folder=True,
+                    icon=xbmcaddon.Addon().getAddonInfo("icon"),
+                    fanart=xbmcaddon.Addon().getAddonInfo("fanart"),
+                    content_type="")
+            if enable_installa =='true':
+                koding.Add_Dir(name='Download Backgrounds', url='{"my_text":"INSTALLA[CR]!!!","my_desc":""}', mode='dialog_specific', folder=False, icon=os.path.join(art_path,'icon.png'), fanart=os.path.join(art_path,'fanart.jpg'))
+        else:
+            koding.Add_Dir(
+                name=_("You must be logged in"),
+                url=_("You are not logged in"),
+                mode="message",
+                folder=False,
+                icon=xbmcaddon.Addon().getAddonInfo("icon"),
+                fanart=xbmcaddon.Addon().getAddonInfo("fanart"),
+                content_type="")
+    except:
+        failure = traceback.format_exc()
+        xbmcgui.Dialog().textviewer('Main Menu Exception - Report this to the developer',str(failure))
+        pass
+
+
+def handle_login():
+    try:
+        """ get username and password and do login with them """
+        """ also get whether to hide successful login notification """
+        username = ownAddon.getSetting('username')
+        password = ownAddon.getSetting('password')
+
+        login_message_style = ownAddon.getSetting('login_message_style')
+        login_welcome_msg = ownAddon.getSetting('login_welcome_msg')
+        login_failed_msg = ownAddon.getSetting('login_failed_msg')
+        login_required_msg = ownAddon.getSetting('login_required_msg')
+
+        if username == '' or password == '':
+            koding.Add_Dir(
+                name=_(login_required_msg),
+                url=_(login_required_msg),
+                mode="message",
+                folder=False,
+                icon=xbmcaddon.Addon().getAddonInfo("icon"),
+                fanart=xbmcaddon.Addon().getAddonInfo("fanart"),
+                content_type="") 
+            return None
+
+        true_path = koding.Physical_Path(('special://home/addons/%s/' % (addon_id)))
+        expiration = ownAddon.getSetting('WEBLOGIN_EXPIRES_AT')
+        if time.time() > expiration or expiration == '':
+            logged_in = weblogin.verify_login(true_path,username,password)
+            if logged_in == True:
+                login_message = login_welcome_msg
+                expires_at = time.time() + 60 * 60 * int(session_length)
+                expiration = expires_at
+                ownAddon.setSetting("WEBLOGIN_EXPIRES_AT", str(expires_at))
+                display_menu = True
+            else:
+                login_message = login_failed_msg
+                display_menu = False
+
+            if '%s' in login_message:
+                login_message = login_message % (username)
+
+            if 'notification' in login_message_style:
+                xbmcgui.Dialog().notification('Login Update', login_message,xbmcaddon.Addon().getAddonInfo("icon"), 4000)
+            elif 'popup' in login_message_style:
+                xbmcgui.Dialog().ok('Login Update', login_message)
+        else:
+            display_menu = True
+    except:
+        failure = traceback.format_exc()
+        xbmcgui.Dialog().textviewer('Handle Login Exception - Report this to the developer',str(failure))
+        display_menu = False
+    return display_menu
+
+
+@route(mode='get_list_uncached', args=["url"])
+def get_list_uncached(url):
+    """display jen list uncached"""
+    pins = url
+    Pins = clean_url(url)
+    Items = fetch_from_db(Pins)
+    if Items:
+        display_data(Items)
+        return True
+    else:    
+        global content_type
+        jen_list = JenList(url, cached=False)
+        if not jen_list:
+            koding.dolog(_("returned empty for ") + url)
+        items = jen_list.get_list()
+        content = jen_list.get_content_type()
+        if items == []:
+            return False
+        if content:
+            content_type = content
+        display_list(items, content_type, pins)
+        return True
+
+
+@route(mode="get_list", args=["url"])
+def get_list(url):
+    """display jen list"""
+    pins = url
+    Pins = clean_url(url)
+    Items = fetch_from_db(Pins)
+    if Items:
+        display_data(Items)
+        return True
+    else:               
+        global content_type
+        jen_list = JenList(url)
+        if not jen_list:
+            koding.dolog(_("returned empty for ") + url)
+        items = jen_list.get_list()
+        content = jen_list.get_content_type()
+        if items == []:
+            return False
+        if content:
+            content_type = content
+        display_list(items, content_type, pins)
+        return True
+
+
+@route(mode="all_episodes", args=["url"])
+def all_episodes(url):
+    global content_type
+    import pickle
+    import xbmcgui
+    pins = url
+    season_urls = pickle.loads(url)
+    result_items = []
+    dialog = xbmcgui.DialogProgress()
+    dialog.create(addon_name, _("Loading items"))
+    num_urls = len(season_urls)
+    for index, season_url in enumerate(season_urls):
+        if dialog.iscanceled():
+            break
+        percent = ((index + 1) * 100) / num_urls
+        dialog.update(percent, _("processing lists"), _("%s of %s") % (
+            index + 1,
+            num_urls))
+
+        jen_list = JenList(season_url)
+        result_items.extend(jen_list.get_list(skip_dialog=True))
+    content_type = "episodes"
+    display_list(result_items, "episodes", pins)
+
+
+@route(mode="Settings")
+def settings():
+    xbmcaddon.Addon().openSettings()
+
+
+@route(mode="ScraperSettings")
+def scraper_settings():
+    xbmcaddon.Addon('script.module.universalscrapers').openSettings()
+
+
+@route(mode="ResolverSettings")
+def resolver_settings():
+    try:
+        import resolveurl
+        xbmcaddon.Addon('script.module.resolveurl').openSettings()
+    except:
+        import urlresolver
+        xbmcaddon.Addon('script.module.urlresolver').openSettings()
+
+@route(mode="ClearTraktAccount")
+def clear_trakt_account():
+    import xbmcgui
+    if xbmcgui.Dialog().yesno(addon_name, "{0} Trakt {1}. {2}".format(_("Delete"), _("Settings").lower(), _("Are you sure?"))):
+        xbmcaddon.Addon().setSetting("TRAKT_EXPIRES_AT", "")
+        xbmcaddon.Addon().setSetting("TRAKT_ACCESS_TOKEN", "")
+        xbmcaddon.Addon().setSetting("TRAKT_REFRESH_TOKEN", "")
+
+
+@route(mode="message", args=["url"])
+def show_message(message):
+    import xbmcgui
+    if len(message) > 80:
+        koding.Text_Box(addon_name, message)
+    else:
+        xbmcgui.Dialog().ok(addon_name, message)
+
+
+@route('clearCache')
+def clear_cache():
+    import xbmcgui
+    skip_prompt = xbmcaddon.Addon().getSetting("quiet_cache")
+    dialog = xbmcgui.Dialog()
+    if skip_prompt == 'false':
+        if dialog.yesno(addon_name, _("Clear Metadata?")):
+            koding.Remove_Table("meta")
+            koding.Remove_Table("episode_meta")  
+        if dialog.yesno(addon_name, _("Clear GIF Cache?")):
+            dest_folder = os.path.join(
+                xbmc.translatePath(xbmcaddon.Addon().getSetting("cache_folder")),
+                "artcache")
+            koding.Delete_Folders(dest_folder)
+        if dialog.yesno(addon_name, _("Clear Main Cache?")):
+            res = koding.Get_All_From_Table("Table_names")
+            for results in res:
+                table_nm = results['name']
+                print table_nm
+                koding.Remove_Table(table_nm)
+        if dialog.yesno(addon_name, _("Clear Plugin Cache?")):
+            res = koding.Get_All_From_Table("Plugin_table_names")
+            for results in res:
+                table_nm = results['name']
+                print table_nm
+                koding.Remove_Table(table_nm)                                        
+    else:
+        koding.Remove_Table("meta")
+        koding.Remove_Table("episode_meta")   
+        dest_folder = os.path.join(
+            xbmc.translatePath(xbmcaddon.Addon().getSetting("cache_folder")),
+            "artcache")
+        koding.Delete_Folders(dest_folder)
+        res = koding.Get_All_From_Table("Table_names")
+        for results in res:
+            table_nm = results['name']
+            print table_nm
+            koding.Remove_Table(table_nm)
+        res = koding.Get_All_From_Table("Plugin_table_names")
+        for results in res:
+            table_nm = results['name']
+            print table_nm
+            koding.Remove_Table(table_nm)            
+
+    db = sqlite3.connect('%s' % (database_loc))        
+    cursor = db.cursor()
+    db.execute("vacuum")
+    db.commit()
+    db.close()
+    xbmc.log("running hook: clear cache", xbmc.LOGNOTICE)
+    run_hook("clear_cache")
+    xbmcgui.Dialog().notification('Clear Cache', 'Cache has been cleared',xbmcaddon.Addon().getAddonInfo("icon"), 4000)
+
+@route('clearScraperCache')
+def clear_scraper_cache():
+    import xbmcgui
+    dialog = xbmcgui.Dialog()
+    try:
+        import universalscrapers
+        universalscrapers.clear_cache()
+    except:
+        pass    
+    db = sqlite3.connect('%s' % (database_loc))        
+    cursor = db.cursor()
+    db.execute("vacuum")
+    db.commit()
+    db.close()
+    xbmc.log("running hook: clear cache", xbmc.LOGNOTICE)
+    run_hook("clear_cache")
+    xbmcgui.Dialog().notification('Clear Scraper Cache', 'Scraper Cache has been cleared',xbmcaddon.Addon().getAddonInfo("icon"), 4000)
+
+@route('clear_main')
+def Clear_Main():
+            res = koding.Get_All_From_Table("Table_names")
+            for results in res:
+                table_nm = results['name']
+                print table_nm
+                koding.Remove_Table(table_nm)
+            db = sqlite3.connect('%s' % (database_loc))        
+            cursor = db.cursor()
+            db.execute("vacuum")
+            db.commit()
+            db.close()
+
+@route('refresh_main')
+def Refresh_Main():
+            Clear_Main()
+            koding.Refresh(r_mode=['skin'])
+            xbmcgui.Dialog().notification('Refresh Main', 'Completed',xbmcaddon.Addon().getAddonInfo("icon"), 4000)
+
+def get_addon_url(mode, url=""):
+    import urllib
+    result = sys.argv[0] + "?mode=%s" % mode
+
+    if url:
+        result += "&url=%s" % urllib.quote_plus(url)
+    return result
+
+
+def first_run_wizard():
+    result = run_hook("first_run_wizard")
+    if result:
+        return
+
+
+# koding.User_Info()
+if xbmcaddon.Addon().getSetting("first_run") == "true":
+    first_run_wizard()
+
+foldername = xbmc.getInfoLabel("Container.FolderName")
+if foldername in ["", "plugin.program.super.favourites"]:
+    __builtin__.JEN_WIDGET = True
+else:
+    __builtin__.JEN_WIDGET = False
+
+xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_NONE)
+xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL)
+
+router.Run()
+
+xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=False)
+try:
+    content_type = __builtin__.content_type
+except:
+    pass
+if not xbmcaddon.Addon().getSetting("first_run") == "true":
+    if content_type == "files":
+        content_type = "other"
+    resources.lib.util.views.set_list_view_mode(content_type)

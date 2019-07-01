@@ -90,7 +90,8 @@ def do_search(term=None):
 
     result = run_hook("do_search", search_term)
     if result:
-        display_list(result, "videos")
+        pins = ""
+        display_list(result, "videos", pins)
         return
     jenlist = JenList("")
     jenlist.list_image = xbmcaddon.Addon().getAddonInfo('icon')
@@ -170,7 +171,8 @@ def do_search(term=None):
                                key=lambda item: title)
     exact_result_list.extend(sorted(result_list,
                                     key=lambda item: title))
-    display_list(exact_result_list, "videos")
+    pins = ""
+    display_list(exact_result_list, "videos", pins)
 
 
 @route(mode="add_search")

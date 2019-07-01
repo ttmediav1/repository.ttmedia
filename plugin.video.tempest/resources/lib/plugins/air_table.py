@@ -54,31 +54,27 @@
 
 """
 
-
-
-from __future__ import absolute_import
-import requests
-import re
-import os
-import xbmc
-import xbmcaddon
-import json
+import requests,re,os,xbmc,xbmcaddon
+import base64,pickle,koding,time,sqlite3
 from koding import route
 from ..plugin import Plugin
-from resources.lib.external.airtable.airtable import Airtable
 from resources.lib.util.context import get_context_items
-from resources.lib.util.xml import JenItem, JenList, display_list
-from requests.exceptions import HTTPError
-import time
+from resources.lib.util.xml import JenItem, JenList, display_list, display_data, clean_url
+from resources.lib.external.airtable.airtable import Airtable
 from unidecode import unidecode
 
-CACHE_TIME = 3600  # change to wanted cache time in seconds
+CACHE_TIME = 86400  # change to wanted cache time in seconds
 
+addon_id = xbmcaddon.Addon().getAddonInfo('id')
 addon_fanart = xbmcaddon.Addon().getAddonInfo('fanart')
 addon_icon = xbmcaddon.Addon().getAddonInfo('icon')
 AddonName = xbmc.getInfoLabel('Container.PluginName')
 AddonName = xbmcaddon.Addon(AddonName).getAddonInfo('id')
-
+home_folder = xbmc.translatePath('special://home/')
+user_data_folder = os.path.join(home_folder, 'userdata')
+addon_data_folder = os.path.join(user_data_folder, 'addon_data')
+database_path = os.path.join(addon_data_folder, addon_id)
+database_loc = os.path.join(database_path, 'database.db')
 
 class AIRTABLE(Plugin):
     name = "airtable"
@@ -92,7 +88,7 @@ class AIRTABLE(Plugin):
                     'icon': item.get("thumbnail", addon_icon),
                     'fanart': item.get("fanart", addon_fanart),
                     'mode': "Tv_channels",
-                    'url': "",
+                    'url': item.get("Airtable", ""),
                     'folder': True,
                     'imdb': "0",
                     'season': "0",
@@ -114,7 +110,7 @@ class AIRTABLE(Plugin):
                     'icon': item.get("thumbnail", addon_icon),
                     'fanart': item.get("fanart", addon_fanart),
                     'mode': "Sports_channels",
-                    'url': "",
+                    'url': item.get("Airtable", ""),
                     'folder': True,
                     'imdb': "0",
                     'season': "0",
@@ -137,6 +133,7 @@ class AIRTABLE(Plugin):
                     'icon': item.get("thumbnail", addon_icon),
                     'fanart': item.get("fanart", addon_fanart),
                     'mode': "247",
+                    #'url': item.get("Airtable", ""),
                     'url': "",
                     'folder': True,
                     'imdb': "0",
@@ -159,7 +156,7 @@ class AIRTABLE(Plugin):
                     'icon': item.get("thumbnail", addon_icon),
                     'fanart': item.get("fanart", addon_fanart),
                     'mode': "channels2",
-                    'url': "",
+                    'url': item.get("Airtable", ""),
                     'folder': True,
                     'imdb': "0",
                     'season': "0",
@@ -198,258 +195,317 @@ class AIRTABLE(Plugin):
 
 
 
-@route(mode='Tv_channels')
-def new_releases():
-    xml = ""
-    table_key = 'appw1K6yy7YtatXbm'
-    table_name = 'TV_channels'
-    at = Airtable(table_key, table_name, api_key='keyikW1exArRfNAWj')
-    match = at.search('category', 'type' ,view='Grid view')
-    for field in match:
-        try:
-            res = field['fields']
-            channel = res['channel']
-            thumbnail = res['thumbnail']
-            fanart = res['fanart']
-            link = res['link']
-            link2 = res['link2']
-            link3 = res['link3']
-            category = res['category']
-            xml +=  "<item>"\
-                    "<title>%s</title>"\
-                    "<thumbnail>%s</thumbnail>"\
-                    "<fanart>%s</fanart>"\
-                    "<link>"\
-                    "<Airtable>cats/%s/%s/%s</Airtable>"\
-                    "</link>"\
-                    "</item>" % (channel,thumbnail,fanart,table_key,table_name,channel)
-        except:
-            pass                
+@route(mode='Tv_channels',args=["url"])
+def new_releases(url):
+    pins = "PLuginairtabletvchannels"
+    Items = fetch_from_db2(pins)
+    if Items: 
+        display_data(Items) 
+    else:    
+        xml = ""
+        table_key = 'appw1K6yy7YtatXbm'
+        table_name = 'TV_channels'
+        at = Airtable(table_key, table_name, api_key='keyikW1exArRfNAWj')
+        match = at.search('category', 'type' ,view='Grid view')
+        for field in match:
+            try:
+                res = field['fields']
+                channel = res['channel']
+                thumbnail = res['thumbnail']
+                fanart = res['fanart']
+                link = res['link']
+                link2 = res['link2']
+                link3 = res['link3']
+                category = res['category']
+                xml +=  "<item>"\
+                        "<title>%s</title>"\
+                        "<thumbnail>%s</thumbnail>"\
+                        "<fanart>%s</fanart>"\
+                        "<link>"\
+                        "<Airtable>cats/%s/%s/%s</Airtable>"\
+                        "</link>"\
+                        "</item>" % (channel,thumbnail,fanart,table_key,table_name,channel)
+            except:
+                pass                
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 
-@route(mode='Sports_channels')
-def new_releases():
-    xml = ""
-    table_key = 'appFVmVwiMw0AS1cJ'
-    table_name = 'Sports_channels'
-    at = Airtable(table_key, table_name, api_key='keyikW1exArRfNAWj')
-    match = at.search('category', 'type' ,view='Grid view')
-    for field in match:
-        try:
-            res = field['fields']
-            channel = res['channel']
-            thumbnail = res['thumbnail']
-            fanart = res['fanart']
-            link = res['link']
-            link2 = res['link2']
-            link3 = res['link3']
-            category = res['category']
-            xml +=  "<item>"\
-                    "<title>%s</title>"\
-                    "<thumbnail>%s</thumbnail>"\
-                    "<fanart>%s</fanart>"\
-                    "<link>"\
-                    "<Airtable>cats/%s/%s/%s</Airtable>"\
-                    "</link>"\
-                    "</item>" % (channel,thumbnail,fanart,table_key,table_name,channel)
+@route(mode='Sports_channels',args=["url"])
+def new_releases(url):
+    pins = "PLuginairtablesportschannels"
+    Items = fetch_from_db2(pins)
+    if Items: 
+        display_data(Items) 
+    else:    
+        xml = ""
+        table_key = 'appFVmVwiMw0AS1cJ'
+        table_name = 'Sports_channels'
+        at = Airtable(table_key, table_name, api_key='keyikW1exArRfNAWj')
+        match = at.search('category', 'type' ,view='Grid view')
+        for field in match:
+            try:
+                res = field['fields']
+                channel = res['channel']
+                thumbnail = res['thumbnail']
+                fanart = res['fanart']
+                link = res['link']
+                link2 = res['link2']
+                link3 = res['link3']
+                category = res['category']
+                xml +=  "<item>"\
+                        "<title>%s</title>"\
+                        "<thumbnail>%s</thumbnail>"\
+                        "<fanart>%s</fanart>"\
+                        "<link>"\
+                        "<Airtable>cats/%s/%s/%s</Airtable>"\
+                        "</link>"\
+                        "</item>" % (channel,thumbnail,fanart,table_key,table_name,channel)
 
-        except:
-            pass                
+            except:
+                pass                
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
+
 
 
 @route(mode='247')
-def twenty_four_seven():
-    xml = ""
-    table_key = 'appMiehwc18Akz8Zv'
-    table_name = 'twenty_four_seven'
-    at = Airtable(table_key, table_name, api_key='keyikW1exArRfNAWj')
-    match = at.search('category', 'type' ,view='Grid view')
-    for field in match:
-        try:
-            res = field['fields']
-            channel = res['channel']
-            thumbnail = res['thumbnail']
-            fanart = res['fanart']
-            link = res['link']
-            link2 = res['link2']
-            link3 = res['link3']
-            category = res['category']
-            xml +=  "<item>"\
-                    "<title>%s</title>"\
-                    "<thumbnail>%s</thumbnail>"\
-                    "<fanart>%s</fanart>"\
-                    "<link>"\
-                    "<Airtable>cats/%s/%s/%s</Airtable>"\
-                    "</link>"\
-                    "</item>" % (channel,thumbnail,fanart,table_key,table_name,channel)
+def twenty_four_seven():    
+    pins = "PLuginairtable247"
+    Items = fetch_from_db2(pins)
+    if Items: 
+        display_data(Items) 
+    else:    
+        xml = ""
+        table_key = 'appMiehwc18Akz8Zv'
+        table_name = 'twenty_four_seven'
+        at = Airtable(table_key, table_name, api_key='keyikW1exArRfNAWj')
+        match = at.search('category', 'type' ,view='Grid view')
+        for field in match:
+            try:
+                res = field['fields']
+                channel = res['channel']
+                thumbnail = res['thumbnail']
+                fanart = res['fanart']
+                link = res['link']
+                link2 = res['link2']
+                link3 = res['link3']
+                category = res['category']
+                xml +=  "<item>"\
+                        "<title>%s</title>"\
+                        "<thumbnail>%s</thumbnail>"\
+                        "<fanart>%s</fanart>"\
+                        "<link>"\
+                        "<Airtable>cats/%s/%s/%s</Airtable>"\
+                        "</link>"\
+                        "</item>" % (channel,thumbnail,fanart,table_key,table_name,channel)
 
-        except:
-            pass                
+            except:
+                pass                
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())        
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)        
 
-@route(mode='channels2')
-def get_channels2():
-    xml = ""
-    at = Airtable('appycq5PhSS0tygok', 'TV_channels2', api_key='keyikW1exArRfNAWj')
-    match = at.get_all(maxRecords=1200, sort=['channel'])
-    for field in match:
-        try:
-            res = field['fields']
-            channel = res['channel']
-            thumbnail = res['thumbnail']
-            fanart = res['fanart']
-            link = res['link']                  
-            xml +=  "<item>"\
-                    "<title>%s</title>"\
-                    "<meta>"\
-                    "<content>movie</content>"\
-                    "<imdb></imdb>"\
-                    "<title>%s</title>"\
-                    "<year></year>"\
-                    "<thumbnail>%s</thumbnail>"\
-                    "<fanart>%s</fanart>"\
-                    "<summary></summary>"\
-                    "</meta>"\
-                    "<link>"\
-                    "<sublink>%s</sublink>"\
-                    "</link>"\
-                    "</item>" % (channel,channel,thumbnail,fanart,link)
-        except:
-            pass                
+@route(mode='channels2',args=["url"])
+def get_channels2(url):
+    pins = "PLuginairtablechannels2"
+    Items = fetch_from_db2(pins)
+    if Items: 
+        display_data(Items) 
+    else:    
+        xml = ""
+        at = Airtable('appycq5PhSS0tygok', 'TV_channels2', api_key='keyikW1exArRfNAWj')
+        match = at.get_all(maxRecords=700, sort=['channel'])
+        for field in match:
+            try:
+                res = field['fields']
+                channel = res['channel']
+                thumbnail = res['thumbnail']
+                fanart = res['fanart']
+                link = res['link']                  
+                xml +=  "<item>"\
+                        "<title>%s</title>"\
+                        "<meta>"\
+                        "<content>movie</content>"\
+                        "<imdb></imdb>"\
+                        "<title>%s</title>"\
+                        "<year></year>"\
+                        "<thumbnail>%s</thumbnail>"\
+                        "<fanart>%s</fanart>"\
+                        "<summary></summary>"\
+                        "</meta>"\
+                        "<link>"\
+                        "<sublink>%s</sublink>"\
+                        "</link>"\
+                        "</item>" % (channel,channel,thumbnail,fanart,link)
+            except:
+                pass                
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 @route(mode='show_category_channels',args=["url"])
 def get_channels2(url):
-    xml = ""
-    table_key = url.split("/")[-3]
-    table_name = url.split("/")[-2]
-    cat = url.split("/")[-1]
-    at = Airtable(table_key, table_name, api_key='keyikW1exArRfNAWj')
-    match = at.search('category', cat ,view='Grid view')
-    for field in match:
-        try:
-            res = field['fields']
-            channel = res['channel']
-            thumbnail = res['thumbnail']
-            fanart = res['fanart']
-            link = res['link']
-            link2 = res['link2']
-            link3 = res['link3']
-            if "plugin" in link:
-                if link2 == "-":
-                    xml += "<plugin>"\
-                           "<title>%s</title>"\
-                           "<meta>"\
-                           "<content>movie</content>"\
-                           "<imdb></imdb>"\
-                           "<title>%s</title>"\
-                           "<year></year>"\
-                           "<thumbnail>%s</thumbnail>"\
-                           "<fanart>%s</fanart>"\
-                           "<summary></summary>"\
-                           "</meta>"\
-                           "<link>"\
-                           "<sublink>%s</sublink>"\
-                           "</link>"\
-                           "</plugin>" % (channel,channel,thumbnail,fanart,link)
-                elif link3 == "-":
-                    xml += "<plugin>"\
-                           "<title>%s</title>"\
-                           "<meta>"\
-                           "<content>movie</content>"\
-                           "<imdb></imdb>"\
-                           "<title>%s</title>"\
-                           "<year></year>"\
-                           "<thumbnail>%s</thumbnail>"\
-                           "<fanart>%s</fanart>"\
-                           "<summary></summary>"\
-                           "</meta>"\
-                           "<link>"\
-                           "<sublink>%s</sublink>"\
-                           "<sublink>%s</sublink>"\
-                           "</link>"\
-                           "</plugin>" % (channel,channel,thumbnail,fanart,link,link2)
+    pins = "PLuginairtable"+url
+    Items = fetch_from_db2(pins)
+    if Items: 
+        display_data(Items) 
+    else:    
+        xml = ""
+        table_key = url.split("/")[-3]
+        table_name = url.split("/")[-2]
+        cat = url.split("/")[-1]
+        at = Airtable(table_key, table_name, api_key='keyikW1exArRfNAWj')
+        match = at.search('category', cat ,view='Grid view')
+        for field in match:
+            try:
+                res = field['fields']
+                channel = res['channel']
+                thumbnail = res['thumbnail']
+                fanart = res['fanart']
+                link = res['link']
+                link2 = res['link2']
+                link3 = res['link3']
+                if "plugin" in link:
+                    if link2 == "-":
+                        xml += "<plugin>"\
+                               "<title>%s</title>"\
+                               "<meta>"\
+                               "<content>movie</content>"\
+                               "<imdb></imdb>"\
+                               "<title>%s</title>"\
+                               "<year></year>"\
+                               "<thumbnail>%s</thumbnail>"\
+                               "<fanart>%s</fanart>"\
+                               "<summary></summary>"\
+                               "</meta>"\
+                               "<link>"\
+                               "<sublink>%s</sublink>"\
+                               "</link>"\
+                               "</plugin>" % (channel,channel,thumbnail,fanart,link)
+                    elif link3 == "-":
+                        xml += "<plugin>"\
+                               "<title>%s</title>"\
+                               "<meta>"\
+                               "<content>movie</content>"\
+                               "<imdb></imdb>"\
+                               "<title>%s</title>"\
+                               "<year></year>"\
+                               "<thumbnail>%s</thumbnail>"\
+                               "<fanart>%s</fanart>"\
+                               "<summary></summary>"\
+                               "</meta>"\
+                               "<link>"\
+                               "<sublink>%s</sublink>"\
+                               "<sublink>%s</sublink>"\
+                               "</link>"\
+                               "</plugin>" % (channel,channel,thumbnail,fanart,link,link2)
+                    else:
+                        xml += "<plugin>"\
+                               "<title>%s</title>"\
+                               "<meta>"\
+                               "<content>movie</content>"\
+                               "<imdb></imdb>"\
+                               "<title>%s</title>"\
+                               "<year></year>"\
+                               "<thumbnail>%s</thumbnail>"\
+                               "<fanart>%s</fanart>"\
+                               "<summary></summary>"\
+                               "</meta>"\
+                               "<link>"\
+                               "<sublink>%s</sublink>"\
+                               "<sublink>%s</sublink>"\
+                               "<sublink>%s</sublink>"\
+                               "</link>"\
+                               "</plugin>" % (channel,channel,thumbnail,fanart,link,link2,link3)                                                                         
                 else:
-                    xml += "<plugin>"\
-                           "<title>%s</title>"\
-                           "<meta>"\
-                           "<content>movie</content>"\
-                           "<imdb></imdb>"\
-                           "<title>%s</title>"\
-                           "<year></year>"\
-                           "<thumbnail>%s</thumbnail>"\
-                           "<fanart>%s</fanart>"\
-                           "<summary></summary>"\
-                           "</meta>"\
-                           "<link>"\
-                           "<sublink>%s</sublink>"\
-                           "<sublink>%s</sublink>"\
-                           "<sublink>%s</sublink>"\
-                           "</link>"\
-                           "</plugin>" % (channel,channel,thumbnail,fanart,link,link2,link3)                                                                         
-            else:
-                if link2 == "-":
-                    xml +=  "<item>"\
-                            "<title>%s</title>"\
-                            "<meta>"\
-                            "<content>movie</content>"\
-                            "<imdb></imdb>"\
-                            "<title>%s</title>"\
-                            "<year></year>"\
-                            "<thumbnail>%s</thumbnail>"\
-                            "<fanart>%s</fanart>"\
-                            "<summary></summary>"\
-                            "</meta>"\
-                            "<link>"\
-                            "<sublink>%s</sublink>"\
-                            "</link>"\
-                            "</item>" % (channel,channel,thumbnail,fanart,link)
-                elif link3 == "-":
-                    xml +=  "<item>"\
-                            "<title>%s</title>"\
-                            "<meta>"\
-                            "<content>movie</content>"\
-                            "<imdb></imdb>"\
-                            "<title>%s</title>"\
-                            "<year></year>"\
-                            "<thumbnail>%s</thumbnail>"\
-                            "<fanart>%s</fanart>"\
-                            "<summary></summary>"\
-                            "</meta>"\
-                            "<link>"\
-                            "<sublink>%s</sublink>"\
-                            "<sublink>%s</sublink>"\
-                            "</link>"\
-                            "</item>" % (channel,channel,thumbnail,fanart,link,link2)
-                else:
-                    xml +=  "<item>"\
-                            "<title>%s</title>"\
-                            "<meta>"\
-                            "<content>movie</content>"\
-                            "<imdb></imdb>"\
-                            "<title>%s</title>"\
-                            "<year></year>"\
-                            "<thumbnail>%s</thumbnail>"\
-                            "<fanart>%s</fanart>"\
-                            "<summary></summary>"\
-                            "</meta>"\
-                            "<link>"\
-                            "<sublink>%s</sublink>"\
-                            "<sublink>%s</sublink>"\
-                            "<sublink>%s</sublink>"\
-                            "</link>"\
-                            "</item>" % (channel,channel,thumbnail,fanart,link,link2,link3)                                                                                      
+                    if link2 == "-":
+                        xml +=  "<item>"\
+                                "<title>%s</title>"\
+                                "<meta>"\
+                                "<content>movie</content>"\
+                                "<imdb></imdb>"\
+                                "<title>%s</title>"\
+                                "<year></year>"\
+                                "<thumbnail>%s</thumbnail>"\
+                                "<fanart>%s</fanart>"\
+                                "<summary></summary>"\
+                                "</meta>"\
+                                "<link>"\
+                                "<sublink>%s</sublink>"\
+                                "</link>"\
+                                "</item>" % (channel,channel,thumbnail,fanart,link)
+                    elif link3 == "-":
+                        xml +=  "<item>"\
+                                "<title>%s</title>"\
+                                "<meta>"\
+                                "<content>movie</content>"\
+                                "<imdb></imdb>"\
+                                "<title>%s</title>"\
+                                "<year></year>"\
+                                "<thumbnail>%s</thumbnail>"\
+                                "<fanart>%s</fanart>"\
+                                "<summary></summary>"\
+                                "</meta>"\
+                                "<link>"\
+                                "<sublink>%s</sublink>"\
+                                "<sublink>%s</sublink>"\
+                                "</link>"\
+                                "</item>" % (channel,channel,thumbnail,fanart,link,link2)
+                    else:
+                        xml +=  "<item>"\
+                                "<title>%s</title>"\
+                                "<meta>"\
+                                "<content>movie</content>"\
+                                "<imdb></imdb>"\
+                                "<title>%s</title>"\
+                                "<year></year>"\
+                                "<thumbnail>%s</thumbnail>"\
+                                "<fanart>%s</fanart>"\
+                                "<summary></summary>"\
+                                "</meta>"\
+                                "<link>"\
+                                "<sublink>%s</sublink>"\
+                                "<sublink>%s</sublink>"\
+                                "<sublink>%s</sublink>"\
+                                "</link>"\
+                                "</item>" % (channel,channel,thumbnail,fanart,link,link2,link3)                                                                                      
 
-        except:
-            pass                
+            except:
+                pass                
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
+
+def fetch_from_db2(url):
+    koding.reset_db()
+    url2 = clean_url(url)
+    match = koding.Get_All_From_Table(url2)
+    if match:
+        match = match[0]
+        if not match["value"]:
+            return None   
+        match_item = match["value"]
+        try:
+                result = pickle.loads(base64.b64decode(match_item))
+        except:
+                return None
+        created_time = match["created"]
+        print created_time + "created"
+        print time.time() 
+        print CACHE_TIME
+        test_time = float(created_time) + CACHE_TIME 
+        print test_time
+        if float(created_time) + CACHE_TIME <= time.time():
+            koding.Remove_Table(url2)
+            db = sqlite3.connect('%s' % (database_loc))        
+            cursor = db.cursor()
+            db.execute("vacuum")
+            db.commit()
+            db.close()
+            display_list2(result, "video", url2)
+        else:
+            pass                     
+        return result
+    else:
+        return []
 
 def remove_non_ascii(text):
     return unidecode(text)

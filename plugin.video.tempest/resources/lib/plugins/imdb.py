@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 """
     imdb.py --- Jen Plugin for accessing iMDB data
     Copyright (C) 2018, Mister-X
+    Version 2.0.0
 
     --August 14, 2018 Added calendar support for upcoming releases by country
 
@@ -536,6 +538,7 @@ def searchseries(url):
 
 @route(mode='imdbmovies', args=["url"])
 def imdbmovies(url):
+    pins = ""
     xml = ""
     url = url.replace("movies/popular","http://www.imdb.com/search/title?title_type=feature,tv_movie&num_votes=1000,&production_status=released&groups=top_1000&sort=moviemeter,asc&count=40&start=1").replace("movies/voted","http://www.imdb.com/search/title?title_type=feature,tv_movie&num_votes=1000,&production_status=released&sort=num_votes,desc&count=40&start=1").replace("movies/trending","http://www.imdb.com/search/title?title_type=feature,tv_movie&num_votes=1000,&production_status=released&release_date=date[365],date[60]&sort=moviemeter,asc&count=40&start=1").replace("movies/boxoffice","http://www.imdb.com/search/title?title_type=feature,tv_movie&production_status=released&sort=boxoffice_gross_us,desc&count=40&start=1")
     listhtml = getHtml(url)
@@ -573,11 +576,12 @@ def imdbmovies(url):
     except:
         pass
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 
 @route(mode='imdbseries', args=["url"])
 def imdbseries(url):
+    pins = ""
     xml = ""
     url = url.replace("tvshows/popular","http://www.imdb.com/search/title?title_type=tv_series,mini_series&num_votes=100,&release_date=,date[0]&sort=moviemeter,asc&count=40&start=1")
     url = url.replace("tvshows/new","http://www.imdb.com/search/title?title_type=tv_series,mini_series&languages=en&num_votes=10,&release_date=date[60],date[0]&sort=release_date,desc&count=40&start=1")
@@ -620,11 +624,12 @@ def imdbseries(url):
     except:
         pass
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 
 @route(mode='imdbseason', args=["url"])
 def imdbseason(url):
+    pins = ""
     xml = ""
     url = url.replace("season/","title/")
     url = 'http://www.imdb.com/' + url
@@ -683,11 +688,12 @@ def imdbseason(url):
                     "<fanart></fanart>"\
                     "</dir>" % (name, imdb, episodeURL, season, thumbnail)
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 
 @route(mode='imdbepisode', args=["url"])
 def imdbepisode(url):
+    pins = ""
     xml = ""
     url = url.replace("theepisode/","")
     listhtml = getHtml(url)
@@ -724,10 +730,11 @@ def imdbepisode(url):
                     "<fanart></fanart>"\
                     "</item>" % (name, imdb, tvshowtitle, Year, title, premiered, season, episode, thumbnail)
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 @route(mode='imdbepisodeTwo', args=["url"])
 def imdbepisodeTwo(url):
+    pins = ""
     xml = ""
     url = url.replace("theepisodeTwo/","")
     listhtml = getHtml(url)
@@ -763,11 +770,12 @@ def imdbepisodeTwo(url):
                         "<fanart></fanart>"\
                         "</item>" % (name, imdb, tvshowtitle, Year, season, episode)
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 
 @route(mode='imdblists', args=["url"])
 def imdblists(url):
+    pins = ""
     xml = ""
     link = 'http://www.imdb.com/' + url
     listhtml = getHtml(link)
@@ -794,11 +802,12 @@ def imdblists(url):
                 "<fanart></fanart>"\
                 "</item>" % (name, imdb, title, year, thumbnail)
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 
 @route(mode='imdbyears', args=["url"])
 def imdbyears(url):
+    pins = ""
     xml = ""
     url = url.replace("years/","")
     url = 'http://www.imdb.com/search/title?year=' + url + '&title_type=feature'
@@ -837,10 +846,11 @@ def imdbyears(url):
     except:
         pass
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 @route(mode='imdbyearstv', args=["url"])
 def imdbyearstv(url):
+    pins = ""
     xml = ""
     url = url.replace("yearstv/","")
     url = 'http://www.imdb.com/search/title?title_type=tv_series&release_date=' + url
@@ -878,11 +888,12 @@ def imdbyearstv(url):
     except:
         pass
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 
 @route(mode='imdbgenres', args=["url"])
 def imdbgenres(url):
+    pins = ""
     xml = ""
     url = url.replace("genres/","")
     url = 'http://www.imdb.com/search/title?genres=' + url + '&explore=title_type,genres&title_type=tvMovie&ref_=adv_explore_rhs'
@@ -921,11 +932,12 @@ def imdbgenres(url):
     except:
         pass
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 
 @route(mode='imdbgenrestv', args=["url"])
 def imdbgenrestv(url):
+    pins = ""
     xml = ""
     url = url.replace("genrestv/","")
     url = 'http://www.imdb.com/search/title?genres=' + url + '&explore=title_type,genres&title_type=tvSeries&ref_=adv_explore_rhs'
@@ -963,12 +975,13 @@ def imdbgenrestv(url):
     except:
         pass
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 
 
 @route(mode='imdbactors', args=["url"])
 def imdbactors(url):
+    pins = ""
     xml = ""
     url = url.replace("http://www.imdb.com","").replace("actors","list").replace("actor","")
     link = 'http://www.imdb.com/' + url
@@ -1000,10 +1013,11 @@ def imdbactors(url):
     except:
         pass
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 @route(mode='imdbactorspage', args=["url"])
 def imdbactorspage(url):
+    pins = ""
     xml = ""
     link = 'http://www.imdb.com/' + url
     listhtml = getHtml(link)
@@ -1028,11 +1042,12 @@ def imdbactorspage(url):
                 "<fanart></fanart>"\
                 "</item>" % (name, imdb, title, year)
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 
 @route(mode='imdbchart', args=["url"])
 def imdbchart(url):
+    pins = ""
     xml = ""
     url = 'http://www.imdb.com/' + url
     listhtml = getHtml(url)
@@ -1059,11 +1074,12 @@ def imdbchart(url):
                 "<fanart></fanart>"\
                 "</item>" % (name, imdb, title, year, thumbnail)
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 
 @route(mode='imdbcharttv', args=["url"])
 def imdbcharttv(url):
+    pins = ""
     xml = ""
     url = url.replace("charttv/","chart/")
     url = 'http://www.imdb.com/' + url
@@ -1090,11 +1106,12 @@ def imdbcharttv(url):
                "<fanart></fanart>"\
                "</dir>" % (name, imdb, imdb, title, year, thumbnail)
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 
 @route(mode='moviecalendar', args=["url"])
 def moviecalendar(url):
+    pins = ""
     xml = ""
     url = url.replace("moviecalendar/","")
     url = 'https://www.imdb.com/calendar?region=%s&ref_=rlm' % (url)
@@ -1144,11 +1161,12 @@ def moviecalendar(url):
     xbmcgui.Dialog().ok('Upcoming Releases','This list is for future releases only.[CR][CR]You can view trailers and movie information, but links are not yet available for these titles.')
 
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 
 @route(mode='imdbNextPage', args=["url"])
 def imdbNextPage(url):
+    pins = ""
     xml = ""
     link = url
     listhtml = getHtml(link)
@@ -1186,7 +1204,7 @@ def imdbNextPage(url):
     except:
         pass
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 
 def getHtml(url, referer=None, hdr=None, data=None):

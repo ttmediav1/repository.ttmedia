@@ -36,9 +36,10 @@ parses local xml file as a jen list
     :return: list of jen items
     :rtype: list[dict[str,str]]
     """
+    pins = ""
     profile_path = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile')).decode('utf-8')
     test_file = xbmcvfs.File(os.path.join(profile_path, file_name))
     xml = test_file.read()
     test_file.close()
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(),pins)

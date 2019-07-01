@@ -28,6 +28,11 @@ import requests
 import xbmc
 import xbmcaddon
 import xbmcgui
+import xbmcplugin
+import sys
+import sqlite3
+
+import base64,pickle,koding
 
 from language import get_string as _
 from resources.lib.plugin import run_hook
@@ -35,9 +40,14 @@ from resources.lib.util.context import get_context_items
 from resources.lib.util.info import get_info
 from resources.lib.util.url import replace_url, get_addon_url
 
+CACHE_TIME = 120  # change to wanted cache time in seconds
 
 ADDON = xbmcaddon.Addon()
-
+addon_id = xbmcaddon.Addon().getAddonInfo('id')
+addon_data_folder = xbmc.translatePath('special://home/userdata/addon_data')
+addon_data = os.path.join(addon_data_folder, addon_id)
+database_loc = os.path.join(addon_data, 'database.db')
+main_cache_time = int(ADDON.getSetting("main_cache_time"))*60
 
 class JenList(object):
     """
@@ -401,6 +411,7 @@ wrapper class for jen list functions
 
 class JenItem(object):
     """represents an item in a jen xml list"""
+    
 
     def __init__(self, item_xml):
         self.item_string = item_xml
@@ -443,14 +454,37 @@ class JenItem(object):
         return self.item_string
 
 
-def display_list(items, content_type):
+def display_list(items, content_type, pins):
     "display jen list in kodi"
-    import xbmcplugin
-    import sys
-    hook_result = run_hook("display_list", items, content_type)
-    if hook_result:
-        return
-    for item in items:
+    if ADDON.getSetting("enable_cache") == "true":
+        Items = fetch_from_db(pins)
+        if Items:
+            import xbmcplugin
+            import sys
+            display_code(items, content_type)                                                 
+        elif not Items:
+            import xbmcplugin
+            import sys
+            hook_result = run_hook("display_list", items, content_type, pins)
+            if hook_result:       
+                return
+            pins = pins.lower()     
+            save_to_db(items, pins)
+            display_code(items, content_type)           
+    else:
+        import xbmcplugin
+        import sys
+        hook_result = run_hook("display_list", items, content_type, pins)
+        if hook_result:       
+            return
+        display_code(items, content_type)    
+
+def display_list2(items, content_type, pins):
+        save_to_db(items, pins)
+        display_data(Items)              
+
+def display_data(Items):
+    for item in Items:           
         context_items = []
         if ADDON.getSetting("settings_context") == "true":
             context_items.append((_("Settings"),
@@ -468,10 +502,101 @@ def display_list(items, content_type):
             content_type="video",
             info_labels=item["info"],
             set_property=item.get("properties", {}),
-            set_art={"poster": item["icon"]})
-        # xbmcgui.Dialog().textviewer('info',str(item["info"]))
-    xbmcplugin.setContent(int(sys.argv[1]), content_type)
+            set_art={"poster": item["icon"]})    
+    #xbmcplugin.setContent(int(sys.argv[1]), content_type)
 
+def save_to_db(items, url):
+    if not items or not url:
+        return False
+    url2 = clean_url(url)        
+    koding.reset_db()
+    test_spec = {
+    "columns": {
+        "value": "TEXT",
+        "created": "TEXT"}
+        }
+    koding.Create_Table(url2, test_spec)
+    set_val = base64.b64encode(pickle.dumps(items))        
+    koding.Add_To_Table(url2,
+                        {
+                            "value": set_val,
+                            "created": time.time()
+                        })    
+    table_name_spec = {
+    "columns": {
+        "name": "TEXT",}
+        }
+    koding.Create_Table("Table_names", table_name_spec)            
+    plugin_table_name_spec = {
+    "columns": {
+        "name": "TEXT",}
+        }
+    koding.Create_Table("Plugin_table_names", plugin_table_name_spec)
+    if "PLugin" in url:
+        koding.Add_To_Table("Plugin_table_names",
+                            {
+                                "name": url2,
+                            })
+    else:                                 
+        koding.Add_To_Table("Table_names",
+                            {
+                                "name": url2,
+                            })        
+
+def fetch_from_db(url):
+    koding.reset_db()
+    url2 = clean_url(url)
+    match = koding.Get_All_From_Table(url2)
+    if match:
+        match = match[0]
+        if not match["value"]:
+            return None
+        match_item = match["value"]
+        try:
+                result = pickle.loads(base64.b64decode(match_item))
+        except:
+                return None
+        created_time = match["created"]
+        if float(created_time) + int(main_cache_time) <= time.time():
+            koding.Remove_Table(url2)
+            db = sqlite3.connect('%s' % (database_loc))        
+            cursor = db.cursor()
+            db.execute("vacuum")
+            db.commit()
+            db.close()
+            return result
+        else:
+            return result                
+        return result
+    else:
+        return []
+
+
+def clean_url(url):
+   url = re.sub('\\\|/|\(|\)|\[|\]|\{|\}|-|:|;|\*|\?|"|\'|<|>|\_|\.|\?|%20|_', '', url).replace("|","").replace(" ","")
+   return url            
+
+def display_code(Items, content_type):
+    for item in Items:           
+        context_items = []
+        if ADDON.getSetting("settings_context") == "true":
+            context_items.append((_("Settings"),
+                                 "RunPlugin({0})".format(
+                                     get_addon_url("Settings"))))
+        context_items.extend(item["context"])
+        koding.Add_Dir(
+            name=item["label"],
+            url=item["url"],
+            mode=item["mode"],
+            folder=item["folder"],
+            icon=item["icon"],
+            fanart=item["fanart"],
+            context_items=context_items,
+            content_type="video",
+            info_labels=item["info"],
+            set_property=item.get("properties", {}),
+            set_art={"poster": item["icon"]})                            
+    xbmcplugin.setContent(int(sys.argv[1]), content_type)    
 
 class threadWithReturn(Thread):
     def __init__(self, *args, **kwargs):
@@ -489,4 +614,4 @@ class threadWithReturn(Thread):
 
         return self._return
 
-#  LocalWords:  nfl
+

@@ -107,12 +107,14 @@ class MassivelyOP(Plugin):
             result_item['fanart_small'] = result_item["fanart"]
             return result_item
 
-
     def clear_cache(self):
+        skip_prompt = xbmcaddon.Addon().getSetting("quiet_cache")
         dialog = xbmcgui.Dialog()
-        if dialog.yesno(xbmcaddon.Addon().getAddonInfo('name'), "Clear MOP Plugin Cache?"):
+        if skip_prompt == 'false':
+            if dialog.yesno(xbmcaddon.Addon().getAddonInfo('name'), "Clear MOP Plugin Cache?"):
+                koding.Remove_Table("mop_plugin")
+        else:
             koding.Remove_Table("mop_plugin")
-
 
 @route(mode='MassivelyOP', args=["url"])
 def get_MassivelyOP(url):

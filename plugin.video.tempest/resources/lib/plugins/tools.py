@@ -332,6 +332,7 @@ def mysettings_handler(query):
 
 @route(mode="PASSREQ", args=["url"])
 def password_handler(url):
+    pins = ""
     prot_xml = ''
     sep_list = url.decode('base64').split('|')
     dec_pass = sep_list[0]
@@ -382,7 +383,7 @@ def password_handler(url):
             xml_file.close()
 
     jenlist = JenList(prot_xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 
 @route(mode="PAIRWITH", args=["url"])

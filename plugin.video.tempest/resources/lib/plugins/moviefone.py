@@ -32,22 +32,25 @@
 
 """    
 
-import requests,re,json,os
-import koding
-import __builtin__
-import xbmc,xbmcaddon
+import requests,re,os,xbmc,xbmcaddon,xbmcgui
+import base64,pickle,koding,time,sqlite3
 from koding import route
-from resources.lib.plugin import Plugin
+from ..plugin import Plugin
 from resources.lib.util.context import get_context_items
-from resources.lib.util.xml import JenItem, JenList, display_list
+from resources.lib.util.xml import JenItem, JenList, display_list,  display_data, clean_url
+from resources.lib.external.airtable.airtable import Airtable
 from unidecode import unidecode
-from time import gmtime, strftime
 
 CACHE_TIME = 3600  # change to wanted cache time in seconds
 
 addon_fanart = xbmcaddon.Addon().getAddonInfo('fanart')
 addon_icon = xbmcaddon.Addon().getAddonInfo('icon')
 User_Agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36'
+addon_id = xbmcaddon.Addon().getAddonInfo('id')
+addon_data_folder = xbmc.translatePath('special://home/userdata/addon_data')
+addon_data = os.path.join(addon_data_folder, addon_id)
+database_loc = os.path.join(addon_data, 'database.db')
+
 
 class MovieFone(Plugin):
     name = "moviefone"
@@ -147,92 +150,104 @@ class MovieFone(Plugin):
 
 @route(mode='get_moviefone_trailers', args=["url"])
 def get_game(url):
-    xml = ""
     current = url.split("/")[-1]
-    try:    
-        url = "https://www.moviefone.com/movie-trailers/videos/?page="+current
-        html = requests.get(url).content
-        match = re.compile('<a class="poster-link" href="(.+?)".+?data-src="(.+?)".+?alt="(.+?)".+?<div class="description">(.+?)</div>',re.DOTALL).findall(html)
-        for link1,thumbnail,name,summary in match:
-            name = name.replace("&#039;","")
-            name = remove_non_ascii(name)
-            summary = clean_search(summary)
-            xml += "<item>"\
-                   "<title>%s</title>"\
-                   "<meta>"\
-                   "<content>movie</content>"\
-                   "<imdb></imdb>"\
-                   "<title></title>"\
-                   "<year></year>"\
-                   "<thumbnail>%s</thumbnail>"\
-                   "<fanart>%s</fanart>"\
-                   "<summary>%s</summary>"\
-                   "</meta>"\
-                   "<moviefone>link**%s</moviefone>"\
-                   "</item>" % (name,thumbnail,thumbnail,summary,link1)            
-        try:
-            next_page = int(current)+1
-            xml += "<dir>"\
-                   "<title>[COLOR dodgerblue]Next Page >>[/COLOR]</title>"\
-                   "<moviefone>trailers/%s</moviefone>"\
-                   "<thumbnail>http://www.clker.com/cliparts/a/f/2/d/1298026466992020846arrow-hi.png</thumbnail>"\
-                   "</dir>" % (next_page)                                  
+    pins = "PLuginmoviefone"+current
+    Items = fetch_from_db2(pins)
+    if Items:
+        display_data(Items) 
+    else:   
+        xml = ""       
+        try:    
+            url = "https://www.moviefone.com/movie-trailers/videos/?page="+current
+            html = requests.get(url).content
+            match = re.compile('<a class="poster-link" href="(.+?)".+?data-src="(.+?)".+?alt="(.+?)".+?<div class="description">(.+?)</div>',re.DOTALL).findall(html)
+            for link1,thumbnail,name,summary in match:                   
+                name = name.replace("&#039;","")
+                name = remove_non_ascii(name)
+                summary = clean_search(summary)               
+                xml += "<item>"\
+                       "<title>%s</title>"\
+                       "<meta>"\
+                       "<content>movie</content>"\
+                       "<imdb></imdb>"\
+                       "<title></title>"\
+                       "<year></year>"\
+                       "<thumbnail>%s</thumbnail>"\
+                       "<fanart>%s</fanart>"\
+                       "<summary>%s</summary>"\
+                       "</meta>"\
+                       "<moviefone>link**%s**%s**%s</moviefone>"\
+                       "</item>" % (name,thumbnail,thumbnail,summary,link1,name,thumbnail)            
         except:
             pass
-    except:
-        pass        
+        next_page = int(current)+1
+        xml += "<item>"\
+               "<title>[COLOR dodgerblue]Next Page >>[/COLOR]</title>"\
+               "<moviefone>trailers/%s</moviefone>"\
+               "<thumbnail>http://www.clker.com/cliparts/a/f/2/d/1298026466992020846arrow-hi.png</thumbnail>"\
+               "</item>" % (next_page)
+                  
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type()) 
-
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins) 
+#
 @route(mode='get_moviefone_trailer_link', args=["url"])
 def get_game(url):
+    pins = ""
     xml = ""
     try:
         koding.Show_Busy(status=True)
-        link1 = url.split("**")[-1]
+        link1 = url.split("**")[-3]
+        name = url.split("**")[-2]
+        thumbnail = url.split("**")[-1]        
         html2 = requests.get(link1).content
-        match2 = re.compile('<div id="trailer-player">.+?src="(.+?)"',re.DOTALL).findall(html2)
-        link2 = "http:" + match2[0]
-        html3 = requests.get(link2).content
-        match3 = re.compile('"videoUrls":.+?,"(.+?)"',re.DOTALL).findall(html3)
-        link3 = match3[0]
+        match2 = re.compile('<body id="moviefone".+?src="(.+?)"',re.DOTALL).findall(html2)
+        link2 = match2[0]
+        link3 = link2.replace("embed/","manifest/").replace(".js",".m3u8")
+        link3 = link3 + "|Referer=https://www.moviephone.com/"
         koding.Show_Busy(status=False )
-        xbmc.Player().play(link3)
+        info = xbmcgui.ListItem(name, thumbnailImage=thumbnail)
+        xbmc.Player().play(link3,info)
     except:
         pass                        
 
 @route(mode='get_moviefone_result_link', args=["url"])
 def get_result(url):
-    xml = ""
-    try:
-        open_url = url.split("**")[-1]
-        open_url = open_url.replace("main/","trailers/")
-        html3 = requests.get(open_url).content
-        block3 = re.compile('Movie Trailers</a>(.+?)<h2>Top Trailers</h2>',re.DOTALL).findall(html3)
-        match3 = re.compile('<div class="trailer-item">.+?href="(.+?)".+?data-src="(.+?)".+?<div class="photo-name">(.+?)</div>',re.DOTALL).findall(str(block3))
-        for link2,thumbnail,name in match3:
-            name = name.replace("&#039;","")
-            name = remove_non_ascii(name)
-            xml += "<item>"\
-                   "<title>%s</title>"\
-                   "<meta>"\
-                   "<content>movie</content>"\
-                   "<imdb></imdb>"\
-                   "<title></title>"\
-                   "<year></year>"\
-                   "<thumbnail>%s</thumbnail>"\
-                   "<fanart>%s</fanart>"\
-                   "<summary></summary>"\
-                   "</meta>"\
-                   "<moviefone>link**%s</moviefone>"\
-                   "</item>" % (name,thumbnail,thumbnail,link2)
-    except:
-        pass                                               
+    pins = "PLuginmoviefone"+url
+    Items = fetch_from_db2(pins)
+    if Items:
+        display_data(Items)  
+    else:    
+        xml = ""
+        try:
+            open_url = url.split("**")[-1]
+            open_url = open_url.replace("main/","trailers/")
+            html3 = requests.get(open_url).content
+            block3 = re.compile('Movie Trailers</a>(.+?)<h2>Top Trailers</h2>',re.DOTALL).findall(html3)
+            match3 = re.compile('<div class="trailer-item">.+?href="(.+?)".+?data-src="(.+?)".+?<div class="photo-name">(.+?)</div>',re.DOTALL).findall(str(block3))
+            for link2,thumbnail,name in match3:
+                name = name.replace("&#039;","")
+                name = remove_non_ascii(name)
+                xml += "<item>"\
+                       "<title>%s</title>"\
+                       "<meta>"\
+                       "<content>movie</content>"\
+                       "<imdb></imdb>"\
+                       "<title></title>"\
+                       "<year></year>"\
+                       "<thumbnail>%s</thumbnail>"\
+                       "<fanart>%s</fanart>"\
+                       "<summary></summary>"\
+                       "</meta>"\
+                       "<moviefone>link**%s**%s**%s</moviefone>"\
+                       "</item>" % (name,thumbnail,thumbnail,link2,name,thumbnail)
+        except:
+            pass                                               
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type()) 
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins) 
 
 @route(mode='search_moviefone_trailers', args=["url"])
 def search_trailers(url):
+    pins = ""
     xml = ""
     try:
         search_query = koding.Keyboard(heading='Search for Trailers')
@@ -247,7 +262,7 @@ def search_trailers(url):
                 if key2 == "Trailers":
                     name = name.replace("&#039;","")
                     name = remove_non_ascii(name)
-                    summary = clean_search(summary)
+                    summary = clean_search(summary)                   
                     xml += "<item>"\
                            "<title>%s</title>"\
                            "<meta>"\
@@ -265,23 +280,46 @@ def search_trailers(url):
             if xml == "":
                 xml += "<item>"\
                        "<title>No Results</title>"\
-                       "<meta>"\
-                       "<content>movie</content>"\
-                       "<imdb></imdb>"\
-                       "<title></title>"\
-                       "<year></year>"\
-                       "<thumbnail></thumbnail>"\
-                       "<fanart></fanart>"\
-                       "<summary></summary>"\
-                       "</meta>"\
-                       "<link></link>"\
                        "</item>"                                      
         except:
             pass                                 
     except:
         pass                                                              
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type()) 
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins) 
+
+def fetch_from_db2(url):
+    koding.reset_db()
+    url2 = clean_url(url)
+    match = koding.Get_All_From_Table(url2)
+    if match:
+        match = match[0]
+        if not match["value"]:
+            return None   
+        match_item = match["value"]
+        try:
+                result = pickle.loads(base64.b64decode(match_item))
+        except:
+                return None
+        created_time = match["created"]
+        print created_time + "created"
+        print time.time() 
+        print CACHE_TIME
+        test_time = float(created_time) + CACHE_TIME 
+        print test_time
+        if float(created_time) + CACHE_TIME <= time.time():
+            koding.Remove_Table(url2)
+            db = sqlite3.connect('%s' % (database_loc))        
+            cursor = db.cursor()
+            db.execute("vacuum")
+            db.commit()
+            db.close()
+            display_list2(result, "video", url2)
+        else:
+            pass                     
+        return result
+    else:
+        return []
 
 def remove_non_ascii(text):
     return unidecode(text)

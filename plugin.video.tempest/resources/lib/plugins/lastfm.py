@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
     lastfm.py --- Jen Plugin for accessing lastfm data
     Copyright (C) 2017
@@ -98,6 +99,7 @@ class LASTFM(Plugin):
 
 @koding.route("lastfm", ["url"])
 def lastfm(url):
+    pins = ""
     req_url = BASE_URL
     response_key = None
     __builtin__.content_type = "files"
@@ -230,7 +232,8 @@ def lastfm(url):
     #save_to_db(xml, url)
 
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), __builtin__.content_type)
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
+   #display_list(jenlist.get_list(), __builtin__.content_type)
 
 
 def get_album_xml(album):

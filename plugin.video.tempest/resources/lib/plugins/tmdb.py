@@ -190,7 +190,7 @@ addon_fanart = xbmcaddon.Addon().getAddonInfo('fanart')
 addon_icon = xbmcaddon.Addon().getAddonInfo('icon')
 COLOR1 = ""
 COLOR2 = ""
-
+pins = ""
 
 class TMDB(Plugin):
     name = "tmdb"
@@ -264,13 +264,18 @@ class TMDB(Plugin):
             return result_item
 
     def clear_cache(self):
+        skip_prompt = xbmcaddon.Addon().getSetting("quiet_cache")
         dialog = xbmcgui.Dialog()
-        if dialog.yesno(xbmcaddon.Addon().getAddonInfo('name'), "Clear TMDB Plugin Cache?"):
+        if skip_prompt == 'false':
+            if dialog.yesno(xbmcaddon.Addon().getAddonInfo('name'), "Clear TMDB Plugin Cache?"):
+                koding.Remove_Table("tmdb_plugin")
+        else:
             koding.Remove_Table("tmdb_plugin")
 
 
 @route(mode='tmdb', args=["url"])
 def tmdb(url):
+    pins = ""
     page = 1
     try:
         xml, __builtin__.content_type = fetch_from_db(url) or (None, None)
@@ -546,7 +551,7 @@ def tmdb(url):
         save_to_db((xml, __builtin__.content_type), url)
 
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), __builtin__.content_type)
+    display_list(jenlist.get_list(), __builtin__.content_type, pins)
 
 
 def get_movie_xml(item):
@@ -795,6 +800,7 @@ def get_episode_xml(item, tmdb_id, year, tvtitle):
 
 @route(mode='tmdb_tv_show', args=["url"])
 def tmdb_tv_show(url):
+    pins = ""
     xml = fetch_from_db(url)
     if not xml:
         xml = ""
@@ -809,11 +815,12 @@ def tmdb_tv_show(url):
             xml += get_season_xml(season, tmdb_id, year, tvtitle)
         save_to_db(xml, url)
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 
 @route(mode='tmdb_season', args=["url"])
 def tmdb_season(url):
+    pins = ""
     xml = fetch_from_db(url)
     if not xml:
         xml = ""
@@ -829,7 +836,7 @@ def tmdb_season(url):
             xml += get_episode_xml(episode, tmdb_id, year, tvtitle)
         save_to_db(xml, url)
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 
 def remove_non_ascii(text):
@@ -852,6 +859,8 @@ def save_to_db(item, url):
                             "item": base64.b64encode(pickle.dumps(item)),
                             "created": time.time()
                         })
+
+           
 
 
 def fetch_from_db(url):
