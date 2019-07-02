@@ -276,7 +276,24 @@
     </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="[B][COLORlime]TTMedia Repository[/COLOR][/B]" version="2.1.5" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.ttmediaplatinum" name="[B][COLORlimegreen]TTMedia Platinum[/B][/COLOR]" version="1.0.0" provider-name="[B][COLORlimegreen]TTMedia[/B][/COLOR]">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="script.module.requests" />
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">[COLORlimegreen]Live IPTV[/COLOR] </summary>
+    <language>en</language>
+    <description lang="en">[COLORlimegreen]TTMedia Supplier of Great Quality and Stable Streams[/COLOR]</description>
+     <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="repository.ttmedia" name="[B][COLORlime]TTMedia Repository[/COLOR][/B]" version="2.1.6" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
