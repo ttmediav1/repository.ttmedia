@@ -1,8 +1,11 @@
 """
     Air_table Sports Leagues
-    Copyright (C) 2018,
-    Version 2.0.0
+    Copyright (C) 2018, Jen 2x version
+    Version 2.0.1
     Jen Live Chat group
+
+    04-22-2019-
+        - Changed the MLB table to display game days first.
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -143,7 +146,7 @@ class Sports_Leagues(Plugin):
                 result_item['fanart_small'] = result_item["fanart"]
                 return result_item 
             elif "league/" in item.get("sports_leagues", ""):
-                sports = ['NFL','NBA','NHL']
+                sports = ['NFL','NBA','NHL','MLB']
                 info = item.get("sports_leagues", "")
                 tag = info.split("/")[1]
                 if tag in sports:                
@@ -233,10 +236,11 @@ class Sports_Leagues(Plugin):
 
 @route(mode='open_the_all_league')
 def open_table():
+    pins = ""
     xml = ""
     lai = []
     at1 = Airtable(tid, tnm, api_key=atk)
-    m1 = at1.get_all(maxRecords=700, view='Grid view') 
+    m1 = at1.get_all(maxRecords=1200, view='Grid view') 
     for f1 in m1:
         r1 = f1['fields']   
         n1 = r1['au1']
@@ -246,7 +250,7 @@ def open_table():
     else:
         exit()    
     at = Airtable('appbwmFXMwN9WaOu2', 'Leagues', api_key='keyikW1exArRfNAWj')
-    match = at.get_all(maxRecords=700, view='Grid view') 
+    match = at.get_all(maxRecords=1200, view='Grid view') 
     for field in match:
         try:
             res = field['fields']   
@@ -267,14 +271,15 @@ def open_table():
         except:
             pass                                                                     
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 @route(mode='open_the_league_main',args=["url"])
 def open_table(url):
+    pins = ""
     xml = ""
     lai = []
     at1 = Airtable(tid, tnm, api_key=atk)
-    m1 = at1.get_all(maxRecords=700, view='Grid view') 
+    m1 = at1.get_all(maxRecords=1200, view='Grid view') 
     for f1 in m1:
         r1 = f1['fields']   
         n1 = r1['au1']
@@ -286,7 +291,7 @@ def open_table(url):
     table = url.split("/")[-2]
     key = url.split("/")[-1]
     at = Airtable(key, table, api_key='keyikW1exArRfNAWj')
-    match = at.get_all(maxRecords=700, view='Grid view')                                  
+    match = at.get_all(maxRecords=1200, view='Grid view')                                  
     for field in match:
         try:
             res = field['fields']   
@@ -307,15 +312,16 @@ def open_table(url):
         except:
             pass                                                                     
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 
 @route(mode='open_the_other_league_main',args=["url"])
 def open_table(url):
+    pins = ""
     xml = ""
     lai = []
     at1 = Airtable(tid, tnm, api_key=atk)
-    m1 = at1.get_all(maxRecords=700, view='Grid view') 
+    m1 = at1.get_all(maxRecords=1200, view='Grid view') 
     for f1 in m1:
         r1 = f1['fields']   
         n1 = r1['au1']
@@ -327,7 +333,7 @@ def open_table(url):
     table = url.split("/")[-2]
     key = url.split("/")[-1]
     at = Airtable(key, table, api_key='keyikW1exArRfNAWj')
-    match = at.get_all(maxRecords=700, view='Grid view')                                  
+    match = at.get_all(maxRecords=1200, view='Grid view')                                  
     for field in match:
         try:
             res = field['fields']   
@@ -427,14 +433,15 @@ def open_table(url):
         except:
             pass                                                                     
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 @route(mode='open_the_league_seasons',args=["url"])
 def open_table(url):
+    pins = ""
     xml = ""
     lai = []
     at1 = Airtable(tid, tnm, api_key=atk)
-    m1 = at1.get_all(maxRecords=700, view='Grid view') 
+    m1 = at1.get_all(maxRecords=1200, view='Grid view') 
     for f1 in m1:
         r1 = f1['fields']   
         n1 = r1['au1']
@@ -465,15 +472,16 @@ def open_table(url):
         except:
             pass                                                                     
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 
 @route(mode='open_the_week_list',args=["url"])
 def open_table(url):
+    pins = ""
     xml = ""
     lai = []
     at1 = Airtable(tid, tnm, api_key=atk)
-    m1 = at1.get_all(maxRecords=700, view='Grid view') 
+    m1 = at1.get_all(maxRecords=1200, view='Grid view') 
     for f1 in m1:
         r1 = f1['fields']   
         n1 = r1['au1']
@@ -585,7 +593,7 @@ def open_table(url):
         except:
             pass                                                                     
     jenlist = JenList(xml)
-    display_list(jenlist.get_list(), jenlist.get_content_type())
+    display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
 def remove_non_ascii(text):
     return unidecode(text)
