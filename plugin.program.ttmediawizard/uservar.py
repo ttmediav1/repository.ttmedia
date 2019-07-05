@@ -20,6 +20,9 @@ YOUTUBEFILE    = 'http://'
 ADDONFILE      = 'http://'
 # Text File for advanced settings.  Leave as 'http://' to ignore
 ADVANCEDFILE   = 'http://'
+# Text file for roms and emus
+ROMPACK        = 'http://mbmantech.com/Wizard/Texts/roms.txt'
+EMUAPKS        = 'http://mbmantech.com/Wizard/Texts/emu.txt'
 
 # Dont need to edit just here for icons stored locally
 PATH           = xbmcaddon.Addon().getAddonInfo('path')
