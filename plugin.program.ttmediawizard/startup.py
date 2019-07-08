@@ -1,21 +1,50 @@
-################################################################################
-#      Copyright (C) 2015 Surfacingx                                           #
-#                                                                              #
-#  This Program is free software; you can redistribute it and/or modify        #
-#  it under the terms of the GNU General Public License as published by        #
-#  the Free Software Foundation; either version 2, or (at your option)         #
-#  any later version.                                                          #
-#                                                                              #
-#  This Program is distributed in the hope that it will be useful,             #
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of              #
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the                #
-#  GNU General Public License for more details.                                #
-#                                                                              #
-#  You should have received a copy of the GNU General Public License           #
-#  along with XBMC; see the file COPYING.  If not, write to                    #
-#  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.       #
-#  http://www.gnu.org/copyleft/gpl.html                                        #
-################################################################################
+############################################################################
+#                             /T /I                                        #
+#                              / |/ | .-~/                                 #
+#                          T\ Y  I  |/  /  _                               #
+#         /T               | \I  |  I  Y.-~/                               #
+#        I l   /I       T\ |  |  l  |  T  /                                #
+#     T\ |  \ Y l  /T   | \I  l   \ `  l Y       If your going to copy     #
+# __  | \l   \l  \I l __l  l   \   `  _. |       this addon just           #
+# \ ~-l  `\   `\  \  \ ~\  \   `. .-~   |        give credit!              #
+#  \   ~-. "-.  `  \  ^._ ^. "-.  /  \   |                                 #
+#.--~-._  ~-  `  _  ~-_.-"-." ._ /._ ." ./        Stop Deleting the        #
+# >--.  ~-.   ._  ~>-"    "\   7   7   ]          credits file!            #
+#^.___~"--._    ~-{  .-~ .  `\ Y . /    |                                  #
+# <__ ~"-.  ~       /_/   \   \I  Y   : |                                  #
+#   ^-.__           ~(_/   \   >._:   | l______                            #
+#       ^--.,___.-~"  /_/   !  `-.~"--l_ /     ~"-.                        #
+#              (_/ .  ~(   /'     "~"--,Y   -=b-. _)                       #
+#               (_/ .  \  :           / l      c"~o \                      #
+#                \ /    `.    .     .^   \_.-~"~--.  )                     #
+#                 (_/ .   `  /     /       !       )/                      #
+#                  / / _.   '.   .':      /        '                       #
+#                  ~(_/ .   /    _  `  .-<_                                #
+#                    /_/ . ' .-~" `.  / \  \          ,z=.  Surfacingx     #
+#                    ~( /   '  :   | K   "-.~-.______//   Original Author  #
+#                      "-,.    l   I/ \_    __{--->._(==.                  #
+#                       //(     \  <    ~"~"     //                        #
+#                      /' /\     \  \     ,v=.  ((     Fire TV Guru        #
+#                    .^. / /\     "  }__ //===-  `    PyXBMCt LaYOUt       #
+#                   / / ' '  "-.,__ {---(==-                               #
+#                 .^ '       :  T  ~"   ll                                 #
+#                / .  .  . : | :!        \                                 #
+#               (_/  /   | | j-"          ~^                               #
+#                 ~-<_(_.^-~"                                              #
+#                                                                          #
+#                  Copyright (C) One of those Years....                    #
+#                                                                          #
+#  This program is free software: you can redistribute it and/or modify    #
+#  it under the terms of the GNU General Public License as published by    #
+#  the Free Software Foundation, either version 3 of the License, or       #
+#  (at your option) any later version.                                     #
+#                                                                          #
+#  This program is distributed in the hope that it will be useful,         #
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of          #
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #
+#  GNU General Public License for more details.                            #
+#                                                                          #
+############################################################################
 
 import xbmc, xbmcaddon, xbmcgui, xbmcplugin, os, sys, xbmcvfs, glob
 import shutil
@@ -23,7 +52,7 @@ import urllib2,urllib
 import re
 import uservar
 from datetime import date, datetime, timedelta
-from resources.libs import extract, downloader, notify, loginit, debridit, traktit, skinSwitch, uploadLog, wizard as wiz
+from resources.libs import extract, downloader, notify, loginit, debridit, allucit, traktit, skinSwitch, uploadLog, wizard as wiz
 
 ADDON_ID       = uservar.ADDON_ID
 ADDONTITLE     = uservar.ADDONTITLE
@@ -42,10 +71,12 @@ USERDATA       = os.path.join(HOME,     'userdata')
 PLUGIN         = os.path.join(ADDONS,   ADDON_ID)
 PACKAGES       = os.path.join(ADDONS,   'packages')
 ADDONDATA      = os.path.join(USERDATA, 'addon_data', ADDON_ID)
+TEXTCACHE      = os.path.join(ADDONDATA, 'Cache')
 FANART         = os.path.join(ADDONPATH,'fanart.jpg')
 ICON           = os.path.join(ADDONPATH,'icon.png')
 ART            = os.path.join(ADDONPATH,'resources', 'art')
 SKIN           = xbmc.getSkinDir()
+THUMBS         = os.path.join(USERDATA,  'Thumbnails')
 BUILDNAME      = wiz.getS('buildname')
 DEFAULTSKIN    = wiz.getS('defaultskin')
 DEFAULTNAME    = wiz.getS('defaultskinname')
@@ -62,9 +93,11 @@ AUTOFEQ        = wiz.getS('autocleanfeq')
 AUTONEXTRUN    = wiz.getS('nextautocleanup')
 TRAKTSAVE      = wiz.getS('traktlastsave')
 REALSAVE       = wiz.getS('debridlastsave')
+ALLUCSAVE      = wiz.getS('alluclastsave')
 LOGINSAVE      = wiz.getS('loginlastsave')
 KEEPTRAKT      = wiz.getS('keeptrakt')
 KEEPREAL       = wiz.getS('keepdebrid')
+KEEPALLUC      = wiz.getS('keepalluc')
 KEEPLOGIN      = wiz.getS('keeplogin')
 INSTALLED      = wiz.getS('installed')
 EXTRACT        = wiz.getS('extract')
@@ -99,6 +132,10 @@ COLOR1         = uservar.COLOR1
 COLOR2         = uservar.COLOR2
 WORKING        = True if wiz.workingURL(BUILDFILE) == True else False
 FAILED         = False
+
+
+
+
 
 ###########################
 #### Check Updates   ######
@@ -181,9 +218,14 @@ while xbmc.Player().isPlayingVideo():
 
 if KODIV >= 17:
 	NOW = datetime.now()
-	wiz.log(NOW)
+	temp = wiz.getS('kodi17iscrap')
+	if not temp == '':
+		if temp > str(NOW - timedelta(minutes=2)):
+			wiz.log("Killing Start Up Script")
+			sys.exit()
+	wiz.log("%s" % (NOW))
 	wiz.setS('kodi17iscrap', str(NOW))
-	xbmc.sleep(500)
+	xbmc.sleep(1000)
 	if not wiz.getS('kodi17iscrap') == str(NOW):
 		wiz.log("Killing Start Up Script")
 		sys.exit()
@@ -263,24 +305,23 @@ if ENABLE == 'Yes':
 	if not NOTIFY == 'true':
 		url = wiz.workingURL(NOTIFICATION)
 		if url == True:
-			link  = wiz.openURL(NOTIFICATION).replace('\r','').replace('\t','')
-			try:
-				id, msg = link.split('|||')
-				if msg.startswith('\n'): msg = msg[2:]
-				if int(id) == int(NOTEID):
-					if NOTEDISMISS == 'false':
-						notify.notification(msg)
-						xbmc.sleep(500)
-					else: wiz.log("[Notifications] id[%s] Dismissed" % int(id), xbmc.LOGNOTICE)
-				elif int(id) > int(NOTEID):
-					wiz.log("[Notifications] id: %s" % str(int(id)), xbmc.LOGNOTICE)
-					wiz.setS('noteid', str(int(id)))
-					wiz.setS('notedismiss', 'false')
-					notify.notification(msg=msg)
-					wiz.log("[Notifications] Complete", xbmc.LOGNOTICE)
-					xbmc.sleep(500)
-			except Exception, e:
-				wiz.log("Error on Notifications Window: %s" % str(e), xbmc.LOGERROR)
+			id, msg = wiz.splitNotify(NOTIFICATION)
+			if not id == False:
+				try:
+					id = int(id); NOTEID = int(NOTEID)
+					if id == NOTEID:
+						if NOTEDISMISS == 'false':
+							notify.notification(msg)
+						else: wiz.log("[Notifications] id[%s] Dismissed" % int(id), xbmc.LOGNOTICE)
+					elif id > NOTEID:
+						wiz.log("[Notifications] id: %s" % str(id), xbmc.LOGNOTICE)
+						wiz.setS('noteid', str(id))
+						wiz.setS('notedismiss', 'false')
+						notify.notification(msg=msg)
+						wiz.log("[Notifications] Complete", xbmc.LOGNOTICE)
+				except Exception, e:
+					wiz.log("Error on Notifications Window: %s" % str(e), xbmc.LOGERROR)
+			else: wiz.log("[Notifications] Text File not formated Correctly")
 		else: wiz.log("[Notifications] URL(%s): %s" % (NOTIFICATION, url), xbmc.LOGNOTICE)
 	else: wiz.log("[Notifications] Turned Off", xbmc.LOGNOTICE)
 else: wiz.log("[Notifications] Not Enabled", xbmc.LOGNOTICE)
@@ -396,26 +437,38 @@ if KEEPLOGIN == 'true':
 		wiz.log("[Login Data] Next Auto Save isnt until: %s / TODAY is: %s" % (LOGINSAVE, str(TODAY)), xbmc.LOGNOTICE)
 else: wiz.log("[Login Data] Not Enabled", xbmc.LOGNOTICE)
 
-wiz.log("[Auto Clean Up] Started", xbmc.LOGNOTICE)
-if AUTOCLEANUP == 'true':
-	service = False
-	days = [TODAY, TOMORROW, THREEDAYS, ONEWEEK]
-	feq = int(float(AUTOFEQ))
-	if AUTONEXTRUN <= str(TODAY) or feq == 0:
-		service = True
-		next_run = days[feq]
-		wiz.setS('nextautocleanup', str(next_run))
-	else: wiz.log("[Auto Clean Up] Next Clean Up %s" % AUTONEXTRUN, xbmc.LOGNOTICE)
-	if service == True:
-		AUTOCACHE      = wiz.getS('clearcache')
-		AUTOPACKAGES   = wiz.getS('clearpackages')
-		AUTOTHUMBS     = wiz.getS('clearthumbs')
-		if AUTOCACHE == 'true': wiz.log('[Auto Clean Up] Cache: On', xbmc.LOGNOTICE); wiz.clearCache(True)
-		else: wiz.log('[Auto Clean Up] Cache: Off', xbmc.LOGNOTICE)
-		if AUTOTHUMBS == 'true': wiz.log('[Auto Clean Up] Old Thumbs: On', xbmc.LOGNOTICE); wiz.oldThumbs()
-		else: wiz.log('[Auto Clean Up] Old Thumbs: Off', xbmc.LOGNOTICE)
-		if AUTOPACKAGES == 'true': wiz.log('[Auto Clean Up] Packages: On', xbmc.LOGNOTICE); wiz.clearPackagesStartup()
-		else: wiz.log('[Auto Clean Up] Packages: Off', xbmc.LOGNOTICE)
-else: wiz.log('[Auto Clean Up] Turned off', xbmc.LOGNOTICE)
+filesize = int(wiz.getS('filesize_alert'))
+filesize_thumb = int(wiz.getS('filesizethumb_alert'))
+total_size2 = 0
+total_size = 0
+count = 0
+total_sizetext2 = "%.0f" % (total_size2/1024000.0)
 
+for dirpath, dirnames, filenames in os.walk(PACKAGES):
+	count = 0
+	for f in filenames:
+		count += 1
+		fp = os.path.join(dirpath, f)
+		total_size += os.path.getsize(fp)
+total_sizetext = "%.0f" % (total_size/1024000.0)
+	
+if int(total_sizetext) > filesize:
+	wiz.clearPackagesStart(); wiz.refresh()
+	wiz.log("[Auto Cleaner] Package Cleaner Triggered", xbmc.LOGNOTICE)
+	
+for dirpath2, dirnames2, filenames2 in os.walk(THUMBS):
+	for f2 in filenames2:
+		fp2 = os.path.join(dirpath2, f2)
+		total_size2 += os.path.getsize(fp2)
+total_sizetext2 = "%.0f" % (total_size2/1024000.0)
+
+if int(total_sizetext2) > filesize_thumb:
+	wiz.clearThumb(); wiz.refresh()
+	wiz.log("[Auto Cleaner] Thumbs Cleaner Triggered", xbmc.LOGNOTICE)
+
+if wiz.getS('clearcache') == 'true':
+	wiz.clearCache(); wiz.refresh()
+	wiz.log("[Auto Cleaner] Thumbs Cleaner Triggered", xbmc.LOGNOTICE)
+	
+	
 wiz.setS('kodi17iscrap', '')

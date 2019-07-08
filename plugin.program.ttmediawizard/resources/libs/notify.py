@@ -1,21 +1,50 @@
-################################################################################
-#      Copyright (C) 2015 Surfacingx                                           #
-#                                                                              #
-#  This Program is free software; you can redistribute it and/or modify        #
-#  it under the terms of the GNU General Public License as published by        #
-#  the Free Software Foundation; either version 2, or (at your option)         #
-#  any later version.                                                          #
-#                                                                              #
-#  This Program is distributed in the hope that it will be useful,             #
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of              #
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the                #
-#  GNU General Public License for more details.                                #
-#                                                                              #
-#  You should have received a copy of the GNU General Public License           #
-#  along with XBMC; see the file COPYING.  If not, write to                    #
-#  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.       #
-#  http://www.gnu.org/copyleft/gpl.html                                        #
-################################################################################
+############################################################################
+#                             /T /I                                        #
+#                              / |/ | .-~/                                 #
+#                          T\ Y  I  |/  /  _                               #
+#         /T               | \I  |  I  Y.-~/                               #
+#        I l   /I       T\ |  |  l  |  T  /                                #
+#     T\ |  \ Y l  /T   | \I  l   \ `  l Y       If your going to copy     #
+# __  | \l   \l  \I l __l  l   \   `  _. |       this addon just           #
+# \ ~-l  `\   `\  \  \ ~\  \   `. .-~   |        give credit!              #
+#  \   ~-. "-.  `  \  ^._ ^. "-.  /  \   |                                 #
+#.--~-._  ~-  `  _  ~-_.-"-." ._ /._ ." ./        Stop Deleting the        #
+# >--.  ~-.   ._  ~>-"    "\   7   7   ]          credits file!            #
+#^.___~"--._    ~-{  .-~ .  `\ Y . /    |                                  #
+# <__ ~"-.  ~       /_/   \   \I  Y   : |                                  #
+#   ^-.__           ~(_/   \   >._:   | l______                            #
+#       ^--.,___.-~"  /_/   !  `-.~"--l_ /     ~"-.                        #
+#              (_/ .  ~(   /'     "~"--,Y   -=b-. _)                       #
+#               (_/ .  \  :           / l      c"~o \                      #
+#                \ /    `.    .     .^   \_.-~"~--.  )                     #
+#                 (_/ .   `  /     /       !       )/                      #
+#                  / / _.   '.   .':      /        '                       #
+#                  ~(_/ .   /    _  `  .-<_                                #
+#                    /_/ . ' .-~" `.  / \  \          ,z=.  Surfacingx     #
+#                    ~( /   '  :   | K   "-.~-.______//   Original Author  #
+#                      "-,.    l   I/ \_    __{--->._(==.                  #
+#                       //(     \  <    ~"~"     //                        #
+#                      /' /\     \  \     ,v=.  ((     Fire TV Guru        #
+#                    .^. / /\     "  }__ //===-  `    PyXBMCt LaYOUt       #
+#                   / / ' '  "-.,__ {---(==-                               #
+#                 .^ '       :  T  ~"   ll                                 #
+#                / .  .  . : | :!        \                                 #
+#               (_/  /   | | j-"          ~^                               #
+#                 ~-<_(_.^-~"                                              #
+#                                                                          #
+#                  Copyright (C) One of those Years....                    #
+#                                                                          #
+#  This program is free software: you can redistribute it and/or modify    #
+#  it under the terms of the GNU General Public License as published by    #
+#  the Free Software Foundation, either version 3 of the License, or       #
+#  (at your option) any later version.                                     #
+#                                                                          #
+#  This program is distributed in the hope that it will be useful,         #
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of          #
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #
+#  GNU General Public License for more details.                            #
+#                                                                          #
+############################################################################
 
 import xbmc, xbmcaddon, xbmcgui, xbmcplugin, os, sys, xbmcvfs, glob
 import shutil
@@ -23,7 +52,7 @@ import urllib2,urllib
 import re
 import uservar
 import time
-from resources.libs import wizard as wiz
+from resources.libs import yt, wizard as wiz
 from datetime import date, datetime, timedelta
 
 ADDON_ID       = uservar.ADDON_ID
@@ -31,6 +60,7 @@ ADDON          = wiz.addonId(ADDON_ID)
 VERSION        = wiz.addonInfo(ADDON_ID,'version')
 ADDONPATH      = wiz.addonInfo(ADDON_ID,'path')
 ADDONTITLE     = uservar.ADDONTITLE
+BUILDERNAME    = uservar.BUILDERNAME
 DIALOG         = xbmcgui.Dialog()
 DP             = xbmcgui.DialogProgress()
 HOME           = xbmc.translatePath('special://home/')
@@ -69,6 +99,9 @@ THEME4         = uservar.THEME4
 THEME5         = uservar.THEME5
 COLOR1         = uservar.COLOR1
 COLOR2         = uservar.COLOR2
+COLOR3         = uservar.COLOR3
+COLOR4         = uservar.COLOR4
+COLOR5         = uservar.COLOR5
 CONTACTICON    = uservar.CONTACTICON if not uservar.CONTACTICON == 'http://' else ICON 
 CONTACTFANART  = uservar.CONTACTFANART if not uservar.CONTACTFANART == 'http://' else FANART
 
@@ -94,10 +127,10 @@ def artwork(file):
 	elif file == 'radio' : return os.path.join(SKINFOLD, 'RadioButton', 'MenuItemFO.png'), os.path.join(SKINFOLD, 'RadioButton', 'MenuItemNF.png'), os.path.join(SKINFOLD, 'RadioButton', 'radiobutton-focus.png'), os.path.join(SKINFOLD, 'RadioButton', 'radiobutton-nofocus.png')
 	elif file == 'slider': return os.path.join(SKINFOLD, 'Slider', 'osd_slider_nib.png'), os.path.join(SKINFOLD, 'Slider', 'osd_slider_nibNF.png'), os.path.join(SKINFOLD, 'Slider', 'slider1.png'), os.path.join(SKINFOLD, 'Slider', 'slider1.png')
 
-def autoConfig(msg='', TxtColor='0xFFFFFFFF', Font='font12', BorderWidth=10):
+def autoConfig(msg='', TxtColor='0xFFFFFFFF', Font='font10', BorderWidth=10):
 	class MyWindow(xbmcgui.WindowDialog):
 		scr={};
-		def __init__(self,msg='',L=0,T=0,W=1280,H=720,TxtColor='0xFFFFFFFF',Font='font12',BorderWidth=10):
+		def __init__(self,msg='',L=0,T=0,W=1280,H=720,TxtColor='0xFFFFFFFF',Font='font10',BorderWidth=10):
 			buttonfocus, buttonnofocus = artwork('button')
 			radiobgfocus, radiobgnofocus, radiofocus, radionofocus = artwork('radio')
 			slidernibfocus, slidernibnofocus, sliderfocus, slidernofocus = artwork('slider')
@@ -206,10 +239,10 @@ def autoConfig(msg='', TxtColor='0xFFFFFFFF', Font='font12', BorderWidth=10):
 			self.addControl(self.Support4)
 			self.Support4.setText(msg4)
 			B1 = secondrow+130+BorderWidth; B2 = B1+30; B3 = B2+30; B4 = B3+30;
-			self.Button0 = xbmcgui.ControlRadioButton(rightside+(BorderWidth*3), B1, (W/2)-(BorderWidth*4), 30, '0: Buffer all internet filesystems', font='font12', focusTexture=radiobgfocus, noFocusTexture=radiobgnofocus, focusOnTexture=radiofocus, noFocusOnTexture=radiofocus, focusOffTexture=radionofocus, noFocusOffTexture=radionofocus)
-			self.Button1 = xbmcgui.ControlRadioButton(rightside+(BorderWidth*3), B2, (W/2)-(BorderWidth*4), 30, '1: Buffer all filesystems', font='font12', focusTexture=radiobgfocus, noFocusTexture=radiobgnofocus, focusOnTexture=radiofocus, noFocusOnTexture=radiofocus, focusOffTexture=radionofocus, noFocusOffTexture=radionofocus)
-			self.Button2 = xbmcgui.ControlRadioButton(rightside+(BorderWidth*3), B3, (W/2)-(BorderWidth*4), 30, '2: Only buffer true internet filesystems', font='font12', focusTexture=radiobgfocus, noFocusTexture=radiobgnofocus, focusOnTexture=radiofocus, noFocusOnTexture=radiofocus, focusOffTexture=radionofocus, noFocusOffTexture=radionofocus)
-			self.Button3 = xbmcgui.ControlRadioButton(rightside+(BorderWidth*3), B4, (W/2)-(BorderWidth*4), 30, '3: No Buffer', font='font12', focusTexture=radiobgfocus, noFocusTexture=radiobgnofocus, focusOnTexture=radiofocus, noFocusOnTexture=radiofocus, focusOffTexture=radionofocus, noFocusOffTexture=radionofocus)
+			self.Button0 = xbmcgui.ControlRadioButton(rightside+(BorderWidth*3), B1, (W/2)-(BorderWidth*4), 30, '0: Buffer all internet filesystems', font='font10', focusTexture=radiobgfocus, noFocusTexture=radiobgnofocus, focusOnTexture=radiofocus, noFocusOnTexture=radiofocus, focusOffTexture=radionofocus, noFocusOffTexture=radionofocus)
+			self.Button1 = xbmcgui.ControlRadioButton(rightside+(BorderWidth*3), B2, (W/2)-(BorderWidth*4), 30, '1: Buffer all filesystems', font='font10', focusTexture=radiobgfocus, noFocusTexture=radiobgnofocus, focusOnTexture=radiofocus, noFocusOnTexture=radiofocus, focusOffTexture=radionofocus, noFocusOffTexture=radionofocus)
+			self.Button2 = xbmcgui.ControlRadioButton(rightside+(BorderWidth*3), B3, (W/2)-(BorderWidth*4), 30, '2: Only buffer true internet filesystems', font='font10', focusTexture=radiobgfocus, noFocusTexture=radiobgnofocus, focusOnTexture=radiofocus, noFocusOnTexture=radiofocus, focusOffTexture=radionofocus, noFocusOffTexture=radionofocus)
+			self.Button3 = xbmcgui.ControlRadioButton(rightside+(BorderWidth*3), B4, (W/2)-(BorderWidth*4), 30, '3: No Buffer', font='font10', focusTexture=radiobgfocus, noFocusTexture=radiobgnofocus, focusOnTexture=radiofocus, noFocusOnTexture=radiofocus, focusOffTexture=radionofocus, noFocusOffTexture=radionofocus)
 			self.addControl(self.Button0)
 			self.addControl(self.Button1)
 			self.addControl(self.Button2)
@@ -269,7 +302,7 @@ def autoConfig(msg='', TxtColor='0xFFFFFFFF', Font='font12', BorderWidth=10):
 			elif self.Button2.isSelected(): buffermode = 2
 			elif self.Button3.isSelected(): buffermode = 3
 			if os.path.exists(ADVANCED):
-				choice = DIALOG.yesno(ADDONTITLE, "[COLOR %s]There is currently an active [COLOR %s]AdvancedSettings.xml[/COLOR], would you like to remove it and continue?[/COLOR]" % (COLOR2, COLOR1), yeslabel="[B][COLOR springgreen]Remove Settings[/COLOR][/B]", nolabel="[B][COLOR red]Cancel Write[/COLOR][/B]")
+				choice = DIALOG.yesno(ADDONTITLE, "[COLOR %s]There is currently an active [COLOR %s]AdvancedSettings.xml[/COLOR], would you like to remove it and continue?[/COLOR]" % (COLOR2, COLOR1), yeslabel="[B][COLOR green]Remove Settings[/COLOR][/B]", nolabel="[B][COLOR red]Cancel Write[/COLOR][/B]")
 				if choice == 0: return
 				try: os.remove(ADVANCED)
 				except: f = open(ADVANCED, 'w'); f.close()
@@ -299,6 +332,7 @@ def autoConfig(msg='', TxtColor='0xFFFFFFFF', Font='font12', BorderWidth=10):
 					f.write('	</network>\n')
 					f.write('</advancedsettings>\n')
 				f.close()
+				wiz.LogNotify("[COLOR %s]%s[/COLOR]" % (COLOR1, ADDONTITLE), '[COLOR %s]AdvancedSettings.xml have been written[/COLOR]' % COLOR2)
 			self.CloseWindow()
 			
 		def onControl(self, control):
@@ -321,8 +355,16 @@ def autoConfig(msg='', TxtColor='0xFFFFFFFF', Font='font12', BorderWidth=10):
 	TempWindow=MyWindow(L=L,T=T,W=W,H=H,TxtColor=TxtColor,Font=Font,BorderWidth=BorderWidth); 
 	TempWindow.doModal() 
 	del TempWindow
-
-def QautoConfig(msg='', TxtColor='0xFFFFFFFF', Font='font10', BorderWidth=10):
+##########################################
+#  `7MM"""YMM MMP""MM""YMM   .g8"""bgd   #
+#    MM    `7 P'   MM   `7 .dP'     `M   #
+#    MM   d        MM      dM'       `   #
+#    MM""MM        MM      MM            #
+#    MM   Y        MM      MM.    `7MMF' #
+#    MM            MM      `Mb.     MM   #
+#  .JMML.        .JMML.      `"bmmmdPY   #
+########################################## 
+def autoConfig2(msg='', TxtColor='0xFFFFFFFF', Font='font10', BorderWidth=10):
 	class MyWindow(xbmcgui.WindowDialog):
 		scr={};
 		def __init__(self,msg='',L=0,T=0,W=1280,H=720,TxtColor='0xFFFFFFFF',Font='font10',BorderWidth=10):
@@ -331,38 +373,61 @@ def QautoConfig(msg='', TxtColor='0xFFFFFFFF', Font='font10', BorderWidth=10):
 			self.addControl(self.BG)
 			top = T+BorderWidth
 			leftside = L+BorderWidth
-			rightside = L+(W/2)-(BorderWidth*2)		
-			header = '[COLOR %s]Quick Advanced Settings Configurator[/COLOR]' % (COLOR2)
+			rightside = L+(W/2)-(BorderWidth*2)
+			
+			header = '[COLOR %s]Quick Advanced Settings Configurator[/COLOR]' % (COLOR3)
 			self.Header=xbmcgui.ControlLabel(L, top, W, 30, header, font='font13', textColor=TxtColor, alignment=0x00000002)
 			self.addControl(self.Header)
 			top += 30+BorderWidth
+			
+			#####Video Cache Size####
 			freeMemory = int(float(wiz.getInfo('System.Memory(free)')[:-2])*.33)
 			recMemory = int(float(wiz.getInfo('System.Memory(free)')[:-2])*.23)
+
 			self.videomin = 0; self.videomax = freeMemory if freeMemory < 2000 else 2000
 			self.recommendedVideo = recMemory if recMemory < 500 else 500; self.currentVideo = self.recommendedVideo
 			current1 = '[COLOR %s]Video Cache Size[/COLOR]=[COLOR %s]%s MB[/COLOR]' % (COLOR1, COLOR2, self.currentVideo)
-			recommended1 = '[COLOR %s]Video Cache Size:[/COLOR] [COLOR %s]%s MB[/COLOR]' % (COLOR1, COLOR2, self.recommendedVideo)
+			recommended1 = '[COLOR %s]Video Cache Size:[/COLOR] [COLOR %s]%s MB[/COLOR]' % (COLOR1, COLOR5, self.recommendedVideo)
+			
+			####CURL Timeout/CURL Low Speed####
 			self.curlmin = 0; self.curlmax = 20
 			self.recommendedCurl = 10; self.currentCurl = self.recommendedCurl
 			curlpos = wiz.percentage(self.currentCurl, self.curlmax)
-			recommended2 = '[COLOR %s]CURL Timeout/CURL Low Speed:[/COLOR] [COLOR %s]%ss[/COLOR]' % (COLOR1, COLOR2, self.recommendedCurl)
+			recommended2 = '[COLOR %s]CURL Timeout/CURL Low Speed:[/COLOR] [COLOR %s]%ss[/COLOR]' % (COLOR1, COLOR5, self.recommendedCurl)
+			
+			########Read Buffer Factor#####
 			self.readmin = 0; self.readmax = 10
 			self.recommendedRead = 5; self.currentRead = self.recommendedRead
 			readpos = wiz.percentage(self.currentRead, self.readmax)
-			recommended3 = '[COLOR %s]Read Buffer Factor:[/COLOR] [COLOR %s]%s[/COLOR]' % (COLOR1, COLOR2, self.recommendedRead)
-			recommended4 = '[COLOR %s]Buffer Mode:[/COLOR] [COLOR %s]2[/COLOR]' %(COLOR1, COLOR2)
-			msgbox='[COLOR %s]These settings will be written to the advancesettings.xml[/COLOR]\r\n\r\n%s\r\n%s\r\n%s\r\n%s' %(COLOR1, recommended4, recommended1, recommended3, recommended2)
+			recommended3 = '[COLOR %s]Read Buffer Factor:[/COLOR] [COLOR %s]%s[/COLOR]' % (COLOR1, COLOR5, self.recommendedRead)
+			
+			######Buffer Mode#####
+			recommended4 = '[COLOR %s]Buffer Mode:[/COLOR] [COLOR %s]2[/COLOR]' %(COLOR1, COLOR5)
+
+			
+			####BOX##
+			msgbox='[COLOR %s]These settings will be written to the advancesettings.xml[/COLOR]\r\n\r\n%s\r\n%s\r\n%s\r\n%s' %(COLOR4, recommended4, recommended1, recommended3, recommended2)
 			self.box=xbmcgui.ControlTextBox(L+25,T+50,W,H, font='font14')
 			self.addControl(self.box)
 			self.box.setText(msgbox)
+			
+			####Buttons###
+			
+			
+			
 			self.buttonWrite=xbmcgui.ControlButton(leftside,T+H-40-BorderWidth,(W/2)-(BorderWidth*2),35,"Write File",textColor="0xFF000000",focusedColor="0xFF000000",alignment=2,focusTexture=buttonfocus,noFocusTexture=buttonnofocus)
-			self.buttonCancel=xbmcgui.ControlButton(rightside+BorderWidth*2,T+H-40-BorderWidth,(W/2)-(BorderWidth*2),35,"Cancel",textColor="0xFF000000",focusedColor="0xFF000000",alignment=2,focusTexture=buttonfocus,noFocusTexture=buttonnofocus)			
+			self.buttonCancel=xbmcgui.ControlButton(rightside+BorderWidth*2,T+H-40-BorderWidth,(W/2)-(BorderWidth*2),35,"Cancel",textColor="0xFF000000",focusedColor="0xFF000000",alignment=2,focusTexture=buttonfocus,noFocusTexture=buttonnofocus)
+			
 			self.addControl(self.buttonWrite); self.addControl(self.buttonCancel)
-			self.setFocus(self.buttonCancel)			
+			self.setFocus(self.buttonCancel)
+			
 			self.buttonWrite.controlLeft(self.buttonCancel); self.buttonWrite.controlRight(self.buttonCancel); self.buttonCancel.controlLeft(self.buttonWrite); self.buttonCancel.controlRight(self.buttonWrite)
 			
+
+			
 		def doExit(self):
-			self.CloseWindow()			
+			self.CloseWindow()
+			
 		def updateCurrent(self, control):
 			if control == self.videoCacheSize:
 				self.currentVideo = (self.videomax)*self.videoCacheSize.getPercent()/100
@@ -378,8 +443,12 @@ def QautoConfig(msg='', TxtColor='0xFFFFFFFF', Font='font10', BorderWidth=10):
 				self.currentRead = (self.readmax)*self.readBufferFactor.getPercent()/100
 				current = '[COLOR %s]Current:[/COLOR] [COLOR %s]%s[/COLOR]' % (COLOR1, COLOR2, int(self.currentRead))
 				self.currentRead3.setText(current)
+				
+
 		def doWrite(self):
+
 			buffermode = 2
+
 			if os.path.exists(ADVANCED):
 				choice = DIALOG.yesno(ADDONTITLE, "[COLOR %s]There is currently an active [COLOR %s]AdvancedSettings.xml[/COLOR], would you like to remove it and continue?[/COLOR]" % (COLOR2, COLOR1), yeslabel="[B][COLOR green]Remove Settings[/COLOR][/B]", nolabel="[B][COLOR red]Cancel Write[/COLOR][/B]")
 				if choice == 0: return
@@ -412,20 +481,25 @@ def QautoConfig(msg='', TxtColor='0xFFFFFFFF', Font='font10', BorderWidth=10):
 					f.write('</advancedsettings>\n')
 				f.close()
 				wiz.LogNotify("[COLOR %s]%s[/COLOR]" % (COLOR1, ADDONTITLE), '[COLOR %s]AdvancedSettings.xml have been written[/COLOR]' % COLOR2)
-			self.CloseWindow()			
+			self.CloseWindow()
+			
 		def onControl(self, control):
 			if   control==self.buttonWrite: self.doWrite()
 			elif control==self.buttonCancel:  self.doExit()
+
 		def onAction(self, action):
 			try: F=self.getFocus()
 			except: F=False
 			if action == ACTION_PREVIOUS_MENU:  self.doExit()
-			elif action == ACTION_NAV_BACK:       self.doExit()			
+			elif action == ACTION_NAV_BACK:       self.doExit()
+			
 		def CloseWindow(self): self.close()
+
 	maxW=1280; maxH=720; W=int(700); H=int(350); L=int((maxW-W)/2); T=int((maxH-H)/2); 
 	TempWindow=MyWindow(L=L,T=T,W=W,H=H,TxtColor=TxtColor,Font=Font,BorderWidth=BorderWidth); 
 	TempWindow.doModal() 
 	del TempWindow
+
 ##########################
 ### Converted to XML
 ##########################
@@ -509,8 +583,41 @@ def speedTest(img):
 	popup = speedTest('SpeedTest.xml', ADDON.getAddonInfo('path'), 'DefaultSkin', img=img)
 	popup.doModal()
 	del popup
-
 	
+def Preview(url):
+	class YTvid(xbmcgui.WindowXMLDialog):
+		def __init__(self,*args,**kwargs):
+			self.url    = kwargs['url']
+		
+		def onInit(self):
+			self.button    = 101
+			self.Obutton    = 102
+			self.showdialog()
+			
+		def showdialog(self):
+			self.setFocus(self.getControl(self.Obutton))
+			if wiz.getCond('System.HasAddon(plugin.video.youtube)') == 1:
+				url = 'plugin://plugin.video.youtube/play/?video_id=%s' % self.url
+				xbmc.Player().play(url, windowed=False)
+				xbmc.sleep(2000)
+			if xbmc.Player().isPlayingVideo() == 0:
+				yt.PlayVideoB(self.url)
+
+		def onClick(self,controlID):
+			if controlId == self.Obutton:
+				self.close()		
+			else: self.CloseWindow()
+
+		def onAction(self,action):
+			if action in [ACTION_PREVIOUS_MENU, ACTION_BACKSPACE, ACTION_NAV_BACK, ACTION_SELECT_ITEM, ACTION_MOUSE_LEFT_CLICK, ACTION_MOUSE_LONG_CLICK]: self.CloseWindow(); xbmc.Player().stop()
+
+		def CloseWindow(self):
+			self.close()
+	
+	YTv = YTvid('Preview.xml', ADDON.getAddonInfo('path'), 'DefaultSkin', url=url)
+	YTv.doModal()
+	del YTv
+
 def firstRunSettings():
 	class firstRun(xbmcgui.WindowXMLDialog):
 		def __init__(self,*args,**kwargs):
@@ -522,7 +629,7 @@ def firstRunSettings():
 			self.trakt      = 301
 			self.debrid     = 302
 			self.login      = 303
-			self.sources    = 304
+			self.alluc      = 314
 			self.profiles   = 305
 			self.advanced   = 306
 			self.favourites = 307
@@ -530,17 +637,16 @@ def firstRunSettings():
 			self.repo       = 309
 			self.whitelist  = 310
 			self.cache      = 311
-			self.packages   = 312
-			self.thumbs     = 313
 			self.showdialog()
 			self.controllist     = [self.trakt, self.debrid, self.login, 
-									self.sources, self.profiles, self.advanced, 
+									self.profiles, self.advanced, 
 									self.favourites, self.superfav, self.repo, 
-									self.whitelist, self.cache, self.packages, self.thumbs]
+									self.whitelist, self.cache,  self.alluc]
 			self.controlsettings = ['keeptrakt', 'keepdebrid', 'keeplogin',
-									'keepsources', 'keepprofiles', 'keepadvanced',
+									'keepprofiles', 'keepadvanced',
 									'keepfavourites', 'keeprepos', 'keepsuper', 
-									'keepwhitelist', 'clearcache', 'clearpackages', 'clearthumbs']
+									'keepwhitelist', 'clearcache', 'keepalluc']
+									
 			for item in self.controllist:
 				if wiz.getS(self.controlsettings[self.controllist.index(item)]) == 'true':
 					self.getControl(item).setSelected(True)
@@ -569,7 +675,7 @@ def firstRun():
 	class MyWindow(xbmcgui.WindowXMLDialog):
 		def __init__(self, *args, **kwargs):
 			self.title = THEME3 % ADDONTITLE
-			self.msg   = "[COLOR white]Thank You for Choosing This Wizard\nSelect [/COLOR]'[B][COLOR springgreen]Build Menu[/COLOR][/B]'[COLOR white] To Install a Custom Build Or Select [/COLOR]'[B][COLOR red]MayBe Later[/COLOR][/B]'[COLOR white] And You Can Install a Build Later From This Wizard"
+			self.msg   = "Currently no build installed from %s.\n\nSelect 'Build Menu' to install a %s Build or 'Ignore' to never see this message again.\n\nThank you for choosing %s." % (ADDONTITLE,BUILDERNAME, ADDONTITLE)
 			self.msg   = THEME2 % self.msg
 
 		def onInit(self):

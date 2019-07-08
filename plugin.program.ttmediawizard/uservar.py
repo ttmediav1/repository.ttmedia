@@ -1,35 +1,96 @@
 import os, xbmc, xbmcaddon
-
+import binascii
 #########################################################
 ### User Edit Variables #################################
 #########################################################
+# Enable/Disable the text file caching with 'Yes' or 'No' and age being how often it rechecks in minutes
+CACHETEXT      = 'Yes'
+CACHEAGE       = 30
+
 ADDON_ID       = xbmcaddon.Addon().getAddonInfo('id')
-ADDONTITLE     = 'TTMedia Wizard'
-EXCLUDES       = [ADDON_ID]
-# Text File with build info in it.
+ADDONTITLE     = '[COLORdodgerblue][B]TTMedia Wizard[/B][/COLOR]'
+BUILDERNAME    = 'TTMedia Wizard'
+#########################Make sure to change the repo to yours!!!!
+EXCLUDES       = [ADDON_ID, 'repository.ttmedia', 'My_Builds', 'backupdir']
 BUILDFILE      = 'http://ttmedia.live/wizard/autobuilds.txt'
-# How often you would list it to check for build updates in days
-# 0 being every startup of kodi
 UPDATECHECK    = 0
-# Text File with apk info in it.  Leave as 'http://' to ignore
 APKFILE        = 'http://ttmedia.live/wizard/apk.txt'
-# Text File with Youtube Videos urls.  Leave as 'http://' to ignore
 YOUTUBETITLE   = 'http://'
 YOUTUBEFILE    = 'http://'
-# Text File for addon installer.  Leave as 'http://' to ignore
 ADDONFILE      = 'http://'
-# Text File for advanced settings.  Leave as 'http://' to ignore
 ADVANCEDFILE   = 'http://'
-# Text file for roms and emus
 ROMPACK        = 'http://ttmedia.live/wizard/roms.txt'
 EMUAPKS        = 'http://ttmedia.live/wizard/emu.txt'
-
-# Dont need to edit just here for icons stored locally
+ADDONPACK      = 'http://'
 PATH           = xbmcaddon.Addon().getAddonInfo('path')
 ART            = os.path.join(PATH, 'resources', 'art')
 
 #########################################################
 ### THEMING MENU ITEMS ##################################
+#########################################################
+
+##Alway test to see the color combo!!
+
+#### NEW GUI THEME ###################################
+# Choose from the following 
+# Only these colors avalable
+# white , blue , orange , yellow , red , purple , pink , lime , cyan, green
+#Button focus color
+FOCUS_BUTTON_COLOR = 'blue'
+EXIT_BUTTON_COLOR = 'red'
+#Highlight outline for lists
+HIGHLIGHT_LIST = 'lightblue'
+##No TXT file Banner
+NO_TXT_FILE = 'red'
+
+############################################
+############################################
+### The full list of colors for below can found @ https://forum.kodi.tv/showthread.php?tid=210837
+
+#Top Main buttons
+MAIN_BUTTONS_TEXT = 'dodgerblue'
+#All other buttons
+OTHER_BUTTONS_TEXT = 'dodgerblue'
+#all list text color
+##FYI any color placed in the txt file will overide this
+LIST_TEXT = 'blue'
+
+
+#Description text title color
+DES_T_COLOR = 'cornflowerblue'
+#Description color
+DESCOLOR = 'cornflowerblue'
+
+#Wizard title name and verion color
+WIZTITLE = 'TTMedia Wizard'
+WIZTITLE_COLOR = 'dodgerblue'
+VERTITLE_COLOR = 'dodgerblue'
+VER_NUMBER_COLOR = 'dodgerblue'
+############################################################
+
+## The colors and theme below is still used for the pop up dialogs
+##Alway test to see the color combo
+# You can edit these however you want, just make sure that you have a %s in each of the
+# THEME's so it grabs the text from the menu item
+COLOR1         = 'dodgerblue'
+COLOR2         = 'white'
+COLOR3         = 'white'
+COLOR4         = 'white'
+COLOR5         = 'white'
+# Primary menu items   / %s is the menu item and is required
+THEME1         = '[COLOR '+COLOR1+'][B]([COLOR '+COLOR2+']TTMedia[/COLOR])[/B][/COLOR] [COLOR '+COLOR2+']%s[/COLOR]'
+# Build Names          / %s is the menu item and is required
+THEME2         = '[COLOR '+COLOR1+']%s[/COLOR]'
+# Alternate items      / %s is the menu item and is required
+THEME3         = '[COLOR '+COLOR2+']%s[/COLOR]'
+# Current Build Header / %s is the menu item and is required
+THEME4         = '[COLOR '+COLOR2+']Current Build:[/COLOR] [COLOR '+COLOR2+']%s[/COLOR]'
+# Current Theme Header / %s is the menu item and is required
+THEME5         = '[COLOR '+COLOR2+']Current Theme:[/COLOR] [COLOR '+COLOR2+']%s[/COLOR]'
+THEME6         = '[COLOR '+COLOR3+'][B]%s[/B][/COLOR]'
+
+
+
 #########################################################
 # If you want to use locally stored icons the place them in the Resources/Art/
 # folder of the wizard then use os.path.join(ART, 'imagename.png')
@@ -39,7 +100,6 @@ ART            = os.path.join(PATH, 'resources', 'art')
 # Leave as http:// for default icon
 ICONBUILDS     = 'http://ttmedia.live/wizard/icon.png'
 ICONMAINT      = 'http://ttmedia.live/wizard/icon.png'
-ICONSPEED      = 'http://ttmedia.live/wizard/icon.png'
 ICONAPK        = 'http://ttmedia.live/wizard/icon.png'
 ICONRETRO      = 'http://ttmedia.live/wizard/icon.png'
 ICONADDONS     = 'http://ttmedia.live/wizard/icon.png'
@@ -55,24 +115,9 @@ HIDESPACERS    = 'No'
 # Character used in seperator
 SPACER         = '~'
 
-# You can edit these however you want, just make sure that you have a %s in each of the
-# THEME's so it grabs the text from the menu item
-COLOR1         = 'dodgerblue'
-COLOR2         = 'white'
-# Primary menu items   / %s is the menu item and is required
-THEME1         = '[COLOR '+COLOR1+'][B]([COLOR '+COLOR2+']TTMedia[/COLOR])[/B][/COLOR] [COLOR '+COLOR2+']%s[/COLOR]'
-# Build Names          / %s is the menu item and is required
-THEME2         = '[COLOR '+COLOR2+']%s[/COLOR]'
-# Alternate items      / %s is the menu item and is required
-THEME3         = '[COLOR '+COLOR1+']%s[/COLOR]'
-# Current Build Header / %s is the menu item and is required
-THEME4         = '[COLOR '+COLOR1+'][B]Current Build:[/B][/COLOR] [COLOR '+COLOR2+']%s[/COLOR]'
-# Current Theme Header / %s is the menu item and is required
-THEME5         = '[COLOR '+COLOR1+'][B]Current Theme:[/B][/COLOR] [COLOR '+COLOR2+']%s[/COLOR]'
-
 # Message for Contact Page
 # Enable 'Contact' menu item 'Yes' hide or 'No' dont hide
-HIDECONTACT    = 'no'
+HIDECONTACT    = 'Yes'
 # You can add \n to do line breaks
 CONTACT        = 'Thank you for choosing TTMedia Wizard.'
 #Images used for the contact window.  http:// for default icon and fanart
@@ -93,27 +138,31 @@ WIZARDFILE     = 'http://ttmedia.live/wizard/autobuilds.txt'
 ### AUTO INSTALL ########################################
 ########## REPO IF NOT INSTALLED ########################
 # Enable Auto Install 'Yes' or 'No'
-AUTOINSTALL    = 'No'
+AUTOINSTALL    = 'Yes'
 # Addon ID for the repository
 REPOID         = ''
 # Url to Addons.xml file in your repo folder(this is so we can get the latest version)
 REPOADDONXML   = 'http://'
 # Url to folder zip is located in
-REPOZIPURL     = 'http://'
+REPOZIPURL     =  'http://'
 #########################################################
 
 #########################################################
 ### NOTIFICATION WINDOW##################################
 #########################################################
 # Enable Notification screen Yes or No
-ENABLE         = 'Yes'
+ENABLE         = 'yes'
 # Url to notification file
 NOTIFICATION   = 'http://ttmedia.live/wizard/notify.txt'
 # Use either 'Text' or 'Image'
 HEADERTYPE     = 'Text'
+# Font size of header
+FONTHEADER     = 'Font13'
 HEADERMESSAGE  = 'TTMedia Wizard'
-# url to image if using Image 500x50(Width can vary but height of image needs to be 50px)
-HEADERIMAGE    = 'http://ttmedia.live/wizard/icon.png'
+# url to image if using Image 424x180
+HEADERIMAGE    = ''
+# Font for Notification Window
+FONTSETTINGS   = 'Font12'
 # Background for Notification Window
-BACKGROUND     = ''
-#########################################################
+BACKGROUND     = 'http://ttmedia.live/wizard/fanart.jpg'
+############################    ############################

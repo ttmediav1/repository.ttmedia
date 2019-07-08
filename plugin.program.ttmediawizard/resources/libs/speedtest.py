@@ -353,8 +353,8 @@ def getConfig():
     del configxml
     return config
 def closestServers(client, all=False):
-    urls = ['http://c.speedtest.net/speedtest-servers-static.php',
-            'http://c.speedtest.net/speedtest-servers.php']
+    urls = ['http://www.speedtest.net/speedtest-servers-static.php',
+            'https://www.speedtest.net/speedtest-servers-static.php']
     errors = []
     servers = {}
     for url in urls:
@@ -647,5 +647,7 @@ def main():
         speedtest()
     except KeyboardInterrupt:
         print_('\nCancelling...')
+        dp.close()
+        sys.exit()
 if __name__ == '__main__':
     main()

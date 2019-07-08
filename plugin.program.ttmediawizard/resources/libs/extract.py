@@ -17,7 +17,8 @@
 #  http://www.gnu.org/copyleft/gpl.html                                        #
 ################################################################################
 
-import xbmcaddon, xbmc, uservar, sys, os, time
+import zipfile, xbmcaddon, xbmc, uservar, sys, os, time
+
 import wizard as wiz
 KODIV          = float(xbmc.getInfoLabel("System.BuildVersion")[:4])
 if KODIV > 17:
