@@ -39,7 +39,7 @@ ART            = os.path.join(PATH, 'resources', 'art')
 FOCUS_BUTTON_COLOR = 'blue'
 EXIT_BUTTON_COLOR = 'red'
 #Highlight outline for lists
-HIGHLIGHT_LIST = 'lightblue'
+HIGHLIGHT_LIST = 'orange'
 ##No TXT file Banner
 NO_TXT_FILE = 'red'
 
@@ -53,13 +53,13 @@ MAIN_BUTTONS_TEXT = 'dodgerblue'
 OTHER_BUTTONS_TEXT = 'dodgerblue'
 #all list text color
 ##FYI any color placed in the txt file will overide this
-LIST_TEXT = 'blue'
+LIST_TEXT = 'khaki'
 
 
 #Description text title color
 DES_T_COLOR = 'cornflowerblue'
 #Description color
-DESCOLOR = 'cornflowerblue'
+DESCOLOR = 'cyan'
 
 #Wizard title name and verion color
 WIZTITLE = 'TTMedia Wizard'
@@ -73,12 +73,12 @@ VER_NUMBER_COLOR = 'dodgerblue'
 # You can edit these however you want, just make sure that you have a %s in each of the
 # THEME's so it grabs the text from the menu item
 COLOR1         = 'dodgerblue'
-COLOR2         = 'white'
-COLOR3         = 'white'
-COLOR4         = 'white'
-COLOR5         = 'white'
+COLOR2         = 'yellow'
+COLOR3         = 'red'
+COLOR4         = 'snow'
+COLOR5         = 'lightblue'
 # Primary menu items   / %s is the menu item and is required
-THEME1         = '[COLOR '+COLOR1+'][B]([COLOR '+COLOR2+']TTMedia[/COLOR])[/B][/COLOR] [COLOR '+COLOR2+']%s[/COLOR]'
+THEME1         = '[COLOR '+COLOR1+']%s[/COLOR]'
 # Build Names          / %s is the menu item and is required
 THEME2         = '[COLOR '+COLOR1+']%s[/COLOR]'
 # Alternate items      / %s is the menu item and is required
