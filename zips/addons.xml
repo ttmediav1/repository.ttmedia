@@ -227,7 +227,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.7.7" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.7.9" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -242,6 +242,7 @@
         <import addon="script.module.metadatautils" />
 		<import addon="script.module.simplejson" />
 		<import addon="script.module.ttmedialive" />
+		<import addon="script.module.ttmedia-tvtap" />
 		<import addon="script.module.beatport" />
 		<import addon="script.video.F4mProxy" version="2.8.7" />
 		<import addon="script.module.livestreamer" optional="true" />
@@ -294,7 +295,7 @@
   </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="[B][COLORlime]TTMedia Repository[/COLOR][/B]" version="2.1.8" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="repository.ttmedia" name="[B][COLORlime]TTMedia Repository[/COLOR][/B]" version="2.1.9" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
@@ -437,6 +438,30 @@
     <source>https://github.com/Twilight0/script.module.streamlink.crypto</source>
     <platform>all</platform>
     <license>MIT</license>
+  </extension>
+</addon>
+
+<addon id="script.module.ttmedia-tvtap" name="Tempest TvTap" version="2.0.0" provider-name="TTMedia">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.livestreamer" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.routing" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>all</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_gb">TTMedia TvTap Module. All credit must go to anyone involved in the Original Code</summary>
+    <description lang="en_gb">Module for TvTap APK</description>
+    <disclaimer lang="en_gb"></disclaimer>
+    <language></language>
+    <platform>all</platform>
+    <license></license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <source></source>
   </extension>
 </addon>
 
