@@ -77,11 +77,15 @@ def m3u(url):
         xml = ""
         if '.m3u' in url:
             listhtml = getHtml(url)
-            match = re.compile('#EXTINF:.+?,(.+?)\n([^"]+)\s+\n',
-                               re.IGNORECASE | re.DOTALL).findall(listhtml)
+            #match = re.compile('#EXTINF:.+?,(.+?)\n([^"]+)\s+\n',
+            #                   re.IGNORECASE | re.DOTALL).findall(listhtml)
+            match = re.compile('#EXTINF:.+?,(.+?)\n(.+?).m3u8',re.DOTALL).findall(listhtml)
             for name, url in match:
+                print "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+                print name
+                print url
                 name = name
-                url = url
+                url = url + ".m3u8"
                 url = url + UserAgent
                 xml += "<item>"\
                        "<title>%s</title>"\
