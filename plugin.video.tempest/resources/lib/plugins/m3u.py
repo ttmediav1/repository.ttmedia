@@ -1,7 +1,9 @@
 """
     m3u.py --- Jen Plugin for accessing m3u data
     Copyright (C) 2018, Mister-X
+    version 1.0.2
 
+    7-8-19 - Added cache function and modified regex - TH
     6-9-19 - Modified regex and added User Agent - TH
 
     This program is free software: you can redistribute it and/or modify
@@ -29,17 +31,26 @@
 """
 
 import urllib2
-import re
-import xbmcaddon
+import requests,re,os,xbmc,xbmcaddon
+import base64,pickle,koding,time,sqlite3
 from koding import route
-from resources.lib.plugin import Plugin
+from ..plugin import Plugin
 from resources.lib.util.context import get_context_items
-from resources.lib.util.xml import JenItem, JenList, display_list
+from resources.lib.util.xml import JenItem, JenList, display_list, display_data, clean_url
+from resources.lib.external.airtable.airtable import Airtable
+from unidecode import unidecode
 
 CACHE_TIME = 86400  # change to wanted cache time in seconds
 
+addon_id = xbmcaddon.Addon().getAddonInfo('id')
 addon_fanart = xbmcaddon.Addon().getAddonInfo('fanart')
 addon_icon = xbmcaddon.Addon().getAddonInfo('icon')
+AddonName = xbmc.getInfoLabel('Container.PluginName')
+home_folder = xbmc.translatePath('special://home/')
+user_data_folder = os.path.join(home_folder, 'userdata')
+addon_data_folder = os.path.join(user_data_folder, 'addon_data')
+database_path = os.path.join(addon_data_folder, addon_id)
+database_loc = os.path.join(database_path, 'database.db')
 UserAgent = "|User-Agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36"
 
 class M3U(Plugin):
@@ -71,27 +82,28 @@ class M3U(Plugin):
 
 @route(mode='m3u', args=["url"])
 def m3u(url):
-    pins = ""
     xml = ""
-    if not xml:
-        xml = ""
-        if '.m3u' in url:
-            listhtml = getHtml(url)
-            #match = re.compile('#EXTINF:.+?,(.+?)\n([^"]+)\s+\n',
-            #                   re.IGNORECASE | re.DOTALL).findall(listhtml)
-            match = re.compile('#EXTINF:.+?,(.+?)\n(.+?).m3u8',re.DOTALL).findall(listhtml)
-            for name, url in match:
-                print "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-                print name
-                print url
-                name = name
-                url = url + ".m3u8"
-                url = url + UserAgent
-                xml += "<item>"\
-                       "<title>%s</title>"\
-                       "<link>%s</link>"\
-                       "<thumbnail></thumbnail>"\
-                       "</item>" % (name, url)
+    pins = "PLuginm3u"
+    Items = fetch_from_db2(pins)
+    if Items: 
+        display_data(Items) 
+    else:
+        if not xml:
+            xml = ""
+            if '.m3u' in url:
+                listhtml = getHtml(url)
+                #match = re.compile('#EXTINF:.+?,(.+?)\n([^"]+)\s+\n',
+                #                   re.IGNORECASE | re.DOTALL).findall(listhtml)
+                match = re.compile('#EXTINF:.+?,(.+?)\n(.+?).m3u8',re.DOTALL).findall(listhtml)
+                for name, url in match:
+                    name = name
+                    url = url + ".m3u8"
+                    url = url + UserAgent
+                    xml += "<item>"\
+                           "<title>%s</title>"\
+                           "<link>%s</link>"\
+                           "<thumbnail></thumbnail>"\
+                           "</item>" % (name, url)
     jenlist = JenList(xml)
     display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
 
@@ -114,3 +126,36 @@ def getHtml(url, referer=None, hdr=None, data=None):
     data = response.read()
     response.close()
     return data
+
+def fetch_from_db2(url):
+    koding.reset_db()
+    url2 = clean_url(url)
+    match = koding.Get_All_From_Table(url2)
+    if match:
+        match = match[0]
+        if not match["value"]:
+            return None   
+        match_item = match["value"]
+        try:
+                result = pickle.loads(base64.b64decode(match_item))
+        except:
+                return None
+        created_time = match["created"]
+        print created_time + "created"
+        print time.time() 
+        print CACHE_TIME
+        test_time = float(created_time) + CACHE_TIME 
+        print test_time
+        if float(created_time) + CACHE_TIME <= time.time():
+            koding.Remove_Table(url2)
+            db = sqlite3.connect('%s' % (database_loc))        
+            cursor = db.cursor()
+            db.execute("vacuum")
+            db.commit()
+            db.close()
+            display_list2(result, "video", url2)
+        else:
+            pass                     
+        return result
+    else:
+        return []     

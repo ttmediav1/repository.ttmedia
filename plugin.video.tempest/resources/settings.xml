@@ -88,12 +88,12 @@
         <setting id="debug" type="bool" label="API's" default="true" visible="true"/>
         <setting id="first_run" label="first run" type="bool" default="false" visible="false"/>
         <setting label="Cache Location" id="cache_folder" type="folder" default="special://profile/addon_data/plugin.video.tempest/" visible="false"/>
-        <setting label="TVDB API Key" type="text" id="tvdb_api_key" option="hidden" default="146E7EB2B9C689B2" visible="eq(-3,true)"/>
-        <setting label="TMDB API Key" type="text" id="tmdb_api_key" option="hidden" default="63aa68b8717a7477ff33c5a0ffa31355" visible="eq(-4,true)"/>
-        <setting label="Trakt Client ID" type="text" id="trakt_api_client_id" option="hidden" default="3bfca5a53033d8659bc4cb926b65e281de94db9e122c5717003e0a2526b44dea" visible="eq(-5,true)"/>
-        <setting label="Trakt Client Secret" type="text" id="trakt_api_client_secret" option="hidden" visible="!eq(-1,true) + eq(-6,true)" default="7ae57b40dfb7f3dc4cce7b8f2847a15ca1a4cfb99471f6b566d5bbeadb142f5d"/>
-        <setting label="Last.fm API Key" type="text" id="lastfm_api_key" option="hidden" default="9f8e10942d79d87fd36300a13d666071" visible="eq(-7,true)"/>
-        <setting label="Last.fm Secret" type="text" id="lastfm_secret" option="hidden" visible="!eq(-1,true) + eq(-8,true)" default="39b22c5cc712030ddacaaa0d03012d6e"/>
+        <setting label="TVDB API Key" type="text" id="tvdb_api_key" option="hidden" default="MTQ2RTdFQjJCOUM2ODlCMg==" visible="eq(-3,true)"/>
+        <setting label="TMDB API Key" type="text" id="tmdb_api_key" option="hidden" default="NjNhYTY4Yjg3MTdhNzQ3N2ZmMzNjNWEwZmZhMzEzNTU=" visible="eq(-4,true)"/>
+        <setting label="Trakt Client ID" type="text" id="trakt_api_client_id" option="hidden" default="M2JmY2E1YTUzMDMzZDg2NTliYzRjYjkyNmI2NWUyODFkZTk0ZGI5ZTEyMmM1NzE3MDAzZTBhMjUyNmI0NGRlYQ==" visible="eq(-5,true)"/>
+        <setting label="Trakt Client Secret" type="text" id="trakt_api_client_secret" option="hidden" visible="!eq(-1,true) + eq(-6,true)" default="N2FlNTdiNDBkZmI3ZjNkYzRjY2U3YjhmMjg0N2ExNWNhMWE0Y2ZiOTk0NzFmNmI1NjZkNWJiZWFkYjE0MmY1ZA=="/>
+        <setting label="Last.fm API Key" type="text" id="lastfm_api_key" option="hidden" default="OWY4ZTEwOTQyZDc5ZDg3ZmQzNjMwMGExM2Q2NjYwNzE=" visible="eq(-7,true)"/>
+        <setting label="Last.fm Secret" type="text" id="lastfm_secret" option="hidden" visible="!eq(-1,true) + eq(-8,true)" default="MzliMjJjNWNjNzEyMDMwZGRhY2FhYTBkMDMwMTJkNmU="/>
         <setting id="TRAKT_ACCESS_TOKEN" label="" type="text" visible="false"/>
         <setting id="TRAKT_EXPIRES_AT" label="" type="text" visible="false"/>
         <setting id="TRAKT_REFRESH_TOKEN" label="" type="text" visible="false"/>
