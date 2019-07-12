@@ -7,6 +7,16 @@ class PluginError(StreamlinkError):
     """Plugin related error."""
 
 
+class FatalPluginError(PluginError):
+    """
+    Plugin related error that cannot be recovered from
+
+    Plugin's should use this Exception when errors that can
+    never be recovered from are encountered. For example, when
+    a user's input is required an none can be given.
+    """
+
+
 class NoStreamsError(StreamlinkError):
     def __init__(self, url):
         self.url = url
@@ -22,5 +32,4 @@ class StreamError(StreamlinkError):
     """Stream related error."""
 
 
-__all__ = ["StreamlinkError", "PluginError", "NoPluginError",
-           "NoStreamsError", "StreamError"]
+__all__ = ["StreamlinkError", "PluginError", "NoPluginError", "NoStreamsError", "StreamError", "FatalPluginError"]

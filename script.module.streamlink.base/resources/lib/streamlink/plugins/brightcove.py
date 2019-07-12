@@ -1,13 +1,13 @@
 import random
 import re
-from binascii import hexlify
+import logging
 from io import BytesIO
 
 from streamlink import PluginError
 from streamlink.packages.flashmedia import AMFMessage, AMFPacket
 from streamlink.packages.flashmedia.types import AMF3ObjectBase
 from streamlink.plugin import Plugin
-from streamlink.plugin.api import http, validate, useragents
+from streamlink.plugin.api import validate, useragents
 from streamlink.stream import HLSStream, HTTPStream, RTMPStream
 from streamlink.compat import urlparse, parse_qsl, urlencode
 
@@ -60,7 +60,7 @@ class BrightcovePlayer(object):
 
     def __init__(self, session, account_id, player_id="default_default"):
         self.session = session
-        self.logger = session.logger.new_module("plugins.brightcove")
+        self.logger = logging.getLogger("streamlink.plugins.brightcove")
         self.logger.debug("Creating player for account {0} (player_id={1})", account_id, player_id)
         self.account_id = account_id
         self.player_id = player_id
@@ -74,17 +74,17 @@ class BrightcovePlayer(object):
         url = "{base}accounts/{account_id}/videos/{video_id}".format(base=self.api_url,
                                                                      account_id=self.account_id,
                                                                      video_id=video_id)
-        res = http.get(url,
+        res = self.session.http.get(url,
                        headers={
                            "User-Agent": useragents.CHROME,
                            "Referer": self.player_url(video_id),
                            "Accept": "application/json;pk={0}".format(policy_key)
                        })
-        return http.json(res, schema=self.schema)
+        return self.session.http.json(res, schema=self.schema)
 
     def policy_key(self, video_id):
         # Get the embedded player page
-        res = http.get(self.player_url(video_id))
+        res = self.session.http.get(self.player_url(video_id))
 
         policy_key_m = self.policy_key_re.search(res.text)
         policy_key = policy_key_m and policy_key_m.group("key")
@@ -98,6 +98,7 @@ class BrightcovePlayer(object):
         policy_key = self.policy_key(video_id)
         self.logger.debug("Found policy key: {0}", policy_key)
         data = self.video_info(video_id, policy_key)
+        headers = {"Referer": self.player_url(video_id)}
 
         for source in data.get("sources"):
             # determine quality name
@@ -107,10 +108,9 @@ class BrightcovePlayer(object):
                 q = "{0}k".format(source.get("avg_bitrate") // 1000)
             else:
                 q = "live"
-
             if ((source.get("type") == "application/x-mpegURL" and source.get("src")) or
                     (source.get("src") and ".m3u8" in source.get("src"))):
-                for s in HLSStream.parse_variant_playlist(self.session, source.get("src")).items():
+                for s in HLSStream.parse_variant_playlist(self.session, source.get("src"), headers=headers).items():
                     yield s
             elif source.get("app_name"):
                 s = RTMPStream(self.session,
@@ -118,7 +118,7 @@ class BrightcovePlayer(object):
                                 "playpath": source.get("stream_name")})
                 yield q, s
             elif source.get("src") and source.get("src").endswith(".mp4"):
-                yield q, HTTPStream(self.session, source.get("src"))
+                yield q, HTTPStream(self.session, source.get("src"), headers=headers)
 
     @classmethod
     def from_url(cls, session, url):
@@ -151,7 +151,7 @@ class BrightcovePlayer(object):
         amf_packet = AMFPacket(version=3)
         amf_packet.messages.append(amf_message)
 
-        res = http.post(cls.amf_broker,
+        res = self.session.http.post(cls.amf_broker,
                         headers={"Content-Type": "application/x-amf"},
                         data=amf_packet.serialize(),
                         params=dict(playerKey=player_key),

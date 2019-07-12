@@ -1,22 +1,31 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
+import logging
 import re
 import warnings
+from collections import namedtuple
 from random import random
 
 import requests
+
 from streamlink.compat import urlparse
 from streamlink.exceptions import NoStreamsError, PluginError, StreamError
-from streamlink.plugin import Plugin, PluginOptions
-from streamlink.plugin.api import http, validate
+from streamlink.plugin import Plugin, PluginArguments, PluginArgument
+from streamlink.plugin.api import validate
 from streamlink.plugin.api.utils import parse_json, parse_query
 from streamlink.stream import (
     HTTPStream, HLSStream, FLVPlaylist, extract_flv_header_tags
 )
+from streamlink.stream.hls import HLSStreamReader, HLSStreamWriter, HLSStreamWorker
+from streamlink.stream.hls_playlist import M3U8Parser, load as load_hls_playlist
+from streamlink.utils.times import hours_minutes_seconds
 
 try:
     from itertools import izip as zip
 except ImportError:
     pass
+
+
+log = logging.getLogger(__name__)
 
 QUALITY_WEIGHTS = {
     "source": 1080,
@@ -29,7 +38,6 @@ QUALITY_WEIGHTS = {
     "low": 240,
     "mobile": 120,
 }
-
 
 TWITCH_CLIENT_ID = "pwkzresl8kj2rdj6g7bvxl9ys1wly3j"
 
@@ -46,24 +54,13 @@ _url_re = re.compile(r"""
     )
     (?:
         /
-        (?P<video_type>[bcv])
+        (?P<video_type>[bcv])(?:ideo)?
         /
         (?P<video_id>\d+)
     )?
     (?:
         /
         (?P<clip_name>[\w]+)
-    )?
-""", re.VERBOSE)
-_time_re = re.compile(r"""
-    (?:
-        (?P<hours>\d+)h
-    )?
-    (?:
-        (?P<minutes>\d+)m
-    )?
-    (?:
-        (?P<seconds>\d+)s
     )?
 """, re.VERBOSE)
 
@@ -138,19 +135,86 @@ _quality_options_schema = validate.Schema(
 )
 
 
-def time_to_offset(t):
-    match = _time_re.match(t)
-    if match:
-        offset = int(match.group("hours") or "0") * 60 * 60
-        offset += int(match.group("minutes") or "0") * 60
-        offset += int(match.group("seconds") or "0")
-    else:
-        offset = 0
+Segment = namedtuple("Segment", "uri duration title key discontinuity scte35 byterange date map")
 
-    return offset
+
+class TwitchM3U8Parser(M3U8Parser):
+    def parse_tag_ext_x_scte35_out(self, value):
+        self.state["scte35"] = True
+
+    # unsure if this gets used by Twitch
+    def parse_tag_ext_x_scte35_out_cont(self, value):
+        self.state["scte35"] = True
+
+    def parse_tag_ext_x_scte35_in(self, value):
+        self.state["scte35"] = False
+
+    def get_segment(self, uri):
+        byterange = self.state.pop("byterange", None)
+        extinf = self.state.pop("extinf", (0, None))
+        date = self.state.pop("date", None)
+        map_ = self.state.get("map")
+        key = self.state.get("key")
+        discontinuity = self.state.pop("discontinuity", False)
+        scte35 = self.state.pop("scte35", None)
+
+        return Segment(
+            uri,
+            extinf[0],
+            extinf[1],
+            key,
+            discontinuity,
+            scte35,
+            byterange,
+            date,
+            map_
+        )
+
+
+class TwitchHLSStreamWorker(HLSStreamWorker):
+    def _reload_playlist(self, text, url):
+        return load_hls_playlist(text, url, parser=TwitchM3U8Parser)
+
+
+class TwitchHLSStreamWriter(HLSStreamWriter):
+    def __init__(self, *args, **kwargs):
+        HLSStreamWriter.__init__(self, *args, **kwargs)
+        options = self.session.plugins.get("twitch").options
+        self.disable_ads = options.get("disable-ads")
+        if self.disable_ads:
+            log.info("Will skip ad segments")
+
+    def write(self, sequence, *args, **kwargs):
+        if self.disable_ads:
+            if sequence.segment.scte35 is not None:
+                self.reader.ads = sequence.segment.scte35
+                if self.reader.ads:
+                    log.info("Will skip ads beginning with segment {0}".format(sequence.num))
+                else:
+                    log.info("Will stop skipping ads beginning with segment {0}".format(sequence.num))
+            if self.reader.ads:
+                return
+        return HLSStreamWriter.write(self, sequence, *args, **kwargs)
+
+
+class TwitchHLSStreamReader(HLSStreamReader):
+    __worker__ = TwitchHLSStreamWorker
+    __writer__ = TwitchHLSStreamWriter
+    ads = None
+
+
+class TwitchHLSStream(HLSStream):
+    def open(self):
+        reader = TwitchHLSStreamReader(self)
+        reader.open()
+
+        return reader
 
 
 class UsherService(object):
+    def __init__(self, session):
+        self.session = session
+
     def _create_url(self, endpoint, **extra_params):
         url = "https://usher.ttvnw.net{0}".format(endpoint)
         params = {
@@ -165,8 +229,8 @@ class UsherService(object):
 
         req = requests.Request("GET", url, params=params)
         # prepare_request is only available in requests 2.0+
-        if hasattr(http, "prepare_request"):
-            req = http.prepare_request(req)
+        if hasattr(self.session.http, "prepare_request"):
+            req = self.session.http.prepare_request(req)
         else:
             req = req.prepare()
 
@@ -181,13 +245,14 @@ class UsherService(object):
 
 
 class TwitchAPI(object):
-    def __init__(self, beta=False, version=3):
+    def __init__(self, session, beta=False, version=3):
         self.oauth_token = None
+        self.session = session
         self.subdomain = beta and "betaapi" or "api"
         self.version = version
 
     def add_cookies(self, cookies):
-        http.parse_cookies(cookies, domain="twitch.tv")
+        self.session.http.parse_cookies(cookies, domain="twitch.tv")
 
     def call(self, path, format="json", schema=None, **extra_params):
         params = dict(as3="t", **extra_params)
@@ -203,10 +268,10 @@ class TwitchAPI(object):
         headers = {'Accept': 'application/vnd.twitchtv.v{0}+json'.format(self.version),
                    'Client-ID': TWITCH_CLIENT_ID}
 
-        res = http.get(url, params=params, headers=headers)
+        res = self.session.http.get(url, params=params, headers=headers)
 
         if format == "json":
-            return http.json(res, schema=schema)
+            return self.session.http.json(res, schema=schema)
         else:
             return res
 
@@ -231,10 +296,16 @@ class TwitchAPI(object):
     def channel_info(self, channel, **params):
         return self.call("/kraken/channels/{0}".format(channel), **params)
 
+    def streams(self, channel_id, **params):
+        return self.call("/kraken/streams/{0}".format(channel_id), **params)
+
+    def clips(self, clip_name, **params):
+        return self.call("/kraken/clips/{0}".format(clip_name), **params)
+
     # Private API calls
 
     def access_token(self, endpoint, asset, **params):
-        return self.call("/api/{0}/{1}/access_token".format(endpoint, asset), **params)
+        return self.call("/api/{0}/{1}/access_token".format(endpoint, asset), **dict(platform="_", **params))
 
     def token(self, **params):
         return self.call("/api/viewer/token", **params)
@@ -246,7 +317,8 @@ class TwitchAPI(object):
         return self.call_subdomain("tmi", "/hosts", format="", **params)
 
     def clip_status(self, channel, clip_name, schema):
-        return http.json(self.call_subdomain("clips", "/api/v2/clips/" + clip_name + "/status", format=""), schema=schema)
+        return self.session.http.json(self.call_subdomain("clips", "/api/v2/clips/" + clip_name + "/status", format=""),
+                                      schema=schema)
 
     # Unsupported/Removed private API calls
 
@@ -261,11 +333,42 @@ class TwitchAPI(object):
 
 
 class Twitch(Plugin):
-    options = PluginOptions({
-        "cookie": None,
-        "oauth_token": None,
-        "disable_hosting": False,
-    })
+    arguments = PluginArguments(
+        PluginArgument("oauth-token",
+                       sensitive=True,
+                       metavar="TOKEN",
+                       help="""
+        An OAuth token to use for Twitch authentication.
+        Use --twitch-oauth-authenticate to create a token.
+        """),
+        PluginArgument("cookie",
+                       sensitive=True,
+                       metavar="COOKIES",
+                       help="""
+        Twitch cookies to authenticate to allow access to subscription channels.
+
+        Example:
+
+          "_twitch_session_id=xxxxxx; persistent=xxxxx"
+
+        Note: This method is the old and clunky way of authenticating with
+        Twitch, using --twitch-oauth-authenticate is the recommended and
+        simpler way of doing it now.
+        """
+                       ),
+        PluginArgument("disable-hosting",
+                       action="store_true",
+                       help="""
+        Do not open the stream if the target channel is hosting another channel.
+        """
+                       ),
+        PluginArgument("disable-ads",
+                       action="store_true",
+                       help="""
+        Skip embedded advertisement segments at the beginning or during a stream.
+        Will cause these segments to be missing from the stream.
+        """
+                       ))
 
     @classmethod
     def stream_weight(cls, key):
@@ -279,6 +382,38 @@ class Twitch(Plugin):
     def can_handle_url(cls, url):
         return _url_re.match(url)
 
+    def _get_metadata(self):
+        if self.video_id:
+            api_res = self.api.videos(self.video_id)
+            self.title = api_res["title"]
+            self.author = api_res["channel"]["display_name"]
+            self.category = api_res["game"]
+        elif self.clip_name:
+            api_res = self.api.clips(self.clip_name)
+            self.title = api_res["title"]
+            self.author = api_res["broadcaster"]["display_name"]
+            self.category = api_res["game"]
+        elif self._channel:
+            api_res = self.api.streams(self.channel_id)["stream"]["channel"]
+            self.title = api_res["status"]
+            self.author = api_res["display_name"]
+            self.category = api_res["game"]
+
+    def get_title(self):
+        if self.title is None:
+            self._get_metadata()
+        return self.title
+
+    def get_author(self):
+        if self.author is None:
+            self._get_metadata()
+        return self.author
+
+    def get_category(self):
+        if self.category is None:
+            self._get_metadata()
+        return self.category
+
     def __init__(self, url):
         Plugin.__init__(self, url)
         self._hosted_chain = []
@@ -291,6 +426,9 @@ class Twitch(Plugin):
         self._channel_id = None
         self._channel = None
         self.clip_name = None
+        self.title = None
+        self.author = None
+        self.category = None
 
         if self.subdomain == "player":
             # pop-out player
@@ -312,8 +450,10 @@ class Twitch(Plugin):
             self.video_id = match.get("video_id") or match.get("videos_id")
             self.clip_name = match.get("clip_name")
 
-        self.api = TwitchAPI(beta=self.subdomain == "beta", version=5)
-        self.usher = UsherService()
+        self.api = TwitchAPI(beta=self.subdomain == "beta",
+                             session=self.session,
+                             version=5)
+        self.usher = UsherService(session=self.session)
 
     @property
     def channel(self):
@@ -516,7 +656,12 @@ class Twitch(Plugin):
         # start offset if needed.
         time_offset = self.params.get("t")
         if time_offset:
-            videos["start_offset"] += time_to_offset(self.params.get("t"))
+            try:
+                time_offset = hours_minutes_seconds(time_offset)
+            except ValueError:
+                time_offset = 0
+
+            videos["start_offset"] += time_offset
 
         return self._create_playlist_streams(videos)
 
@@ -557,15 +702,17 @@ class Twitch(Plugin):
             elif hosted_channel:
                 self.logger.info("switching to {0}", hosted_channel)
                 if hosted_channel in self._hosted_chain:
-                    self.logger.error(u"A loop of hosted channels has been detected, "
-                                      "cannot find a playable stream. ({0})".format(u" -> ".join(self._hosted_chain + [hosted_channel])))
+                    self.logger.error(
+                        u"A loop of hosted channels has been detected, "
+                        "cannot find a playable stream. ({0})".format(
+                            u" -> ".join(self._hosted_chain + [hosted_channel])))
                     return {}
                 self.channel = hosted_channel
                 return self._get_hls_streams(stream_type)
 
             # only get the token once the channel has been resolved
             sig, token = self._access_token(stream_type)
-            url = self.usher.channel(self.channel, sig=sig, token=token)
+            url = self.usher.channel(self.channel, sig=sig, token=token, fast_bread=True)
         elif stream_type == "video":
             sig, token = self._access_token(stream_type)
             url = self.usher.video(self.video_id, nauthsig=sig, nauth=token)
@@ -573,11 +720,22 @@ class Twitch(Plugin):
             self.logger.debug("Unknown HLS stream type: {0}".format(stream_type))
             return {}
 
+        time_offset = self.params.get("t", 0)
+        if time_offset:
+            try:
+                time_offset = hours_minutes_seconds(time_offset)
+            except ValueError:
+                time_offset = 0
+
         try:
             # If the stream is a VOD that is still being recorded the stream should start at the
             # beginning of the recording
-            streams = HLSStream.parse_variant_playlist(self.session, url,
-                                                       force_restart=not stream_type == "live")
+            streams = TwitchHLSStream.parse_variant_playlist(
+                self.session,
+                url,
+                start_offset=time_offset,
+                force_restart=not stream_type == "live"
+            )
         except IOError as err:
             err = str(err)
             if "404 Client Error" in err or "Failed to parse playlist" in err:

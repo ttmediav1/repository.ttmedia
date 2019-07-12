@@ -1,7 +1,7 @@
 import re
 
 from streamlink.plugin import Plugin
-from streamlink.plugin.api import http, useragents, validate
+from streamlink.plugin.api import useragents, validate
 from streamlink.stream import HDSStream, HLSStream, HTTPStream
 
 
@@ -13,10 +13,9 @@ class CanalPlus(Plugin):
     SECRET = 'pqzerjlsmdkjfoiuerhsdlfknaes'
 
     _url_re = re.compile(r'''
-        (https|http)://
+        https?://
         (
-            www.mycanal.fr/(.*)/(.*)/p/(?P<video_id>[0-9]+) |
-            www\.cnews\.fr/.+
+            www.mycanal.fr/(.*)/(.*)/p/(?P<video_id>[0-9]+)
         )
 ''', re.VERBOSE)
     _video_id_re = re.compile(r'(\bdata-video="|<meta property="og:video" content=".+?&videoId=)(?P<video_id>[0-9]+)"')
@@ -45,14 +44,14 @@ class CanalPlus(Plugin):
         video_id = match.group('video_id')
         if video_id is None:
             # Retrieve URL page and search for video ID
-            res = http.get(self.url)
+            res = self.session.http.get(self.url)
             match = self._video_id_re.search(res.text)
             if match is None:
                 return
             video_id = match.group('video_id')
 
-        res = http.get(self.API_URL.format(video_id))
-        videos = http.json(res, schema=self._api_schema)
+        res = self.session.http.get(self.API_URL.format(video_id))
+        videos = self.session.http.json(res, schema=self._api_schema)
         parsed = []
         headers = {'User-Agent': self._user_agent}
 

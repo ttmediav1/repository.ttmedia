@@ -3,10 +3,9 @@ from __future__ import print_function
 import re
 
 from streamlink.plugin import Plugin
-from streamlink.plugin.api import http
 from streamlink.plugin.api import validate
 from streamlink.stream import HLSStream, RTMPStream
-from streamlink.utils import parse_json
+from streamlink.utils import parse_json, update_scheme
 
 
 class EarthCam(Plugin):
@@ -32,7 +31,7 @@ class EarthCam(Plugin):
         return cls.url_re.match(url) is not None
 
     def _get_streams(self):
-        res = http.get(self.url)
+        res = self.session.http.get(self.url)
         m = self.cam_name_re.search(res.text)
         cam_name = m and m.group("name")
         json_base = self.cam_data_schema.validate(res.text)
@@ -86,6 +85,7 @@ class EarthCam(Plugin):
         # HLS stream
         if hls_playpath and is_live:
             hls_url = hls_domain + hls_playpath
+            hls_url = update_scheme(self.url, hls_url)
 
             self.logger.debug("HLS URL: {0}", hls_url)
 

@@ -3,18 +3,31 @@ import re
 
 from streamlink import PluginError
 from streamlink.plugin import Plugin
-from streamlink.plugin.api import http
 from streamlink.plugin.api import validate
 from streamlink.stream import HLSStream
 from streamlink.utils import parse_json
-from streamlink.plugin import PluginOptions
+from streamlink.plugin import PluginArgument, PluginArguments
 
 
 class BTV(Plugin):
-    options = PluginOptions({
-        "username": None,
-        "password": None
-    })
+    arguments = PluginArguments(
+        PluginArgument(
+            "username",
+            metavar="USERNAME",
+            requires=["password"],
+            help="""
+        A BTV username required to access any stream.
+        """
+        ),
+        PluginArgument(
+            "password",
+            sensitive=True,
+            metavar="PASSWORD",
+            help="""
+        A BTV account password to use with --btv-username.
+        """
+        )
+    )
     url_re = re.compile(r"https?://(?:www\.)?btv\.bg/live/?")
 
     api_url = "http://www.btv.bg/lbin/global/player_config.php"
@@ -31,7 +44,7 @@ class BTV(Plugin):
                          validate.any(
                              None,
                              validate.get(1), validate.url()
-            ))
+                         ))
         )
     )
 
@@ -40,14 +53,14 @@ class BTV(Plugin):
         return cls.url_re.match(url) is not None
 
     def login(self, username, password):
-        res = http.post(self.login_url, data={"username": username, "password": password})
+        res = self.session.http.post(self.login_url, data={"username": username, "password": password})
         if "success_logged_in" in res.text:
             return True
         else:
             return False
 
     def get_hls_url(self, media_id):
-        res = http.get(self.api_url, params=dict(media_id=media_id))
+        res = self.session.http.get(self.api_url, params=dict(media_id=media_id))
         try:
             return parse_json(res.text, schema=self.api_schema)
         except PluginError:
@@ -58,7 +71,7 @@ class BTV(Plugin):
             self.logger.error("BTV requires registration, set the username and password"
                               " with --btv-username and --btv-password")
         elif self.login(self.options.get("username"), self.options.get("password")):
-            res = http.get(self.url)
+            res = self.session.http.get(self.url)
             media_match = self.media_id_re.search(res.text)
             media_id = media_match and media_match.group(1)
             if media_id:

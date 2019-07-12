@@ -9,23 +9,16 @@ An API is also provided that allows direct access to stream data.
 Full documentation is available at https://streamlink.github.io.
 
 """
-import warnings
-from sys import version_info
 
+import xbmcaddon
+addon = xbmcaddon.Addon
 
-if version_info[:2] == (2, 6):
-    warnings.warn(
-        "Python 2.6 is no longer supported by the Python core team, please "
-        "upgrade your Python. A future version of streamlink will drop "
-        "support for Python 2.6",
-        DeprecationWarning
-    )
+__version__ = addon().getAddonInfo('version')
 
 __title__ = "streamlink"
-__version__ = "0.10.0"
 __license__ = "Simplified BSD"
 __author__ = "Streamlink"
-__copyright__ = "Copyright 2018 Streamlink"
+__copyright__ = "Copyright 2019 Streamlink"
 __credits__ = [
     "Agustín Carrasco (@asermax)",
     "Andrew Bashore (@bashtech)",
@@ -81,6 +74,5 @@ __credits__ = [
 ]
 
 from .api import streams
-from .exceptions import (StreamlinkError, PluginError, NoStreamsError,
-                         NoPluginError, StreamError)
+from .exceptions import (StreamlinkError, PluginError, NoStreamsError, NoPluginError, StreamError)
 from .session import Streamlink

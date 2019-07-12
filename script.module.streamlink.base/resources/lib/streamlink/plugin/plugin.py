@@ -1,17 +1,18 @@
 import ast
+import logging
 import operator
 import re
-
-try:
-    from collections import OrderedDict
-except ImportError:
-    from streamlink.utils.ordereddict import OrderedDict
+import time
+import requests.cookies
 
 from functools import partial
+from streamlink.compat import OrderedDict
 
-from ..cache import Cache
-from ..exceptions import PluginError, NoStreamsError
-from ..options import Options
+from streamlink.cache import Cache
+from streamlink.exceptions import PluginError, NoStreamsError, FatalPluginError
+from streamlink.options import Options, Arguments
+
+log = logging.getLogger(__name__)
 
 # FIXME: This is a crude attempt at making a bitrate's
 # weight end up similar to the weight of a resolution.
@@ -35,14 +36,12 @@ QUALITY_WEIGTHS_EXTRA = {
     },
 }
 
-
 FILTER_OPERATORS = {
     "<": operator.lt,
     "<=": operator.le,
     ">": operator.gt,
     ">=": operator.ge,
 }
-
 
 PARAMS_REGEX = r"(\w+)=({.+?}|\[.+?\]|\(.+?\)|'(?:[^'\\]|\\')*'|\"(?:[^\"\\]|\\\")*\"|\S+)"
 
@@ -57,7 +56,7 @@ def stream_weight(stream):
         if stream in weights:
             return weights[stream], group
 
-    match = re.match(r"^(\d+)(k|p)?(\d+)?(\+)?(?:_(\d+)k)?(?:_(alt)(\d)?)?$", stream)
+    match = re.match(r"^(\d+)([kp])?(\d+)?(\+)?(?:[a_](\d+)k)?(?:_(alt)(\d)?)?$", stream)
 
     if match:
         weight = 0
@@ -158,6 +157,33 @@ def parse_params(params):
     return rval
 
 
+class UserInputRequester(object):
+    """
+    Base Class / Interface for requesting user input
+
+    eg. From the console
+    """
+    def ask(self, prompt):
+        """
+        Ask the user for a text input, the input is not sensitive
+        and can be echoed to the user
+
+        :param prompt: message to display when asking for the input
+        :return: the value the user input
+        """
+        raise NotImplementedError
+
+    def ask_password(self, prompt):
+        """
+        Ask the user for a text input, the input _is_ sensitive
+        and should be masked as the user gives the input
+
+        :param prompt: message to display when asking for the input
+        :return: the value the user input
+        """
+        raise NotImplementedError
+
+
 class Plugin(object):
     """A plugin can retrieve stream information from the URL specified.
 
@@ -168,18 +194,28 @@ class Plugin(object):
     logger = None
     module = "unknown"
     options = Options()
+    arguments = Arguments()
     session = None
+    _user_input_requester = None
 
     @classmethod
-    def bind(cls, session, module):
-        cls.cache = Cache(filename="plugin-cache.json",
-                          key_prefix=module)
-        cls.logger = session.logger.new_module("plugin." + module)
+    def bind(cls, session, module, user_input_requester=None):
+        cls.cache = Cache(filename="plugin-cache.json", key_prefix=module)
+        cls.logger = logging.getLogger("streamlink.plugin." + module)
         cls.module = module
         cls.session = session
+        if user_input_requester is not None:
+            if isinstance(user_input_requester, UserInputRequester):
+                cls._user_input_requester = user_input_requester
+            else:
+                raise RuntimeError("user-input-requester must be an instance of UserInputRequester")
 
     def __init__(self, url):
         self.url = url
+        try:
+            self.load_cookies()
+        except RuntimeError:
+            pass  # unbound cannot load
 
     @classmethod
     def can_handle_url(cls, url):
@@ -192,6 +228,10 @@ class Plugin(object):
     @classmethod
     def get_option(cls, key):
         return cls.options.get(key)
+
+    @classmethod
+    def get_argument(cls, key):
+        return cls.arguments.get(key)
 
     @classmethod
     def stream_weight(cls, stream):
@@ -270,22 +310,6 @@ class Plugin(object):
         :param sorting_excludes: Specify which streams to exclude from
                                  the best/worst synonyms.
 
-
-        .. versionchanged:: 1.4.2
-           Added *priority* parameter.
-
-        .. versionchanged:: 1.5.0
-           Renamed *priority* to *stream_types* and changed behaviour
-           slightly.
-
-        .. versionchanged:: 1.5.0
-           Added *sorting_excludes* parameter.
-
-        .. versionchanged:: 1.6.0
-           *sorting_excludes* can now be a list of filter expressions
-           or a function that is passed to filter().
-
-
         """
 
         try:
@@ -308,9 +332,7 @@ class Plugin(object):
             stream_types = self.default_stream_types(ostreams)
 
         # Add streams depending on stream type and priorities
-        sorted_streams = sorted(iterate_streams(ostreams),
-                                key=partial(stream_type_priority,
-                                            stream_types))
+        sorted_streams = sorted(iterate_streams(ostreams), key=partial(stream_type_priority, stream_types))
 
         streams = {}
         for name, stream in sorted_streams:
@@ -354,10 +376,11 @@ class Plugin(object):
 
         # Create the best/worst synonmys
         def stream_weight_only(s):
-            return (self.stream_weight(s)[0] or
-                    (len(streams) == 1 and 1))
+            return (self.stream_weight(s)[0] or (len(streams) == 1 and 1))
+
         stream_names = filter(stream_weight_only, streams.keys())
         sorted_streams = sorted(stream_names, key=stream_weight_only)
+        unfiltered_sorted_streams = sorted_streams
 
         if isinstance(sorting_excludes, list):
             for expr in sorting_excludes:
@@ -376,20 +399,129 @@ class Plugin(object):
             worst = sorted_streams[0]
             final_sorted_streams["worst"] = streams[worst]
             final_sorted_streams["best"] = streams[best]
+        elif len(unfiltered_sorted_streams) > 0:
+            best = unfiltered_sorted_streams[-1]
+            worst = unfiltered_sorted_streams[0]
+            final_sorted_streams["worst-unfiltered"] = streams[worst]
+            final_sorted_streams["best-unfiltered"] = streams[best]
 
         return final_sorted_streams
-
-    def get_streams(self, *args, **kwargs):
-        """Deprecated since version 1.9.0.
-
-        Has been renamed to :func:`Plugin.streams`, this is an alias
-        for backwards compatibility.
-        """
-
-        return self.streams(*args, **kwargs)
 
     def _get_streams(self):
         raise NotImplementedError
 
+    def get_title(self):
+        return None
+
+    def get_author(self):
+        return None
+
+    def get_category(self):
+        return None
+
+    def save_cookies(self, cookie_filter=None, default_expires=60 * 60 * 24 * 7):
+        """
+        Store the cookies from ``http`` in the plugin cache until they expire. The cookies can be filtered
+        by supplying a filter method. eg. ``lambda c: "auth" in c.name``. If no expiry date is given in the
+        cookie then the ``default_expires`` value will be used.
+
+        :param cookie_filter: a function to filter the cookies
+        :type cookie_filter: function
+        :param default_expires: time (in seconds) until cookies with no expiry will expire
+        :type default_expires: int
+        :return: list of the saved cookie names
+        """
+        if not self.session or not self.cache:
+            raise RuntimeError("Cannot cache cookies in unbound plugin")
+
+        cookie_filter = cookie_filter or (lambda c: True)
+        saved = []
+
+        for cookie in filter(cookie_filter, self.session.http.cookies):
+            cookie_dict = {}
+            for attr in ("version", "name", "value", "port", "domain", "path", "secure", "expires", "discard",
+                         "comment", "comment_url", "rfc2109"):
+                cookie_dict[attr] = getattr(cookie, attr, None)
+            cookie_dict["rest"] = getattr(cookie, "rest", getattr(cookie, "_rest", None))
+
+            expires = default_expires
+            if cookie_dict['expires']:
+                expires = int(cookie_dict['expires'] - time.time())
+            key = "__cookie:{0}:{1}:{2}:{3}".format(cookie.name,
+                                                    cookie.domain,
+                                                    cookie.port_specified and cookie.port or "80",
+                                                    cookie.path_specified and cookie.path or "*")
+            self.cache.set(key, cookie_dict, expires)
+            saved.append(cookie.name)
+
+        if saved:
+            self.logger.debug("Saved cookies: {0}".format(", ".join(saved)))
+        return saved
+
+    def load_cookies(self):
+        """
+        Load any stored cookies for the plugin that have not expired.
+
+        :return: list of the restored cookie names
+        """
+        if not self.session or not self.cache:
+            raise RuntimeError("Cannot loaded cached cookies in unbound plugin")
+
+        restored = []
+
+        for key, value in self.cache.get_all().items():
+            if key.startswith("__cookie"):
+                cookie = requests.cookies.create_cookie(**value)
+                self.session.http.cookies.set_cookie(cookie)
+                restored.append(cookie.name)
+
+        if restored:
+            self.logger.debug("Restored cookies: {0}".format(", ".join(restored)))
+        return restored
+
+    def clear_cookies(self, cookie_filter=None):
+        """
+        Removes all of the saved cookies for this Plugin. To filter the cookies that are deleted
+        specify the ``cookie_filter`` argument (see :func:`save_cookies`).
+
+        :param cookie_filter: a function to filter the cookies
+        :type cookie_filter: function
+        :return: list of the removed cookie names
+        """
+        if not self.session or not self.cache:
+            raise RuntimeError("Cannot loaded cached cookies in unbound plugin")
+
+        cookie_filter = cookie_filter or (lambda c: True)
+        removed = []
+
+        for key, value in sorted(self.cache.get_all().items(), key=operator.itemgetter(0), reverse=True):
+            if key.startswith("__cookie"):
+                cookie = requests.cookies.create_cookie(**value)
+                if cookie_filter(cookie):
+                    del self.session.http.cookies[cookie.name]
+                    self.cache.set(key, None, 0)
+                    removed.append(key)
+
+        return removed
+
+    def input_ask(self, prompt):
+        if self._user_input_requester:
+            try:
+                return self._user_input_requester.ask(prompt)
+            except IOError as e:
+                raise FatalPluginError("User input error: {0}".format(e))
+            except NotImplementedError:  # ignore this and raise a FatalPluginError
+                pass
+        raise FatalPluginError("This plugin requires user input, however it is not supported on this platform")
+
+    def input_ask_password(self, prompt):
+        if self._user_input_requester:
+            try:
+                return self._user_input_requester.ask_password(prompt)
+            except IOError as e:
+                raise FatalPluginError("User input error: {0}".format(e))
+            except NotImplementedError:  # ignore this and raise a FatalPluginError
+                pass
+        raise FatalPluginError("This plugin requires user input, however it is not supported on this platform")
 
 __all__ = ["Plugin"]
