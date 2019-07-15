@@ -89,9 +89,9 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.bosstechmediaV4"
-       name="BossTech Media [COLOR red]V4[/COLOR]"
-       version="1.6"
+<addon id="plugin.video.bosstechmediaV5"
+       name="BossTech Media [COLOR red]V5[/COLOR]"
+       version="1.0.0"
        provider-name="[COLORlime]TT Media[/COLOR]">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -102,9 +102,9 @@
         <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">BOSSTECH MEDIA[COLORred]V4[/COLOR]</summary>
+    <summary lang="en">BOSSTECH MEDIA[COLORred]V5[/COLOR]</summary>
     <language>en</language>
-    <description lang="en">[COLORlightskyblue]BOSSTECH MEDIAV4 ADDON - SUPPLIER OF GREAT QUALITY AND STABLE STREAMS.[/COLOR]</description>
+    <description lang="en">[COLORlightskyblue]BOSSTECH MEDIAV5 ADDON - SUPPLIER OF GREAT QUALITY AND STABLE STREAMS.[/COLOR]</description>
      <platform>all</platform>
   </extension>
 </addon>
@@ -227,7 +227,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.8.7" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.8.8" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -248,6 +248,7 @@
 		<import addon="script.module.livestreamer" optional="true" />
 		<import addon="script.module.streamlink.base" />
 		<import addon="script.module.streamlink.crypto" />
+		<import addon="script.module.cryptolib" />
 		<import addon="script.module.slproxy" />
         <!--<import addon="script.module.web-pdb" version="1.0"/>-->
         <import addon="script.module.resolveurl" />
@@ -257,7 +258,7 @@
 		<import addon="plugin.program.advancedsettings" />
 		<import addon="plugin.program.aptoide" />
 		<import addon="plugin.program.xmlerator" version="5.5.0" />
-		<import addon="plugin.video.bosstechmediaV4" version="1.6" />
+		<import addon="plugin.video.bosstechmediaV5" version="1.0.0" />
 		<import addon="plugin.video.f4mTester" version="2.7.2" />
 		<import addon="plugin.video.SportsDevil"  />
     </requires>
@@ -296,7 +297,7 @@
   </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="[B][COLORlime]TTMedia Repository[/COLOR][/B]" version="2.2.4" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="repository.ttmedia" name="[B][COLORlime]TTMedia Repository[/COLOR][/B]" version="2.2.5" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
@@ -411,6 +412,19 @@
 		<news>
 		</news>
 	</extension>
+</addon>
+
+<addon id="script.module.cryptolib" name="Crypto Libraries" version="1.0.0" provider-name="Twilight0">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary>Pure Python implementation of some cryptographic libraries</summary>
+    <source>https://github.com/Twilight0/script.module.cryptolib</source>
+    <platform>all</platform>
+    <license>MIT</license>
+  </extension>
 </addon>
 
 <addon id="script.module.livestreamer"

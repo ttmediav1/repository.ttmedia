@@ -50,8 +50,8 @@
         <setting id="session_length" type="text" label="30208" default="24" visible="false"/>
         <setting id="login_verified" type="text" label="30205" default="Welcome to" visible="true"/>
         <setting id="login_welcome_msg" type="text" label="30210" default="Welcome to tempest %s" visible="true"/>
-        <setting id="login_failed_msg" type="text" label="30211" default="Username or Password was incorrect %s" visible="true"/>
-        <setting id="login_required_msg" type="text" label="30212" default="Please enter a valid username and password in Settings" visible="true"/>
+        <setting id="login_failed_msg" type="text" label="30211" default="Username or Password was incorrect %s" visible="false"/>
+        <setting id="login_required_msg" type="text" label="30212" default="Please enter a valid username and password in Settings" visible="false"/>
     </category>-->
 
     <!-- scraper settings -->
