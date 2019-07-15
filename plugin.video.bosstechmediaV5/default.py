@@ -25,8 +25,8 @@ play_url     = '%s:%s/live/%s/%s/'%(host,port,username,password)
 Series_url   = '%s:%s/enigma2.php?username=%s&password=%s&type=get_series_categories'%(host,port,username,password)
 
 
-Guide = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.Limitless/resources/catchup', 'guide.xml'))
-GuideLoc = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.Limitless/resources/catchup', 'g'))
+Guide = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.bosstechmediaV5/resources/catchup', 'guide.xml'))
+GuideLoc = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.bosstechmediaV5/resources/catchup', 'g'))
 
 advanced_settings           =  xbmc.translatePath('special://home/addons/'+addon_id+'/resources/advanced_settings')
 advanced_settings_target    =  xbmc.translatePath(os.path.join('special://home/userdata','advancedsettings.xml'))
@@ -52,9 +52,9 @@ def start():
 			start()
 		else:
 			line1 = "Login Successful"
-			line2 = "Welcome to Limitless"
+			line2 = "Welcome to bosstechmediaV5"
 			line3 = ('[COLOR cornsilk]%s[/COLOR]'%user)
-			xbmcgui.Dialog().ok('Limitless', line1, line2, line3)
+			xbmcgui.Dialog().ok('bosstechmediaV5', line1, line2, line3)
 			tvguidesetup()
 			addonsettings('ADS2','')
 			xbmc.executebuiltin('Container.Refresh')
@@ -65,16 +65,16 @@ def start():
 		auth = '%s:%s/enigma2.php?username=%s&password=%s&type=get_series_categories'%(host,port,username,password)
 		auth = tools.OPEN_URL(auth)
 		if not auth=="":
-			tools.addDir('[COLOR white]Account Information[/COLOR]','url',6,icon,fanart,'')
-			tools.addDir('[COLOR white]Live Tv[/COLOR]','live',1,icon,fanart,'')
-			tools.addDir('[COLOR white]Catchup TV[/COLOR]','url',12,icon,fanart,'')
+			tools.addDir('[COLOR red]Account Information[/COLOR]','url',6,icon,fanart,'')
+			tools.addDir('[COLOR red]Live Tv[/COLOR]','live',1,icon,fanart,'')
+			tools.addDir('[COLOR red]Catchup TV[/COLOR]','url',12,icon,fanart,'')
 			if xbmc.getCondVisibility('System.HasAddon(pvr.iptvsimple)') or xbmc.getCondVisibility('System.HasAddon(script.ivueguide)'):
-				tools.addDir('[COLOR white]TV Guide[/COLOR]','pvr',7,icon,fanart,'')
-			tools.addDir('[COLOR white]VOD[/COLOR]','vod',3,icon,fanart,'')
-			tools.addDir('[COLOR white]Series[/COLOR]','Series',20,icon,fanart,'')
-			tools.addDir('[COLOR white]Search[/COLOR]','url',5,icon,fanart,'')
-			tools.addDir('[COLOR white]Settings[/COLOR]','url',8,icon,fanart,'')
-			tools.addDir('[COLOR white]Extras[/COLOR]','url',16,icon,fanart,'')
+				tools.addDir('[COLOR red]TV Guide[/COLOR]','pvr',7,icon,fanart,'')
+			tools.addDir('[COLOR red]VOD[/COLOR]','vod',3,icon,fanart,'')
+			tools.addDir('[COLOR red]Series[/COLOR]','Series',20,icon,fanart,'')
+			tools.addDir('[COLOR red]Search[/COLOR]','url',5,icon,fanart,'')
+			tools.addDir('[COLOR red]Settings[/COLOR]','url',8,icon,fanart,'')
+			tools.addDir('[COLOR red]Extras[/COLOR]','url',16,icon,fanart,'')
 def home():
 	tools.addDir('Account Information','url',6,icon,fanart,'')
 	tools.addDir('Live TV','live',1,icon,fanart,'')
@@ -227,7 +227,7 @@ def catchup():
         
     except urllib2.HTTPError, e:
         print e.getcode()
-        dialog.ok("[COLOR white]Expired Account[/COLOR]",'[COLOR white]You cannot use this service with an expired account[/COLOR]',' ','[COLOR white]Please check your account information[/COLOR]')
+        dialog.ok("[COLOR red]Expired Account[/COLOR]",'[COLOR red]You cannot use this service with an expired account[/COLOR]',' ','[COLOR red]Please check your account information[/COLOR]')
         sys.exit(1)
         xbmc.executebuiltin("Dialog.Close(busydialog)")
 
@@ -313,15 +313,15 @@ def _pbhook(numblocks, blocksize, filesize, dp, start_time):
             kbps_speed = kbps_speed / 1024 
             mbps_speed = kbps_speed / 1024 
             total = float(filesize) / (1024 * 1024) 
-            mbs = '[COLOR white]%.02f MB of less than 5MB[/COLOR]' % (currently_downloaded)
-            e = '[COLOR white]Speed:  %.02f Mb/s ' % mbps_speed  + '[/COLOR]'
+            mbs = '[COLOR red]%.02f MB of less than 5MB[/COLOR]' % (currently_downloaded)
+            e = '[COLOR red]Speed:  %.02f Mb/s ' % mbps_speed  + '[/COLOR]'
             dp.update(percent, mbs, e)
         except: 
             percent = 100 
             dp.update(percent) 
         if dp.iscanceled():
             dialog = xbmcgui.Dialog()
-            dialog.ok("Limitless", 'The download was cancelled.')
+            dialog.ok("bosstechmediaV5", 'The download was cancelled.')
 				
             sys.exit()
             dp.close()
@@ -348,7 +348,7 @@ def stream_video(url):
 	
 	
 def searchdialog():
-	search = control.inputDialog(heading='Search Limitless:')
+	search = control.inputDialog(heading='Search bosstechmediaV5:')
 	if search=="":
 		return
 	else:
@@ -389,53 +389,53 @@ def addonsettings(url,description):
 		dialog = xbmcgui.Dialog().select('Edit Advanced Settings', ['Enable Fire TV Stick AS','Enable Fire TV AS','Enable 1GB Ram or Lower AS','Enable 2GB Ram or Higher AS','Enable Nvidia Shield AS','Disable AS'])
 		if dialog==0:
 			advancedsettings('stick')
-			xbmcgui.Dialog().ok('Limitless', 'Set Advanced Settings')
+			xbmcgui.Dialog().ok('bosstechmediaV5', 'Set Advanced Settings')
 		elif dialog==1:
 			advancedsettings('firetv')
-			xbmcgui.Dialog().ok('Limitless', 'Set Advanced Settings')
+			xbmcgui.Dialog().ok('bosstechmediaV5', 'Set Advanced Settings')
 		elif dialog==2:
 			advancedsettings('lessthan')
-			xbmcgui.Dialog().ok('Limitless', 'Set Advanced Settings')
+			xbmcgui.Dialog().ok('bosstechmediaV5', 'Set Advanced Settings')
 		elif dialog==3:
 			advancedsettings('morethan')
-			xbmcgui.Dialog().ok('Limitless', 'Set Advanced Settings')
+			xbmcgui.Dialog().ok('bosstechmediaV5', 'Set Advanced Settings')
 		elif dialog==4:
 			advancedsettings('shield')
-			xbmcgui.Dialog().ok('Limitless', 'Set Advanced Settings')
+			xbmcgui.Dialog().ok('bosstechmediaV5', 'Set Advanced Settings')
 		elif dialog==5:
 			advancedsettings('remove')
-			xbmcgui.Dialog().ok('Limitless', 'Advanced Settings Removed')
+			xbmcgui.Dialog().ok('bosstechmediaV5', 'Advanced Settings Removed')
 	elif url =="ADS2":
 		dialog = xbmcgui.Dialog().select('Select Your Device Or Closest To', ['Fire TV Stick ','Fire TV','1GB Ram or Lower','2GB Ram or Higher','Nvidia Shield'])
 		if dialog==0:
 			advancedsettings('stick')
-			xbmcgui.Dialog().ok('Limitless', 'Set Advanced Settings')
+			xbmcgui.Dialog().ok('bosstechmediaV5', 'Set Advanced Settings')
 		elif dialog==1:
 			advancedsettings('firetv')
-			xbmcgui.Dialog().ok('Limitless', 'Set Advanced Settings')
+			xbmcgui.Dialog().ok('bosstechmediaV5', 'Set Advanced Settings')
 		elif dialog==2:
 			advancedsettings('lessthan')
-			xbmcgui.Dialog().ok('Limitless', 'Set Advanced Settings')
+			xbmcgui.Dialog().ok('bosstechmediaV5', 'Set Advanced Settings')
 		elif dialog==3:
 			advancedsettings('morethan')
-			xbmcgui.Dialog().ok('Limitless', 'Set Advanced Settings')
+			xbmcgui.Dialog().ok('bosstechmediaV5', 'Set Advanced Settings')
 		elif dialog==4:
 			advancedsettings('shield')
-			xbmcgui.Dialog().ok('Limitless', 'Set Advanced Settings')
+			xbmcgui.Dialog().ok('bosstechmediaV5', 'Set Advanced Settings')
 	elif url =="tv":
 		dialog = xbmcgui.Dialog().select('Select a TV Guide to Setup', ['iVue TV Guide','PVR TV Guide','Both'])
 		if dialog==0:
 			ivueint()
-			xbmcgui.Dialog().ok('Limitless', 'iVue Integration Complete')
+			xbmcgui.Dialog().ok('bosstechmediaV5', 'iVue Integration Complete')
 		elif dialog==1:
 			pvrsetup()
-			xbmcgui.Dialog().ok('Limitless', 'PVR Integration Complete')
+			xbmcgui.Dialog().ok('bosstechmediaV5', 'PVR Integration Complete')
 		elif dialog==2:
 			pvrsetup()
 			ivueint()
-			xbmcgui.Dialog().ok('Limitless', 'PVR & iVue Integration Complete')
+			xbmcgui.Dialog().ok('bosstechmediaV5', 'PVR & iVue Integration Complete')
 	elif url =="ST":
-		xbmc.executebuiltin('Runscript("special://home/addons/plugin.video.Limitless/resources/modules/speedtest.py")')
+		xbmc.executebuiltin('Runscript("special://home/addons/plugin.video./resources/modules/speedtest.py")')
 	elif url =="META":
 		if 'ON' in description:
 			xbmcaddon.Addon().setSetting('meta','false')
@@ -486,7 +486,7 @@ def pvrsetup():
 		
 		
 def asettings():
-	choice = xbmcgui.Dialog().yesno('Limitless', 'Please Select The RAM Size of Your Device', yeslabel='Less than 1GB RAM', nolabel='More than 1GB RAM')
+	choice = xbmcgui.Dialog().yesno('bosstechmediaV5', 'Please Select The RAM Size of Your Device', yeslabel='Less than 1GB RAM', nolabel='More than 1GB RAM')
 	if choice:
 		lessthan()
 	else:
@@ -563,7 +563,7 @@ def accountinfo():
 	
 def correctPVR():
 
-	addon = xbmcaddon.Addon('plugin.video.Limitless')
+	addon = xbmcaddon.Addon('plugin.video.bosstechmediaV5')
 	username_text = addon.getSetting(id='Username')
 	password_text = addon.getSetting(id='Password')
 	jsonSetPVR = '{"jsonrpc":"2.0", "method":"Settings.SetSettingValue", "params":{"setting":"pvrmanager.enabled", "value":true},"id":1}'
@@ -587,19 +587,19 @@ def ivueint():
 	ivuesetup.iVueInt()
 	
 def tvguidesetup():
-		dialog = xbmcgui.Dialog().yesno('Limitless','Would You like us to Setup the TV Guide for You?')
+		dialog = xbmcgui.Dialog().yesno('bosstechmediaV5','Would You like us to Setup the TV Guide for You?')
 		if dialog:
 			dialog = xbmcgui.Dialog().select('Select a TV Guide to Setup', ['iVue TV Guide','PVR TV Guide','Both'])
 			if dialog==0:
 				ivueint()
-				xbmcgui.Dialog().ok('Limitless', 'iVue Integration Complete')
+				xbmcgui.Dialog().ok('bosstechmediaV5', 'iVue Integration Complete')
 			elif dialog==1:
 				pvrsetup()
-				xbmcgui.Dialog().ok('Limitless', 'PVR Integration Complete')
+				xbmcgui.Dialog().ok('bosstechmediaV5', 'PVR Integration Complete')
 			elif dialog==2:
 				pvrsetup()
 				ivueint()
-				xbmcgui.Dialog().ok('Limitless', 'PVR & iVue Integration Complete')
+				xbmcgui.Dialog().ok('bosstechmediaV5', 'PVR & iVue Integration Complete')
 
 def num2day(num):
 	if num =="0":
