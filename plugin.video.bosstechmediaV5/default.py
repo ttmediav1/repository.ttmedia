@@ -7,7 +7,7 @@ import xml.etree.ElementTree as ElementTree
 #################################
 
 #############Defined Strings#############
-addon_id     = 'plugin.video.Limitless'
+addon_id     = 'plugin.video.bosstechmediaV5'
 selfAddon    = xbmcaddon.Addon(id=addon_id)
 icon         = xbmc.translatePath(os.path.join('special://home/addons/' + addon_id, 'icon.png'))
 fanart       = xbmc.translatePath(os.path.join('special://home/addons/' + addon_id , 'fanart.jpg'))

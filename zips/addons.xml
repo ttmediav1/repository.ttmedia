@@ -91,7 +91,7 @@
 
 <addon id="plugin.video.bosstechmediaV5"
        name="BossTech Media [COLOR red]V5[/COLOR]"
-       version="1.0.0"
+       version="1.0.1"
        provider-name="[COLORlime]TT Media[/COLOR]">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -297,7 +297,7 @@
   </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="[B][COLORlime]TTMedia Repository[/COLOR][/B]" version="2.2.5" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="repository.ttmedia" name="[B][COLORlime]TTMedia Repository[/COLOR][/B]" version="2.2.6" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
