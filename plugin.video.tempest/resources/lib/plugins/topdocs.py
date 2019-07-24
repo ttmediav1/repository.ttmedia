@@ -32,209 +32,135 @@
 
     XML Explanations:
         Tags: 
-            <docuh></docuh> - Displays the entry as category's contents
+            <topdocs></topdocs> - Displays the entry as category's contents
 
 
     Usage Examples:
 
         <dir>
-            <title>911</title>
-            <docuh>dhcategory/911</docuh>
-        </dir>
-
-        <dir>
-            <title>Activist</title>
-            <docuh>dhcategory/activist</docuh>
-        </dir>
-
-        <dir>
-            <title>Archaeology</title>
-            <docuh>dhcategory/archaeology</docuh>
+            <title>9-11</title>
+            <topdocs>tdcategory/911</topdocs>
         </dir>
 
         <dir>
             <title>Art and Artists</title>
-            <docuh>dhcategory/art-and-artists</docuh>
+            <topdocs>tdcategory/art-artists</topdocs>
         </dir>
 
         <dir>
-            <title>Atheism</title>
-            <docuh>dhcategory/atheism</docuh>
+            <title>Biography</title>
+            <topdocs>tdcategory/biography</topdocs>
         </dir>
 
         <dir>
-            <title>Biographies</title>
-            <docuh>dhcategory/biographies</docuh>
-        </dir>
-
-        <dir>
-            <title>Business</title>
-            <docuh>dhcategory/business</docuh>
-        </dir>
-
-        <dir>
-            <title>Celebrity</title>
-            <docuh>dhcategory/celebrity</docuh>
-        </dir>
-
-        <dir>
-            <title>Crime</title>
-            <docuh>dhcategory/crime</docuh>
-        </dir>
-
-        <dir>
-            <title>Conference</title>
-            <docuh>dhcategory/conference</docuh>
+            <title>Comedy</title>
+            <topdocs>tdcategory/comedy</topdocs>
         </dir>
 
         <dir>
             <title>Conspiracy</title>
-            <docuh>dhcategory/conspiracy</docuh>
+            <topdocs>tdcategory/crime-conspiracy</topdocs>
         </dir>
 
         <dir>
-            <title>Countries</title>
-            <docuh>dhcategory/countries</docuh>
+            <title>Crime</title>
+            <topdocs>tdcategory/crime</topdocs>
         </dir>
 
         <dir>
             <title>Drugs</title>
-            <docuh>dhcategory/drugs</docuh>
+            <topdocs>tdcategory/drugs</topdocs>
         </dir>
 
         <dir>
             <title>Economics</title>
-            <docuh>dhcategory/economics</docuh>
-        </dir>
-
-        <dir>
-            <title>Educational</title>
-            <docuh>dhcategory/educational</docuh>
+            <topdocs>tdcategory/economics</topdocs>
         </dir>
 
         <dir>
             <title>Environment</title>
-            <docuh>dhcategory/environment</docuh>
-        </dir>
-
-        <dir>
-            <title>Evolution</title>
-            <docuh>dhcategory/evolution</docuh>
-        </dir>
-
-        <dir>
-            <title>Gangs</title>
-            <docuh>dhcategory/gangs</docuh>
+            <topdocs>tdcategory/environment</topdocs>
         </dir>
 
         <dir>
             <title>Health</title>
-            <docuh>dhcategory/health</docuh>
+            <topdocs>tdcategory/health</topdocs>
         </dir>
 
         <dir>
             <title>History</title>
-            <docuh>dhcategory/history</docuh>
+            <topdocs>tdcategory/history</topdocs>
         </dir>
 
         <dir>
-            <title>Human Rights</title>
-            <docuh>dhcategory/human-rights</docuh>
+            <title>Media</title>
+            <topdocs>tdcategory/media</topdocs>
         </dir>
 
         <dir>
-            <title>Lifestyle</title>
-            <docuh>dhcategory/lifestyle</docuh>
-        </dir>
-
-        <dir>
-            <title>Movies</title>
-            <docuh>dhcategory/movies</docuh>
-        </dir>
-
-        <dir>
-            <title>Music</title>
-            <docuh>dhcategory/music</docuh>
+            <title>Military and War</title>
+            <topdocs>tdcategory/military-war</topdocs>
         </dir>
 
         <dir>
             <title>Mystery</title>
-            <docuh>dhcategory/mystery</docuh>
+            <topdocs>tdcategory/mystery</topdocs>
         </dir>
 
         <dir>
-            <title>Nature</title>
-            <docuh>dhcategory/nature</docuh>
-        </dir>
-
-        <dir>
-            <title>News and Politics</title>
-            <docuh>dhcategory/news-politics</docuh>
+            <title>Nature and Wildlife</title>
+            <topdocs>tdcategory/nature-wildlife</topdocs>
         </dir>
 
         <dir>
             <title>Performing Arts</title>
-            <docuh>dhcategory/performing-arts</docuh>
+            <topdocs>tdcategory/music-performing-arts</topdocs>
         </dir>
 
         <dir>
             <title>Philosophy</title>
-            <docuh>dhcategory/philosophy</docuh>
+            <topdocs>tdcategory/philosophy</topdocs>
         </dir>
 
         <dir>
-            <title>Preview Only</title>
-            <docuh>dhcategory/preview-only</docuh>
+            <title>Politics</title>
+            <topdocs>tdcategory/politics</topdocs>
         </dir>
 
         <dir>
             <title>Psychology</title>
-            <docuh>dhcategory/psychology</docuh>
+            <topdocs>tdcategory/psychology</topdocs>
         </dir>
 
         <dir>
             <title>Religion</title>
-            <docuh>dhcategory/religion</docuh>
+            <topdocs>tdcategory/religion</topdocs>
         </dir>
 
         <dir>
             <title>Science</title>
-            <docuh>dhcategory/science</docuh>
+            <topdocs>tdcategory/science-technology</topdocs>
+        </dir>
+
+        <dir>
+            <title>Sexuality</title>
+            <topdocs>tdcategory/sex</topdocs>
         </dir>
 
         <dir>
             <title>Society</title>
-            <docuh>dhcategory/society</docuh>
+            <topdocs>tdcategory/society</topdocs>
         </dir>
 
         <dir>
-            <title>Space</title>
-            <docuh>dhcategory/space</docuh>
-        </dir>
-
-        <dir>
-            <title>Spiritual</title>
-            <docuh>dhcategory/spiritual</docuh>
-        </dir>
-
-        <dir>
-            <title>Sport and Adventure</title>
-            <docuh>dhcategory/sportadventure</docuh>
+            <title>Sports</title>
+            <topdocs>tdcategory/sports</topdocs>
         </dir>
 
         <dir>
             <title>Technology</title>
-            <docuh>dhcategory/technology</docuh>
+            <topdocs>tdcategory/technology</topdocs>
         </dir>
-
-        <dir>
-            <title>War</title>
-            <docuh>dhcategory/war</docuh>
-        </dir>
-
-
-
-
 
 """
 
@@ -256,47 +182,23 @@ addon_id = xbmcaddon.Addon().getAddonInfo('id')
 addon_fanart = xbmcaddon.Addon().getAddonInfo('fanart')
 addon_icon   = xbmcaddon.Addon().getAddonInfo('icon')
 
-docu_link = 'http://documentaryheaven.com'
-docu_cat_list = 'http://documentaryheaven.com/category/'
+docu_link = 'https://topdocumentaryfilms.com/'
+docu_cat_list = 'https://topdocumentaryfilms.com/category/'
 
-"""
-Add strings to the reg_items for domains that are supported naturally by resolveurl
-"""
-reg_items = {'vimeo','dailymotion','rutube','vid.ag','thevideobee','vidzi.tv'}
-unreg_items = {'myspace','nfb.ca','snagfilms','dotsub','en.musicplayon.com','vkontakte.ru','veehd.com','liveleak.com','imdb.com','disclose.tv','videoweed.es','putlocker','vid.ag','vice.com'}
-"""
-Examples for unreg_items, to look into future support or if requested to fix by adding to/fixing in resolveurl
-
-thevideobee: Music - Amy
-snagfiles: Music - Jimi Hendrix the Uncut Story
-dotsub: Music - The Man in the Mirror
-en.musicplayon.com: Music - Prince: The Glory Years
-vkontakte.ru: Music - Paul Kalkbrenner: A live documentary
-veehd.com: The Abandoned Marsh
-liveleak.com: Lost Nuke
-imdb.com: Eceti Ranch
-disclose.tv: The Revelation of the Pyramids
-videoweed.es: EP2/4 Wonders of the Universe
-putlocker: EP 1/6 The Private Life of Plants
-vid.ag: Jim: The James Foley Story
-vice.com: Our Rising Oceans
-
-"""
-
-class DocuHeaven(Plugin):
-    name = "docuh"
+class TopDocs(Plugin):
+    name = "topdocs"
     priority = 200
 
     def process_item(self, item_xml):
-        if "<docuh>" in item_xml:
+        if "<topdocs>" in item_xml:
             item = JenItem(item_xml)
-            if "dhcategory/" in item.get("docuh", ""):
+            if "tdcategory/" in item.get("topdocs", ""):
                 result_item = {
                     'label': item["title"],
                     'icon': item.get("thumbnail", addon_icon),
                     'fanart': item.get("fanart", addon_fanart),
-                    'mode': "DHCats",
-                    'url': item.get("docuh", ""),
+                    'mode': "TDCats",
+                    'url': item.get("topdocs", ""),
                     'folder': True,
                     'imdb': "0",
                     'content': "files",
@@ -314,15 +216,16 @@ class DocuHeaven(Plugin):
         skip_prompt = xbmcaddon.Addon().getSetting("quiet_cache")
         dialog = xbmcgui.Dialog()
         if skip_prompt == 'false':
-            if dialog.yesno(xbmcaddon.Addon().getAddonInfo('name'), "Clear Documentary Heaven Plugin Cache?"):
-                koding.Remove_Table("docuheaven_com_plugin")
+            if dialog.yesno(xbmcaddon.Addon().getAddonInfo('name'), "Clear Top Documentaries Plugin Cache?"):
+                koding.Remove_Table("topdocs_com_plugin")
         else:
-            koding.Remove_Table("docuheaven_com_plugin")
+            koding.Remove_Table("topdocs_com_plugin")
+            
 
-@route(mode='DHCats', args=["url"])
-def get_DHcats(url):
+@route(mode='TDCats', args=["url"])
+def get_tdcats(url):
     pins = ""
-    url = url.replace('dhcategory/', '') # Strip our category tag off.
+    url = url.replace('tdcategory/', '') # Strip our category tag off.
     orig_cat = url.split("/")[0]
     url = urlparse.urljoin(docu_cat_list, url)
 
@@ -331,7 +234,7 @@ def get_DHcats(url):
         xml = ""
         try:
             html = requests.get(url).content
-            doc_list = dom_parser.parseDOM(html, 'article')
+            doc_list = dom_parser.parseDOM(html, 'article', attrs={'class':'module'})
             for content in doc_list:
                 try:
                     docu_info = re.compile('<h2>(.+?)</h2>',re.DOTALL).findall(content)[0]
@@ -343,6 +246,7 @@ def get_DHcats(url):
                         docu_icon = re.compile('data-src="(.+?)"',re.DOTALL).findall(content)[0]
                     except:
                         docu_icon = re.compile('src="(.+?)"',re.DOTALL).findall(content)[0]
+
 
                     docu_url = re.compile('href="(.+?)"',re.DOTALL).findall(docu_info)[0]
                     docu_html = requests.get(docu_url).content
@@ -356,7 +260,7 @@ def get_DHcats(url):
                         docu_item = 'https:' + docu_item
                     docu_url = docu_item
 
-                    replaceHTMLCodes(docu_title)
+                    docu_title = replaceHTMLCodes(docu_title)
 
                     if 'youtube' in docu_url:
                         if 'videoseries' not in docu_url:
@@ -376,6 +280,13 @@ def get_DHcats(url):
                                    "    <thumbnail>%s</thumbnail>"\
                                    "    <summary>%s</summary>"\
                                    "</item>" % (docu_title,docu_url,docu_icon,docu_summary)
+                    elif 'vimeo' in docu_url or 'dailymotion' in docu_url:
+                        xml += "<item>"\
+                               "    <title>%s</title>"\
+                               "    <link>%s</link>"\
+                               "    <thumbnail>%s</thumbnail>"\
+                               "    <summary>%s</summary>"\
+                               "</item>" % (docu_title,docu_url,docu_icon,docu_summary)
                     elif 'archive.org/embed' in docu_url:
                         docu_html = requests.get(docu_url).content
                         video_element = dom_parser.parseDOM(docu_html, 'source', ret='src')[0]
@@ -386,37 +297,30 @@ def get_DHcats(url):
                                "    <thumbnail>%s</thumbnail>"\
                                "    <summary>%s</summary>"\
                                "</item>" % (docu_title,docu_url,docu_icon,docu_summary)
-                    elif any(x in docu_url for x in reg_items):
-                        xml += "<item>"\
-                               "    <title>%s</title>"\
-                               "    <link>%s</link>"\
-                               "    <thumbnail>%s</thumbnail>"\
-                               "    <summary>%s</summary>"\
-                               "</item>" % (docu_title,docu_url,docu_icon,docu_summary)
-                    elif any(x in docu_url for x in unreg_items):
+                    elif 'myspace' in docu_url or 'nfb.ca' in docu_url:
                         # most of these gone now so screw it lol, and no valid player know yet to work with nfb
                         continue
                     else:
                         xbmcgui.Dialog().ok('Unknown Host - ' + docu_title,str(docu_url)) 
+
                 except:
                     continue
 
             try:
-                navi_content = dom_parser.parseDOM(html, 'div', attrs={'class':'numeric-nav'})[0]
-                if '>NEXT' in navi_content:
+                navi_content = dom_parser.parseDOM(html, 'div', attrs={'class':'pagination module'})[0]
+                if '>Next' in navi_content:
                     links = dom_parser.parseDOM(navi_content, 'a', ret='href')
                     link = links[(len(links)-1)]
                     page = link.split("/")[-2]
                     xml += "<dir>"\
                            "    <title>Next Page >></title>"\
-                           "    <docuh>dhcategory/%s/page/%s</docuh>"\
+                           "    <topdocs>tdcategory/%s/page/%s</topdocs>"\
                            "</dir>" % (orig_cat,page)
             except:
                 pass
+            save_to_db(xml, url)
         except:
             pass
-
-        save_to_db(xml, url)
 
     jenlist = JenList(xml)
     display_list(jenlist.get_list(), jenlist.get_content_type(), pins)
@@ -428,12 +332,12 @@ def save_to_db(item, url):
     try:
         koding.reset_db()
         koding.Remove_From_Table(
-            "docuheaven_com_plugin",
+            "topdocs_com_plugin",
             {
                 "url": url
             })
 
-        koding.Add_To_Table("docuheaven_com_plugin",
+        koding.Add_To_Table("topdocs_com_plugin",
                             {
                                 "url": url,
                                 "item": base64.b64encode(item),
@@ -445,7 +349,7 @@ def save_to_db(item, url):
 
 def fetch_from_db(url):
     koding.reset_db()
-    docuh_plugin_spec = {
+    topdocs_plugin_spec = {
         "columns": {
             "url": "TEXT",
             "item": "TEXT",
@@ -455,9 +359,9 @@ def fetch_from_db(url):
             "unique": "url"
         }
     }
-    koding.Create_Table("docuheaven_com_plugin", docuh_plugin_spec)
+    koding.Create_Table("topdocs_com_plugin", topdocs_plugin_spec)
     match = koding.Get_From_Table(
-        "docuheaven_com_plugin", {"url": url})
+        "topdocs_com_plugin", {"url": url})
     if match:
         match = match[0]
         if not match["item"]:
