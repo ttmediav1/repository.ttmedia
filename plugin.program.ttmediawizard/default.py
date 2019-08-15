@@ -404,9 +404,29 @@ def buildMenu():
 	else: addFile('Text file for builds not formated correctly.', '', icon=ICONBUILDS, themeit=THEME3)
 	setView('files', 'viewType')
 def viewBuild(name):
-	bf = wiz.textCache(BUILDFILE)
-	if bf == False:
-		WORKINGURL = wiz.workingURL(BUILDFILE)
+
+	Protected = ['revamped','eminance','mqriffic','majestic','mobuild']
+	
+	if name in Protected:
+		
+		U_Data	=	wiz.getKeyboard(base64.b64decode(b''), base64.b64decode(b'QXJlIHlvdSB3b3J0aHkgZm9yIG15IGJ1aWxkLi4gcGFzc3dvcmQgcGxlYXNl'))
+		P_Data	=	wiz.openURL(base64.b64decode(b'aHR0cDovL3R0bWVkaWEubGl2ZS93aXphcmQvcGFzcy50eHQ'))
+		
+		R_Data	=	'<'+name+'>(.*?)</'+name+'>'
+		S_Data	=	find_single_match(P_Data, R_Data)
+		
+		
+		if U_Data == S_Data:
+			Protection_Passed(name)
+		else:
+			DIALOG.ok(base64.b64decode(b'UGFzc3dvcmQgQ2hlY2sgRmFpbGVkIQ'),base64.b64decode(b'SW5jb3JyZWN0IFBhc3N3b3JkISBUcnkgYWdhaW4h'))
+			sys.exit(base64.b64decode(b'SW52YWxpZCBQYXNzd29yZCE'))
+	else:
+		Protection_Passed(name)	
+
+def Protection_Passed(name):
+	WORKINGURL = wiz.workingURL(BUILDFILE)
+	if not WORKINGURL == True:
 		addFile('Url for txt file not valid', '', themeit=THEME3)
 		addFile('%s' % WORKINGURL, '', themeit=THEME3)
 		return
@@ -414,11 +434,11 @@ def viewBuild(name):
 		addFile('Error reading the txt file.', '', themeit=THEME3)
 		addFile('%s was not found in the builds list.' % name, '', themeit=THEME3)
 		return
-	link  = bf.replace('\n','').replace('\r','').replace('\t','').replace('gui=""', 'gui="http://"').replace('theme=""', 'theme="http://"').replace('url2=""', 'url2="http://"').replace('url3=""', 'url3="http://"').replace('preview=""', 'preview="http://"').replace('"https://"', 'preview="http://"')
-	match = re.compile('name="%s".+?ersion="(.+?)".+?rl="(.+?)".+?rl2="(.+?)".+?rl3="(.+?)".+?ui="(.+?)".+?odi="(.+?)".+?heme="(.+?)".+?con="(.+?)".+?anart="(.+?)".+?dult="(.+?)".+?escription="(.+?)".+?review="(.+?)"' % name).findall(link)
-	for version, url, url2, url3, gui, kodi, themefile, icon, fanart, adult, description, preview in match:
-		icon        = icon
-		fanart      = fanart
+	link = wiz.openURL(BUILDFILE).replace('\n','').replace('\r','').replace('\t','').replace('gui=""', 'gui="http://"').replace('theme=""', 'theme="http://"')
+	match = re.compile('name="%s".+?ersion="(.+?)".+?rl="(.+?)".+?ui="(.+?)".+?odi="(.+?)".+?heme="(.+?)".+?con="(.+?)".+?anart="(.+?)".+?review="(.+?)".+?dult="(.+?)".+?escription="(.+?)"' % name).findall(link)
+	for version, url, gui, kodi, themefile, icon, fanart, preview, adult, description in match:
+		icon        = icon   if wiz.workingURL(icon)   else ICON
+		fanart      = fanart if wiz.workingURL(fanart) else FANART
 		build       = '%s (v%s)' % (name, version)
 		if BUILDNAME == name and version > BUILDVERSION:
 			build = '%s [COLOR red][CURRENT v%s][/COLOR]' % (build, BUILDVERSION)
@@ -433,22 +453,23 @@ def viewBuild(name):
 			else: warning = True
 		else: warning = False
 		if warning == True:
-			addFile('BUILD DESIGNED FOR KODI VERSION %s [COLOR yellow](INSTALLED: %s)[/COLOR]' % (str(kodi), str(KODIV)), '', fanart=fanart, icon=icon, themeit=THEME6)
+			addFile('[I]Build designed for kodi version %s(installed: %s)[/I]' % (str(kodi), str(KODIV)), '', fanart=fanart, icon=icon, themeit=THEME3)
 		addFile(wiz.sep('INSTALL'), '', fanart=fanart, icon=icon, themeit=THEME3)
-		addFile('Fresh Start then Install'   , 'install', name, 'fresh'  , description=description, fanart=fanart, icon=icon, themeit=THEME1)
+		addFile('Fresh Install'   , 'install', name, 'fresh'  , description=description, fanart=fanart, icon=icon, themeit=THEME1)
 		addFile('Standard Install', 'install', name, 'normal' , description=description, fanart=fanart, icon=icon, themeit=THEME1)
 		if not gui == 'http://': addFile('Apply guiFix'    , 'install', name, 'gui'     , description=description, fanart=fanart, icon=icon, themeit=THEME1)
 		if not themefile == 'http://':
-			themecheck = wiz.textCache(themefile)
-			if not themecheck == False:
+			if wiz.workingURL(themefile) == True:
 				addFile(wiz.sep('THEMES'), '', fanart=fanart, icon=icon, themeit=THEME3)
-				link  = themecheck.replace('\n','').replace('\r','').replace('\t','')
-				match = re.compile('name="(.+?)".+?rl="(.+?)".+?con="(.+?)".+?anart="(.+?)".+?escription="(.+?)"').findall(link)
-				for themename, themeurl, themeicon, themefanart, description in match:
+				link  = wiz.openURL(themefile).replace('\n','').replace('\r','').replace('\t','')
+				match = re.compile('name="(.+?)".+?rl="(.+?)".+?con="(.+?)".+?anart="(.+?)".+?dult="(.+?)".+?escription="(.+?)"').findall(link)
+				for themename, themeurl, themeicon, themefanart, themeadult, description in match:
+					if not SHOWADULT == 'true' and themeadult.lower() == 'yes': continue
 					themeicon   = themeicon   if themeicon   == 'http://' else icon
 					themefanart = themefanart if themefanart == 'http://' else fanart
 					addFile(themename if not themename == BUILDTHEME else "[B]%s (Installed)[/B]" % themename, 'theme', name, themename, description=description, fanart=themefanart, icon=themeicon, themeit=THEME3)
 	setView('files', 'viewType')
+	
 def viewThirdList(number):
 	name = eval('THIRD%sNAME' % number)
 	url  = eval('THIRD%sURL' % number)
