@@ -51,13 +51,22 @@
                 <onleft>105</onleft>
                 <onright>105</onright>
             </control>
-            <control type="image">
-                <left>730</left>
-                <top>175</top>
-                <width>200</width>
-                <height>200</height>
-                <texture border="2">Background/qricon.png</texture>
-				<aspectratio aligny="center" align="center">keep</aspectratio>
+            <control type="scrollbar" id="105">
+                <left>910</left>
+                <top>70</top>
+                <width>30</width>
+                <height>300</height>
+                <subtype>text</subtype>
+                <visible>true</visible>
+                <texturesliderbackground>Button/scrollbar-V-background.png</texturesliderbackground>
+                <texturesliderbar>Button/scrollbar-V.png</texturesliderbar>
+                <texturesliderbarfocus colordiffuse="FF12B2E7">Button/scrollbar-V-focus.png</texturesliderbarfocus>
+                <orientation>vertical</orientation>
+                <showonepage>true</showonepage>
+                <onup>104</onup>
+                <ondown>104</ondown>
+                <onleft>104</onleft>
+                <onright>104</onright>
             </control>
         </control>
     </controls>

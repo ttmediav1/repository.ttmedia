@@ -55,7 +55,7 @@ def _pbhook(numblocks, blocksize, filesize, dp, start_time):
 		dp.update(percent, '', mbs, e)
 	except Exception, e:
 		wiz.log("ERROR Downloading: %s" % str(e), xbmc.LOGERROR)
-		pass
+		return str(e)
 	if dp.iscanceled(): 
 		dp.close()
 		wiz.LogNotify("[COLOR %s]%s[/COLOR]" % (COLOR1, ADDONTITLE), "[COLOR %s]Download Cancelled[/COLOR]" % COLOR2)

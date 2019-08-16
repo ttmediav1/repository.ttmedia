@@ -2,7 +2,7 @@
 <window>
     <coordinates>
         <left>635</left>
-        <top>160</top>
+        <top>180</top>
     </coordinates>
     <controls>
         <control type="group">
@@ -11,7 +11,7 @@
                 <posx>0</posx>
                 <posy>0</posy>
                 <width>650</width>
-                <height>765</height>
+                <height>720</height>
                 <texture border="2">Background/loguploader-dialog-bg.png</texture>
             </control>
             <control type="image">
@@ -20,7 +20,7 @@
                 <posy>0</posy>
                 <width>650</width>
                 <height>50</height>
-                <texture colordiffuse="FF333333" border="2">Background/loguploader-white.png</texture>
+                <texture colordiffuse="FF12B2E7" border="2">Background/loguploader-white.png</texture>
             </control>
             <control type="label" id="101">
                 <description>header label</description>
@@ -28,7 +28,7 @@
                 <posy>0</posy>
                 <width>650</width>
                 <height>50</height>
-                <font>font14</font>
+                <font>font13</font>
                 <label></label>
                 <align>center</align>
                 <aligny>center</aligny>
@@ -105,14 +105,14 @@
                 <textureradioofffocus colordiffuse="FF12B2E7">RadioButton/radiobutton-focus.png</textureradioofffocus>
                 <textureradiooffnofocus>RadioButton/radiobutton-nofocus.png</textureradiooffnofocus>
             </control>
-            <control type="radiobutton" id="314">
+            <control type="radiobutton" id="304">
                 <width>610</width>
                 <height>40</height>
                 <textwidth>565</textwidth>
                 <textoffsetx>10</textoffsetx>
                 <radioheight>45</radioheight>
                 <radioposx>530</radioposx>
-                <label>Keep My Alluc Login</label>
+                <label>Keep My Sources.xml</label>
                 <font>font12</font>
                 <texturefocus colordiffuse="FF12B2E7">RadioButton/MenuItemFO.png</texturefocus>
                 <texturenofocus>RadioButton/MenuItemNF.png</texturenofocus>
@@ -233,11 +233,43 @@
                 <textureradioofffocus colordiffuse="FF12B2E7">RadioButton/radiobutton-focus.png</textureradioofffocus>
                 <textureradiooffnofocus>RadioButton/radiobutton-nofocus.png</textureradiooffnofocus>
             </control>
+            <control type="radiobutton" id="312">
+                <width>610</width>
+                <height>40</height>
+                <textwidth>565</textwidth>
+                <textoffsetx>10</textoffsetx>
+                <radioheight>45</radioheight>
+                <radioposx>530</radioposx>
+                <label>Clear Packages on Startup</label>
+                <font>font12</font>
+                <texturefocus colordiffuse="FF12B2E7">RadioButton/MenuItemFO.png</texturefocus>
+                <texturenofocus>RadioButton/MenuItemNF.png</texturenofocus>
+                <textureradioonfocus colordiffuse="FF12B2E7">RadioButton/radiobutton-focus.png</textureradioonfocus>
+                <textureradioonnofocus colordiffuse="FF12B2E7">RadioButton/radiobutton-focus.png</textureradioonnofocus>
+                <textureradioofffocus colordiffuse="FF12B2E7">RadioButton/radiobutton-focus.png</textureradioofffocus>
+                <textureradiooffnofocus>RadioButton/radiobutton-nofocus.png</textureradiooffnofocus>
+            </control>
+            <control type="radiobutton" id="313">
+                <width>610</width>
+                <height>40</height>
+                <textwidth>565</textwidth>
+                <textoffsetx>10</textoffsetx>
+                <radioheight>45</radioheight>
+                <radioposx>530</radioposx>
+                <label>Clear Old Thumbnails on Startup</label>
+                <font>font12</font>
+                <texturefocus colordiffuse="FF12B2E7">RadioButton/MenuItemFO.png</texturefocus>
+                <texturenofocus>RadioButton/MenuItemNF.png</texturenofocus>
+                <textureradioonfocus colordiffuse="FF12B2E7">RadioButton/radiobutton-focus.png</textureradioonfocus>
+                <textureradioonnofocus colordiffuse="FF12B2E7">RadioButton/radiobutton-focus.png</textureradioonnofocus>
+                <textureradioofffocus colordiffuse="FF12B2E7">RadioButton/radiobutton-focus.png</textureradioofffocus>
+                <textureradiooffnofocus>RadioButton/radiobutton-nofocus.png</textureradiooffnofocus>
+            </control>
         </control>
         <control type="group" id="9001">
             <control type="button" id="201">
                 <left>350</left>
-                <top>675</top>
+                <top>630</top>
                 <width>300</width>
                 <height>90</height>
                 <font>font13</font>

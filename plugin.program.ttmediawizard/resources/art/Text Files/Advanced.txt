@@ -1,0 +1,14 @@
+
+name="Advanced Settings Name"
+section="no"
+url="http:// URL to /advancedsettings1.xml"
+icon="http://" 
+fanart="http://"
+description="1 Gig Ram Advanced Settings"
+
+name="Advanced Setting Section 1 Name"
+section="yes"
+url="http:// URL to /advanced-section1.txt"
+icon="http://" 
+fanart="http://"
+description="description of section 1"

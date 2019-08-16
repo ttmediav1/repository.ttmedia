@@ -45,7 +45,6 @@ ADDON_ID         = uservar.ADDON_ID
 ADDONTITLE       = uservar.ADDONTITLE
 COLOR1           = uservar.COLOR1
 COLOR2           = uservar.COLOR2
-BUILDERNAME      = uservar.BUILDERNAME
 ADDON            = wiz.addonId(ADDON_ID)
 ADDONVERSION     = ADDON.getAddonInfo('version')
 DIALOG           = xbmcgui.Dialog()
@@ -199,7 +198,7 @@ class Main:
 
 	def postLog(self, data, name):
 		params = {}
-		params['poster'] = BUILDERNAME
+		params['poster'] = ADDONTITLE
 		params['content'] = data
 		params['syntax'] = 'text'
 		params['expiration'] = 'week'
@@ -222,12 +221,37 @@ class Main:
 			a = 'unable to retrieve the paste url'
 			wiz.log("%s: %s" % (a, str(e)), xbmc.LOGERROR)
 			return False, a
+			
+	def email_Log(self, email, results, file):
+		URL = 'http://aftermathwizard.net/mail_logs.php'
+		data = {'email': email, 'results': results, 'file': file, 'wizard': ADDONTITLE}
+		params = urlencode(data)
+		url_opener = pasteURLopener()
+		try:
+			result     = url_opener.open(URL, params)
+			returninfo = result.read()
+			wiz.log(str(returninfo), xbmc.LOGNOTICE)
+		except Exception, e:
+			a = 'failed to connect to the server'
+			wiz.log("%s: %s" % (a, str(e)), xbmc.LOGERROR)
+			return False, a
+		try:
+			js_data = json.loads(returninfo)
+			if 'type' in js_data:
+				return js_data['type'], str(js_data['text'])
+			else: return str(js_data)
+		except Exception, e:
+			wiz.log("ERROR: "+ str(e), xbmc.LOGERROR)
+		return "Error Sending Email."
 
 	def showResult(self, message, url=None):
 		if not url == None:
 			try:
 				fn        = url.split('/')[-2]
 				imagefile = wiz.generateQR(url, fn)
+				#imagefile = os.path.join(QRCODES,'%s.png' % fn)
+ 				#qrIMG     = pyqrcode.create(url)
+				#qrIMG.png(imagefile, scale=10)
 				qr = QRCode( "loguploader.xml" , ADDON.getAddonInfo('path'), 'DefaultSkin', image=imagefile, text=message)
 				qr.doModal()
 				del qr

@@ -20,7 +20,7 @@
                 <posy>0</posy>
                 <width>1920</width>
                 <height>60</height>
-                <texture colordiffuse="FF333333" border="2">Background/loguploader-white.png</texture>
+                <texture colordiffuse="FF12B2E7" border="2">Background/loguploader-white.png</texture>
             </control>
             <control type="image">
                 <description>Dialog Header image</description>
@@ -28,7 +28,7 @@
                 <posy>1010</posy>
                 <width>1920</width>
                 <height>60</height>
-                <texture colordiffuse="FF333333" border="2">Background/loguploader-white.png</texture>
+                <texture colordiffuse="FF12B2E7" border="2">Background/loguploader-white.png</texture>
             </control>
             <control type="label" id="101">
                 <description>header label</description>

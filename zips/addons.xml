@@ -50,7 +50,7 @@
 	</extension>
 </addon>
 
-<addon id="plugin.program.ttmediawizard" name="[COLORdodgerblue]TTMedia Wizard[/COLOR]" version="4.7" provider-name="[COLORdodgerblue]TTMedia[/COLOR]">
+<addon id="plugin.program.ttmediawizard" name="[B][COLORlightblue]TTMedia Wizard[/B][/COLOR]" version="4.8" provider-name="[B][COLORlightblue]TTMedia[/B][/COLOR]">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
@@ -60,7 +60,7 @@
   <extension point="xbmc.service" library="startup.py" start="startup" />
   <extension point="xbmc.addon.metadata">
     <summary lang="en">TTMedia Wizard</summary>
-    <description lang="en">[B][COLORdodgerblue]TTMEDIA WIZARD KEEPS YOUR KODI DEVICES RUNNING SMOOTH AND ALLOWS YOU TO GET ACCESS TO THE LATEST TTMEDIA CUSTOM BUILDS.[/COLOR][/B]</description>
+    <description lang="en">[B][COLORlightblue]TTMEDIA WIZARD KEEPS YOUR KODI DEVICES RUNNING SMOOTH AND ALLOWS YOU TO GET ACCESS TO THE LATEST TTMEDIA CUSTOM BUILDS.[/COLOR][/B]</description>
     <platform>all</platform>
   </extension>
 </addon>
