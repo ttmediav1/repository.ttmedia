@@ -198,10 +198,9 @@ class Main:
 
 	def postLog(self, data, name):
 		params = {}
-		params['poster'] = ADDONTITLE
+		params['poster'] = 'kodi'
 		params['content'] = data
 		params['syntax'] = 'text'
-		params['expiration'] = 'week'
 		params = urlencode(params)
 
 		url_opener = pasteURLopener()
