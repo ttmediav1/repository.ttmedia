@@ -24,6 +24,7 @@ import re
 import zipfile
 import uservar
 import fnmatch
+import base64
 try:    from sqlite3 import dbapi2 as database
 except: from pysqlite2 import dbapi2 as database
 from datetime import date, datetime, timedelta
