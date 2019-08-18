@@ -1,0 +1,23 @@
+
+name="Bob"
+plugin="plugin.video.bob"
+url="https://raw.githubusercontent.com/noobsandnerds/noobsandnerds/master/zips/plugin.video.bob/"
+repository="repository.noobsandnerds"
+repositoryxml="https://raw.githubusercontent.com/noobsandnerds/noobsandnerds/master/zips/addons.xml"
+repositoryurl="https://raw.githubusercontent.com/noobsandnerds/noobsandnerds/master/zips/repository.noobsandnerds/"
+icon="https://raw.githubusercontent.com/noobsandnerds/noobsandnerds/master/plugin.video.bob/icon.png"
+fanart="https://raw.githubusercontent.com/noobsandnerds/noobsandnerds/master/plugin.video.bob/fanart.jpg"
+adult="No"
+description="Bob Playlist Addon."
+
+
+name="Section 1 Name If using Sections"
+plugin="section"
+url="http:// URL to /addons-section1.txt"
+repository="none"
+repositoryxml="http://"
+repositoryurl="http://"
+icon="http://"
+fanart="http://"
+adult="no"
+description="Description of addon section 1"

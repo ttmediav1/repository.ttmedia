@@ -181,14 +181,9 @@ while xbmc.Player().isPlayingVideo():
 
 if KODIV >= 17:
 	NOW = datetime.now()
-	temp = wiz.getS('kodi17iscrap')
-	if not temp == '':
-		if temp > str(NOW - timedelta(minutes=2)):
-			wiz.log("Killing Start Up Script")
-			sys.exit()
-	wiz.log("%s" % (NOW))
+	wiz.log(NOW)
 	wiz.setS('kodi17iscrap', str(NOW))
-	xbmc.sleep(1000)
+	xbmc.sleep(500)
 	if not wiz.getS('kodi17iscrap') == str(NOW):
 		wiz.log("Killing Start Up Script")
 		sys.exit()
@@ -268,23 +263,24 @@ if ENABLE == 'Yes':
 	if not NOTIFY == 'true':
 		url = wiz.workingURL(NOTIFICATION)
 		if url == True:
-			id, msg = wiz.splitNotify(NOTIFICATION)
-			if not id == False:
-				try:
-					id = int(id); NOTEID = int(NOTEID)
-					if id == NOTEID:
-						if NOTEDISMISS == 'false':
-							notify.notification(msg)
-						else: wiz.log("[Notifications] id[%s] Dismissed" % int(id), xbmc.LOGNOTICE)
-					elif id > NOTEID:
-						wiz.log("[Notifications] id: %s" % str(id), xbmc.LOGNOTICE)
-						wiz.setS('noteid', str(id))
-						wiz.setS('notedismiss', 'false')
-						notify.notification(msg=msg)
-						wiz.log("[Notifications] Complete", xbmc.LOGNOTICE)
-				except Exception, e:
-					wiz.log("Error on Notifications Window: %s" % str(e), xbmc.LOGERROR)
-			else: wiz.log("[Notifications] Text File not formated Correctly")
+			link  = wiz.openURL(NOTIFICATION).replace('\r','').replace('\t','')
+			try:
+				id, msg = link.split('|||')
+				if msg.startswith('\n'): msg = msg[2:]
+				if int(id) == int(NOTEID):
+					if NOTEDISMISS == 'false':
+						notify.notification(msg)
+						xbmc.sleep(500)
+					else: wiz.log("[Notifications] id[%s] Dismissed" % int(id), xbmc.LOGNOTICE)
+				elif int(id) > int(NOTEID):
+					wiz.log("[Notifications] id: %s" % str(int(id)), xbmc.LOGNOTICE)
+					wiz.setS('noteid', str(int(id)))
+					wiz.setS('notedismiss', 'false')
+					notify.notification(msg=msg)
+					wiz.log("[Notifications] Complete", xbmc.LOGNOTICE)
+					xbmc.sleep(500)
+			except Exception, e:
+				wiz.log("Error on Notifications Window: %s" % str(e), xbmc.LOGERROR)
 		else: wiz.log("[Notifications] URL(%s): %s" % (NOTIFICATION, url), xbmc.LOGNOTICE)
 	else: wiz.log("[Notifications] Turned Off", xbmc.LOGNOTICE)
 else: wiz.log("[Notifications] Not Enabled", xbmc.LOGNOTICE)

@@ -1,0 +1,6 @@
+name="Name of Theme"
+url="http:// Link to Theme Zip"
+icon="http:// Link to Icon"
+fanart="http:// Link to Fanart"
+adult="no"
+description="Type any Description"

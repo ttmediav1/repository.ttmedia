@@ -50,7 +50,7 @@
 	</extension>
 </addon>
 
-<addon id="plugin.program.ttmediawizard" name="[B][COLORlightblue]TTMedia Wizard[/B][/COLOR]" version="5.2" provider-name="[B][COLORlightblue]TTMedia[/B][/COLOR]">
+<addon id="plugin.program.ttmediawizard" name="[B][COLORlightblue]TTMedia Wizard[/B][/COLOR]" version="5.3" provider-name="[B][COLORlightblue]TTMedia[/B][/COLOR]">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
