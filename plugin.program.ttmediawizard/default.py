@@ -508,7 +508,7 @@ def apkScraper(name=""):
 def apkMenu(url=None):
 	if url == None:
 		if DEVELOPER == 'true': addDir ('Official Kodi Apk\'s', 'apkscrape', 'kodi', icon=ICONAPK, themeit=THEME1)
-		if DEVELOPER == 'true': addDir ('Official SPMC Apk\'s', 'apkscrape', 'spmc', icon=ICONAPK, themeit=THEME1)
+		if DEVELOPER == 'false': addDir ('Official SPMC Apk\'s', 'apkscrape', 'spmc', icon=ICONAPK, themeit=THEME1)
 		#if HIDESPACERS == 'No': addFile(wiz.sep(), '', themeit=THEME3)
 	if not APKFILE == 'http://':
 		if url == None:

@@ -60,7 +60,7 @@ SPACER         = '~'
 COLOR1         = 'blue'
 COLOR2         = 'lightblue'
 # Primary menu items   / %s is the menu item and is required
-THEME1         = '[COLOR '+COLOR1+'][B]([COLOR '+COLOR2+']Retro[/COLOR])[/B][/COLOR] [COLOR '+COLOR2+']%s[/COLOR]'
+THEME1         = '[COLOR '+COLOR1+'][B]([COLOR '+COLOR2+']TTMedia[/COLOR])[/B][/COLOR] [COLOR '+COLOR2+']%s[/COLOR]'
 # Build Names          / %s is the menu item and is required
 THEME2         = '[COLOR '+COLOR2+']%s[/COLOR]'
 # Alternate items      / %s is the menu item and is required
