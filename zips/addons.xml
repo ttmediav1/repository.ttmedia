@@ -280,7 +280,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.video.ttmediaplatinum" name="[B][COLORlimegreen]TTMedia Platinum[/B][/COLOR]" version="1.0.1" provider-name="[B][COLORlimegreen]TTMedia[/B][/COLOR]">
+<addon id="plugin.video.ttmediaplatinum" name="[B][COLORlightblue]TTMedia Platinum[/B][/COLOR]" version="1.0.2" provider-name="[B][COLORlightblue]TTMedia[/B][/COLOR]">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
 	<import addon="script.module.requests" />
@@ -290,9 +290,9 @@
         <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">[COLORlimegreen]Live IPTV[/COLOR] </summary>
+    <summary lang="en">[COLORlightblue]Live IPTV[/COLOR] </summary>
     <language>en</language>
-    <description lang="en">[COLORlimegreen]TTMedia Supplier of Great Quality and Stable Streams[/COLOR]</description>
+    <description lang="en">[COLORlightblue]TTMedia Supplier of Great Quality and Stable Streams[/COLOR]</description>
      <platform>all</platform>
   </extension>
 </addon>
