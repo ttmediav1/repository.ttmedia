@@ -169,7 +169,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.mafiastreams" name="Mafia [B][COLORred]Streams[/B][/COLOR]" version="1.0.3" provider-name="[B][COLORblue]TTMedia[/B][/COLOR]">
+<addon id="plugin.video.mafiastreams" name="Mafia [B][COLORred]Streams[/B][/COLOR]" version="1.0.4" provider-name="[B][COLORblue]TTMedia[/B][/COLOR]">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
 	<import addon="script.module.requests" />
