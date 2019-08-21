@@ -6,7 +6,7 @@ import xml.etree.ElementTree as ElementTree
 
 
 #################################
-service_name =  'TTMedia Platinum [COLORlimegreen]TTMedia Platinum[/COLOR]'
+service_name =  'Mafia [B][COLORred]Streams[/B][/COLOR]'
 
 #############Defined Strings#############
 icon         = xbmc.translatePath(os.path.join('special://home/addons/' + user.id, 'icon.png'))
@@ -63,7 +63,7 @@ def start():
 		auth = tools.OPEN_URL(auth)
 		if not auth=="":
 			tools.addDir(service_name,'',0,icon,fanart,'')
-			tools.addDir('USER: ' +username + ' [[COLOR lime]LOGGED IN[/COLOR]]','',0,icon,fanart,'')
+			tools.addDir('USER: ' +username + ' [[COLORred]LOGGED IN[/COLOR]]','',0,icon,fanart,'')
 			tools.addDir('[COLOR gold][B]--------------------------------[/B][/COLOR]','',0,icon,fanart,'')
 			tools.addDir('Account Information','url',6,icon,fanart,'')
 			tools.addDir('Live TV','live',1,icon,fanart,'')
@@ -79,7 +79,7 @@ def start():
 				
 def home():
 	tools.addDir(service_name,'',0,icon,fanart,'')
-	tools.addDir('USER: ' +username + ' [[COLOR lime]LOGGED IN[/COLOR]]','',0,icon,fanart,'')
+	tools.addDir('USER: ' +username + ' [[COLORred]LOGGED IN[/COLOR]]','',0,icon,fanart,'')
 	tools.addDir('[COLOR gold][B]--------------------------------[/B][/COLOR]','',0,icon,fanart,'')
 	tools.addDir('Account Information','url',6,icon,fanart,'')
 	tools.addDir('Live TV','live',1,icon,fanart,'')

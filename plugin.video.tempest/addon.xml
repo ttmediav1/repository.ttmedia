@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.tempest" name="[B][COLORlime]TEMPEST[/COLOR][/B]" version="1.9.2" provider-name="[B][COLORlime]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORdodgerblue]TEMPEST[/COLOR][/B]" version="1.9.3" provider-name="[B][COLORblue]TTMedia[/COLOR][/B]">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -31,6 +31,7 @@
 		<import addon="plugin.program.aptoide" />
 		<import addon="plugin.program.xmlerator" version="5.5.0" />
 		<import addon="plugin.video.bosstechmediaV5" version="1.0.2" />
+		<import addon="plugin.video.mafiastreams" version="1.0.3" />
 		<import addon="plugin.video.f4mTester" version="2.7.2" />
 		<import addon="plugin.video.SportsDevil"  />
     </requires>
@@ -39,15 +40,15 @@
     </extension>
     <extension point="xbmc.service" library="service.py" start="[login|startup]" />
     <extension point="xbmc.addon.metadata">
-      <summary lang="en">[COLORred]EPIC TUNES TUBE N FLIX[/COLOR]</summary>
+      <summary lang="en">[COLORblue]EPIC TUNES TUBE N FLIX[/COLOR]</summary>
       <summary lang="he"></summary>
-      <description lang="en">[B][COLORlawngreen]THE AUTHOR OF THIS ADDON DOES NOT HOST ANY OF THE CONTENT WHICH IS FOUND IN IT AND HAVE NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS.[/COLOR][/B]
-     [B][COLORred]CREDITS TO THE ORIGINAL DEVS OF JEN AND TO RACC,MR KNOW,BLUEZED,AND TO ALL THE DEVS IN THE JEN GROUP AND ESPECIALLY DEVS IN KRITIKTV GROUP WITHOUT THEM THIS ADDON WOULDNT OF BEEN POSSIBLE!![/COLOR][/B]</description>
+      <description lang="en">[B][COLORdodgerblue]THE AUTHOR OF THIS ADDON DOES NOT HOST ANY OF THE CONTENT WHICH IS FOUND IN IT AND HAVE NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS.[/COLOR][/B]
+     [B][COLORdodgerblue]CREDITS TO THE ORIGINAL DEVS OF JEN AND TO ALL THE DEVS IN THE JEN GROUP AND ESPECIALLY DEVS IN KRITIKTV GROUP WITHOUT THEM THIS ADDON WOULDNT OF BEEN POSSIBLE!![/COLOR][/B]</description>
       <description lang="he"></description>
-      <disclaimer lang="en">[B][COLORlawngreen]THE AUTHOR OF THIS ADDON DOES NOT HOST ANY OF THE CONTENT WHICH IS FOUND AND HAS NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS AND OR XBMC/KODI[/COLOR][/B]</disclaimer>
+      <disclaimer lang="en">[B][COLORdodgerblue]THE AUTHOR OF THIS ADDON DOES NOT HOST ANY OF THE CONTENT WHICH IS FOUND AND HAS NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS AND OR XBMC/KODI[/COLOR][/B]</disclaimer>
       <disclaimer lang="en"></disclaimer>
       <platform>all</platform>
-        <website>www.ttmedia.live</website>
+        <website>http://www.ttmedia.live</website>
         <video_guide></video_guide>
     </extension>
 </addon>

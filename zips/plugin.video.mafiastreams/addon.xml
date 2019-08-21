@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.ttmediaplatinum" name="[B][COLORlightblue]TTMedia Platinum[/B][/COLOR]" version="1.0.2" provider-name="[B][COLORlightblue]TTMedia[/B][/COLOR]">
+<addon id="plugin.video.mafiastreams" name="Mafia [B][COLORred]Streams[/B][/COLOR]" version="1.0.3" provider-name="[B][COLORblue]TTMedia[/B][/COLOR]">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
 	<import addon="script.module.requests" />
@@ -11,7 +11,7 @@
   <extension point="xbmc.addon.metadata">
     <summary lang="en">[COLORlightblue]Live IPTV[/COLOR] </summary>
     <language>en</language>
-    <description lang="en">[COLORlightblue]TTMedia Supplier of Great Quality and Stable Streams[/COLOR]</description>
+    <description lang="en">[COLORdodgerblue]TTMedia Supplier of Great Quality and Stable Streams[/COLOR]</description>
      <platform>all</platform>
   </extension>
 </addon>
