@@ -11,7 +11,7 @@ BUILDFILE      = 'http://ttmedia.live/wizard/autobuilds.txt'
 # How often you would list it to check for build updates in days
 # 0 being every startup of kodi
 UPDATECHECK    = 0
-# Text File with apk info in it.
+# Text File with apk info in it.  Leave as 'http://' to ignore
 APKFILE        = 'http://ttmedia.live/wizard/apk.txt'
 # Text File with Youtube Videos urls.  Leave as 'http://' to ignore
 YOUTUBETITLE   = ''
@@ -20,6 +20,9 @@ YOUTUBEFILE    = 'http://'
 ADDONFILE      = 'http://'
 # Text File for advanced settings.  Leave as 'http://' to ignore
 ADVANCEDFILE   = 'http://'
+# Text file for roms and emus
+ROMPACK        = 'https://ttmedia.live/wizard/roms.txt'
+EMUAPKS        = 'https://ttmedia.live/wizard/emu.txt'
 
 # Dont need to edit just here for icons stored locally
 PATH           = xbmcaddon.Addon().getAddonInfo('path')
@@ -36,7 +39,9 @@ ART            = os.path.join(PATH, 'resources', 'art')
 # Leave as http:// for default icon
 ICONBUILDS     = 'http://ttmedia.live/wizard/icon.png'
 ICONMAINT      = 'http://ttmedia.live/wizard/icon.png'
-ICONAPK        = 'http://ttmedia.live/wizard/icon.png'
+ICONSPEED      = 'http://ttmedia.live/wizard/icon.png'
+ICONAPK        = 'http://ttmedia.live/wizard/icon.pnghttp://'
+ICONRETRO      = 'http://ttmedia.live/wizard/icon.png'
 ICONADDONS     = 'http://ttmedia.live/wizard/icon.png'
 ICONYOUTUBE    = 'http://ttmedia.live/wizard/icon.png'
 ICONSAVE       = 'http://ttmedia.live/wizard/icon.png'
@@ -55,19 +60,19 @@ SPACER         = '*'
 COLOR1         = 'blue'
 COLOR2         = 'lightblue'
 # Primary menu items   / %s is the menu item and is required
-THEME1         = '[COLOR '+COLOR1+'][B][I]([COLOR '+COLOR2+']TTMedia[/COLOR])[/B][/COLOR] [COLOR '+COLOR2+']%s[/COLOR][/I]'
+THEME1         = '[COLOR '+COLOR1+'][B]([COLOR '+COLOR2+']TTMedia[/COLOR])[/B][/COLOR] [COLOR '+COLOR2+']%s[/COLOR]'
 # Build Names          / %s is the menu item and is required
 THEME2         = '[COLOR '+COLOR2+']%s[/COLOR]'
 # Alternate items      / %s is the menu item and is required
 THEME3         = '[COLOR '+COLOR1+']%s[/COLOR]'
 # Current Build Header / %s is the menu item and is required
-THEME4         = '[COLOR '+COLOR1+']Current Build:[/COLOR] [COLOR '+COLOR2+']%s[/COLOR]'
+THEME4         = '[COLOR '+COLOR1+'][B]Current Build:[/B][/COLOR] [COLOR '+COLOR2+']%s[/COLOR]'
 # Current Theme Header / %s is the menu item and is required
-THEME5         = '[COLOR '+COLOR1+']Current Theme:[/COLOR] [COLOR '+COLOR2+']%s[/COLOR]'
+THEME5         = '[COLOR '+COLOR1+'][B]Current Theme:[/B][/COLOR] [COLOR '+COLOR2+']%s[/COLOR]'
 
 # Message for Contact Page
 # Enable 'Contact' menu item 'Yes' hide or 'No' dont hide
-HIDECONTACT    = 'Yes'
+HIDECONTACT    = 'yes'
 # You can add \n to do line breaks
 CONTACT        = ''
 #Images used for the contact window.  http:// for default icon and fanart
@@ -92,9 +97,9 @@ AUTOINSTALL    = 'No'
 # Addon ID for the repository
 REPOID         = ''
 # Url to Addons.xml file in your repo folder(this is so we can get the latest version)
-REPOADDONXML   = ''
+REPOADDONXML   = 'http://'
 # Url to folder zip is located in
-REPOZIPURL     = ''
+REPOZIPURL     = 'http://'
 #########################################################
 
 #########################################################
@@ -107,7 +112,7 @@ NOTIFICATION   = 'http://ttmedia.live/wizard/notify.txt'
 # Use either 'Text' or 'Image'
 HEADERTYPE     = 'Image'
 HEADERMESSAGE  = ''
-# url to image if using Image 424x180
+# url to image if using Image 500x50(Width can vary but height of image needs to be 50px)
 HEADERIMAGE    = 'http://ttmedia.live/wizard/icon.png'
 # Background for Notification Window
 BACKGROUND     = ''

@@ -35,7 +35,7 @@
                 <top>70</top>
                 <width>860</width>
                 <height>230</height>
-                <font>font10</font>
+                <font>font14</font>
                 <align>left</align>
                 <aligny>top</aligny>
             </control>
@@ -46,9 +46,9 @@
                 <top>290</top>
                 <width>310</width>
                 <height>60</height>
-                <font>font12</font>
-                <textcolor>FFF0F0F0</textcolor>
-                <label>Build Menu</label>
+                <font>font14</font>
+                <textcolor>springgreen</textcolor>
+                <label>[B]Build Menu[/B]</label>
                 <align>center</align>
                 <aligny>center</aligny>
                 <texturefocus colordiffuse="FF12B2E7">Button/testbuttonfo.png</texturefocus>
@@ -61,10 +61,10 @@
                 <top>290</top>
                 <width>310</width>
                 <height>60</height>
-                <font>font12</font>
-                <textcolor>FFF0F0F0</textcolor>
+                <font>font14</font>
+                <textcolor>red</textcolor>
                 <textoffsetx>20</textoffsetx>
-                <label>Ignore</label>
+                <label>[B]MayBe Later[/B]</label>
                 <align>center</align>
                 <aligny>center</aligny>
                 <texturefocus colordiffuse="FF12B2E7">Button/testbuttonfo.png</texturefocus>
