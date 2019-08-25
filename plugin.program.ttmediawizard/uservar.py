@@ -37,19 +37,19 @@ ART            = os.path.join(PATH, 'resources', 'art')
 # Example:  ICONMAINT     = os.path.join(ART, 'mainticon.png')
 #           ICONSETTINGS  = 'http://aftermathwizard.net/repo/wizard/settings.png'
 # Leave as http:// for default icon
-ICONBUILDS     = 'http://ttmedia.live/wizard/icon.png'
-ICONMAINT      = 'http://ttmedia.live/wizard/icon.png'
-ICONSPEED      = 'http://ttmedia.live/wizard/icon.png'
-ICONAPK        = 'http://ttmedia.live/wizard/icon.pnghttp://'
-ICONRETRO      = 'http://ttmedia.live/wizard/icon.png'
+ICONBUILDS     = 'https://ttmedia.live/wizard/builds.png'
+ICONMAINT      = 'https://ttmedia.live/wizard/tools.png'
+ICONSPEED      = 'https://ttmedia.live/wizard/internet.png'
+ICONAPK        = 'https://ttmedia.live/wizard/apks.png'
+ICONRETRO      = 'https://ttmedia.live/wizard/retro.png'
 ICONADDONS     = 'http://ttmedia.live/wizard/icon.png'
 ICONYOUTUBE    = 'http://ttmedia.live/wizard/icon.png'
-ICONSAVE       = 'http://ttmedia.live/wizard/icon.png'
+ICONSAVE       = 'https://ttmedia.live/wizard/data.png'
 ICONTRAKT      = 'http://ttmedia.live/wizard/icon.png'
 ICONREAL       = 'http://ttmedia.live/wizard/icon.png'
 ICONLOGIN      = 'http://ttmedia.live/wizard/icon.png'
 ICONCONTACT    = 'http://ttmedia.live/wizard/icon.png'
-ICONSETTINGS   = 'http://ttmedia.live/wizard/icon.png'
+ICONSETTINGS   = 'https://ttmedia.live/wizard/settings.png'
 # Hide the ====== seperators 'Yes' or 'No'
 HIDESPACERS    = 'No'
 # Character used in seperator
@@ -57,10 +57,10 @@ SPACER         = '*'
 
 # You can edit these however you want, just make sure that you have a %s in each of the
 # THEME's so it grabs the text from the menu item
-COLOR1         = 'blue'
+COLOR1         = 'dodgerblue'
 COLOR2         = 'lightblue'
 # Primary menu items   / %s is the menu item and is required
-THEME1         = '[COLOR '+COLOR1+'][B]([COLOR '+COLOR2+']TTMedia[/COLOR])[/B][/COLOR] [COLOR '+COLOR2+']%s[/COLOR]'
+THEME1         = ''
 # Build Names          / %s is the menu item and is required
 THEME2         = '[COLOR '+COLOR2+']%s[/COLOR]'
 # Alternate items      / %s is the menu item and is required
