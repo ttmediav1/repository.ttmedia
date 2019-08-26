@@ -38,10 +38,10 @@ ART            = os.path.join(PATH, 'resources', 'art')
 #           ICONSETTINGS  = 'http://aftermathwizard.net/repo/wizard/settings.png'
 # Leave as http:// for default icon
 ICONBUILDS     = 'https://ttmedia.live/wizard/builds.png'
-ICONMAINT      = 'https://ttmedia.live/wizard/tools.png'
-ICONSPEED      = 'https://ttmedia.live/wizard/internet.png'
-ICONAPK        = 'https://ttmedia.live/wizard/apks.png'
-ICONRETRO      = 'https://ttmedia.live/wizard/retro.png'
+ICONMAINT      = 'https://ttmedia.live/wizard/maintain.png'
+ICONSPEED      = 'https://ttmedia.live/wizard/tools.png'
+ICONAPK        = 'https://ttmedia.live/wizard/apk.png'
+ICONRETRO      = 'https://ttmedia.live/wizard/retro1.png'
 ICONADDONS     = 'http://ttmedia.live/wizard/icon.png'
 ICONYOUTUBE    = 'http://ttmedia.live/wizard/icon.png'
 ICONSAVE       = 'https://ttmedia.live/wizard/data.png'
@@ -60,7 +60,7 @@ SPACER         = '*'
 COLOR1         = 'dodgerblue'
 COLOR2         = 'lightblue'
 # Primary menu items   / %s is the menu item and is required
-THEME1         = ''
+THEME1         = '[COLOR '+COLOR2+']%s[/COLOR]'
 # Build Names          / %s is the menu item and is required
 THEME2         = '[COLOR '+COLOR2+']%s[/COLOR]'
 # Alternate items      / %s is the menu item and is required
