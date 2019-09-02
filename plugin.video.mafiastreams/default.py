@@ -23,6 +23,7 @@ iconMoviesod	 = xbmc.translatePath(os.path.join('special://home/addons/' + user.
 iconTvseries	 = xbmc.translatePath(os.path.join('special://home/addons/' + user.id+'/media/',  'icontvseries.png'))
 iconsearch	     = xbmc.translatePath(os.path.join('special://home/addons/' + user.id+'/media/',  'iconsearch.png'))
 iconaccount	     = xbmc.translatePath(os.path.join('special://home/addons/' + user.id+'/media/',  'iconaccount.png'))
+icontvguide	     = xbmc.translatePath(os.path.join('special://home/addons/' + user.id+'/media/',  'icontvguide.png'))
 
 username     	 = control.setting('Username')
 password     	 = control.setting('Password')

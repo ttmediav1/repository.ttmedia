@@ -169,7 +169,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.mafiastreams" name="Mafia [B][COLORred]Streams[/B][/COLOR]" version="1.0.5" provider-name="[B][COLORblue]TTMedia[/B][/COLOR]">
+<addon id="plugin.video.mafiastreams" name="Mafia [B][COLORred]Streams[/B][/COLOR]" version="1.0.6" provider-name="[B][COLORblue]TTMedia[/B][/COLOR]">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
 	<import addon="script.module.requests" />
@@ -181,7 +181,7 @@
   <extension point="xbmc.addon.metadata">
     <summary lang="en">[B][COLORlightblue]Live IPTV[/B][/COLOR]</summary>
     <language>en</language>
-    <description lang="en">[B][COLORdodgerblue]TTMedia Supplier of Great Quality and Stable Streams[/B][/COLOR]</description>
+    <description lang="en">[B][COLORdodgerblue]Mafia Streams Supplier of Great Quality and Stable Streams[/B][/COLOR]</description>
      <platform>all</platform>
   </extension>
 </addon>
