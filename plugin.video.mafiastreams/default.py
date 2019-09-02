@@ -6,20 +6,32 @@ import xml.etree.ElementTree as ElementTree
 
 
 #################################
-service_name =  'Mafia [B][COLORred]Streams[/B][/COLOR]'
-
+service_name =  'Mafia Streams'
 #############Defined Strings#############
-icon         = xbmc.translatePath(os.path.join('special://home/addons/' + user.id, 'icon.png'))
-fanart       = xbmc.translatePath(os.path.join('special://home/addons/' + user.id , 'fanart.jpg'))
+icon             = xbmc.translatePath(os.path.join('special://home/addons/' + user.id+'/media/',  'icon.png'))
+fanart           = xbmc.translatePath(os.path.join('special://home/addons/' + user.id+'/media/',  'fanart.jpg'))
+background       = xbmc.translatePath(os.path.join('special://home/addons/' + user.id+'/media/',  'background.jpg'))
+live		     = xbmc.translatePath(os.path.join('special://home/addons/' + user.id+'/media/',  'live.jpg'))
+catch	 	     = xbmc.translatePath(os.path.join('special://home/addons/' + user.id+'/media/',  'cu.jpg'))
+Moviesod	 	 = xbmc.translatePath(os.path.join('special://home/addons/' + user.id+'/media/',  'movie.jpg'))
+Tvseries	 	 = xbmc.translatePath(os.path.join('special://home/addons/' + user.id+'/media/',  'tv.jpg'))
+iconextras       = xbmc.translatePath(os.path.join('special://home/addons/' + user.id+'/media/',  'iconextras.png'))
+iconsettings     = xbmc.translatePath(os.path.join('special://home/addons/' + user.id+'/media/',  'iconsettings.png'))
+iconlive		 = xbmc.translatePath(os.path.join('special://home/addons/' + user.id+'/media/',  'iconlive.png'))
+iconcatchup	     = xbmc.translatePath(os.path.join('special://home/addons/' + user.id+'/media/',  'iconcatchup.png'))
+iconMoviesod	 = xbmc.translatePath(os.path.join('special://home/addons/' + user.id+'/media/',  'iconmovies.png'))
+iconTvseries	 = xbmc.translatePath(os.path.join('special://home/addons/' + user.id+'/media/',  'icontvseries.png'))
+iconsearch	     = xbmc.translatePath(os.path.join('special://home/addons/' + user.id+'/media/',  'iconsearch.png'))
+iconaccount	     = xbmc.translatePath(os.path.join('special://home/addons/' + user.id+'/media/',  'iconaccount.png'))
 
-username     = control.setting('Username')
-password     = control.setting('Password')
+username     	 = control.setting('Username')
+password     	 = control.setting('Password')
 
-live_url     = '%s:%s/enigma2.php?username=%s&password=%s&type=get_live_categories'%(user.host,user.port,username,password)
-vod_url      = '%s:%s/enigma2.php?username=%s&password=%s&type=get_vod_categories'%(user.host,user.port,username,password)
-series_url   = '%s:%s/enigma2.php?username=%s&password=%s&type=get_series_categories'%(user.host,user.port,username,password)
-panel_api    = '%s:%s/panel_api.php?username=%s&password=%s'%(user.host,user.port,username,password)
-play_url     = '%s:%s/live/%s/%s/'%(user.host,user.port,username,password)
+live_url     	 = '%s:%s/enigma2.php?username=%s&password=%s&type=get_live_categories'%(user.host,user.port,username,password)
+vod_url      	 = '%s:%s/enigma2.php?username=%s&password=%s&type=get_vod_categories'%(user.host,user.port,username,password)
+series_url       = '%s:%s/enigma2.php?username=%s&password=%s&type=get_series_categories'%(user.host,user.port,username,password)
+panel_api    	 = '%s:%s/panel_api.php?username=%s&password=%s'%(user.host,user.port,username,password)
+play_url     	 = '%s:%s/live/%s/%s/'%(user.host,user.port,username,password)
 
 
 Guide = xbmc.translatePath(os.path.join('special://home/addons/addons/'+user.id+'/resources/catchup', 'guide.xml'))
@@ -62,76 +74,66 @@ def start():
 		auth = '%s:%s/enigma2.php?username=%s&password=%s&type=get_vod_categories'%(user.host,user.port,username,password)
 		auth = tools.OPEN_URL(auth)
 		if not auth=="":
-			tools.addDir(service_name,'',0,icon,fanart,'')
-			tools.addDir('USER: ' +username + ' [[COLORred]LOGGED IN[/COLOR]]','',0,icon,fanart,'')
-			tools.addDir('[COLOR gold][B]--------------------------------[/B][/COLOR]','',0,icon,fanart,'')
-			tools.addDir('Account Information','url',6,icon,fanart,'')
-			tools.addDir('Live TV','live',1,icon,fanart,'')
-			tools.addDir('TV Series','live',18,icon,fanart,'')
+			
+			tools.addDir('Live TV','live',1,iconlive,background,'')
+			tools.addDir('Catchup TV','url',12,iconcatchup,background,'')
+			tools.addDir('Movies','vod',3,iconMoviesod,background,'')
+			tools.addDir('TV Series','live',18,iconTvseries,background,'')
 			
 			if xbmc.getCondVisibility('System.HasAddon(pvr.iptvsimple)'):
-				tools.addDir('TV Guide','pvr',7,icon,fanart,'')
-			tools.addDir('Catchup TV','url',12,icon,fanart,'')
-			tools.addDir('VOD','vod',3,icon,fanart,'')
-			tools.addDir('Search','url',5,icon,fanart,'')
-			tools.addDir('Settings','url',8,icon,fanart,'')
-			tools.addDir('Extras','url',16,icon,fanart,'')
+				tools.addDir('TV Guide','pvr',7,icon,background,'')
+			tools.addDir('Search','url',5,iconsearch,background,'')
+			tools.addDir('Settings','url',8,iconsettings,background,'')
+			tools.addDir('Extras','url',16,iconextras,background,'')
+			tools.addDir('Account Information','url',6,iconaccount,background,'')
 				
 def home():
-	tools.addDir(service_name,'',0,icon,fanart,'')
-	tools.addDir('USER: ' +username + ' [[COLORred]LOGGED IN[/COLOR]]','',0,icon,fanart,'')
-	tools.addDir('[COLOR gold][B]--------------------------------[/B][/COLOR]','',0,icon,fanart,'')
-	tools.addDir('Account Information','url',6,icon,fanart,'')
-	tools.addDir('Live TV','live',1,icon,fanart,'')
-	tools.addDir('TV Series','live',18,icon,fanart,'')
+	
+	tools.addDir('Account Information','url',6,icon,background,'')
+	tools.addDir('Live TV','live',1,icon,background,'')
+	tools.addDir('TV Series','live',18,icon,background,'')
 	
 	if xbmc.getCondVisibility('System.HasAddon(pvr.iptvsimple)'):
-		tools.addDir('TV Guide','pvr',7,icon,fanart,'')
-	tools.addDir('Catchup TV','url',12,icon,fanart,'')
-	tools.addDir('VOD','vod',3,icon,fanart,'')
-	tools.addDir('Search','',5,icon,fanart,'')
-	tools.addDir('Settings','url',8,icon,fanart,'')
-	tools.addDir('Extras','url',16,icon,fanart,'')
+		tools.addDir('TV Guide','pvr',7,icon,background,'')
+	tools.addDir('Catchup TV','url',12,icon,background,'')
+	tools.addDir('vod','vod',3,icon,background,'')
+	tools.addDir('Search','',5,icon,background,'')
+	tools.addDir('Settings','url',8,icon,background,'')
+	tools.addDir('Extras','url',16,icon,background,'')
 		
 def livecategory(url):
 	
 	open = tools.OPEN_URL(live_url)
 	all_cats = tools.regex_get_all(open,'<channel>','</channel>')
-	tools.addDir(service_name,'',0,icon,fanart,'')
-	tools.addDir('Live TV','',0,'','','')
-	tools.addDir('---------------------','',19,'','','')
+	
 	for a in all_cats:
 		name = tools.regex_from_to(a,'<title>','</title>')
 		name = base64.b64decode(name)
 		url1  = tools.regex_from_to(a,'<playlist_url>','</playlist_url>').replace('<![CDATA[','').replace(']]>','')
 		if xbmcaddon.Addon().getSetting('hidexxx')=='true':
-			tools.addDir('%s'%name,url1,2,icon,fanart,'')
+			tools.addDir('%s'%name,url1,2,icon,live,'')
 		else:
 			if not 'XXX |' in name:
-				tools.addDir('%s'%name,url1,2,icon,fanart,'')
+				tools.addDir('%s'%name,url1,2,icon,background,'')
 				
+
 def series_cats(url):	# added by @ShaneysRepo
 	open = tools.OPEN_URL(series_url)
 	all_cats = tools.regex_get_all(open,'<channel>','</channel>')
-	tools.addDir(service_name,'',0,icon,fanart,'')
-	tools.addDir('TV Series Categories','',19,'','','')
-	tools.addDir('[COLOR gold][B]--------------------------------[/B][/COLOR]','',0,icon,fanart,'')
 	for a in all_cats:
 		name = tools.regex_from_to(a,'<title>','</title>')
 		name = base64.b64decode(name)
 		url1  = tools.regex_from_to(a,'<playlist_url>','</playlist_url>').replace('<![CDATA[','').replace(']]>','')
 		if xbmcaddon.Addon().getSetting('hidexxx')=='true':
-			tools.addDir('%s'%name,url1,25,icon,fanart,'')
+			tools.addDir('%s'%name,url1,25,icon,background,'')
 		else:
 			if not 'XXX |' in name:
-				tools.addDir('%s'%name,url1,25,icon,fanart,'')
+				tools.addDir('%s'%name,url1,25,icon,background,'')
 		
 def Livelist(url):
 	url  = buildcleanurl(url)
 	open = tools.OPEN_URL(url)
-	tools.addDir(service_name,'',0,icon,fanart,'')
-	tools.addDir('Live TV','',0,'','','')
-	tools.addDir('---------------------','',19,'','','')
+	
 	all_cats = tools.regex_get_all(open,'<channel>','</channel>')
 	for a in all_cats:
 		name = tools.regex_from_to(a,'<title>','</title>')
@@ -142,20 +144,17 @@ def Livelist(url):
 		url1  = tools.regex_from_to(a,'<stream_url>','</stream_url>').replace('<![CDATA[','').replace(']]>','')
 		desc = tools.regex_from_to(a,'<description>','</description>')
 		if xbmcaddon.Addon().getSetting('hidexxx')=='true':
-			tools.addDir(name,url1,4,thumb,fanart,base64.b64decode(desc))
+			tools.addDir(name,url1,4,thumb,background,base64.b64decode(desc))
 		else:
 			if not 'XXX:' in name:
-				if not 'XXX VOD:' in name:
-					tools.addDir(name,url1,4,thumb,fanart,base64.b64decode(desc))
+				if not 'XXX vod:' in name:
+					tools.addDir(name,url1,4,thumb,background,base64.b64decode(desc))
 		
 	
 def serieslist(url): # Added by @ShaneysRepo
 	url  = buildcleanurl(url)
 	open = tools.OPEN_URL(url)
 	series = tools.regex_from_to(open,'<category_title>','</category_title>').replace('<![CDATA[','').replace(']]>','')
-	tools.addDir(service_name,'',0,icon,fanart,'')
-	tools.addDir(series,'',19,'','','')
-	tools.addDir('---------------------','',19,'','','')
 	all_cats = tools.regex_get_all(open,'<channel>','</channel>')
 	for a in all_cats:
 		name = tools.regex_from_to(a,'<title>','</title>')
@@ -166,19 +165,17 @@ def serieslist(url): # Added by @ShaneysRepo
 		url1  = tools.regex_from_to(a,'<playlist_url>','</playlist_url>').replace('<![CDATA[','').replace(']]>','')
 		desc = tools.regex_from_to(a,'<description>','</description>')
 		if xbmcaddon.Addon().getSetting('hidexxx')=='true':
-			tools.addDir(name,url1,19,thumb,fanart,'')
+			tools.addDir(name,url1,19,thumb,background,'')
 		else:
 			if not 'XXX:' in name:
-				if not 'XXX VOD:' in name:
-					tools.addDir(name,url1,19,thumb,fanart,'')
+				if not 'XXX vod:' in name:
+					tools.addDir(name,url1,19,thumb,background,'')
 					
 					
 def series_options(url): # Added by @ShaneysRepo
 	url  = buildcleanurl(url)
 	open = tools.OPEN_URL(url)
 	series = tools.regex_from_to(open,'<category_title>','</category_title>').replace('<![CDATA[','').replace(']]>','')
-	tools.addDir(series,'',19,'','','')
-	tools.addDir('---------------------','',19,'','','')
 	all_cats = tools.regex_get_all(open,'<channel>','</channel>')
 	for a in all_cats:
 		name = tools.regex_from_to(a,'<title>','</title>')
@@ -189,19 +186,17 @@ def series_options(url): # Added by @ShaneysRepo
 		url1  = tools.regex_from_to(a,'<playlist_url>','</playlist_url>').replace('<![CDATA[','').replace(']]>','')
 		desc = tools.regex_from_to(a,'<description>','</description>')
 		if xbmcaddon.Addon().getSetting('hidexxx')=='true':
-			tools.addDir(url1,url1,20,thumb,fanart,base64.b64decode(desc))
+			tools.addDir(url1,url1,20,thumb,background,base64.b64decode(desc))
 		else:
 			if not 'XXX:' in name:
-				if not 'XXX VOD:' in name:
-					tools.addDir(name,url1,20,thumb,fanart,base64.b64decode(desc))
+				if not 'XXX vod:' in name:
+					tools.addDir(name,url1,20,thumb,background,base64.b64decode(desc))
 
 
 def season_list(url): # Added by @ShaneysRepo
 	url  = buildcleanurl(url)
 	open = tools.OPEN_URL(url)
 	series = tools.regex_from_to(open,'<category_title>','</category_title>').replace('<![CDATA[','').replace(']]>','')
-	tools.addDir(series,'',0,'','','')
-	tools.addDir('---------------------','',19,'','','')
 	all_cats = tools.regex_get_all(open,'<channel>','</channel>')
 	for a in all_cats:
 		name = tools.regex_from_to(a,'<title>','</title>')
@@ -212,11 +207,11 @@ def season_list(url): # Added by @ShaneysRepo
 		url1  = tools.regex_from_to(a,'<stream_url>','</stream_url>').replace('<![CDATA[','').replace(']]>','')
 		desc = tools.regex_from_to(a,'<description>','</description>')
 		if xbmcaddon.Addon().getSetting('hidexxx')=='true':
-			tools.addDir(url1,url1,4,thumb,fanart,base64.b64decode(desc))
+			tools.addDir(url1,url1,4,thumb,background,base64.b64decode(desc))
 		else:
 			if not 'XXX:' in name:
-				if not 'XXX VOD:' in name:
-					tools.addDir(name,url1,4,thumb,fanart,base64.b64decode(desc))
+				if not 'XXX vod:' in name:
+					tools.addDir(name,url1,4,thumb,background,base64.b64decode(desc))
 
 					
 	
@@ -227,14 +222,11 @@ def vod(url):
 		url  = buildcleanurl(url)
 		open = tools.OPEN_URL(url)
 	all_cats = tools.regex_get_all(open,'<channel>','</channel>')
-	tools.addDir(service_name,'',0,icon,fanart,'')
-	tools.addDir('VOD Categories','',19,'','','')
-	tools.addDir('[COLOR gold][B]--------------------------------[/B][/COLOR]','',0,icon,fanart,'')
 	for a in all_cats:
 		if '<playlist_url>' in open:
 			name = tools.regex_from_to(a,'<title>','</title>')
 			url1  = tools.regex_from_to(a,'<playlist_url>','</playlist_url>').replace('<![CDATA[','').replace(']]>','')
-			tools.addDir(str(base64.b64decode(name)).replace('?',''),url1,3,icon,fanart,'')
+			tools.addDir(str(base64.b64decode(name)).replace('?',''),url1,3,icon,background,'')
 		else:
 			if xbmcaddon.Addon().getSetting('meta') == 'true':
 				try:
@@ -251,16 +243,16 @@ def vod(url):
 					year = re.compile('-.*?-.*?-(.*?)-',re.DOTALL).findall(year)
 					runt = tools.regex_from_to(desc,'DURATION_SECS:','\n')
 					genre= tools.regex_from_to(desc,'GENRE:','\n')
-					tools.addDirMeta(str(name).replace('[/COLOR][/B].','.[/COLOR][/B]'),url,4,thumb,fanart,plot,str(year).replace("['","").replace("']",""),str(cast).split(),ratin,runt,genre)
+					tools.addDirMeta(str(name).replace('[/COLOR][/B].','.[/COLOR][/B]'),url,4,thumb,background,plot,str(year).replace("['","").replace("']",""),str(cast).split(),ratin,runt,genre)
 				except:pass
-				xbmcplugin.setContent(int(sys.argv[1]), 'movies')
+				xbmcplugin.setContent(int(sys.argv[1]), 'vod')
 			else:
 				name = tools.regex_from_to(a,'<title>','</title>')
 				name = base64.b64decode(name)
 				thumb= tools.regex_from_to(a,'<desc_image>','</desc_image>').replace('<![CDATA[','').replace(']]>','')
 				url  = tools.regex_from_to(a,'<stream_url>','</stream_url>').replace('<![CDATA[','').replace(']]>','')
 				desc = tools.regex_from_to(a,'<description>','</description>')
-				tools.addDir(name,url,4,thumb,fanart,base64.b64decode(desc))
+				tools.addDir(name,url,4,thumb,background,base64.b64decode(desc))
 				
 				
 		
@@ -274,9 +266,6 @@ def catchup():
     listcatchup()
 		
 def listcatchup():
-	tools.addDir(service_name,'',0,icon,fanart,'')
-	tools.addDir('Live TV Catch up','',19,'','','')
-	tools.addDir('[COLOR gold][B]--------------------------------[/B][/COLOR]','',0,icon,fanart,'')
 	open = tools.OPEN_URL(panel_api)
 	all  = tools.regex_get_all(open,'{"num','direct')
 	for a in all:
@@ -285,7 +274,7 @@ def listcatchup():
 			thumb= tools.regex_from_to(a,'"stream_icon":"','"').replace('\/','/')
 			id   = tools.regex_from_to(a,'stream_id":"','"')
 			if not name=="":
-				tools.addDir(name,'url',13,thumb,fanart,id)
+				tools.addDir(name,'url',13,thumb,background,id)
 			
 
 def tvarchive(name,description):
@@ -325,7 +314,7 @@ def tvarchive(name,description):
                 catchupURL = base64.b64decode("JXM6JXMvc3RyZWFtaW5nL3RpbWVzaGlmdC5waHA/dXNlcm5hbWU9JXMmcGFzc3dvcmQ9JXMmc3RyZWFtPSVzJnN0YXJ0PQ==")%(user.host,user.port,username,password,description)
                 ResultURL = catchupURL + str(Finalstart) + "&duration=%s"%(FinalDuration)
                 kanalinimi = "[B][COLOR white]%s[/COLOR][/B] - %s"%(start2,ShowTitle)
-                tools.addDir(kanalinimi,ResultURL,4,icon,fanart,DesC)
+                tools.addDir(kanalinimi,ResultURL,4,icon,background,DesC)
 
 	
 					
@@ -397,9 +386,9 @@ def search():
 		url  = tools.regex_from_to(a,'"stream_id":"','"')
 		thumb= tools.regex_from_to(a,'stream_icon":"','"').replace('\/','/')
 		if text in name.lower():
-			tools.addDir(name,play_url+url+'.ts',4,thumb,fanart,'')
+			tools.addDir(name,play_url+url+'.ts',4,thumb,background,'')
 		elif text not in name.lower() and text in name:
-			tools.addDir(name,play_url+url+'.ts',4,thumb,fanart,'')
+			tools.addDir(name,play_url+url+'.ts',4,thumb,background,'')
 
 	
 def settingsmenu():
@@ -407,9 +396,9 @@ def settingsmenu():
 		META = '[B][COLOR lime]ON[/COLOR][/B]'
 	else:
 		META = '[B][COLOR red]OFF[/COLOR][/B]'
-	tools.addDir('Edit Advanced Settings','ADS',10,icon,fanart,'')
-	tools.addDir('META for VOD is %s'%META,'META',10,icon,fanart,META)
-	tools.addDir('Log Out','LO',10,icon,fanart,'')
+	tools.addDir('Edit Advanced Settings','ADS',10,icon,background,'')
+	tools.addDir('META for vod is %s'%META,'META',10,icon,background,META)
+	tools.addDir('Log Out','LO',10,icon,background,'')
 	
 
 def addonsettings(url,description):
@@ -469,13 +458,21 @@ def addonsettings(url,description):
 		else:
 			xbmcaddon.Addon().setSetting('meta','true')
 			xbmc.executebuiltin('Container.Refresh')
+	elif url =="US":
+		if 'ON' in description:
+			xbmcaddon.Addon().setSetting('hideUS','true')
+			xbmc.executebuiltin('Container.Refresh')
+		else:
+			xbmcaddon.Addon().setSetting('hideUS','true')
+			xbmc.executebuiltin('Container.Refresh')
 	elif url =="XXX":
 		if 'ON' in description:
-			xbmcaddon.Addon().setSetting('hidexxx','false')
+			xbmcaddon.Addon().setSetting('hidexxx','true')
 			xbmc.executebuiltin('Container.Refresh')
 		else:
 			xbmcaddon.Addon().setSetting('hidexxx','true')
-			xbmc.executebuiltin('Container.Refresh')
+			xbmc.executebuiltin('Container.Refresh')		
+			
 	elif url =="LO":
 		xbmcaddon.Addon().setSetting('Username','')
 		xbmcaddon.Addon().setSetting('Password','')
@@ -588,29 +585,31 @@ def accountinfo():
 			expiry = 'Unlimited'
 			
 		ip        = tools.getlocalip()
-		tools.addDir('[B][COLOR white]Username :[/COLOR][/B] '+username,'','',icon,fanart,'')
-		tools.addDir('[B][COLOR white]Password :[/COLOR][/B] '+password,'','',icon,fanart,'')
-		tools.addDir('[B][COLOR white]Expiry Date:[/COLOR][/B] '+expiry,'','',icon,fanart,'')
-		tools.addDir('[B][COLOR white]Account Status :[/COLOR][/B] %s'%status,'','',icon,fanart,'')
-		tools.addDir('[B][COLOR white]Current Connections:[/COLOR][/B] '+ active,'','',icon,fanart,'')
-		tools.addDir('[B][COLOR white]Allowed Connections:[/COLOR][/B] '+connects,'','',icon,fanart,'')
-		tools.addDir('[B][COLOR white]Local IP Address:[/COLOR][/B] '+ip,'','',icon,fanart,'')
-		tools.addDir('[B][COLOR white]Kodi Version:[/COLOR][/B] '+str(KODIV),'','',icon,fanart,'')
+		tools.addDir('[B][COLOR white]Username :[/COLOR][/B] '+username,'','',icon,background,'')
+		tools.addDir('[B][COLOR white]Password :[/COLOR][/B] '+password,'','',icon,background,'')
+		tools.addDir('[B][COLOR white]Expiry Date:[/COLOR][/B] '+expiry,'','',icon,background,'')
+		tools.addDir('[B][COLOR white]Account Status :[/COLOR][/B] %s'%status,'','',icon,background,'')
+		tools.addDir('[B][COLOR white]Current Connections:[/COLOR][/B] '+ active,'','',icon,background,'')
+		tools.addDir('[B][COLOR white]Allowed Connections:[/COLOR][/B] '+connects,'','',icon,background,'')
+		tools.addDir('[B][COLOR white]Local IP Address:[/COLOR][/B] '+ip,'','',icon,background,'')
+		tools.addDir('[B][COLOR white]Kodi Version:[/COLOR][/B] '+str(KODIV),'','',icon,background,'')
 		
 
 		
 	
 def correctPVR():
 
-	addon = xbmcaddon.Addon(user.id)
+	addon         = xbmcaddon.Addon(user.id)
 	username_text = addon.getSetting(id='Username')
 	password_text = addon.getSetting(id='Password')
-	jsonSetPVR = '{"jsonrpc":"2.0", "method":"Settings.SetSettingValue", "params":{"setting":"pvrmanager.enabled", "value":true},"id":1}'
-	IPTVon 	   = '{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","params":{"addonid":"pvr.iptvsimple","enabled":true},"id":1}'
-	nulldemo   = '{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","params":{"addonid":"pvr.demo","enabled":false},"id":1}'
-	loginurl   = user.host+':'+user.port+"/get.php?username=" + username_text + "&password=" + password_text + "&type=m3u_plus&output=ts"
-	EPGurl     = user.host+':'+user.port+"/xmltv.php?username=" + username_text + "&password=" + password_text
-
+	PvrEnable     = '{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","params":{"addonid":"pvr.demo","enabled":false},"id":1}'
+	jsonSetPVR 	  = '{"jsonrpc":"2.0", "method":"Settings.SetSettingValue", "params":{"setting":"pvrmanager.enabled", "value":true},"id":1}'
+	IPTVon 	      = '{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","params":{"addonid":"pvr.iptvsimple","enabled":true},"id":1}'
+	nulldemo      = '{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","params":{"addonid":"pvr.demo","enabled":false},"id":1}'
+	loginurl      = user.host+':'+user.port+"/get.php?username=" + username_text + "&password=" + password_text + "&type=m3u_plus&output=ts"
+	EPGurl        = user.host+':'+user.port+"/xmltv.php?username=" + username_text + "&password=" + password_text
+	
+	xbmc.executeJSONRPC(PvrEnable)
 	xbmc.executeJSONRPC(jsonSetPVR)
 	xbmc.executeJSONRPC(IPTVon)
 	xbmc.executeJSONRPC(nulldemo)
@@ -624,10 +623,10 @@ def correctPVR():
 
 	
 def tvguidesetup():
-		dialog = xbmcgui.Dialog().yesno(user.name,'Would You like us to Setup the TV Guide for You?')
+		dialog = xbmcgui.Dialog().yesno(user.name,'Would You like Sorthern IPTV to Setup the TV Guide for You?')
 		if dialog:
 				pvrsetup()
-				xbmcgui.Dialog().ok(user.name, 'PVR Integration Complete, Restart Kodi For Changes To Take Effect')
+				xbmcgui.Dialog().ok(user.name, 'You are all done mate! , Restart Kodi For Changes To Take Effect')
 
 def num2day(num):
 	if num =="0":
@@ -647,10 +646,9 @@ def num2day(num):
 	return day
 	
 def extras():
-	tools.addDir('M3U & EPG URL Generator','SL',10,icon,fanart,'')
-	tools.addDir('Run a Speed Test','ST',10,icon,fanart,'')
-	tools.addDir('Setup PVR Guide','tv',10,icon,fanart,'')
-	tools.addDir('Clear Cache','CC',10,icon,fanart,'')
+	tools.addDir('Run a Speed Test','ST',10,icon,background,'')
+	tools.addDir('Setup PVR Guide','tv',10,icon,background,'')
+	tools.addDir('Clear Cache','CC',10,icon,background,'')
 	
 
 params=tools.get_params()

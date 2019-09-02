@@ -10,9 +10,12 @@ def regex_from_to(text, from_string, to_string, excluding=True):
 		except: r = ''
 	return r
 
-
 def regex_get_all(text, start_with, end_with):
 	r = re.findall("(?i)(" + start_with + "[\S\s]+?" + end_with + ")", text)
+	return r
+	
+def regex_get_us(text, start_with, end_with):
+	r = re.findall("(?i)(" + start_with + ".+?[UK: Sky Sports].+?" + end_with + ")", text)
 	return r
 	
 def addDir(name,url,mode,iconimage,fanart,description):
