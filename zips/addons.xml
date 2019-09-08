@@ -261,7 +261,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[B][COLORdodgerblue]TEMPEST[/COLOR][/B]" version="1.9.6" provider-name="[B][COLORdodgerblue]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORdodgerblue]TEMPEST[/COLOR][/B]" version="1.9.7" provider-name="[B][COLORdodgerblue]TTMedia[/COLOR][/B]">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -289,7 +289,6 @@
         <!--<import addon="script.module.urlresolver" />-->
 		<import addon="plugin.video.sport365.live" />
 		<import addon="plugin.video.youtube" />
-		<import addon="plugin.video.sicilianstreams" version="1.0.0" />
 		<import addon="plugin.video.mafiastreams" version="1.0.3" />
 		<import addon="plugin.video.f4mTester" version="2.7.2" />
 		<import addon="plugin.video.SportsDevil"  />
