@@ -1,0 +1,787 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addons>
+<addon id="plugin.program.advancedsettings"
+       name="Easy Advanced Settings"
+       version="0.8.8"
+       provider-name="TTMedia">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource"
+               	library="default.py">
+        <provides>video executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary>CREATE,VIEW,EDIT AND DELETE YOUR ADVANCEDSETTINGS.XML FILE</summary>
+        <description>WITH THIS TOOL YOU CAN CREATE YOUR ADVANCED SETTINGS DIRECTLY IN KODI..IF YOU DON'T KNOW WHAT A SETTING DOES, DON'T ENABLE IT!</description>
+        <platform>all</platform>
+        <language>en</language>
+        <license>GNU GENERAL PUBLIC LICENSE</license>
+        <forum></forum>
+        <website></website>
+        <source></source>
+        <email></email>
+    </extension>
+
+</addon>
+
+<addon id="plugin.program.aptoide" version="2018.01.08" name="Aptoide" provider-name="TTMedia">
+	<requires>
+		<import addon="xbmc.python" version="2.19.0" />
+		<import addon="script.module.requests" />
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="main.py">
+		<provides>video executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+        <description>INSTALL/DOWNLOAD APK FROM APTOIDE APK STORE</description>
+
+		<summary lang="en">APTOIDE APK STORE</summary>
+		<platform>all</platform>
+		<forum>-</forum>
+		<website>-</website>
+		<source>-</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>-</news>
+	</extension>
+</addon>
+
+<addon id="plugin.program.ttmediawizard" name="[B][COLORdodgerblue]TTMedia Wizard[/B][/COLOR]" version="6.2" provider-name="[B][COLORdodgerblue]TTMedia[/B][/COLOR]">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.service" library="startup.py" start="startup" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">TTMedia Wizard</summary>
+    <description lang="en">[B][COLORdeepskyblue]TTMEDIA WIZARD KEEPS YOUR KODI DEVICES RUNNING SMOOTH AND ALLOWS YOU TO GET ACCESS TO THE LATEST TTMEDIA CUSTOM BUILDS.[/COLOR][/B]</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.program.xmlerator" name="XMLerator" version="5.5.0" provider-name="TonyH">
+	<requires>
+		<import addon="xbmc.python" version="2.19.0" />
+        <import addon="script.module.python.koding.aio" version="0.9.6.6"/>
+		<import addon="script.module.requests" version="2.9.1" />
+		<import addon="script.module.addon.common" version="2.0.0" />
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+	<extension point="xbmc.service" library="service.py" start="[login|startup]" />
+		<summary lang="en">Generate xml's from online lists</summary>
+		<description lang="en">Generate xml's from user made lists using list numbers from tmdb, imdb, and trakt</description>
+		<platform>all</platform>
+		<forum></forum>
+		<website></website>
+		<news></news>
+		<genre>uk,usa</genre>
+		<video_guide></video_guide>
+		<video_preview></video_preview>
+	</extension>
+</addon>
+
+<addon id="plugin.video.bosstechmediaV5"
+       name="BossTech Media [COLOR red]V5[/COLOR]"
+       version="1.0.2"
+       provider-name="[COLORlime]TT Media[/COLOR]">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="script.module.requests" />
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">BOSSTECH MEDIA[COLORred]V5[/COLOR]</summary>
+    <language>en</language>
+    <description lang="en">[COLORlightskyblue]BOSSTECH MEDIAV5 ADDON - SUPPLIER OF GREAT QUALITY AND STABLE STREAMS.[/COLOR]</description>
+     <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.duality"
+       name="[B][COLORdeepskyblue]DUALITY[/COLOR][/B]"
+       version="1.0.7"
+       provider-name="[B][COLORdodgerblue]TTMedia[/B][/COLOR]">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="script.module.requests" />
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">[B][COLORdeepskyblue]Dual IPTV services[/B][/COLOR]</summary>
+    <language>en</language>
+    <description lang="en">[B][COLORdeepskyblue]Two quality IPTV services in one addon...solid,realiable,consistant streams[/B][/COLOR]</description>
+     <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.evolutionstreams" name="[B]Evolution[/B][B][COLORdeepskyblue]Streams[/B][/COLOR]" version="1.0.5" provider-name="[B][COLORskyblue]TTMedia[/B][/COLOR]">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="script.module.requests" />
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">[COLORlightblue]Live IPTV[/COLOR] </summary>
+    <language>en</language>
+    <description lang="en">[COLORdodgerblue]TTMedia Supplier of Great Quality and Stable Streams[/COLOR]</description>
+     <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.f4mTester" name="f4mTester" version="2.7.2" provider-name="Shani">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.video.F4mProxy" version="2.7.1"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>f4mTester</summary>
+        <description></description>
+        <platform>all</platform>
+    </extension>
+</addon>
+
+<addon id="plugin.video.live.streamspro"
+       name="LiveStreamsPro"
+       version="2.8.1"
+       provider-name="Shani">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.beautifulsoup" version="3.2.1"/>
+    <import addon="script.module.simple.downloader" version="0.9.4"/>
+    <import addon="script.module.beautifulsoup4" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.httplib2" />
+    <import addon="script.module.liveresolver" version="0.1.24" optional="true"/>
+    <import addon="script.module.youtube.dl" optional="true"/>
+    <import addon="plugin.video.youtube" optional="true" />
+    <import addon="script.module.urlresolver" optional="true"/>
+    <import addon="script.module.simplejson" />
+     <import addon="script.module.livestreamer" optional="true"/>
+     <import addon="script.module.pyamf" optional="true"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video</provides>
+  </extension>
+
+
+  <extension point="xbmc.addon.metadata">
+    <summary>livestreamspro- shamelessly forked from livestreams but added many thinks</summary>
+    <description>
+        In addition to what livestreams allowed you to do, you can now,
+        1. call regex in regex,
+        2. multiple regex in page, regex in session, also htmlunescape responses
+        3. create session from one regex and pass onto next in line
+        4. save sessions to a file and open again later
+        5. write python code in .py file, put in the profile directory and then call from your regex.
+        6. use epoctime, guid and unpack as functions already defined.
+        7. Use it to post values to the pages to get the proper responses
+        8. support many headers, like origin, X-Requested-With
+        9. you can now append cookies in response and then read in regex using includeheaders
+        10. You can now link to another web url via your xml using externallink
+        11. support for google captcha, now you can show and then post the text
+
+    </description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.mafiastreams" name="Mafia [B][COLORred]Streams[/B][/COLOR]" version="1.0.7" provider-name="[B][COLORblue]TTMedia[/B][/COLOR]">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="script.module.requests" />
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">[B][COLORlightblue]Live IPTV[/B][/COLOR]</summary>
+    <language>en</language>
+    <description lang="en">[B][COLORdodgerblue]Mafia Streams Supplier of Great Quality and Stable Streams[/B][/COLOR]</description>
+     <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.megaiptv" name="[B][COLORsilver]Mega IPTV[/B][/COLOR]" version="1.0.4" provider-name="[B][COLORdodgerblue]TTMedia[/B][/COLOR]">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="script.module.requests" />
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Live IPTV </summary>
+    <language>en</language>
+    <description lang="en">Mega IPTV addon - Supplier of Great Quality and Stable Streams</description>
+     <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.sport365.live" name="Sport365" version="2.6.1" provider-name="TTMedia">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.requests" version="2.19.1"/>
+        <import addon="plugin.video.f4mTester" />
+        <import addon="script.module.streamlink.base" />
+        <import addon="script.module.pyxbmct" version="1.2.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="main.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en"></summary>
+    <description lang="en"></description>
+    <disclaimer lang="en">SPORT365 LIVE DOES NOT PROVIDE ANY STREAMS OF ITS OWN. STREAM QUALITY, CONTENT AND COPYRIGHT ARE RESPONSIBILITY OF THE AD-FINANCED SOURCE WEB SITE.</disclaimer>
+    <language>en</language>
+    <platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <website></website>
+    <twitter></twitter>
+  <assets>
+    <icon>icon.png</icon>
+    <fanart>fanart.png</fanart>
+  </assets>
+  <news>
+  </news>
+  </extension>
+</addon>
+
+<addon
+  id="plugin.video.SportsDevil"
+  version="2019.05.24"
+  name="SportsDevil"
+  provider-name="SportsDevil">
+  <requires>
+   <import addon="xbmc.python" version="2.14.0"/>
+   <import addon="script.module.dateutil" />
+   <import addon="script.module.simplejson" />
+   <import addon="script.module.six" />
+   <import addon="script.module.requests" />
+   <import addon="plugin.video.f4mTester" />
+   <import addon="script.module.slproxy" />
+  </requires>
+  <extension
+    point="xbmc.python.pluginsource"
+    library="default.py">
+   <provides>video</provides>
+  </extension>
+  <!-- <extension point="xbmc.service" library="service/streamlink_proxy.py" /> -->
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">SportsDevil</summary>
+    <description lang="en">[I]There can only be one.[/I][CR][CR]Unofficial Kodi Addon.</description>
+    <disclaimer lang="en">There can only be one.</disclaimer>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.tempest" name="[B][COLORdodgerblue]TEMPEST[/COLOR][/B]" version="1.9.9" provider-name="[B][COLORdodgerblue]TTMedia[/COLOR][/B]">
+    <requires>
+        <import addon="xbmc.python" version="2.19.0" />
+        <import addon="script.module.universalscrapers" version="1.0.0" />
+        <import addon="script.module.python.koding.aio" version="0.9.6.6" />
+        <import addon="script.module.beautifulsoup" version="3.2.1" />
+        <import addon="script.module.requests" version="2.9.1" />
+        <import addon="script.module.addon.common" version="2.0.0" />
+        <import addon="script.module.xmltodict" version="0.9.0" />
+		<import addon="script.module.feedparser" />
+        <import addon="script.module.dateutil" />
+		<import addon="script.module.thetvdb" />
+        <import addon="script.module.metadatautils" />
+		<import addon="script.module.simplejson" />
+		<import addon="script.module.ttmedialive" />
+		<import addon="script.module.ttmedia-tvtap" />
+		<import addon="script.module.beatport" />
+		<import addon="script.video.F4mProxy" version="2.8.7" />
+		<import addon="script.module.livestreamer" optional="true" />
+		<import addon="script.module.streamlink.base" />
+		<import addon="script.module.streamlink.crypto" />
+		<import addon="script.module.cryptolib" />
+		<import addon="script.module.slproxy" />
+        <!--<import addon="script.module.web-pdb" version="1.0"/>-->
+        <import addon="script.module.resolveurl" />
+        <!--<import addon="script.module.urlresolver" />-->
+		<import addon="plugin.video.sport365.live" />
+		<import addon="plugin.video.youtube" />
+		<import addon="plugin.video.mafiastreams" version="1.0.7" />
+		<import addon="plugin.video.megaiptv" version="1.0.4" />
+		<import addon="plugin.video.f4mTester" version="2.7.2" />
+		<import addon="plugin.video.SportsDevil"  />
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>audio video</provides>
+    </extension>
+    <extension point="xbmc.service" library="service.py" start="[login|startup]" />
+    <extension point="xbmc.addon.metadata">
+      <summary lang="en">[COLORred]EPIC TUNES TUBE N FLIX[/COLOR]</summary>
+      <summary lang="he"></summary>
+      <description lang="en">[B][COLORdeepskyblue]THE AUTHOR OF THIS ADDON DOES NOT HOST ANY OF THE CONTENT WHICH IS FOUND IN IT AND HAVE NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS.[/COLOR][/B]
+     [B][COLORdeepskyblue]CREDITS TO THE ORIGINAL DEVS OF JEN AND TO ALL THE DEVS IN THE JEN GROUP AND ESPECIALLY DEVS IN KRITIKTV GROUP WITHOUT THEM THIS ADDON WOULDNT OF BEEN POSSIBLE!![/COLOR][/B]</description>
+      <description lang="he"></description>
+      <disclaimer lang="en">[B][COLORdeepskyblue]THE AUTHOR OF THIS ADDON DOES NOT HOST ANY OF THE CONTENT WHICH IS FOUND AND HAS NO AFFILIATION WITH ANY OF THE CONTENT PROVIDERS AND OR XBMC/KODI[/COLOR][/B]</disclaimer>
+      <disclaimer lang="en"></disclaimer>
+      <platform>all</platform>
+        <website>http://www.ttmedia.live</website>
+        <video_guide></video_guide>
+    </extension>
+</addon>
+
+<addon id="plugin.video.temptv" version="2.0.13" name="[COLOR fuchsia]TempTV[/COLOR]" provider-name="Tempest, JewBMX">
+	<requires>
+		<import addon="xbmc.python" version="2.19.0" />
+		<import addon="script.temptv.artwork" />
+		<import addon="script.module.urlresolver" />
+		<import addon="script.module.requests" />
+		<import addon="script.module.metahandler" />
+		<import addon="script.module.beautifulsoup4" />
+		<import addon="plugin.video.youtube"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="temptv.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.service" library="service.py" start="startup" />
+	<extension point="xbmc.addon.metadata">
+		<description lang="en">Beta. Simple Free Light IPTV and 1 Click Movies.</description>
+        <disclaimer lang="en">The author is not responsible for the use of this addon. The author is not responsible for the content found using this addon. The author does not host or own any content found within this addon.[CR]The author is in no way affiliated with Kodi, Team Kodi, or the XBMC Foundation.[CR]This is a Non-profit resource, organized solely for educational purposes which is protected under the Fair-Use doctrine of the Copyright Act, Specifically section 107, which does promote freedom of expression, by permitting the unlicensed use of copyright-protected works.</disclaimer>
+        <license>Free the People!, Free the World!!</license>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>
+			v2.0.10 - Added Some channels to Streamlive
+		</news>
+	</extension>
+</addon>
+
+<addon id="plugin.video.the-loop" name="The Loop" version="1.3" provider-name="Munkee">
+    <requires>
+        <import addon="xbmc.python" version="2.19.0" />
+        <import addon="script.module.universalscrapers" version="0.5.5" />
+        <import addon="script.module.python.koding.aio" version="0.9.6.6" />
+        <import addon="script.module.beautifulsoup" version="3.2.1" />
+        <import addon="script.module.requests" version="2.9.1" />
+        <import addon="script.module.addon.common" version="2.0.0" />
+        <import addon="script.module.xmltodict" version="0.9.0" />
+        <!--<import addon="script.module.web-pdb" version="1.0"/>-->
+        <import addon="script.module.resolveurl" />
+        <import addon="plugin.video.live.streamspro" version="2.8.1" />
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+        </extension>
+        <extension point="xbmc.service" library="service.py" start="[login|startup]">
+              </extension>
+        <extension point="xbmc.addon.metadata">
+          <summary lang="en">The Loop</summary>
+          <description lang="en">The Loop is a Sports addon made with the Jen template which is derived from BOB. Powered by Jen. </description>
+          <platform>all</platform>
+          <forum></forum>
+          <website></website>
+          <video_guide></video_guide>
+          <video_preview></video_preview>
+        </extension>
+</addon>
+
+<addon id="plugin.video.youtube" name="YouTube" version="6.5.2~beta3" provider-name="anxdpanic, bromix">
+    <requires>
+        <import addon="xbmc.python" version="2.20.0"/>
+        <import addon="script.module.six" version="1.11.0"/>
+        <import addon="script.module.requests" version="2.12.4"/>
+        <import addon="script.module.inputstreamhelper" version="0.2.2" optional="true"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="resources/lib/default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.service" library="resources/lib/startup.py" start="login"/>
+    <extension point="xbmc.python.module" library="resources/lib/"/>
+    <extension point="xbmc.addon.metadata">
+        <news>
+6.5.2
+[fix] playback (No streams found)
+[fix] missing metadata
+[fix] ended live streams not using mpeg-dash when enabled
+[fix] subscriptions not showing latest videos
+[upd] simplify youtube_resolver regex |contrib: Twilight0|
+        </news>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
+        <summary lang="en_GB">Plugin for YouTube</summary>
+        <description lang="en_GB">YouTube is one of the biggest video-sharing websites of the world.</description>
+        <disclaimer lang="en_GB">This plugin is not endorsed by Google</disclaimer>
+        <summary lang="he_IL">תוסף עבור YouTube</summary>
+        <description lang="he_IL">YouTube הוא אחד מאתרי שיתוף הווידאו הגדולים בעולם.</description>
+        <summary lang="de_DE">Plugin für YouTube</summary>
+        <description lang="de_DE">YouTube ist eines der größten Video-Sharing-Websites der Welt.</description>
+        <summary lang="pl_PL">Wtyczka YouTube</summary>
+        <description lang="pl_PL">YouTube jest jednym z największych na świecie serwisów udostępniania wideo.</description>
+        <summary lang="hu_HU">YouTube kiegészítő</summary>
+        <description lang="hu_HU">A YouTube világ egyik legnagyobb videómegosztó weboldala.</description>
+        <summary lang="es_ES">Plugin para YouTube</summary>
+        <description lang="es_ES">YouTube es uno de los sitios web para compartir videos más grande del mundo.</description>
+        <disclaimer lang="es_ES">Este add-on no está respaldado por Google</disclaimer>
+        <summary lang="es_MX">Plugin para YouTube</summary>
+        <description lang="es_MX">YouTube es uno de los más grandes sitios web de intercambio de videos del mundo.</description>
+        <disclaimer lang="es_MX">Este add-on no está respaldado por Google</disclaimer>
+        <summary lang="ru_RU">Видеодополнение YouTube</summary>
+        <description lang="ru_RU">YouTube - популярнейший видеохостинговый сайт, предоставляющий пользователям услуги хранения, доставки и показа видео.</description>
+        <summary lang="fr_FR">Plugin pour YouTube</summary>
+        <description lang="fr_FR">YouTube est l'un des plus grands sites de partage vidéos du monde.</description>
+        <summary lang="zh_CN">YouTube附加元件</summary>
+        <description lang="zh_CN">「Youtube」是全世界最大的影片分享網站</description>
+        <summary lang="zh_TW">YouTube附加元件</summary>
+        <description lang="zh_TW">「Youtube」是全世界最大的影片分享網站</description>
+        <disclaimer lang="zh_TW">此附加元件未由Google支持</disclaimer>
+        <summary lang="bg_BG">Добавка за YouTube</summary>
+        <description lang="bg_BG">YouTube е един от най-големите уеб сайтове за споделяне на видео в целия свят.</description>
+        <summary lang="el_GR">Πρόσθετο YouTube</summary>
+        <description lang="el_GR">Το YouTube είναι μία από τις μεγαλύτερες ιστοσελίδες διαμοιρασμού βίντεο στον κόσμο.</description>
+        <disclaimer lang="el_GR">Η παρούσα μικροεφαρμογή δεν έχει υϊοθετηθεί από την Google</disclaimer>
+        <summary lang="nb_NO">Tillegg for YouTube</summary>
+        <description lang="nb_NO">YouTube er en av verdens største nettsider for videodeling.</description>
+        <summary lang="ko_KR">유튜브 플러그인</summary>
+        <description lang="ko_KR">유튜브는 세상에서 가장 큰 동영상 공유 사이트 중의 하나입니다.</description>
+        <language></language>
+        <platform>all</platform>
+        <license>GPL-2.0-only</license>
+        <forum>https://forum.kodi.tv/showthread.php?tid=325740</forum>
+        <website>https://www.youtube.com</website>
+        <email>ytplugin at datanet dot ws</email>
+        <source>https://github.com/jdf76/plugin.video.youtube</source>
+        <reuselanguageinvoker>true</reuselanguageinvoker>
+    </extension>
+</addon>
+
+<addon id="repository.ttmedia" name="[B][COLORdodgerblue]TTMedia Repository[/COLOR][/B]" version="2.3.2" provider-name="[B][COLORdodgerblue]TTMedia[/COLOR][/B]">
+	<extension point="xbmc.addon.repository" name="TTMedia Repository">
+<dir>
+  <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
+  <checksum>https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml.md5</checksum>
+  <datadir zip="true">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/</datadir>
+</dir>
+
+<dir>
+<info compressed="false">https://raw.githubusercontent.com/totalrevolution/python-koding/master/zips/addons.xml</info>
+<checksum>https://raw.githubusercontent.com/totalrevolution/python-koding/master/zips/addons.xml.md5</checksum>
+<datadir zip="true">https://raw.githubusercontent.com/totalrevolution/python-koding/master/zips/</datadir>
+</dir>
+
+<dir>
+<info compressed="false">https://raw.githubusercontent.com/jsergio123/zips/master/addons.xml</info>
+<checksum>https://raw.githubusercontent.com/jsergio123/zips/master/addons.xml.md5</checksum>
+<datadir zip="true">https://raw.githubusercontent.com/jsergio123/zips/master/</datadir>
+</dir>
+
+<dir>
+<info compressed="false">https://raw.githubusercontent.com/ttmediav1/repository.ttmedia/master/zips/addons.xml</info>
+<checksum>https://raw.githubusercontent.com/ttmediav1/repository.ttmedia/master/zips/addons.xml.md5</checksum>
+<datadir zip="true">https://raw.githubusercontent.com/ttmediav1/repository.ttmedia/master/zips/</datadir>
+</dir>
+    </extension>
+<extension point="xbmc.addon.metadata">
+		<summary lang="en">[COLORred]TTMEDIA[/COLOR]</summary>
+		<description lang="en">[COLORlime]THIS REPOSITORY HAS THE LATEST WORK FROM TTMEDIA[/COLOR]</description>
+		<genre></genre>
+</extension>
+</addon>
+
+<addon
+  id="script.games.rom.collection.browser"
+  version="2.1.5"
+  name="Rom Collection Browser"
+  provider-name="malte">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="service.rom.collection.browser" version="1.0.0"/>
+  </requires>
+  <extension point="xbmc.python.script" library="default.py">
+    <provides>game</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="be">Import, browse and launch games in XBMC</summary>
+    <summary lang="ca">Importa, cerca i arranca jocs en l'XBMC</summary>
+    <summary lang="da">Importere, gennemse og starte spil i XBMC</summary>
+    <summary lang="de">Importiert, verwaltet und startet Spiele in XBMC</summary>
+    <summary lang="el">Εισαγάγετε, αναζητήστε και εκτελέστε παιχνίδια στο XBMC.</summary>
+    <summary lang="en">Import, browse and launch games in XBMC</summary>
+    <summary lang="en_NZ">Import, browse and launch games in XBMC</summary>
+    <summary lang="es">Importa, explora y ejecuta juegos en XBMC</summary>
+    <summary lang="fr">Importez, parcourez et lancez vos jeux depuis XBMC</summary>
+    <summary lang="fr_CA">Importer, parcourir et lancer des jeux dans XBMC</summary>
+    <summary lang="gl">Importar, buscar e executar xogos no XBMC</summary>
+    <summary lang="hu">Konzol játék ROM-ok böngészése</summary>
+    <summary lang="id">Impor, telusuri dan mainkan permainan di XMBC</summary>
+    <summary lang="it">Importa, sfoglia e lancia i giochi da XBMC</summary>
+    <summary lang="nl">Importeer, doorzoek en start spellen in XBMC</summary>
+    <summary lang="pl">Importowanie, przeglądanie i uruchamianie gier w XBMC</summary>
+    <summary lang="pt">Importe, navegue e execute jogos no XBMC</summary>
+    <summary lang="pt_BR">Importe, navegue e execute jogos no XBMC</summary>
+    <summary lang="ru">Импорт, обзор и запуск игр в XBMC</summary>
+    <summary lang="sv">Importera, bläddra och starta spel i XBMC</summary>
+    <summary lang="zh">在 XBMC 中导入、浏览和运行游戏</summary>
+    <description lang="be">With this Addon you can browse and launch emulator roms and standalone games in XBMC. See the wiki page for more information: http://code.google.com/p/romcollectionbrowser/wiki/Welcome.&#10;&#10;First Use:&#10;  * On first launch RCB will start a simple configuration wizard&#10;  * After the wizard is completed RCB will ask you to import your games&#10;  * If needed you can launch the wizard anytime via context menu&#10;  * Just press "C" on your keyboard or "Menu" on your remote&#10;&#10;Features:&#10;  * scan your rom folders and import games to local database&#10;  * scrape artwork and meta data from various online sources&#10;  * import local available descriptions, artwork and videos&#10;  * filter games by console, genre, year and publisher&#10;  * favorites function&#10;  * automatic video playback in video window&#10;  * fullscreen video browser&#10;  * game details page&#10;  * dedicated MAME views to display cabinets and marquees&#10;  * launch roms and standalone games in solo or non-solo mode&#10;  * detect games in zip and 7z archives and ask user which game to load&#10;  * direct launching of savestate files&#10;  * ...&#10;</description>
+    <description lang="de">Mit diesem Addon können Roms und PC-Spiele verwaltet und gestartet werden. Mehr Informationen im RCB wiki: http://code.google.com/p/romcollectionbrowser/wiki/Welcome.&#10;&#10;Erste Schritte:&#10;  * Beim ersten Aufruf startet RCB einen Konfigurations-Assistenten&#10;  * Nach der Konfiguration importiert RCB die Spiele in seine Datenbank&#10;  * Der Assistent kann auch jederzeit aus RCB heraus gestartet werden&#10;  * Drücke dazu "C" auf der Tastatur oder "Menu" auf der Fernbedienung&#10;&#10;Features:&#10;  * Scannt Verzeichnisse rekursiv und importiert Spiele in die Datenbank&#10;  * Liest Artwork und Metadaten aus verschiedenen Online-Quellen&#10;  * Importiert lokal verfügbare Infos, Artwork und Videos&#10;  * Filtert Spiele nach Konsole, Genre, Jahr und Herausgeber&#10;  * Favoriten-Funktion&#10;  * Automatisches Abspielen von Videos&#10;  * Fullscreen Video Browser&#10;  * Detailseite mit weiteren Spiele-Infos&#10;  * spezielle MAME Sichten für Cabinets und Banner&#10;  * Startet Spiele im Solo-Modus (beendet XBMC vor dem Start des Spiels)&#10;  * Erkennt Spiele in zip und 7z Archiven&#10;  * Savestates können direkt gestartet werden (Emulator-abhängig)&#10;  * ...&#10;</description>
+    <description lang="el">Με αυτό το Πρόσθετο μπορείτε να βρείτε και να παίξετε παιχνίδια εξομοιωτών (Rom) καθώς και αυτόνομα παιχνίδια στο XBMC. Δείτε τη σελίδα του wiki για περισσότερες πληροφορίες: http://code.google.com/p/romcollectionbrowser/wiki/Welcome&#10;&#10;Πρώτη Χρήση:&#10;  * Κατά την πρώτη εκτέλεση του RCB θα ξεκινήσει ένας οδηγός εγκατάστασης&#10;  * Μετά την ολοκλήρωση του οδηγού το RCB θα σας ζητήσει να εισάγετε τα παιχνίδια σας&#10;  * Αν χρειαστεί, μπορείτε να εκτελέσετε τον οδηγό ανά πάσα στιγμή από το μενού επιλογών&#10;  * Απλά πιέστε το "C" στο πληκτρολόγιό σας ή το "Μενού" στο τηλεχειριστήριό σας&#10;&#10;Χαρακτηριστικά:&#10;  * σαρώστε τους φακέλους των rom σας και εισάγετε παιχνίδια στην τοπική βάση δεδομένων&#10;  * λήψη εικόνων και μετα-δεδομένων μέσω της διαδικασίας του scrape από διάφορες διαδικτυακές πηγές&#10;  * εισαγωγή διαθέσιμων τοπικών περιγραφών, εικόνων και βίντεο&#10;  * φιλτράρισμα παιχνιδιών ανά παιχνιδομηχανή, είδος, έτος και εταιρεία&#10;  * λειτουργία αγαπημένων&#10;  * αυτόματη αναπαραγωγή βίντεο σε παράθυρο&#10;  * προβολή βίντεο πλήρους οθόνης&#10;  * σελίδα πληροφοριών παιχνιδιών&#10;  * εξειδικευμένες προβολές MAME για εμφάνιση cabinet και marquee&#10;  * έναρξη rom και παιχνιδιών σε λειτουργία solo και μη&#10;  * εντοπισμός παιχνιδιών σε αρχεία zip και 7z και ερώτηση χρήστη σχετικά με το ποιο παιχνίδι να φορτωθεί&#10;  * άμεση έναρξη των αποθηκευμένων αρχείων&#10;  * ...&#10;</description>
+    <description lang="en">With this Addon you can browse and launch emulator roms and standalone games in XBMC. See the wiki page for more information: http://code.google.com/p/romcollectionbrowser/wiki/Welcome.&#10;&#10;First Use:&#10;  * On first launch RCB will start a simple configuration wizard&#10;  * After the wizard is completed RCB will ask you to import your games&#10;  * If needed you can launch the wizard anytime via context menu&#10;  * Just press "C" on your keyboard or "Menu" on your remote&#10;&#10;Features:&#10;  * scan your rom folders and import games to local database&#10;  * scrape artwork and meta data from various online sources&#10;  * import local available descriptions, artwork and videos&#10;  * filter games by console, genre, year and publisher&#10;  * favorites function&#10;  * automatic video playback in video window&#10;  * fullscreen video browser&#10;  * game details page&#10;  * dedicated MAME views to display cabinets and marquees&#10;  * launch roms and standalone games in solo or non-solo mode&#10;  * detect games in zip and 7z archives and ask user which game to load&#10;  * direct launching of savestate files&#10;  * ...&#10;</description>
+    <description lang="en_NZ">With this Addon you can browse and launch emulator roms and standalone games in XBMC. See the wiki page for more information: http://code.google.com/p/romcollectionbrowser/wiki/Welcome.&#10;&#10;First Use:&#10;  * On first launch RCB will start a simple configuration wizard&#10;  * After the wizard is completed RCB will ask you to import your games&#10;  * If needed you can launch the wizard anytime via context menu&#10;  * Just press "C" on your keyboard or "Menu" on your remote&#10;&#10;Features:&#10;  * scan your rom folders and import games to local database&#10;  * scrape artwork and meta data from various online sources&#10;  * import local available descriptions, artwork and videos&#10;  * filter games by console, genre, year and publisher&#10;  * favourites function&#10;  * automatic video playback in video window&#10;  * fullscreen video browser&#10;  * game details page&#10;  * dedicated MAME views to display cabinets and marquees&#10;  * launch roms and standalone games in solo or non-solo mode&#10;  * detect games in zip and 7z archives and ask user which game to load&#10;  * direct launching of savestate files&#10;  * ...&#10;</description>
+    <description lang="es">Con este complemento puedes explorar y ejecutar ROMs de emulador y juegos independientes en XBMC. Visita la página wiki para más información: http://code.google.com/p/romcollectionbrowser/wiki/Welcome.&#10;&#10;Primer Uso:&#10;  * Al ejecutarse por primera vez, RCB mostrará un sencillo asistente de configuración&#10;  * Una vez completado el asistente, RCB te solicitará importar tus juegos&#10;  * Si lo necesitas, puedes ejecutar el asistente en cualquier momento a través del menú contextual&#10;  * Tan solo tienes que pulsar "C" en el teclado o "Menú" en el mando a distancia&#10;&#10;Características:&#10;  * escanea tus carpetas con ROMs e importa los juegos a una base de datos local&#10;  * descarga imágenes y metadatos desde varias fuentes online&#10;  * importa descripciones, imágenes y videos disponibles localmente&#10;  * filtra los juegos por consola, género, año y editor&#10;  * función de favoritos&#10;  * reproducción automática de videos en ventana de video&#10;  * navegador de videos a pantalla completa&#10;  * página de detalles del juego&#10;  * vistas de MAME dedicadas, mostrando máquinas y marcos&#10;  * ejecuta ROMs y juegos independiente en modo solo o no-solo&#10;  * detecta juegos en archivos zip y 7z y pregunta al usuario qué juego desea cargar&#10;  * ejecución directa de archivos de partidas guardadas&#10;  * ...&#10;</description>
+    <description lang="fr">Avec cette extension, vous pouvez parcourir et lancer des roms d'émulateur ainsi que des jeux autonomes. Visitez le wiki pour plus d'informations : http://code.google.com/p/romcollectionbrowser/wiki/Welcome.&#10;Première utilisation :&#10;* Au premier démarrage RCB lancera un assistant de configuration simplifié.&#10;* Une fois cette configuration terminée RCB vous proposera d'importer vos jeux.&#10;* Au besoin, vous pouvez relancer l'assistant de configuration à tout moment depuis le menu contextuel.&#10;* Appuyez sur la touche "C" de votre clavier ou sur "Menu" de votre télécommande.&#10;&#10;Caractéristiques :&#10;* Analyse votre dossier de roms et importe les jeux dans une base de données locale&#10;* Récupère les illustrations et métadonnées depuis différentes sources en ligne&#10;* Importe vos descriptifs, illustrations et vidéos stockés localement&#10;* Filtre vos jeux par console, genre, année et éditeur&#10;* Gestion des favoris&#10;* lecture automatique des vidéos dans une fenêtre&#10;* Navigation parmi les vidéos en plein écran&#10;* Fiche de jeux détaillée&#10;* Vues dédiées pour MAME affichant cabinets et marquees&#10;* Lancement des roms et jeux en mode solo ou non&#10;* Détecte les jeux dans les fichiers zip et 7z et demande à l'utilisateur quel jeux lancer&#10;* lance directement une sauvegarde&#10;&#10;</description>
+    <description lang="fr_CA">Avec cet addiciel vous pouvez parcourir et lancer des roms d'émulateurs et des jeux autonomes dans XBMC. Consulter le wiki pour plus d'informations : http://code.google.com/p/romcollectionbrowser/wiki/Welcome.&#10;&#10;Première utilisation :&#10;* au premier lancement RCB lancera un assistant simple de configuration&#10;* un fois l'assistant terminé RCB vous demandera d'importer vos jeux&#10;* au besoin vous pouvez lancer l'assistant à tout moment avec le menu contextuel&#10;* pesez juste sur « C » sur votre clavier, ou « Menu » sur votre télécommande&#10;&#10;Caractéristiques :&#10;* balayer votre dossier de ROM et importer les jeux dans la base de données locale&#10;* extraire les illustrations et les métadonnées de diverses sources en ligne&#10;* importer les descriptions, les illustrations et les vidéos locales disponibles&#10;* filtrer les jeux par console, genre, année et éditeur&#10;* fonction favoris&#10;* lecture vidéo automatique dans la fenêtre vidéo&#10;* navigateur vidéo en plein écran&#10;* page de détails des jeux&#10;* vues MAME dédiées pour afficher les cabinets et les marquises&#10;* lancer les ROM et les jeux autonomes en mode solo ou non&#10;* détecter les jeux dans les archives zip et 7z et demander à l'utilisateur quel jeu charger&#10;* lancement direct des fichiers de sauvegarde d'état&#10;* ... &#10;</description>
+    <description lang="hu">Jelenlegi funkciók:&#10;  * játékok szűrése konzoltípus, műfaj, év és kiadó alapján&#10;  * rom-ok indítása külső emulátorral&#10;  * a program beállítása egy xml fájl segítségével&#10;  * egyszerű de testreszabható leírófájl-feldolgozó&#10;  * játékonként különböző képek és videók megjelenítése&#10;  * játéktartalom és kiegészítő információk megjelenítése&#10;</description>
+    <description lang="id">Dengan Addon ini Anda dapat menelusuri dan menjalankan rom emulator dan program permainan di XBMC. Lihat halaman wiki untuk informasi lebih lanjut: http://code.google.com/p/romcollectionbrowser/wiki/Welcome.&#10;&#10;Pemakaian Pertama:&#10;* Saat pertama kali menjalankan RCB akan memulai penuntun konfigurasi sederhana&#10;* Setelah tuntunan selesai RCB akan menanyakan Anda untuk mengimpor permainan&#10;* Jika diperlukan Anda dapat menjalankan tuntunan kapan saja melalui menu konteks&#10;* Tekan "C" pada papan ketik atau "Menu" pada remote Anda&#10;&#10;Fitur:&#10;* pindai folder rom Anda dan impor permainan ke basis data lokal&#10;* salin karya seni dan meta data dari berbagai sumber daring&#10;* impor deskripsi, karya seni dan video yang tersedia lokal&#10;* filter permainan berdasarkan konsol, tema, tahun dan penerbit&#10;* fungsi favorit&#10;* pemaran video otomatis di jendela video&#10;* Penelusuran video layar penuh&#10;* halaman rincian permainan&#10;* tampilan MAME dedikasi untuk menampilkan kabinet dan marquee&#10;* deteksi permainan dalam arsip zip dan 7z serta menanyakan pengguna permainan mana yang akan dimuat&#10;* menjalankan langsung dari berkas savestate&#10;* ...&#10;</description>
+    <description lang="it">Con questo addon puoi sfogliare e lanciare le rom degli emulatori o giochi standalone in XBMC. Consulta la pagina wiki per maggiori informazioni : http://code.google.com/p/romcollectionbrowser/wiki/Welcome.&#10;&#10;Prima uso:&#10;  * Al primo avvio, RCB avvia una semplice procedura di configurazione&#10;  * Al termine, RCB ti chiederà di importare i tuoi giochi&#10;  * Se necessario, puoi avviare la procedura di configurazione in qualsiasi momento tramite il menu contestuale&#10;  * Premi semplicemente "C" sulla tua tastiera o il tasto "Menu" del tuo telecomando&#10;&#10;Caratteristiche:&#10;  * Scansiona le tue cartelle contenenti rom e importa i giochi in un database locale&#10;  * Esegui lo scraping degli artwork e dei metadati da varie sorgenti online&#10;  * Importa descrizioni, artwork e video già disponibili in locale&#10;  * Filtra i giochi per console, genere, anno e editore&#10;  * Funzione preferiti &#10;  * Esecuzione automatica dei video nella finestra video&#10;  * Sfoglia video a schermo intero&#10;  * Pagina dettagli del gioco&#10;  * Viste specifiche per MAME per visualizzare i cabinet e i marquee&#10;  * Lancia rom e giochi standalone in modalità "Solo" e "Non solo"&#10;  * Rileva giochi in archivi .zip e .7z, e chiede all'utente quale gioco eseguire&#10;  * Lancio diretto da file di salvataggio del gioco&#10;  * ...&#10;</description>
+    <description lang="nl">Met deze Add-on kan je zoeken en starten van emulator roms en alleenstaande Spellen in XBMC. Zie de wikipagina voor meer informatie:&#10;http://code.google.com/p/romcollectionbrowser/wiki/Welcome.&#10;&#10;Bij eerste keer:&#10;* Bij de eerste keer Starten zal RCB een gemakkelijke configuratie wizard starten&#10;* Nadat de wizard gereed is zal RCB jou vragen jouw spellen te importeren&#10;* wanneer nodig kan je de wizard elke keer starten via het context menu&#10;* Druk alleen "C" op je toetsenbord of "menu"op jouw afstandsbediening&#10;&#10;Functies:&#10;* Scan jouw rom folders en importeer spellen naar jou lokale database&#10;* scrape Artwork en Meta data van uit verschillende online bronnen&#10;* importeer lokaal beschikbare omschrijvingen, artwork en video`s&#10;* Filter spellen op Console, genre, jaar en uitgever&#10;* Favorieten functie&#10;* Automatisch film terugspelen optie in videoscherm&#10;* Volledig scherm Video browser&#10;* Spel details pagina&#10;* Toegewijde MAME weergaven om Cabinets en marquees*&#10;* Start Roms en Alleenstaande spellen in Solo of niet-solo modus&#10;* detecteer spellen in zip en 7z archieven en vraag gebruiker welk spel te laden&#10;* direct starten van opgeslagen bestanden&#10;* ...&#10;&#10;</description>
+    <description lang="pt">Com este Addon pode navegar e jogar roms de emuladores e jogos individuais no seu XBMC. Veja a página de wiki para mais informação: http://code.google.com/p/romcollectionbrowser/wiki/Welcome.&#10;&#10;Primeiro uso:&#10;  * Na primeira execução, RCB iniciará um assistente de configuração&#10;  * Após a configuraçã estar completa, o RCB irá importar os seus jogos&#10;  * Se precisar, pode iniciar o assistente através do menu de contexto&#10;  * Basta premir "C" no seu teclado ou "Menu" no seu remoto&#10;&#10;Funcionalidades:&#10;  * analisar as suas pastas de roms e importar jogos para a base de dados local&#10;  * obter artwork e metadados de várias fontes online&#10;  * importar descrições, artwork e vídeos disponíveis localmente&#10;  * filtrar jogos por consola, género, ano e editora&#10;  * função de favoritos&#10;  * reprodução de vídeo automática na janela de vídeo&#10;  * navegador de vídeos em ecrã cheio&#10;  * página de detalhes do jogo&#10;  * vistas especiais de MAME para exibir cabinets e marquees&#10;  * iniciar roms e jogos autónomos em modo solo ou não-solo&#10;  * detectar jogos em ficheiros zip e 7z e perguntar ao utilizador qual é o jogo a iniciar&#10;  * iniciar directamente ficheiros de savestate&#10;  * ...&#10;</description>
+    <description lang="pt_BR">Com esse addon você pode navegar e lançar roms de emuladores e jogos através do xbmc. Veja a pagina de wiki para mais informações:&#10;http://code.google.com/p/romcollectionbrowser/wiki/Welcome.(\n)(\n)&#10;Primeiro Uso:&#10; No primeiro lançamento o RCB irá iniciar um assistente de configuração simples(&#10;*Depois de concluir o assistente RCB irá pedir para importar seus jogos&#10;*Se necessário, você pode iniciar o assistente a qualquer momento através do menu de contexto&#10;* Basta pressionar "C" no seu teclado ou "Menu" em seu controle remoto&#10;&#10;Características:&#10;* varredura de suas pastas com roms e importação de jogos para um banco de dados local&#10;* procura arte e meta-dados de várias fontes on-line&#10;* importação local para descrições e obras de arte e vídeos se disponíveis&#10;* filtrar jogos por console, gênero, ano e editor&#10;* função favoritos&#10;* reprodução automática de videos na janela do navegador(\n)&#10;*vídeo em tela cheia no navegador&#10;* pagina de detalhes do jogo&#10;* vistas dedicadas a MAME para exibir cabines e letreiros(\n)&#10;* lançamento de roms e jogos independentes no modo sozinho ou não sozinho&#10;* detectar jogos em arquivos ZIP e 7z e perguntar ao usuário qual jogo carregar&#10;* lançamento direto de arquivos de savestate&#10;.&#10;</description>
+    <description lang="ru">С помощью этого дополнения можно просматривать и запускать ROM эмуляторы и игры XBMC. Дополнительную информацию можно увидеть на странице Wiki по адресу: http://code.google.com/p/romcollectionbrowser/wiki/Welcome.&#10;&#10;Первый запуск:&#10;  * При первом запуске RCB будет запущен простой мастер конфигураций&#10;  * После завершения мастера RCB спросит Вас, какие игры импортировать&#10;  * Если нужно, вы можете запустить мастер повторно в контекстном меню&#10;  * Нажмите "C" на клавиатуре или "Menu" на пульте управления&#10;&#10;Возможности:&#10;  * Сканирование папок с образами игр и добавление их в вашу базу данных&#10;  * Искать обложки и мета данные  с различных онлайн источников&#10;  * загружать доступные локальные описания, обложки и видео&#10;  * фильтровать игры по типу консоли, жанру, году, издателю&#10;  * избранное&#10;  * автоматическое воспроизведение видео в окне&#10;  * полноэкранный видео браузер&#10;  * страница описаний игр&#10;  * dedicated MAME views to display cabinets and marquees&#10;  * Запускать образы и игры в одно и многопользовательском режимах&#10;  * определять игры в архивах zip и 7z и затем спрашивать пользователя, что загружать&#10;  * Прямой запуск по файлам сохранений&#10;  * ...&#10;</description>
+    <description lang="sv">Med detta tillägg kan du bläddra och starta emulatorbaserade ROMS och spel i XBMC.&#10;Se wiki för mer information: http://code.google.com/p/romcollectionbrowser/wiki/Welcome.&#10;&#10;Första start:&#10;  * Vid första start kommer RCB starta en enkel inställningsguide&#10;  * När guiden är klar kommer RCB be dig importera dina spel&#10;  * Om du behöver, kan du starta guiden när som helst via undermenyn&#10;  * Tryck "C" på ditt tangentbord eller "Meny" på din fjärrkontroll&#10;&#10;Egenskaper:&#10;  * sök igenom mappar med roms och importera spel till lokal databas&#10;  * skrapa bilder och metadata från olika onlinekällor&#10;  * importera lokala beskrivningar, bilder och filmer&#10;  * filtrera spel efter konsol, genre, år och utgivare&#10;  * favoriter&#10;  * automatisk filmuppspelning i videofönster&#10;  * fullskärmsbläddrare för film&#10;  * sida med detaljerad spelinformation&#10;  * dedikerade MAME-vyer för att visa spelkabinett&#10;  * starta roms och spel i solo eller non-solo läge&#10;  * hitta spel i zip och 7z arkiv och fråga användaren vilket spel att ladda&#10;  * direktstart av savestate fier&#10;  * ...&#10;</description>
+    <language></language>
+    <platform>android freebsd ios linux osx windows</platform>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <forum>http://forum.xbmc.org/showthread.php?tid=70115</forum>
+    <website>https://code.google.com/p/romcollectionbrowser/</website>
+    <source>https://romcollectionbrowser.googlecode.com/svn/trunk/</source>
+  </extension>
+</addon>
+
+<addon id="script.module.beatport" name="[B][COLORlimegreen]Beatport[/B][/COLOR]" version="1.0.0" provider-name="[B][COLORlimegreen]TTMedia[/B][/COLOR]">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="plugin.video.youtube" version="6.1.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Play Music via Youtube</summary>
+		<description lang="en">Choose Music from beatport and play it via Youtube.</description>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
+		<website></website>
+		<email></email>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>
+		</news>
+	</extension>
+</addon>
+
+<addon id="script.module.cryptolib" name="Crypto Libraries" version="1.0.0" provider-name="Twilight0">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary>Pure Python implementation of some cryptographic libraries</summary>
+    <source>https://github.com/Twilight0/script.module.cryptolib</source>
+    <platform>all</platform>
+    <license>MIT</license>
+  </extension>
+</addon>
+
+<addon id="script.module.livestreamer"
+       name="livestreamer"
+       version="1.12.0"
+       provider-name="Christopher Rosell">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.requests"
+                      version="1.1.0"
+                     optional="false"/>
+    <import addon="script.module.singledispatch"
+                      version="3.4.0.3"
+                     optional="false"/>
+    <import addon="script.module.futures"
+                      version="2.2.0"
+                     optional="false"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib"/>
+  <extension point="xbmc.addon.metadata">
+    <summary>Livestreamer extracts streams from various services</summary>
+    <description>Livestreamer is a command-line utility that pipes video streams from various services into a video player, such as VLC. The main purpose of Livestreamer is to allow the user to avoid buggy and CPU heavy flash plugins but still be able to enjoy various streamed content. There is also an API available for developers who want access to the video stream data.</description>
+    <platform>all</platform>
+    <license>Simplified BSD</license>
+    <source>https://github.com/chrippa/livestreamer.git</source>
+    <website>http://livestreamer.io</website>
+  </extension>
+</addon>
+
+<addon id="script.module.simplejson"
+       name="simplejson"
+       version="3.3.0"
+       provider-name="Martijn">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <language></language>
+    <summary lang="en">Simple, fast, extensible JSON encoder/decoder for Python</summary>
+    <description lang="en">Simple, fast, extensible JSON encoder/decoder for Python</description>
+    <disclaimer lang="en">Code taken from https://pypi.python.org/pypi/simplejson/</disclaimer>
+    <license>MIT License, Academic Free License v. 2.1</license>
+    <website>https://pypi.python.org/pypi/simplejson/</website>
+    <source>https://pypi.python.org/pypi/simplejson/</source>
+  </extension>
+</addon>
+
+<addon id="script.module.slproxy" name="SLProxy" version="0.1.1" provider-name="devilsport">
+  <requires>
+    <import addon="xbmc.python" version="2.24.0"/>
+    <import addon="script.module.requests"/>
+	  <import addon="script.module.streamlink.base" />
+  </requires>
+  <extension point="xbmc.python.module" library="lib/"/>
+  <extension point="xbmc.addon.metadata">
+    <summary>StreamLink Proxy DS</summary>
+    <description>Streamlink proxy for Kodi</description>
+    <platform>all</platform>
+    <license>Simplified BSD</license>
+    <source></source>
+    <language>en</language>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+    <news>
+    </news>
+  </extension>
+</addon>
+
+<addon id="script.module.streamlink.base" name="Streamlink Library" version="2019.06.23" provider-name="Streamlink Devs, Twilight0">
+  <requires>
+      <import addon="xbmc.python" version="2.24.0"/>
+      <import addon="script.module.requests" version="2.12.4"/>
+      <import addon="script.module.futures" version="2.2.0"/>
+      <import addon="script.module.cryptolib" version="1.0.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="resources/lib/"/>
+  <extension point="xbmc.addon.metadata">
+      <summary>Streamlink Library for Kodi</summary>
+      <description>Streamlink Library for Kodi. It is a collection of plugins to help resolve web page urls into streamable links. Known issue: Does not work on Xbox, specifically throws exception when trying to import something from ctypes module.</description>
+      <platform>all</platform>
+      <license>Simplified BSD</license>
+      <source>https://github.com/Twilight0/script.module.streamlink.base/</source>
+      <language>en</language>
+      <assets>
+          <icon>icon.png</icon>
+      </assets>
+      <news>+2019.06.23
+- Changed crypto module addon id
+- Updated description</news>
+  </extension>
+</addon>
+
+<addon id="script.module.streamlink.crypto" name="streamlink.crypto" version="1.4.0" provider-name="Streamlink.crypto">
+  <requires>
+    <import addon="xbmc.python" version="2.14.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary>Pure Python implementation of the cryptographic libraries required by Streamlink</summary>
+    <source>https://github.com/Twilight0/script.module.streamlink.crypto</source>
+    <platform>all</platform>
+    <license>MIT</license>
+  </extension>
+</addon>
+
+<addon id="script.module.ttmedia-tvtap" name="Tempest TvTap" version="2.0.0" provider-name="TTMedia">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.livestreamer" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.routing" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>all</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_gb">TTMedia TvTap Module. All credit must go to anyone involved in the Original Code</summary>
+    <description lang="en_gb">Module for TvTap APK</description>
+    <disclaimer lang="en_gb"></disclaimer>
+    <language></language>
+    <platform>all</platform>
+    <license></license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <source></source>
+  </extension>
+</addon>
+
+<addon id="script.module.ttmedialive" name="TTMedia Live" version="8" provider-name="TTMedia">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.livestreamer" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.routing" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>all</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_gb">TTMedia Live</summary>
+    <description lang="en_gb">TTMedia live</description>
+    <disclaimer lang="en_gb"></disclaimer>
+    <language></language>
+    <platform>all</platform>
+    <license></license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <source></source>
+  </extension>
+</addon>
+
+<addon id="script.video.F4mProxy"
+	     name="F4mProxy"
+	     version="2.8.7"
+	     provider-name="Shani">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0" />
+    <import addon="script.module.requests" />
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+    <extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>executable</provides>
+  </extension>
+
+
+
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Proxy for f4m</summary>
+    <description lang="en">Use this addon to play F4m v1 and v2 streams</description>
+  </extension>
+</addon>
+</addons>
