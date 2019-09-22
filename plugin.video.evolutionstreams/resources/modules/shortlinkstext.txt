@@ -1,0 +1,7 @@
+Your M3U & EPG URL's Have Been Generated & Shortened.
+
+M3U URL: %s
+
+EPG URL: %s
+
+Powered By Tinyurl.com
