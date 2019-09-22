@@ -73,6 +73,15 @@ def get_streams_play(params):
             # addDir(frame.get('title', ''), json.dumps(frame), params=params,
             #        mode='take_stream', iconImage=ICON, fanart=FANART)
 
+def enable_silent_inputstream():
+    try:
+        isa_enable()
+        rtmp_enable()
+    except BaseException:
+        return
+
+
+
 
 
 def take_stream(params):
@@ -81,6 +90,11 @@ def take_stream(params):
     import sport365 as mod
     busy()
     stream_url, url, header, title = mod.getChannelVideo(json.loads(ex_link))
+    xbmc.log(stream_url, level=xbmc.LOGNOTICE)
+    xbmc.log(url, level=xbmc.LOGNOTICE)
+    xbmc.log(str(header), level=xbmc.LOGNOTICE)
+    # xbmc.log(title, level=xbmc.LOGNOTICE)
+
     if stream_url:
         liz = xbmcgui.ListItem(label=orig_title)
         liz.setArt({"fanart": FANART, "icon": ICON})
@@ -88,7 +102,7 @@ def take_stream(params):
         liz.setProperty("IsPlayable", "true")
         idle()
         if my_addon.getSetting('play') == 'Inputstream':
-            stream_url = stream_url.replace('/i', '/master.m3u8')
+            stream_url = stream_url.replace('/i', '/index.m3u8') if stream_url.endswith('/i') else stream_url
             liz.setPath(stream_url)
             if float(xbmc.getInfoLabel('System.BuildVersion')[0:4]) >= 17.5:
                 liz.setMimeType('application/vnd.apple.mpegurl')
@@ -100,12 +114,11 @@ def take_stream(params):
 
 
             try:
-                import threading
-                thread = threading.Thread(name='sport356Thread', target=sport356Thread2, args=[url, header])
-                thread.start()
-                #xbmc.Player().play(stream_url, liz)
-                #addLinkItem(orig_title, stream_url, '', '', ICON, liz, True, FANART)
-                ok = xbmcplugin.setResolvedUrl(addon_handle, False, liz)
+                # import threading
+                # thread = threading.Thread(name='sport356Thread', target=sport356Thread2, args=[url, header])
+                # thread.start()
+                # xbmc.Player().play(stream_url, liz)
+                ok = xbmcplugin.setResolvedUrl(addon_handle, True, liz)
                 #ok = xbmcplugin.addDirectoryItem(handle=addon_handle, url=stream_url, listitem=liz, isFolder=False)
                 return ok
             except BaseException:
@@ -116,7 +129,8 @@ def take_stream(params):
             import streamlink.session
             session = streamlink.session.Streamlink()
             stream_url, hdrs = stream_url.split('|')
-            stream_url = 'hls://' + stream_url.replace('/i', '/master.m3u8')
+            stream_url = 'hls://' + stream_url.replace('/i', '/index.m3u8') if stream_url.endswith('/i') else\
+                'hls://' + stream_url
             hdrs += '&Origin=http://h5.adshell.net'
             session.set_option("http-headers", hdrs)
 
@@ -125,6 +139,10 @@ def take_stream(params):
 
             liz.setPath(stream_url)
             idle()
+
+            # import threading
+            # thread = threading.Thread(name='sport356Thread', target=sport356Thread2, args=[url, header])
+            # thread.start()
             ok = xbmcplugin.setResolvedUrl(addon_handle, False, liz)
             return ok
 
@@ -180,22 +198,32 @@ def resolve_stream(name, url, description):
 
 def sport356Thread2(url, header):
     import re, sport365 as s
-
+    xbmc.log("sport356Thread2 url: %s" % url, level=xbmc.LOGNOTICE)
     player = xbmc.Player()
-    xbmc.sleep(20000) #3minutes
+    xbmc.sleep(2000) #3minutes
     player.pause()
     while player.isPlaying():
         ##########################
-        print 'sport356Thread: KODI IS PLAYING, sleeping ...'
+        #print 'sport356Thread: KODI IS PLAYING, sleeping ...'
+        # try:
+        xbmc.log("sport356Thread: KODI IS PLAYING, sleeping ...", level=xbmc.LOGNOTICE)
         a, c = s.getUrlc(url, header=header, usecookies=True)
-        banner = re.compile('url:["\'](.*?)[\'"]').findall(a)[0]
-        xbmc.log(banner)
-        xbmc.sleep(20000)
-        data, c = s.getUrlc(banner)
-        banner = re.findall(r'window.location.replace\("([^"]+)"\);\s*}\)<\/script><div', data)[0]
-        s.getUrlc(urllib.quote(banner, ':/()!@#$%^&;><?'))
-        xbmc.sleep(20000)
-    print 'sport356Thread: KODI STOPED, OUTSIDE WHILE LOOP ... EXITING'
+        if not a:
+            break
+        xbmc.log(a, level=xbmc.LOGNOTICE)
+        banner = re.compile('url\s*:\s*["\'](.*?)[\'"]').findall(a)[0]
+        xbmc.log(banner, level=xbmc.LOGNOTICE)
+        xbmc.sleep(2000)
+        s.getUrlc(banner)
+        xbmc.sleep(2000)
+        # except BaseException:
+        #     pass
+        # data, c = s.getUrlc(banner)
+        # banner = re.findall(r'window.location.replace\("([^"]+)"\);\s*}\)<\/script><div', data)[0]
+        # s.getUrlc(urllib.quote(banner, ':/()!@#$%^&;><?'))
+        # xbmc.sleep(20000)
+    #print 'sport356Thread: KODI STOPED, OUTSIDE WHILE LOOP ... EXITING'
+    xbmc.log("sport356Thread: KODI STOPED, OUTSIDE WHILE LOOP ... EXITING", level=xbmc.LOGNOTICE)
 
 
 ## COMMON Functions
@@ -347,7 +375,7 @@ def isa_enable():
 
     try:
         if enabled:
-            dialog.notification(addonName, 'Inputstream adaptive addon is already enabled')
+            #dialog.notification(addonName, 'Inputstream adaptive addon is already enabled')
             return
 
         else:
@@ -389,7 +417,7 @@ def rtmp_enable():
 
     try:
         if enabled:
-            dialog.notification(addonName, 'Inputstream RTMP addon is already enabled')
+            #dialog.notification(addonName, 'Inputstream RTMP addon is already enabled')
             return
         else:
             xbmc_path = os.path.join('special://xbmc', 'addons', 'inputstream.rtmp')
@@ -418,6 +446,10 @@ def rtmp_enable():
 
 
 if mode is None:
+    if addon_version('xbmc.python') < 2250:
+        my_addon.setSetting('play', 'F4M')
+    else:
+        enable_silent_inputstream()
     # domain = my_addon.getSetting('domain')
     # if 'livesport' in domain:
     #     url = 'http://www.livesportstreams.tv/'
@@ -431,9 +463,9 @@ if mode is None:
     # addDir('[COLORcyan]Alternative Domains[/COLOR]', ex_link='', mode='opensettings',
     #        iconImage=ICON, fanart=FANART)
 
-    # addDir('Sport247 LIVE', ex_link='',
-    #        params={'_service': 'sport365', '_act': 'ListChannels', '_url': 'http://www.sport247.live/'}, mode='site2',
-    #        iconImage=ICON, fanart=FANART)
+    addDir('Sport247 LIVE', ex_link='',
+           params={'_service': 'sport365', '_act': 'ListChannels', '_url': 'http://www.sport247.live/'}, mode='site2',
+           iconImage=ICON, fanart=FANART)
     addDir('s365 LIVE(alt)', ex_link='',
            params={'_service': 'sport365', '_act': 'ListChannels', '_url': 'http://www.s365.live/'}, mode='site2',
            iconImage=ICON, fanart=FANART)

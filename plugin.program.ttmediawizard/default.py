@@ -23,6 +23,7 @@ import urllib2,urllib
 import re
 import uservar
 import fnmatch
+import base64
 try:    from sqlite3 import dbapi2 as database
 except: from pysqlite2 import dbapi2 as database
 from datetime import date, datetime, timedelta
@@ -223,6 +224,18 @@ def index():
 	addFile('Settings'      ,'settings', icon=ICONSETTINGS, themeit=THEME1)
 	if DEVELOPER == 'true': addDir('Developer Menu','developer', icon=ICONSETTINGS, themeit=THEME1)
 	setView('files', 'viewType')
+	
+def find_single_match(text, pattern):
+
+        # USE RE TO FIND THE PATTERN THAT IS A SINGLE MATCH TO OUR REGEX
+    result = ""
+    try:
+        matches = re.findall(pattern, text, flags=re.DOTALL)
+        result = matches[0]
+    except:
+        result = ""
+
+    return result
 
 def buildMenu():
 	WORKINGURL = wiz.workingURL(BUILDFILE)
@@ -337,8 +350,29 @@ def buildMenu():
 								addDir('[%s] %s (v%s)' % (float(kodi), name, version), 'viewbuild', name, description=description, fanart=fanart,icon=icon, menu=menu, themeit=THEME2)
 				else: addFile('Text file for builds not formated correctly.', '', icon=ICONBUILDS, themeit=THEME3)
 	setView('files', 'viewType')
-
+	
 def viewBuild(name):
+
+	Protected = ['revamped','eminance','mqriffic','majestic']
+	
+	if name in Protected:
+		
+		U_Data	=	wiz.getKeyboard(base64.b64decode(b''), base64.b64decode(b'RW50ZXIgdGhlIFBhc3N3b3JkIEZvciBUaGlzIEJ1aWxkLg=='))
+		P_Data	=	wiz.openURL(base64.b64decode(b'aHR0cHM6Ly90dG1lZGlhLmxpdmUvd2l6YXJkL3Bhc3MudHh0'))
+		# don't forget to encode base64 after you put in details
+		R_Data	=	'<'+name+'>(.*?)</'+name+'>'
+		S_Data	=	find_single_match(P_Data, R_Data)
+		
+		
+		if U_Data == S_Data:
+			Protection_Passed(name)
+		else:
+			DIALOG.ok(base64.b64decode(b'UGFzc3dvcmQgQ2hlY2sgRmFpbGVkIQ=='),base64.b64decode(b'SW5jb3JyZWN0IFBhc3N3b3JkIQ=='))
+			sys.exit(base64.b64decode(b'SW52YWxpZCBQYXNzd29yZCE='))
+	else:
+		Protection_Passed(name)
+
+def Protection_Passed(name):
 	WORKINGURL = wiz.workingURL(BUILDFILE)
 	if not WORKINGURL == True:
 		addFile('Url for txt file not valid', '', themeit=THEME3)
@@ -486,9 +520,9 @@ def apkScraper(name=""):
 def apkMenu(url=None):
 	if url == None:
 		if DEVELOPER == 'true': addDir ('Official Kodi Apk\'s', 'apkscrape', 'kodi', icon=ICONAPK, themeit=THEME1)
-		if DEVELOPER == 'true': addDir ('Official SPMC Apk\'s', 'apkscrape', 'spmc', icon=ICONAPK, themeit=THEME1)
+		# if DEVELOPER == 'true': addDir ('Official SPMC Apk\'s', 'apkscrape', 'spmc', icon=ICONAPK, themeit=THEME1)
 		#if HIDESPACERS == 'No': addFile(wiz.sep(), '', themeit=THEME3)
-	if not APKFILE == 'http://':
+	if not APKFILE == 'https://ttmedia.live/wizard/apk.txt':
 		if url == None:
 			APKWORKING  = wiz.workingURL(APKFILE)
 			TEMPAPKFILE = uservar.APKFILE

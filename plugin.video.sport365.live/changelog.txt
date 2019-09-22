@@ -1,3 +1,11 @@
+2.6.3 09-09-2019
+- Add new Alternative source
+- Default playback method INPUTSTREAM and F4M for older kodi versions
+- Auto enable-install inputstream addons
+
+2.6.2 08-09-2019
+- Default playback method INPUTSTREAM
+
 2.6.1 07-06-2019
 - Fix links resolver
 
