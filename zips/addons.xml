@@ -300,7 +300,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[B][COLORdodgerblue]TEMPEST[/COLOR][/B]" version="2.0.0" provider-name="[B][COLORdodgerblue]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORdodgerblue]TEMPEST[/COLOR][/B]" version="2.0.1" provider-name="[B][COLORdodgerblue]TTMedia[/COLOR][/B]">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -323,11 +323,13 @@
 		<import addon="script.module.streamlink.crypto" />
 		<import addon="script.module.cryptolib" />
 		<import addon="script.module.slproxy" />
+		<import addon="script.temptv.artwork" />
         <!--<import addon="script.module.web-pdb" version="1.0"/>-->
         <import addon="script.module.resolveurl" />
         <!--<import addon="script.module.urlresolver" />-->
 		<import addon="plugin.video.sport365.live" />
 		<import addon="plugin.video.youtube" />
+		<import addon="plugin.video.temptv" />
 		<import addon="plugin.video.mafiastreams" version="1.0.7" />
 		<import addon="plugin.video.megaiptv" version="1.0.4" />
 		<import addon="plugin.video.f4mTester" version="2.7.2" />
@@ -351,7 +353,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.video.temptv" version="2.0.13" name="[COLOR fuchsia]TempTV[/COLOR]" provider-name="Tempest, JewBMX">
+<addon id="plugin.video.temptv" version="2.0.14" name="[B][COLORdodgerblue]TempTV[/B][/COLOR]" provider-name="[B][COLORdodgerblue]TTMedia[/B][/COLOR]">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0" />
 		<import addon="script.temptv.artwork" />
@@ -366,16 +368,14 @@
 	</extension>
 	<extension point="xbmc.service" library="service.py" start="startup" />
 	<extension point="xbmc.addon.metadata">
-		<description lang="en">Beta. Simple Free Light IPTV and 1 Click Movies.</description>
+		<description lang="en">Simple iptv and more</description>
         <disclaimer lang="en">The author is not responsible for the use of this addon. The author is not responsible for the content found using this addon. The author does not host or own any content found within this addon.[CR]The author is in no way affiliated with Kodi, Team Kodi, or the XBMC Foundation.[CR]This is a Non-profit resource, organized solely for educational purposes which is protected under the Fair-Use doctrine of the Copyright Act, Specifically section 107, which does promote freedom of expression, by permitting the unlicensed use of copyright-protected works.</disclaimer>
-        <license>Free the People!, Free the World!!</license>
+        <license></license>
 		<assets>
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>
-			v2.0.10 - Added Some channels to Streamlive
-		</news>
+		<news></news>
 	</extension>
 </addon>
 
@@ -450,7 +450,7 @@
     </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="[B][COLORdodgerblue]TTMedia Repository[/COLOR][/B]" version="2.3.3" provider-name="[B][COLORdodgerblue]TTMedia[/COLOR][/B]">
+<addon id="repository.ttmedia" name="[B][COLORdodgerblue]TTMedia Repository[/COLOR][/B]" version="2.3.4" provider-name="[B][COLORdodgerblue]TTMedia[/COLOR][/B]">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
@@ -757,6 +757,18 @@
     <email></email>
     <source></source>
   </extension>
+</addon>
+
+<addon id="script.temptv.artwork" version="1.0.2" name="[B][COLORdodgerblue]TempTV Artwork[/B][/COLOR]" provider-name="[B][COLORdodgerblue]TTMedia[/B][/COLOR]">
+	<requires>
+		<import addon="xbmc.python" version="2.19.0"/>
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<summary>Themes for the Temptv Addon</summary>
+		<description></description>
+		<platform>all</platform>
+	</extension>
 </addon>
 
 <addon id="script.video.F4mProxy"
