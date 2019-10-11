@@ -1,5 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addons>
+<addon id="plugin.audio.mp3streams" name="MP3 Streams" version="2019.09.30" provider-name="Bugatsinho">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.t0mm0.common" version="1.1.0"/>
+        <import addon="script.module.mutagen" version="1.41.1"/>
+        <import addon="script.module.requests" version="1.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>audio</provides>
+    </extension>
+    <extension point="xbmc.service" library="playerMP3.py" start="startup" />
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary>A music streaming collection</summary>
+        <description>Browse, stream or download your favourite songs and albums</description>
+        <news>Small fixes/fix artwork/next page
+        Credits to qahanik, kinkin, art by Marquerite for original code</news>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
+    </extension>
+</addon>
+
+<addon
+	id="plugin.audio.releasefm"
+	name="Release FM"
+	version="1.0.1"
+	provider-name="ReleaseFM">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0" />
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>audio</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+		<source>https://github.com/releasefm/plugin.audio.releasefm</source>
+		<platform>all</platform>
+		<language>en</language>
+		<summary>Release FM - Underground dance music from the UK - www.releasefm.net</summary>
+		<description>Release FM was started by a group of very talented and knowledgeable DJ’s, who just happened to also be radio enthusiasts. Between them, there is over a century of experience in underground dance music and radio broadcasting. This exciting resume includes…Starting the longest running underground dance music station in this country – which is still broadcasting today, Artist management (UK Number 1 artist), Record Label, Event Management and DJing. This wealth of experience and knowledge is the reason why we feel, Release FM is the best and most progressive radio station on the dial and web. Release FM believe in showcasing the very best upfront, forthcoming and classic dance music, tailored towards the clued up and musically intelligent listener, who crave something that isn’t being covered by mainstream stations.</description>
+	</extension>
+</addon>
+
 <addon id="plugin.program.advancedsettings"
        name="Easy Advanced Settings"
        version="0.8.8"
@@ -89,26 +134,6 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.bosstechmediaV5"
-       name="BossTech Media [COLOR red]V5[/COLOR]"
-       version="1.0.2"
-       provider-name="[COLORlime]TT Media[/COLOR]">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-	<import addon="script.module.requests" />
-  </requires>
-  <extension point="xbmc.python.pluginsource"
-            library="default.py">
-        <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">BOSSTECH MEDIA[COLORred]V5[/COLOR]</summary>
-    <language>en</language>
-    <description lang="en">[COLORlightskyblue]BOSSTECH MEDIAV5 ADDON - SUPPLIER OF GREAT QUALITY AND STABLE STREAMS.[/COLOR]</description>
-     <platform>all</platform>
-  </extension>
-</addon>
-
 <addon id="plugin.video.duality"
        name="[B][COLORdeepskyblue]DUALITY[/COLOR][/B]"
        version="1.0.7"
@@ -159,6 +184,21 @@
         <description></description>
         <platform>all</platform>
     </extension>
+</addon>
+
+<addon id="plugin.video.Limitless" name="LIMITLESS TV" version="1.000.006" provider-name="@Nemzzy668 // @_DevKong ">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.addon.common" version="2.0.0" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">LIMITLESS TV</summary>
+    <description lang="en">A Kodi Bassed MultiMedia Addon.</description>
+    <platform>all</platform>
+  </extension>
 </addon>
 
 <addon id="plugin.video.live.streamspro"
@@ -223,29 +263,12 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.megaiptv" name="[B][COLORsilver]Mega IPTV[/B][/COLOR]" version="1.0.4" provider-name="[B][COLORdodgerblue]TTMedia[/B][/COLOR]">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-	<import addon="script.module.requests" />
-  </requires>
-  <extension point="xbmc.python.pluginsource"
-            library="default.py">
-        <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Live IPTV </summary>
-    <language>en</language>
-    <description lang="en">Mega IPTV addon - Supplier of Great Quality and Stable Streams</description>
-     <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id="plugin.video.sport365.live" name="Sport365" version="2.6.3.1" provider-name="Bugatsinho">
+<addon id="plugin.video.sport365.live" name="Sport365" version="2.6.4" provider-name="Bugatsinho">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.requests" version="2.19.1"/>
-        <import addon="plugin.video.f4mTester" />
-        <import addon="script.module.streamlink.base" />
+        <import addon="plugin.video.f4mTester" version="2.7.2"/>
+        <import addon="script.module.streamlink.base" version="2019.06.23"/>
         <import addon="script.module.pyxbmct" version="1.2.0"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="main.py">
@@ -264,10 +287,10 @@
     <icon>icon.png</icon>
     <fanart>fanart.png</fanart>
   </assets>
-  <news>2.6.3 09-09-2019
+  <news>2.6.4 08-10-2019
 - Add new Alternative source
 - Default playback method INPUTSTREAM and F4M for older kodi versions
-- Auto enable-install inputstream addons</news>
+- Fix regex for the events and get key for decrypt website streams</news>
   </extension>
 </addon>
 
@@ -300,7 +323,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.tempest" name="[B][COLORdodgerblue]TEMPEST[/COLOR][/B]" version="2.0.1" provider-name="[B][COLORdodgerblue]TTMedia[/COLOR][/B]">
+<addon id="plugin.video.tempest" name="[B][COLORdodgerblue]TEMPEST[/COLOR][/B]" version="2.0.2" provider-name="[B][COLORdodgerblue]TTMedia[/COLOR][/B]">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -330,8 +353,6 @@
 		<import addon="plugin.video.sport365.live" />
 		<import addon="plugin.video.youtube" />
 		<import addon="plugin.video.temptv" />
-		<import addon="plugin.video.mafiastreams" version="1.0.7" />
-		<import addon="plugin.video.megaiptv" version="1.0.4" />
 		<import addon="plugin.video.f4mTester" version="2.7.2" />
 		<import addon="plugin.video.SportsDevil"  />
     </requires>
@@ -377,6 +398,20 @@
 		</assets>
 		<news></news>
 	</extension>
+</addon>
+
+<addon id="plugin.video.ttmediatv" name="[B][COLORdeepskyblue]TTMedia TV[/B][/COLOR]" version="1.0.0" provider-name="[B][COLORdeepskyblue]TTMedia IPTV[/B][/COLOR]">
+    <requires>
+    </requires>
+    <extension point="xbmc.python.pluginsource"
+               library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary>playlist player</summary>
+        <description>playlist</description>
+    </extension>
 </addon>
 
 <addon id="plugin.video.youtube" name="YouTube" version="6.5.2~beta3" provider-name="anxdpanic, bromix">
@@ -450,7 +485,7 @@
     </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="[B][COLORdodgerblue]TTMedia Repository[/COLOR][/B]" version="2.3.4" provider-name="[B][COLORdodgerblue]TTMedia[/COLOR][/B]">
+<addon id="repository.ttmedia" name="[B][COLORdodgerblue]TTMedia Repository[/COLOR][/B]" version="2.3.5" provider-name="[B][COLORdodgerblue]TTMedia[/COLOR][/B]">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>

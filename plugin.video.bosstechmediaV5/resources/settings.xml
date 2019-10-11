@@ -1,6 +1,0 @@
-<settings>
-<category label="General">
-     <setting id="Username" type="text" label="Username" default=""/>
-     <setting id="Password" type="text" label="Password" default=""/>
-</category>
-</settings>
