@@ -65,7 +65,7 @@ def start():
 		else:
 			line1 = "Login Sucsessfull"
 			line2 = "Welcome to "+user.name 
-			line3 = ('[B][COLOR white]%s[/COLOR][/B]'%usern)
+			line3 = ('[B][COLORdodgerblue]%s[/COLOR][/B]'%usern)
 			xbmcgui.Dialog().ok(user.name, line1, line2, line3)
 			tvguidesetup()
 			addonsettings('ADS2','')
@@ -81,7 +81,7 @@ def start():
 			tools.addDir('Movies','vod',3,iconMoviesod,background,'')
 			tools.addDir('TV Series','live',18,iconTvseries,background,'')
 			
-			if xbmc.getCondVisibility('System.HasAddon(pvr.iptvsimple)'):
+			if xbmc.getCondVisibility('System.HasAddon(pvr.iptvsimple)') or xbmc.getCondVisibility('System.HasAddon(script.ivueguide)'):
 				tools.addDir('TV Guide','pvr',7,icon,background,'')
 			tools.addDir('Search','url',5,iconsearch,background,'')
 			tools.addDir('Settings','url',8,iconsettings,background,'')
@@ -353,6 +353,15 @@ def _pbhook(numblocks, blocksize, filesize, dp, start_time):
 #####################################################################
 
 def tvguide():
+	if xbmc.getCondVisibility('System.HasAddon(pvr.iptvsimple)') and xbmc.getCondVisibility('System.HasAddon(script.ivueguide)'):
+		dialog = xbmcgui.Dialog().select('Select a TV Guide', ['PVR TV Guide','iVue TV Guide'])
+		if dialog==0:
+			xbmc.executebuiltin('ActivateWindow(TVGuide)')
+		elif dialog==1:
+			xbmc.executebuiltin('RunAddon(script.ivueguide)')
+	elif not xbmc.getCondVisibility('System.HasAddon(pvr.iptvsimple)') and xbmc.getCondVisibility('System.HasAddon(script.ivueguide)'):
+		xbmc.executebuiltin('RunAddon(script.ivueguide)')
+	elif xbmc.getCondVisibility('System.HasAddon(pvr.iptvsimple)') and not xbmc.getCondVisibility('System.HasAddon(script.ivueguide)'):
 		xbmc.executebuiltin('ActivateWindow(TVGuide)')
 def stream_video(url):
 	url = buildcleanurl(url)
@@ -446,10 +455,17 @@ def addonsettings(url,description):
 			advancedsettings('shield')
 			xbmcgui.Dialog().ok(user.name, 'Set Advanced Settings')
 	elif url =="tv":
-		dialog = xbmcgui.Dialog().yesno(user.name,'Would You like us to Setup the TV Guide for You?')
-		if dialog:
+		dialog = xbmcgui.Dialog().select('Select a TV Guide to Setup', ['iVue TV Guide','PVR TV Guide','Both'])
+		if dialog==0:
+			ivueint()
+			xbmcgui.Dialog().ok('mafiastreams', 'iVue Integration Complete')
+		elif dialog==1:
 			pvrsetup()
-			xbmcgui.Dialog().ok(user.name, 'PVR Integration Complete, Restart Kodi For Changes To Take Effect')
+			xbmcgui.Dialog().ok('mafiastreams', 'PVR Integration Complete')
+		elif dialog==2:
+			pvrsetup()
+			ivueint()
+			xbmcgui.Dialog().ok('mafiastreams', 'PVR & iVue Integration Complete')
 	elif url =="ST":
 		xbmc.executebuiltin('Runscript("special://home/addons/'+user.id+'/resources/modules/speedtest.py")')
 	elif url =="META":
@@ -600,7 +616,7 @@ def accountinfo():
 	
 def correctPVR():
 
-	addon         = xbmcaddon.Addon(user.id)
+	addon         = xbmcaddon.Addon('plugin.video.mafiastreams')
 	username_text = addon.getSetting(id='Username')
 	password_text = addon.getSetting(id='Password')
 	PvrEnable     = '{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","params":{"addonid":"pvr.demo","enabled":false},"id":1}'
@@ -610,7 +626,7 @@ def correctPVR():
 	loginurl      = user.host+':'+user.port+"/get.php?username=" + username_text + "&password=" + password_text + "&type=m3u_plus&output=ts"
 	EPGurl        = user.host+':'+user.port+"/xmltv.php?username=" + username_text + "&password=" + password_text
 	
-	xbmc.executeJSONRPC(PvrEnable)
+	
 	xbmc.executeJSONRPC(jsonSetPVR)
 	xbmc.executeJSONRPC(IPTVon)
 	xbmc.executeJSONRPC(nulldemo)
@@ -624,10 +640,19 @@ def correctPVR():
 
 	
 def tvguidesetup():
-		dialog = xbmcgui.Dialog().yesno(user.name,'Would You like Sorthern IPTV to Setup the TV Guide for You?')
+		dialog = xbmcgui.Dialog().yesno('mafiastreams','Would You like us to Setup the TV Guide for You?')
 		if dialog:
+			dialog = xbmcgui.Dialog().select('Select a TV Guide to Setup', ['iVue TV Guide','PVR TV Guide','Both'])
+			if dialog==0:
+				ivueint()
+				xbmcgui.Dialog().ok('mafiastreams', 'iVue Integration Complete')
+			elif dialog==1:
 				pvrsetup()
-				xbmcgui.Dialog().ok(user.name, 'You are all done mate! , Restart Kodi For Changes To Take Effect')
+				xbmcgui.Dialog().ok('mafiastreams', 'PVR Integration Complete')
+			elif dialog==2:
+				pvrsetup()
+				ivueint()
+				xbmcgui.Dialog().ok('mafiastreams', 'PVR & iVue Integration Complete')
 
 def num2day(num):
 	if num =="0":
@@ -648,7 +673,7 @@ def num2day(num):
 	
 def extras():
 	tools.addDir('Run a Speed Test','ST',10,icon,background,'')
-	tools.addDir('Setup PVR Guide','tv',10,icon,background,'')
+	tools.addDir('Integrate With TV Guide','tv',10,icon,fanart,'')
 	tools.addDir('Clear Cache','CC',10,icon,background,'')
 	
 

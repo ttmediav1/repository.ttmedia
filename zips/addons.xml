@@ -134,10 +134,10 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.duality"
-       name="[B][COLORdeepskyblue]DUALITY[/COLOR][/B]"
-       version="1.0.7"
-       provider-name="[B][COLORdodgerblue]TTMedia[/B][/COLOR]">
+<addon id="plugin.video.bosstechmediaV6"
+       name="BossTech Media [COLOR red]V6[/COLOR]"
+       version="1.0.6"
+       provider-name="[COLORdeepskyblue]TT Media[/COLOR]">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
 	<import addon="script.module.requests" />
@@ -147,26 +147,9 @@
         <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">[B][COLORdeepskyblue]Dual IPTV services[/B][/COLOR]</summary>
+    <summary lang="en">BOSSTECH MEDIA[COLORred]V6[/COLOR]</summary>
     <language>en</language>
-    <description lang="en">[B][COLORdeepskyblue]Two quality IPTV services in one addon...solid,realiable,consistant streams[/B][/COLOR]</description>
-     <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id="plugin.video.evolutionstreams" name="[B]Evolution[/B][B][COLORdeepskyblue]Streams[/B][/COLOR]" version="1.0.5" provider-name="[B][COLORskyblue]TTMedia[/B][/COLOR]">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-	<import addon="script.module.requests" />
-  </requires>
-  <extension point="xbmc.python.pluginsource"
-            library="default.py">
-        <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">[COLORlightblue]Live IPTV[/COLOR] </summary>
-    <language>en</language>
-    <description lang="en">[COLORdodgerblue]TTMedia Supplier of Great Quality and Stable Streams[/COLOR]</description>
+    <description lang="en">[COLORdeepskyblue]BOSSTECH MEDIA V6 ADDON - SUPPLIER OF GREAT QUALITY AND STABLE STREAMS.[/COLOR]</description>
      <platform>all</platform>
   </extension>
 </addon>
@@ -184,21 +167,6 @@
         <description></description>
         <platform>all</platform>
     </extension>
-</addon>
-
-<addon id="plugin.video.Limitless" name="LIMITLESS TV" version="1.000.006" provider-name="@Nemzzy668 // @_DevKong ">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.addon.common" version="2.0.0" />
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">LIMITLESS TV</summary>
-    <description lang="en">A Kodi Bassed MultiMedia Addon.</description>
-    <platform>all</platform>
-  </extension>
 </addon>
 
 <addon id="plugin.video.live.streamspro"
@@ -246,7 +214,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.mafiastreams" name="Mafia [B][COLORred]Streams[/B][/COLOR]" version="1.0.7" provider-name="[B][COLORblue]TTMedia[/B][/COLOR]">
+<addon id="plugin.video.mafiastreams" name="Mafia [B][COLORred]Streams[/B][/COLOR]" version="1.0.8" provider-name="[B][COLORblue]TTMedia[/B][/COLOR]">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
 	<import addon="script.module.requests" />
@@ -259,6 +227,23 @@
     <summary lang="en">[B][COLORlightblue]Live IPTV[/B][/COLOR]</summary>
     <language>en</language>
     <description lang="en">[B][COLORdodgerblue]Mafia Streams Supplier of Great Quality and Stable Streams[/B][/COLOR]</description>
+     <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.platinumstreams" name="[B]Platinum[/B][B][COLORdeepskyblue]Streams[/B][/COLOR]" version="1.0.6" provider-name="[B][COLORskyblue]TTMedia[/B][/COLOR]">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="script.module.requests" />
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">[COLORlightblue]Live IPTV[/COLOR] </summary>
+    <language>en</language>
+    <description lang="en">[COLORdodgerblue]TTMedia Supplier of Great Quality and Stable Streams[/COLOR]</description>
      <platform>all</platform>
   </extension>
 </addon>
@@ -400,20 +385,6 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.ttmediatv" name="[B][COLORdeepskyblue]TTMedia TV[/B][/COLOR]" version="1.0.0" provider-name="[B][COLORdeepskyblue]TTMedia IPTV[/B][/COLOR]">
-    <requires>
-    </requires>
-    <extension point="xbmc.python.pluginsource"
-               library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary>playlist player</summary>
-        <description>playlist</description>
-    </extension>
-</addon>
-
 <addon id="plugin.video.youtube" name="YouTube" version="6.5.2~beta3" provider-name="anxdpanic, bromix">
     <requires>
         <import addon="xbmc.python" version="2.20.0"/>
@@ -485,7 +456,7 @@
     </extension>
 </addon>
 
-<addon id="repository.ttmedia" name="[B][COLORdodgerblue]TTMedia Repository[/COLOR][/B]" version="2.3.5" provider-name="[B][COLORdodgerblue]TTMedia[/COLOR][/B]">
+<addon id="repository.ttmedia" name="[B][COLORdodgerblue]TTMedia Repository[/COLOR][/B]" version="2.3.6" provider-name="[B][COLORdodgerblue]TTMedia[/COLOR][/B]">
 	<extension point="xbmc.addon.repository" name="TTMedia Repository">
 <dir>
   <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
