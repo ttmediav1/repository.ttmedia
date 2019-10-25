@@ -6,7 +6,7 @@ import xml.etree.ElementTree as ElementTree
 
 
 #################################
-service_name =  'Platinum Streams'
+service_name =  'WestCoast Streams'
 #############Defined Strings#############
 icon             = xbmc.translatePath(os.path.join('special://home/addons/' + user.id+'/media/',  'icon.png'))
 fanart           = xbmc.translatePath(os.path.join('special://home/addons/' + user.id+'/media/',  'fanart.jpg'))
