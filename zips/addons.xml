@@ -231,23 +231,6 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.platinumstreams" name="[B]Platinum[/B][B][COLORdeepskyblue]Streams[/B][/COLOR]" version="1.0.7" provider-name="[B][COLORskyblue]TTMedia[/B][/COLOR]">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-	<import addon="script.module.requests" />
-  </requires>
-  <extension point="xbmc.python.pluginsource"
-            library="default.py">
-        <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">[COLORlightblue]Live IPTV[/COLOR] </summary>
-    <language>en</language>
-    <description lang="en">[COLORdodgerblue]TTMedia Supplier of Great Quality and Stable Streams[/COLOR]</description>
-     <platform>all</platform>
-  </extension>
-</addon>
-
 <addon id="plugin.video.sport365.live" name="Sport365" version="2.6.4" provider-name="Bugatsinho">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -383,6 +366,23 @@
 		</assets>
 		<news></news>
 	</extension>
+</addon>
+
+<addon id="plugin.video.westcoaststreams" name="[B]WestCoast[/B][B][COLORdeepskyblue]Streams[/B][/COLOR]" version="1.0.8" provider-name="[B][COLORskyblue]TTMedia[/B][/COLOR]">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="script.module.requests" />
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">[COLORdodgerblue]Live IPTV[/COLOR] </summary>
+    <language>en</language>
+    <description lang="en">[COLORdodgerblue]TTMedia Supplier Of Great Quality And Stable Streams[/COLOR]</description>
+     <platform>all</platform>
+  </extension>
 </addon>
 
 <addon id="plugin.video.youtube" name="YouTube" version="6.5.2~beta3" provider-name="anxdpanic, bromix">
