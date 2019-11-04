@@ -19,7 +19,7 @@
 '''
 
 
-import re, hashlib, time, xbmcvfs, os, xbmc, xbmcaddon
+import re, hashlib, time, xbmcvfs, os, xbmc, xbmcaddon, xbmcgui
 
 try:
     from sqlite3 import dbapi2 as database
@@ -27,6 +27,8 @@ except:
     # noinspection PyUnresolvedReferences
     from pysqlite2 import dbapi2 as database
 
+execute = xbmc.executebuiltin
+dialog = xbmcgui.Dialog()
 addonInfo = xbmcaddon.Addon().getAddonInfo
 addonPath = xbmc.translatePath(addonInfo('path'))
 dataPath = xbmc.translatePath(addonInfo('profile')).decode('utf-8')
@@ -132,58 +134,81 @@ def timeout(definition, *args, **table):
         return
 
 
-# def clear(table=None, withyes=True):
-#
-#     try:
-#         control.idle()
-#
-#         if table is None:
-#             table = ['rel_list', 'rel_lib']
-#         elif not type(table) == list:
-#             table = [table]
-#
-#         if withyes:
-#
-#             yes = control.yesnoDialog(control.lang(30401).encode('utf-8'), '', '')
-#
-#             if not yes:
-#                 return
-#
-#         else:
-#
-#             pass
-#
-#         dbcon = database.connect(control.cacheFile)
-#         dbcur = dbcon.cursor()
-#
-#         for t in table:
-#             try:
-#                 dbcur.execute("DROP TABLE IF EXISTS %s" % t)
-#                 dbcur.execute("VACUUM")
-#                 dbcon.commit()
-#             except:
-#                 pass
-#
-#         control.infoDialog(control.lang(32013).encode('utf-8'))
-#     except:
-#         pass
-#
-#
-# def delete(dbfile=control.cacheFile, withyes=True):
-#
-#     if withyes:
-#
-#         yes = control.yesnoDialog(control.lang(30401).encode('utf-8'), '', '')
-#
-#         if not yes:
-#             return
-#
-#     else:
-#
-#         pass
-#
-#     control.deleteFile(dbfile)
-#
-#     control.infoDialog(control.lang(32023).encode('utf-8'))
+def clear(table=None, withyes=True):
+
+    try:
+        idle()
+
+        if table is None:
+            table = ['rel_list', 'rel_lib']
+        elif not type(table) == list:
+            table = [table]
+
+        if withyes:
+
+            yes = yesnoDialog(control.lang(30401).encode('utf-8'), '', '')
+
+            if not yes:
+                return
+
+        else:
+
+            pass
+
+        dbcon = database.connect(cacheFile)
+        dbcur = dbcon.cursor()
+
+        for t in table:
+            try:
+                dbcur.execute("DROP TABLE IF EXISTS %s" % t)
+                dbcur.execute("VACUUM")
+                dbcon.commit()
+            except:
+                pass
+
+        infoDialog('You are ready to go!!')
+    except:
+        pass
+
+def idle():
+
+    if float(xbmcaddon.Addon('xbmc.addon').getAddonInfo('version')[:4]) > 17.6:
+        xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
+    else:
+        xbmc.executebuiltin('Dialog.Close(busydialog)')
+
+
+def busy():
+
+    if float(xbmcaddon.Addon('xbmc.addon').getAddonInfo('version')[:4]) > 17.6:
+        xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
+    else:
+        xbmc.executebuiltin('ActivateWindow(busydialog)')
+
+
+def infoDialog(message, heading=addonInfo('name'), icon='', time=3000, sound=True):
+
+    if icon == '':
+        icon = addonInfo('icon')
+
+    try:
+        dialog.notification(heading, message, icon, time, sound=sound)
+    except:
+        execute("Notification(%s, %s, %s, %s)" % (heading, message, time, icon))
+
+
+def okDialog(heading, line1):
+    return dialog.ok(heading, line1)
+
+
+def yesnoDialog(line1, line2='', line3='', heading=addonInfo('name'), nolabel=None, yeslabel=None):
+    return dialog.yesno(heading, line1, line2, line3, nolabel, yeslabel)
+
+
+def delete(dbfile=cacheFile):
+
+    deleteFile(dbfile)
+
+    infoDialog('You are ready to go!!!')
 
 
