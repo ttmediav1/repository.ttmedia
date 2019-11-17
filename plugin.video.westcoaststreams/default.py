@@ -57,7 +57,7 @@ def start():
 		auth = '%s:%s/enigma2.php?username=%s&password=%s&type=get_vod_categories'%(user.host,user.port,usern,passw)
 		auth = tools.OPEN_URL(auth)
 		if auth == "":
-			line1 = "Incorrect Login Details"
+			line1 = "[COLORred]Incorrect[/COLOR] Login Details"
 			line2 = "Please Re-enter" 
 			line3 = "" 
 			xbmcgui.Dialog().ok('Attention', line1, line2, line3)
@@ -75,18 +75,18 @@ def start():
 		auth = '%s:%s/enigma2.php?username=%s&password=%s&type=get_vod_categories'%(user.host,user.port,username,password)
 		auth = tools.OPEN_URL(auth)
 		if not auth=="":
-			
-			tools.addDir('Live TV','live',1,iconlive,background,'')
-			tools.addDir('Catchup TV','url',12,iconcatchup,background,'')
-			tools.addDir('Movies','vod',3,iconMoviesod,background,'')
-			tools.addDir('TV Series','live',18,iconTvseries,background,'')
-			
+		
+	
+			tools.addDir('[COLORdarkturquoise]Account Information[/COLOR]','url',6,iconaccount,background,'')
+			tools.addDir('[COLORdarkturquoise]Live TV[/COLOR]','live',1,iconlive,background,'')
+			tools.addDir('[COLORdarkturquoise]Catchup TV[/COLOR]','url',12,iconcatchup,background,'')
+			tools.addDir('[COLORdarkturquoise]Movies[/COLOR]','vod',3,iconMoviesod,background,'')
+			tools.addDir('[COLORdarkturquoise]TV Series[/COLOR]','live',18,iconTvseries,background,'')
 			if xbmc.getCondVisibility('System.HasAddon(pvr.iptvsimple)'):
-				tools.addDir('TV Guide','pvr',7,icon,background,'')
-			tools.addDir('Search','url',5,iconsearch,background,'')
-			tools.addDir('Settings','url',8,iconsettings,background,'')
-			tools.addDir('Extras','url',16,iconextras,background,'')
-			tools.addDir('Account Information','url',6,iconaccount,background,'')
+				tools.addDir('[COLORdarkturquoise]TV Guide[/COLOR]','pvr',7,icontvguide,background,'')
+			tools.addDir('[COLORdarkturquoise]Settings[/COLOR]','url',8,iconsettings,background,'')
+			tools.addDir('[COLORdarkturquoise]Extras[/COLOR]','url',16,iconextras,background,'')
+			tools.addDir('[COLORred]Search[/COLOR]','url',5,iconsearch,background,'')
 				
 def home():
 	
@@ -98,9 +98,9 @@ def home():
 		tools.addDir('TV Guide','pvr',7,icon,background,'')
 	tools.addDir('Catchup TV','url',12,icon,background,'')
 	tools.addDir('vod','vod',3,icon,background,'')
-	tools.addDir('Search','',5,icon,background,'')
 	tools.addDir('Settings','url',8,icon,background,'')
 	tools.addDir('Extras','url',16,icon,background,'')
+	tools.addDir('Search','',5,icon,background,'')
 		
 def livecategory(url):
 	
@@ -446,7 +446,7 @@ def addonsettings(url,description):
 			advancedsettings('shield')
 			xbmcgui.Dialog().ok(user.name, 'Set Advanced Settings')
 	elif url =="tv":
-		dialog = xbmcgui.Dialog().yesno(user.name,'Would You like us to Setup the TV Guide for You?')
+		dialog = xbmcgui.Dialog().yesno(user.name,'Would You like WestCoast Streams to Setup the TV Guide for You?')
 		if dialog:
 			pvrsetup()
 			xbmcgui.Dialog().ok(user.name, 'PVR Integration Complete, Restart Kodi For Changes To Take Effect')
@@ -624,10 +624,10 @@ def correctPVR():
 
 	
 def tvguidesetup():
-		dialog = xbmcgui.Dialog().yesno(user.name,'Would You like Sorthern IPTV to Setup the TV Guide for You?')
+		dialog = xbmcgui.Dialog().yesno(user.name,'Would You like WestCoast Streams to Setup the TV Guide for You?')
 		if dialog:
 				pvrsetup()
-				xbmcgui.Dialog().ok(user.name, 'You are all done mate! , Restart Kodi For Changes To Take Effect')
+				xbmcgui.Dialog().ok(user.name, 'You are all done ! , Restart Kodi For Changes To Take Effect')
 
 def num2day(num):
 	if num =="0":

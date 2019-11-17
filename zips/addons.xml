@@ -231,6 +231,35 @@
   </extension>
 </addon>
 
+<addon id="plugin.video.mystique"
+	   name="[B][COLORdarkmagenta]Mystique[/B][/COLOR]"
+	   version="1.0.5"
+	   provider-name="[B][COLORdodgerblue]TTMedia[/B][/COLOR]">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="script.module.requests"/>
+	<import addon="script.module.python.koding.aio" version="0.9.6.6" />
+	<import addon="script.module.resolveurl" version="5.0.00"/>
+	<import addon="script.common.plugin.cache" version="2.5.5"/>
+	<import addon="script.module.pyxbmct" version="1.1.4" />
+	<import addon="script.module.futures" version="2.2.0"/>
+	<import addon="script.module.universalscrapers"/>
+	<import addon="script.module.beautifulsoup4" version="4.5.3"/>
+	<import addon="script.module.feedparser" />
+	<import addon="script.module.dateutil" />
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.service" library="service.py" start="startup" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">[B][COLORdodgerblue]The Moment You've All Been Waiting For... is FINALLY HERE.Thanks to Dark Child who is the original Dev of this[/B][/COLOR]</summary>
+    <description lang="en">[B][COLORdodgerblue]Finally Mystique is here, a new and revolutionary way to enjoy kodi.Special thanks to Dark Child the original Dev of this add-on[/B][/COLOR]</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="plugin.video.sport365.live" name="Sport365" version="2.6.6.2" provider-name="Bugatsinho">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -366,7 +395,7 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.westcoaststreams" name="[B]WestCoast[/B][B][COLORdarkturquoise]Streams[/B][/COLOR]" version="1.1.0" provider-name="[B][COLORskyblue]TTMedia[/B][/COLOR]">
+<addon id="plugin.video.westcoaststreams" name="[B]WestCoast[/B][B][COLORdarkturquoise]Streams[/B][/COLOR]" version="1.1.1" provider-name="[B][COLORskyblue]TTMedia[/B][/COLOR]">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
 	<import addon="script.module.requests" />
